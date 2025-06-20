@@ -1,0 +1,19 @@
+card_id,name,owner_type,type_primary,type_secondary,effect_attack_value,effect_defence_value,effect_debuff_value,effect_Turn_value,effect_text,rank,animation_ID
+SC001,물기,player,공격,,10,0,0,0,적에게 (자신 ATK+10)의 물리 피해를 준다.,1,playerBite
+SC002,물기,player,공격,,25,0,0,0,적에게 더 큰 물리 피해를 준다,2,playerBite
+SC003,으르렁거리기,player,약화,,0,0,-5,1,1턴 동안 적의 공격력을 감소 시킨다,1,playerBart
+SC004,으르렁거리기,player,약화,,0,0,-8,2,2 턴 동안 적의 공격력을 크게 감소 시킨다,2,playerBart
+SC005,웅크리기,player,방어,,0,12,0,1,이번 턴에 받을 피해를 막는 '보호막' 조금 생성한다,1,playerDeffence
+SC006,웅크리기,player,방어,,0,30,0,1,이번 턴에 받을 피해를 막는 '보호막' 많이 생성한다,2,playerDeffence
+SC007,할퀴기,captainCat,공격,,8,0,0,0,빠르고 약한 공격을 한다,,
+SC008,파괴의 이빨,securityDog,공격,,15,0,0,0,매우 강력한 피해를 주는 공격을 한다,,
+SC009,위협적인 포효,securityDog,약화,,0,0,10,1,1 턴 동안 상대가 받는 피해를 증가 시킨다,,
+SC010,당근 강타,rabbit,공격,,5,0,0,0,적에게 물리 피해 ,,
+SC011,토끼굴 숨기,rabbit,방어,,0,10,0,0,다음 턴을 방어하는 보호막 생성한다,,
+SC012,토끼똥 머신건,rabbit,공격,약화,13,0,-5,1,적에게 큰 물리 피해 및 1턴 동안 공격력 감소,,
+SC013,해바라기씨 투척,hamster,공격,,15,0,0,0,적에게 물리 피해   준다,,
+SC014,해바라기씨 대량 투척 공격,hamster,공격,,25,0,0,0,적에게 큰 물리 피해  준다,,
+SC015,햄스터  땅굴 파기,hamster,방어,공격,20,0,0,0,1 턴 동안 몸을 숨겼다 차례가 올 시 물리 피해를 준다 (몸을 숨길 시 공격 무효화),,
+SC016,움찔움찔,kitty,약화,,0,0,-4,1,1턴 동안 상대  방어력 감소시킨다,,
+SC017,냥냥 펀치,kitty,공격,,10,0,0,0,적에게 물리피해를 준다,,
+SC018,미야아아옹!,kitty,방어,,0,0,10,1,몸을 크게부풀려서  1 턴 동안 방어력 증가한다,,
