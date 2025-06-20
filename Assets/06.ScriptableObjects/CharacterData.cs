@@ -8,7 +8,7 @@ public class CharacterData : ScriptableObject
     public string displayName;    // 에디터에서 한글명 표시용
 
     [Header("소유자 타입")]
-    public OwnerType ownerType;   // Player / CaptainCat
+    public OwnerType ownerType;
 
     [Header("능력치")]
     public int maxHP;

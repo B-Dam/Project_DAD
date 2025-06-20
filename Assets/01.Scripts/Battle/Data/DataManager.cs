@@ -25,10 +25,10 @@ public class DataManager : MonoBehaviour
     void LoadAllData()
     {
         // 모든 카드 SO 로드
-        allCards = Resources.LoadAll<CardData>("ScriptableObjects/Cards");
+        allCards = Resources.LoadAll<CardData>("06.ScriptableObjects/Cards");
 
         // 2) 모든 캐릭터 SO 로드
-        var chars = Resources.LoadAll<CharacterData>("ScriptableObjects/Characters");
+        var chars = Resources.LoadAll<CharacterData>("06.ScriptableObjects/Characters");
         // 플레이어는 항상 Mono로 고정
         playerData = chars.First(c => c.characterId == "Mono");
 

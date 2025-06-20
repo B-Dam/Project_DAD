@@ -4,7 +4,7 @@ using UnityEditor;
 using System.IO;
 using System.Linq;
 
-public class DataImporter : MonoBehaviour
+public class SkillDataImporter : MonoBehaviour
 {
     // CSV 경로
     private const string cardCsvPath = "Assets/07.Resources/skillcardDB.csv";
