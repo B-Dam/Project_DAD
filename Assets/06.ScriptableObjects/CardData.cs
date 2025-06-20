@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public enum OwnerType { Player, CaptainCat } // 차후 보스가 추가될 때 추가
-public enum CardTypePrimary { Attack, Debuff, Defense }
-public enum CardTypeSecondary { None, Attack, Debuff, Defense }
+public enum CardTypePrimary { 공격, 약화, 방어 }
+public enum CardTypeSecondary { None, 공격, 약화, 방어 }
 
 [CreateAssetMenu(menuName = "Battle/CardData")]
 public class CardData : ScriptableObject
