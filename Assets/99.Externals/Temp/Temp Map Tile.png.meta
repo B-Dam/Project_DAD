@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 95df6cb155b6dab4eb67a390e327bacc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3223745763172162741
+    second: Temp Map Tile_0
+  - first:
+      213: 817493372050320774
+    second: Temp Map Tile_1
+  - first:
+      213: -4904729456587001968
+    second: Temp Map Tile_2
+  - first:
+      213: 4013602695916588341
+    second: Temp Map Tile_3
+  - first:
+      213: 9052283120969434055
+    second: Temp Map Tile_4
+  - first:
+      213: 3157024887463439709
+    second: Temp Map Tile_5
+  - first:
+      213: -7090401714981514389
+    second: Temp Map Tile_6
+  - first:
+      213: -65958984687701683
+    second: Temp Map Tile_7
+  - first:
+      213: -7724566525641865611
+    second: Temp Map Tile_8
+  - first:
+      213: 1585589216386808401
+    second: Temp Map Tile_9
+  - first:
+      213: -5446236538293826090
+    second: Temp Map Tile_10
+  - first:
+      213: 4807175842866288829
+    second: Temp Map Tile_11
+  - first:
+      213: -6549045371188833642
+    second: Temp Map Tile_12
+  - first:
+      213: 6137798629598544008
+    second: Temp Map Tile_13
+  - first:
+      213: -5098717298675090189
+    second: Temp Map Tile_14
+  - first:
+      213: 1645519266858015630
+    second: Temp Map Tile_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Temp Map Tile_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 767
+        width: 528
+        height: 257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b43e3fbfe44f243d0800000000000000
+      internalID: -3223745763172162741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 641
+        width: 46
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68dab4ff3e1585b00800000000000000
+      internalID: 817493372050320774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_2
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 641
+        width: 46
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09facbcab86eeebb0800000000000000
+      internalID: -4904729456587001968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_3
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 658
+        width: 34
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53d88af036e23b730800000000000000
+      internalID: 4013602695916588341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_4
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 577
+        width: 38
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c3c5a7998b20ad70800000000000000
+      internalID: 9052283120969434055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_5
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 447
+        width: 53
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5d6354986100db20800000000000000
+      internalID: 3157024887463439709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_6
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 513
+        width: 38
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b63d4bfe435d99d90800000000000000
+      internalID: -7090401714981514389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_7
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 513
+        width: 46
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d41b1f327aaa51ff0800000000000000
+      internalID: -65958984687701683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_8
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 449
+        width: 38
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5764e33eba3dcc490800000000000000
+      internalID: -7724566525641865611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_9
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 449
+        width: 46
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15afc62ddf4210610800000000000000
+      internalID: 1585589216386808401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 225
+        width: 177
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dd4e3c49b41b64b0800000000000000
+      internalID: -5446236538293826090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_11
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 353
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db852e6a5f486b240800000000000000
+      internalID: 4807175842866288829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 351
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6929f58eeed1d15a0800000000000000
+      internalID: -6549045371188833642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_13
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 297
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 880c91c8557dd2550800000000000000
+      internalID: 6137798629598544008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 127
+        width: 129
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fcf45a81a7bd39b0800000000000000
+      internalID: -5098717298675090189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Temp Map Tile_15
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 176
+        width: 42
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8b122c0e0f06d610800000000000000
+      internalID: 1645519266858015630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Temp Map Tile_0: -3223745763172162741
+      Temp Map Tile_1: 817493372050320774
+      Temp Map Tile_10: -5446236538293826090
+      Temp Map Tile_11: 4807175842866288829
+      Temp Map Tile_12: -6549045371188833642
+      Temp Map Tile_13: 6137798629598544008
+      Temp Map Tile_14: -5098717298675090189
+      Temp Map Tile_15: 1645519266858015630
+      Temp Map Tile_2: -4904729456587001968
+      Temp Map Tile_3: 4013602695916588341
+      Temp Map Tile_4: 9052283120969434055
+      Temp Map Tile_5: 3157024887463439709
+      Temp Map Tile_6: -7090401714981514389
+      Temp Map Tile_7: -65958984687701683
+      Temp Map Tile_8: -7724566525641865611
+      Temp Map Tile_9: 1585589216386808401
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
