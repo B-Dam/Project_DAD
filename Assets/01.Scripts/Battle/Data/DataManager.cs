@@ -25,10 +25,10 @@ public class DataManager : MonoBehaviour
     void LoadAllData()
     {
         // 모든 카드 SO 로드
-        allCards = Resources.LoadAll<CardData>("06.ScriptableObjects/Cards");
+        allCards = Resources.LoadAll<CardData>("ScriptableObjects/Cards");
 
         // 2) 모든 캐릭터 SO 로드
-        var chars = Resources.LoadAll<CharacterData>("06.ScriptableObjects/Characters");
+        var chars = Resources.LoadAll<CharacterData>("ScriptableObjects/Characters");
         // 플레이어는 항상 Mono로 고정
         playerData = chars.First(c => c.characterId == "Mono");
 
@@ -36,8 +36,10 @@ public class DataManager : MonoBehaviour
         if (defaultEnemy != null)
             enemyData = defaultEnemy;
         else
-            enemyData = chars.FirstOrDefault(c => c.ownerType != OwnerType.player)
+            enemyData = chars.FirstOrDefault(c => c.ownerType != OwnerType.Player)
                         ?? throw new System.Exception("Enemy CharacterData가 없습니다!");
+        
+        Debug.Log("[DM] allCards 로드 개수: " + allCards.Length);
     }
     
     /// <summary>
@@ -54,7 +56,7 @@ public class DataManager : MonoBehaviour
     public CardData[] GetPlayerCards()
     {
         return allCards
-               .Where(c => c.ownerType == OwnerType.player && c.rank == 1)
+               .Where(c => c.ownerType == OwnerType.Player && c.rank == 1)
                .ToArray();
     }
 

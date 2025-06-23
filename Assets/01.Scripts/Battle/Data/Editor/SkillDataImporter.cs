@@ -61,7 +61,7 @@ public class SkillDataImporter : MonoBehaviour
             so.effectText = cols[9];
             
             // 소유자 타입이 플레이어인 경우
-            if (so.ownerType == OwnerType.player)
+            if (so.ownerType == OwnerType.Player)
             {
                 // Player면 CSV에서 파싱
                 if (!int.TryParse(cols[10].Trim(), out so.rank))
