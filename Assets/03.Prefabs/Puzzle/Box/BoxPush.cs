@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class TestMoveBox : MonoBehaviour
+public class BoxPush : MonoBehaviour
 {
     public float pushForce = 3f;
     public float maxSpeed = 1.5f;
@@ -19,12 +19,12 @@ public class TestMoveBox : MonoBehaviour
         // 조건: 플레이어가 붙어 있고, 입력이 있을 때만 힘 가함
         if (isPlayerTouching)
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
+            float moveX = Input.GetAxisRaw("Horizontal");
+            float moveY = Input.GetAxisRaw("Vertical");
 
-            if (h != 0 || v != 0)
+            if (moveX != 0 || moveY != 0)
             {
-                Vector2 pushDir = new Vector2(h, v).normalized;
+                Vector2 pushDir = new Vector2(moveX, moveY).normalized;
                 rb.AddForce(pushDir * pushForce, ForceMode2D.Force);
             }
         }
@@ -48,7 +48,7 @@ public class TestMoveBox : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            isPlayerTouching = false; 
+            isPlayerTouching = false;
             // 박스 속도 강제 정지!
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;

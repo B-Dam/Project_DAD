@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PressureSwitch : MonoBehaviour
+public class SwitchTrigger : MonoBehaviour
 {
     public GameObject targetDoor;
     public Collider2D switchCollider;

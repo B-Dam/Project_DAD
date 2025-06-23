@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class InteractionTrigger : MonoBehaviour
+public class LeverTrigger : MonoBehaviour
 {
     public GameObject interactionText;     // UI 텍스트
     public GameObject targetBridge;        // 나타날 다리 등
