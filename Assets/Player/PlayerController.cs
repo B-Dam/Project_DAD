@@ -83,20 +83,22 @@ public class PlayerController : MonoBehaviour
     }
 
     private void UpdateAnimation(Vector2 direction)
-    {
-        if (animator == null) return;
+{
+    if (animator == null) return;
 
-        bool isMoving = direction.magnitude > 0.01f;
-        animator.SetBool("isMoving", isMoving);
+    float speed = direction.magnitude;
+    animator.SetFloat("Run", speed); // 핵심 부분
 
-        if (isMoving)
-            lastMoveDirection = direction;
+    if (speed > 0.01f)
+        lastMoveDirection = direction;
 
-        if (lastMoveDirection.x < 0)
-            transform.localScale = new Vector3(1, 1, 1); // 왼쪽
-        else if (lastMoveDirection.x > 0)
-            transform.localScale = new Vector3(-1, 1, 1); // 오른쪽
-    }
+    // 좌우 방향 전환
+    if (lastMoveDirection.x < 0)
+        transform.localScale = new Vector3(1, 1, 1); // 왼쪽
+    else if (lastMoveDirection.x > 0)
+        transform.localScale = new Vector3(-1, 1, 1); // 오른쪽
+}
+
 
     private void SpawnDustEffect()
     {
