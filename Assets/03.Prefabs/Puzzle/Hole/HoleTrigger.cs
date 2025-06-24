@@ -4,6 +4,7 @@ public class HoleTrigger : MonoBehaviour
 {
     private bool isFalled = false;
     [SerializeField] private GameObject holeCoverPrefab; // 구멍이 채워졌을 때 표시할 커버
+    [SerializeField] private GameObject playerBlock;
     private Collider2D holeCollider;
 
     private void Start()
@@ -38,6 +39,7 @@ public class HoleTrigger : MonoBehaviour
         {
             Instantiate(holeCoverPrefab, transform.position, Quaternion.identity);
         }
+        playerBlock.SetActive(false); // 플레이어 블록 활성화
         box.gameObject.SetActive(false); // 박스를 비활성화
     }
 }
