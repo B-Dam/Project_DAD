@@ -3,55 +3,79 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class BoxPush : MonoBehaviour
 {
-    public float pushForce = 3f;
-    public float maxSpeed = 1.5f;
+    public float moveDistance = 1f;//한 블럭 거리
+    public float moveSpeed = 5f;
+    public LayerMask obstacleLayer; // 장애물 레이어
 
     private Rigidbody2D rb;
-    private bool isPlayerTouching = false;
+    private bool isMoving = false;
+    private Vector2 targetPosition;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;//직접 위치 이동 할 거니까
     }
-
-    private void FixedUpdate()
+    private void Update()
     {
-        // 조건: 플레이어가 붙어 있고, 입력이 있을 때만 힘 가함
-        if (isPlayerTouching)
+        if (isMoving)
         {
-            float moveX = Input.GetAxisRaw("Horizontal");
-            float moveY = Input.GetAxisRaw("Vertical");
+            rb.MovePosition(Vector2.MoveTowards(rb.position, targetPosition, moveSpeed * Time.deltaTime));
 
-            if (moveX != 0 || moveY != 0)
+            if (Vector2.Distance(rb.position, targetPosition) < 0.01f)
             {
-                Vector2 pushDir = new Vector2(moveX, moveY).normalized;
-                rb.AddForce(pushDir * pushForce, ForceMode2D.Force);
+                rb.position = targetPosition;//위치를 즉시 바꿔 버림
+                isMoving = false;
             }
         }
-
-        // 항상 속도 제한
-        if (rb.linearVelocity.magnitude > maxSpeed)
-        {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
-        }
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (isMoving) return;
+        if (!collision.gameObject.CompareTag("Player")) return;
+        //충돌 지점 평균 구하기
+        Vector2 contactPoint = Vector2.zero;
+        foreach (ContactPoint2D contact in collision.contacts)
         {
-            isPlayerTouching = true;
+            contactPoint += contact.point;
         }
-    }
+        contactPoint /= collision.contactCount;
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        Vector2 boxPos = rb.position;
+        //충돌 지점과 박스의 중심 위치 차이 계산
+        Vector2 localoffset = contactPoint - boxPos;
+
+        Vector2 pushDirection = Vector2.zero;
+        float threshold = 0.2f; //얼마나 중심에 가까워야 인정할지
+
+        if (Mathf.Abs(localoffset.x) > Mathf.Abs(localoffset.y))
         {
-            isPlayerTouching = false;
-            // 박스 속도 강제 정지!
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
+            //좌우면 y값이 작아야 중심 근처
+            if (Mathf.Abs(localoffset.y) < threshold)
+            {
+                pushDirection = new Vector2(-Mathf.Sign(localoffset.x), 0f);
+            }
         }
+        else
+        {
+            //상하면 x값이 작아야 중심 근처
+            if (Mathf.Abs(localoffset.x) < threshold)
+            {
+                pushDirection = new Vector2(0f, -Mathf.Sign(localoffset.y));
+            }
+        }
+        if (pushDirection == Vector2.zero) return;//중앙이 아닌 구석 밀면 무시
+
+        Vector2 nextPos = rb.position + pushDirection * moveDistance;
+
+        //장애물 감지
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, pushDirection, moveDistance, obstacleLayer);
+        if ((hit.collider != null))
+        {
+            return; //장애물 있으면 이동 안함    
+        }
+        //이동시작
+        targetPosition = nextPos;
+        isMoving = true;
     }
 }
