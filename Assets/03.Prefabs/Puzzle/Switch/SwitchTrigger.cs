@@ -4,16 +4,23 @@ public class SwitchTrigger : MonoBehaviour
 {
     public GameObject targetDoor;
     public Collider2D switchCollider;
+    [SerializeField] private GameObject openDoorPrefab;
+
+    private bool isActivated = false; // 열린 상태 확인용
+    private GameObject instantiatedOpenDoor; // 생성된 열린 문 오브젝트 저장
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        if (isActivated) return;
         // 완전히 스위치 영역 안에 들어왔는지 확인
         if ((other.CompareTag("Player") || other.CompareTag("Box")) &&
             IsFullyInside(switchCollider, other)) // 순서: 스위치가 대상 안에 있는가?
         {
             Debug.Log(" 스위치가 대상 안에 완전히 들어옴 → 문 열기");
-            if (targetDoor != null)
-                targetDoor.SetActive(false);
+
+            OpenDoor();
+
+            isActivated = true;
         }
     }
 
@@ -29,8 +36,30 @@ public class SwitchTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Box"))
         {
-            if (targetDoor != null)
-                targetDoor.SetActive(true);
+            CloseDoor();
+
+            isActivated = false;
+        }
+    }
+    private void OpenDoor()
+    {
+        if (targetDoor != null)
+            targetDoor.SetActive(false);
+
+        if (openDoorPrefab != null && instantiatedOpenDoor == null)
+        {
+            instantiatedOpenDoor = Instantiate(openDoorPrefab, targetDoor.transform.position, Quaternion.identity);
+        }
+    }
+    private void CloseDoor()
+    {
+        if (targetDoor != null)
+            targetDoor.SetActive(true);
+
+        if (instantiatedOpenDoor != null)
+        {
+            Destroy(instantiatedOpenDoor);
+            instantiatedOpenDoor = null;
         }
     }
 }
