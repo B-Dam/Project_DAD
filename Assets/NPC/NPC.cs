@@ -2,26 +2,21 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour, IInteractable
 {
-    [TextArea(2, 5)]
-    public string[] dialogueLines;
+    [Header("🗣️ ID + 문장을 하나로 관리")]
+    public DialogueEntry[] dialogueEntries;
 
     public void Interact()
     {
         if (DialogueManager.Instance == null) return;
+        if (DialogueManager.Instance.IsDialogueActive) return;
+        if (DialogueManager.Instance.IsOnCooldown) return;
 
-        if (DialogueManager.Instance.IsDialogueActive)
+        string[] ids = new string[dialogueEntries.Length];
+        for (int i = 0; i < dialogueEntries.Length; i++)
         {
-            Debug.Log("⚠️ 대화 중입니다. 무시됨.");
-            return;
+            ids[i] = dialogueEntries[i].id;
         }
 
-        if (DialogueManager.Instance.IsOnCooldown)
-        {
-            Debug.Log("⏳ 대화 쿨타임 중입니다. 잠시 기다리세요.");
-            return;
-        }
-
-        DialogueManager.Instance.StartDialogue(dialogueLines);
+        DialogueManager.Instance.StartDialogueByIDs(ids);
     }
 }
-
