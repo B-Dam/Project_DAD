@@ -35,7 +35,7 @@ public class MapDB
         _mapDataList = ParseMapData(csvLines);
     }
 
-    private string[] ParseCsv()
+    private string[] ParseCsv()  // csv 파일을 전부 읽어오는 함수
     {
         string fullPath = $"{Application.dataPath}/CSV/{CSV_FILE_NAME}";
 
@@ -48,7 +48,7 @@ public class MapDB
         return csvLines;
     }
 
-    private Dictionary<string, MapData> ParseMapData(string[] csvLines)
+    private Dictionary<string, MapData> ParseMapData(string[] csvLines)  // 읽어온 csv 파일을 줄 별, comma 별로 나누는 함수
     {
         Dictionary<string, MapData> dictionary = new();
 

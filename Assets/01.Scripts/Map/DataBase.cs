@@ -8,7 +8,7 @@ public class Database : MonoBehaviour
         get
         {
             if (_instance == null)
-                _instance = FindObjectOfType<Database>();
+                _instance = FindAnyObjectByType<Database>();
 
             if (_instance == null)
                 _instance = new GameObject() { name = "DataBase" }.AddComponent<Database>();
