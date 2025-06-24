@@ -44,8 +44,9 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         descText.text    = TextFormatter.Format(data.effectText, new System.Collections.Generic.Dictionary<string,string> {
             { "damage", (CombatManager.Instance.PlayerBaseAtk + data.effectAttackValue + CombatManager.Instance.playerAtkMod).ToString() },
             { "turns", data.effectTurnValue.ToString() },
-            { "shield", data.effectDefenseValue.ToString() },
-            { "debuff", data.effectDebuffValue.ToString() }
+            { "shield", data.effectShieldValue.ToString() },
+            { "debuff", data.effectAttackDebuffValue.ToString() },
+            { "buff", data.effectAttackIncreaseValue.ToString() }
         });
     }
 

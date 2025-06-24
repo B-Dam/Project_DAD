@@ -7,8 +7,8 @@ public class CharacterData : ScriptableObject
     public string characterId;    // 예: "Mono", "CatBoss"
     public string displayName;    // 에디터에서 한글명 표시용
 
-    [Header("소유자 타입")]
-    public OwnerType ownerType;
+    [Header("소유자 ID")]
+    public int ownerID;
 
     [Header("능력치")]
     public int maxHP;

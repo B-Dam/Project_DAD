@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterId: Mono
   displayName: "\uBAA8\uB178"
-  ownerType: 0
+  ownerID: 1000
   maxHP: 30
   atk: 10
   def: 10

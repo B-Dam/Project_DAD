@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84b0f8cd5f3ca8f4cb9fea36a74ba38d, type: 3}
-  m_Name: CaptainCat
+  m_Name: CaptainCat2
   m_EditorClassIdentifier: 
   characterId: CaptainCat
   displayName: "\uC1A1\uACF3\uB2C8"
-  ownerID: 1001
+  ownerID: 1004
   maxHP: 100
   atk: 5
   def: 10

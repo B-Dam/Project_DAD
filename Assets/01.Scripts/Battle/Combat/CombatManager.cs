@@ -2,15 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public enum StatType
-{
-    Attack,
-    Defense
-}
-
 public class TimedModifier
 {
-    public StatType statType;
     public int value;
     public int remainingTurns;
 }
@@ -30,17 +23,13 @@ public class CombatManager : MonoBehaviour
     [Header("버프, 디버프")]
     public int playerAtkMod { get; private set; }
     public int enemyAtkMod  { get; private set; }
-    public int playerDefMod { get; private set; }
-    public int enemyDefMod  { get; private set; }
     
-    List<TimedModifier> playerModifiers = new List<TimedModifier>();
-    List<TimedModifier> enemyModifiers  = new List<TimedModifier>();
+    List<TimedModifier> playerAttackMods = new List<TimedModifier>();
+    List<TimedModifier> enemyAttackMods  = new List<TimedModifier>();
 
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
-    int PlayerBaseDef => DataManager.Instance.playerData.def;
     int EnemyBaseAtk  => DataManager.Instance.enemyData.atk;
-    int EnemyBaseDef  => DataManager.Instance.enemyData.def;
     
 
     void Awake()
@@ -80,8 +69,8 @@ public class CombatManager : MonoBehaviour
         enemyShield  = 0;
         
         // 상태이상 값 초기화
-        playerModifiers.Clear();
-        enemyModifiers.Clear();
+        playerAttackMods.Clear();
+        enemyAttackMods.Clear();
         
         // 모디파이어 갱신
         RecalculateModifiers();
@@ -103,15 +92,15 @@ public class CombatManager : MonoBehaviour
     // 모디파이어 합산
     void RecalculateModifiers()
     {
-        playerAtkMod = playerModifiers.Where(m => m.statType == StatType.Attack).Sum(m => m.value);
-        playerDefMod = playerModifiers.Where(m => m.statType == StatType.Defense).Sum(m => m.value);
-        enemyAtkMod  = enemyModifiers.Where(m => m.statType == StatType.Attack).Sum(m => m.value);
-        enemyDefMod  = enemyModifiers.Where(m => m.statType == StatType.Defense).Sum(m => m.value);
+        playerAtkMod = 0;
+        foreach (var m in playerAttackMods) playerAtkMod += m.value;
+        enemyAtkMod  = 0;
+        foreach (var m in enemyAttackMods)  enemyAtkMod  += m.value;
     }
 
     void OnPlayerTurnStart()
     {
-        UpdateModifiers(playerModifiers);
+        UpdateModifiers(playerAttackMods);
         RecalculateModifiers();
         // UI에 PlayerHp 갱신, AP 초기화 등
     }
@@ -119,7 +108,7 @@ public class CombatManager : MonoBehaviour
     void OnEnemyTurnStart()
     {
         // 적 전용 모디파이어 업데이트
-        UpdateModifiers(enemyModifiers);
+        UpdateModifiers(enemyAttackMods);
         RecalculateModifiers();
         
         // 적 스킬 사용
@@ -143,51 +132,44 @@ public class CombatManager : MonoBehaviour
         int modAtk    = isPlayer ? playerAtkMod   : enemyAtkMod;
         int rawAttack = baseAtk + data.effectAttackValue + modAtk;
 
-        // 방어력(Def + defMod) 적용
-        int defenderDef = (isPlayer ? EnemyBaseDef : PlayerBaseDef)
-                          + (isPlayer ? enemyDefMod : playerDefMod);
-        int afterDef    = Mathf.Max(0, rawAttack - defenderDef);
-
-        // 방어막(Shield) 적용
+        // 
         if (isPlayer)
         {
-            int shielded = Mathf.Min(enemyShield, afterDef);
-            enemyShield -= shielded;
-            enemyHp     = Mathf.Max(0, enemyHp - (afterDef - shielded));
+            int shielded      = Mathf.Min(enemyShield, rawAttack);
+            enemyShield     -= shielded;
+            enemyHp          = Mathf.Max(0, enemyHp - (rawAttack - shielded));
         }
         else
         {
-            int shielded      = Mathf.Min(playerShield, afterDef);
+            int shielded      = Mathf.Min(playerShield, rawAttack);
             playerShield     -= shielded;
-            playerHp         = Mathf.Max(0, playerHp - (afterDef - shielded));
+            playerHp         = Mathf.Max(0, playerHp - (rawAttack - shielded));
         }
 
-        // 방어 효과: 지속 버프 vs 즉시 쉴드
-        if (data.effectDefenseValue > 0)
+        // 보호막 효과
+        if (data.effectShieldValue > 0)
         {
-            if (data.effectTurnValue > 0)
-                AddModifier(!isPlayer, StatType.Defense, data.effectDefenseValue, data.effectTurnValue);
-            else if (isPlayer)
-                playerShield   += data.effectDefenseValue;
-            else
-                enemyShield    += data.effectDefenseValue;
+            if (isPlayer) playerShield += data.effectShieldValue;
+            else          enemyShield  += data.effectShieldValue;
         }
 
-        // 공격력 디버프(+버프) 처리
-        if (data.effectDebuffValue != 0 && data.effectTurnValue > 0)
-        {
-            AddModifier(!isPlayer, StatType.Attack, -data.effectDebuffValue, data.effectTurnValue);
-        }
+        // 공격력 버프/디버프
+        if (data.effectAttackIncreaseValue != 0 && data.effectTurnValue > 0)
+            AddAttackModifier(isPlayer, data.effectAttackIncreaseValue, data.effectTurnValue);
+
+        if (data.effectAttackDebuffValue != 0 && data.effectTurnValue > 0)
+            AddAttackModifier(!isPlayer, -data.effectAttackDebuffValue, data.effectTurnValue);
 
         RecalculateModifiers();
         CheckEnd();
     }
 
-    // 모디파이어 추가
-    void AddModifier(bool targetIsPlayer, StatType stat, int value, int turns)
+    
+    //  모디파이어 추가
+    void AddAttackModifier(bool targetIsPlayer, int value, int turns)
     {
-        var list = targetIsPlayer ? playerModifiers : enemyModifiers;
-        list.Add(new TimedModifier { statType = stat, value = value, remainingTurns = turns });
+        var list = targetIsPlayer ? playerAttackMods : enemyAttackMods;
+        list.Add(new TimedModifier { value = value, remainingTurns = turns });
     }
 
     // 적이나 아군 체력을 확인하고 종료 로직 작동
