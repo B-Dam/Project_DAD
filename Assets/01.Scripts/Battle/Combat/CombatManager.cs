@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 public class TimedModifier
 {
@@ -30,6 +32,9 @@ public class CombatManager : MonoBehaviour
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
     int EnemyBaseAtk  => DataManager.Instance.enemyData.atk;
+    
+    public event Action OnCombatStart;
+    public event Action OnStatsChanged;
     
 
     void Awake()
@@ -74,6 +79,9 @@ public class CombatManager : MonoBehaviour
         
         // 모디파이어 갱신
         RecalculateModifiers();
+        
+        //
+        OnCombatStart?.Invoke();
         
         // 첫 턴 시작
         TurnManager.Instance.StartPlayerTurn();
@@ -132,18 +140,21 @@ public class CombatManager : MonoBehaviour
         int modAtk    = isPlayer ? playerAtkMod   : enemyAtkMod;
         int rawAttack = baseAtk + data.effectAttackValue + modAtk;
 
-        // 
-        if (isPlayer)
+        // 공격 계수가 0보다 클 때만 데미지 계산
+        if (data.effectAttackValue > 0)
         {
-            int shielded      = Mathf.Min(enemyShield, rawAttack);
-            enemyShield     -= shielded;
-            enemyHp          = Mathf.Max(0, enemyHp - (rawAttack - shielded));
-        }
-        else
-        {
-            int shielded      = Mathf.Min(playerShield, rawAttack);
-            playerShield     -= shielded;
-            playerHp         = Mathf.Max(0, playerHp - (rawAttack - shielded));
+            if (isPlayer)
+            {
+                int shielded = Mathf.Min(enemyShield, rawAttack);
+                enemyShield -= shielded;
+                enemyHp = Mathf.Max(0, enemyHp - (rawAttack - shielded));
+            }
+            else
+            {
+                int shielded = Mathf.Min(playerShield, rawAttack);
+                playerShield -= shielded;
+                playerHp = Mathf.Max(0, playerHp - (rawAttack - shielded));
+            }
         }
 
         // 보호막 효과
@@ -160,6 +171,7 @@ public class CombatManager : MonoBehaviour
         if (data.effectAttackDebuffValue != 0 && data.effectTurnValue > 0)
             AddAttackModifier(!isPlayer, -data.effectAttackDebuffValue, data.effectTurnValue);
 
+        OnStatsChanged?.Invoke();
         RecalculateModifiers();
         CheckEnd();
     }

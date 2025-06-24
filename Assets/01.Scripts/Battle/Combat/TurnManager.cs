@@ -26,7 +26,6 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void StartCombat()
     {
-        Debug.Log("[1] ▶ TurnManager.StartCombat()");
         StartPlayerTurn();
     }
 
@@ -35,10 +34,8 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void StartPlayerTurn()
     {
-        Debug.Log("[2] ▶ TurnManager.StartPlayerTurn()");
         currentPhase = Phase.Player;
         OnPlayerTurnStart?.Invoke();
-        Debug.Log("[3] ▶ TurnManager.OnPlayerTurnStart.Invoke() 완료");
     }
     
     /// <summary>

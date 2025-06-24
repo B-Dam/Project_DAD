@@ -2,81 +2,130 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
-public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI 참조")]
     [SerializeField] Image iconImage;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI descText;
     [SerializeField] TextMeshProUGUI costText;
+    
+    [HideInInspector] public RectTransform enemyDropZone;
 
-    [Header("드롭 영역")]
-    [Tooltip("적에게 드래그해서 놓을 때 감지할 RectTransform")]
-    [SerializeField] RectTransform enemyDropZone;
-
+    public RectTransform Rect { get; private set; }
     public CardData data { get; private set; }
+    
+    public int index;
+    
+    Vector2 dragOffset;
     HandManager handManager;
-
-    RectTransform rect;
     Canvas canvas;
     CanvasGroup canvasGroup;
-    Vector2 startPosition;
-
-    public void Initialize(CardData cardData, HandManager manager)
+    
+    void Awake()
     {
-        data = cardData;
-        handManager = manager;
+        // 컴포넌트 캐시
+        Rect         = GetComponent<RectTransform>();
+        canvas       = GetComponentInParent<Canvas>();
+        canvasGroup  = GetComponent<CanvasGroup>() 
+                       ?? gameObject.AddComponent<CanvasGroup>();
+    }
 
-        rect        = GetComponent<RectTransform>();
-        canvas      = GetComponentInParent<Canvas>();
-        canvasGroup = gameObject.AddComponent<CanvasGroup>();
+    public void Initialize(CardData cardData, HandManager manager, RectTransform dropZone)
+    {
+        data           = cardData;
+        handManager    = manager;
+        enemyDropZone  = dropZone;
 
-        // 초기 위치 저장
-        startPosition = rect.anchoredPosition;
-
-        // UI에 데이터 바인딩
+        // UI 바인딩
         iconImage.sprite = data.icon;
         nameText.text    = data.displayName;
         costText.text    = data.costAP.ToString();
-
-        // TextFormatter로 키 값을 value로 치환
-        descText.text    = TextFormatter.Format(data.effectText, new System.Collections.Generic.Dictionary<string,string> {
-            { "damage", (CombatManager.Instance.PlayerBaseAtk + data.effectAttackValue + CombatManager.Instance.playerAtkMod).ToString() },
-            { "turns", data.effectTurnValue.ToString() },
-            { "shield", data.effectShieldValue.ToString() },
-            { "debuff", data.effectAttackDebuffValue.ToString() },
-            { "buff", data.effectAttackIncreaseValue.ToString() }
-        });
+        descText.text    = TextFormatter.Format(
+            data.effectText,
+            new System.Collections.Generic.Dictionary<string,string> {
+                { "damage", (CombatManager.Instance.PlayerBaseAtk + data.effectAttackValue + CombatManager.Instance.playerAtkMod).ToString() },
+                { "turns", data.effectTurnValue.ToString() },
+                { "shield", data.effectShieldValue.ToString() },
+                { "debuff", data.effectAttackDebuffValue.ToString() },
+                { "buff", data.effectAttackIncreaseValue.ToString() }
+            }
+        );
+        
+        // HandManager에 자신 등록 & 첫 레이아웃 호출
+        manager.AddCard(this);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        canvasGroup.alpha           = 0.6f;
-        canvasGroup.blocksRaycasts  = false;
+        // Tween 취소
+        Rect.DOKill();
+
+        // 맨 앞 배치 & 반투명
+        Rect.SetAsLastSibling();
+        canvasGroup.alpha          = 0.6f;
+        canvasGroup.blocksRaycasts = false;
+
+        // 드래그 플래그 ON
+        handManager.isDraggingCard = true;
+
+        // 클릭 시 카드와 포인터 간 오프셋 계산
+        Vector2 localMouse;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            handManager.handContainer, eventData.position, canvas.worldCamera, out localMouse);
+        dragOffset = Rect.anchoredPosition - localMouse;
+        
+        // 앞쪽으로 올려주고 반투명
+        Rect.SetAsLastSibling();
+        canvasGroup.alpha          = 0.6f;
+        canvasGroup.blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // 마우스/터치 이동량에 맞춰 카드 이동
-        rect.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        // 포인터 로컬 좌표 계산
+        Vector2 localMouse;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            handManager.handContainer, eventData.position, canvas.worldCamera, out localMouse);
+
+        // 오프셋 보정하여 바로 붙여줌
+        Rect.anchoredPosition = localMouse + dragOffset;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.alpha          = 1f;
+        // 투명도 복구 & Raycast 복원
+        canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
-        // 드롭 위치가 적 영역(RectTransform)에 들어왔는지 검사
-        if (RectTransformUtility.RectangleContainsScreenPoint(
-                enemyDropZone, eventData.position, canvas.worldCamera))
+        // 드롭 위치가 적 드롭 존 안인지 체크
+        bool droppedOnEnemy = RectTransformUtility
+            .RectangleContainsScreenPoint(enemyDropZone, eventData.position, canvas.worldCamera);
+
+        // 방어 카드거나, (공격/약화 카드면서) 적 위에 드롭됐으면 UseCard 시도
+        if ((data.typePrimary == CardTypePrimary.방어 || droppedOnEnemy)
+            && handManager.UseCard(this))
         {
-            // 사용 시도
-            if (handManager.UseCard(this))
-                return;   // 성공적으로 사용되면 이 오브젝트는 파괴됨
+            // 블록 레이캐스트를 꺼서 사용된 카드가 더 이상 드래그/클릭되지 않도록 함
+            canvasGroup.blocksRaycasts = false;
+            return;
         }
 
-        // 아니면 원위치
-        rect.anchoredPosition = startPosition;
+        // UseCard 실패(코스트 부족 또는 드롭 실패) 시
+        // 드래그 플래그 끄고 원위치로 레이아웃 복귀
+        handManager.isDraggingCard = false;
+        handManager.LayoutHand();
+    }
+    
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        handManager.OnCardHover(index);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        handManager.OnCardExit();
     }
 }

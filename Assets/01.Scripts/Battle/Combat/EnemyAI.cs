@@ -21,8 +21,10 @@ public class EnemyAI : MonoBehaviour
     {
         // 적 행동 발동
         CombatManager.Instance.ApplySkill(upcoming, isPlayer:false);
+        
         // 바로 다음 스킬 미리보기 준비
         SetupNextSkill();
+        
         // 다시 플레이어 턴으로 전환
         TurnManager.Instance.StartPlayerTurn();
     }

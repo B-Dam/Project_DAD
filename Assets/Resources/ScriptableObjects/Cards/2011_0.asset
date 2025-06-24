@@ -27,5 +27,5 @@ MonoBehaviour:
   rank: 1
   animationID: 
   resourcePath: 
-  costAP: 0
+  costAP: 1
   icon: {fileID: 0}
