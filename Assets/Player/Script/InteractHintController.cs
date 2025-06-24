@@ -3,17 +3,25 @@ using TMPro;
 
 public class InteractHintController : MonoBehaviour
 {
-    public float detectRange = 1.5f;
+    public float detectRange = 1f;
     public LayerMask interactLayer;
     public GameObject hintUIPrefab;
 
     private GameObject currentHintUI;
     private Transform currentTarget;
 
-    private void Update()
+   private void Update()
+{
+    // 대화 중이면 강제로 힌트 숨기기
+    if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
     {
-        DetectInteractable();
+        HideHint();
+        return;
     }
+
+    DetectInteractable();
+}
+
 
     private void DetectInteractable()
     {
