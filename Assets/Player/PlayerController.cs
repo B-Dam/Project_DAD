@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //게임 멈췄을 땐 아무것도 하지 않음
+        if (Time.timeScale == 0f) return;
         HandleMovementInput();
         UpdateAnimation(moveInput);
         HandleInteractionInput();
