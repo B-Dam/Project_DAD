@@ -39,26 +39,36 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = velocity;
     }
 
-    private void Update()
+   private void Update()
+{
+    // 대화 중이면 이동/상호작용 입력 차단
+    if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
     {
-        HandleMovementInput();
-        UpdateAnimation(moveInput);
-        HandleInteractionInput();
+        moveInput = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;  
+        UpdateAnimation(Vector2.zero);
+        return;
+    }
 
-        if (moveInput.magnitude > 0.01f)
+    HandleMovementInput();
+    UpdateAnimation(moveInput);
+    HandleInteractionInput();
+
+    if (moveInput.magnitude > 0.01f)
+    {
+        dustTimer += Time.deltaTime;
+        if (dustTimer >= dustSpawnInterval)
         {
-            dustTimer += Time.deltaTime;
-            if (dustTimer >= dustSpawnInterval)
-            {
-                SpawnDustEffect();
-                dustTimer = 0f;
-            }
-        }
-        else
-        {
+            SpawnDustEffect();
             dustTimer = 0f;
         }
     }
+    else
+    {
+        dustTimer = 0f;
+    }
+}
+
 
     private void FixedUpdate()
     {
