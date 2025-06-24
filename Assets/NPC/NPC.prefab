@@ -102,8 +102,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueLines:
-  - adadadad
-  - adasdaddddd
+  - "\uD081\uD081,\uC774\uAC8C \uBB34\uC2A8 \uB0C4\uC0C8\uC57C? \uAE30\uBD84 \uB098\uC05C
+    \uB0C4\uC0C8\uAC00 \uB09C\uB2E4\uB0E5."
+  - "\uC5EC\uAE34 \uC6B0\uB9AC \uAD6C\uC5ED\uC774\uB2E4\uB0E5, \uC369 \uAEBC\uC838\uB77C
+    \uC560\uC1A1\uC774!"
+  - "\uBE44\uCF1C\uC918! \uC2F8\uC6B8 \uC0DD\uAC01\uC740 \uC5C6\uC5B4.."
+  - "\uB204\uAD6C \uB9D8\uB300\uB85C \uADF8\uB7F0\uAC78 \uC815\uD558\uB0E5? \uADF8\uAC74
+    \uC6B0\uB9AC \uB9D8\uC774\uB2E4\uB0E5!"
+  dialogueIDs:
+  - npc001_3
+  - npc001_4
+  - npc001_5
+  - npc001_6
 --- !u!61 &2917230518800607464
 BoxCollider2D:
   m_ObjectHideFlags: 0
