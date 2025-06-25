@@ -6,24 +6,36 @@ public class DialogueDatabase : MonoBehaviour
 {
     public static DialogueDatabase Instance;
 
-    private Dictionary<string, string> dialogueDict = new();
+    public class DialogueLine
+    {
+        public string speaker;
+        public string text;
+
+        public DialogueLine(string speaker, string text)
+        {
+            this.speaker = speaker;
+            this.text = text;
+        }
+    }
+
+    private Dictionary<string, DialogueLine> dialogueDict = new();
 
     [Header("🔤 다이얼로그 CSV (Resources 폴더 내)")]
     public string csvFileName = "dialogue_ko"; // 예: dialogue_ko.csv
 
-   private void Awake()
-{
-    if (Instance == null)
+    private void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);  
-        LoadCSV(csvFileName);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            LoadCSV(csvFileName);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
-    else
-    {
-        Destroy(gameObject);
-    }
-}
 
     public void LoadCSV(string fileName)
     {
@@ -31,7 +43,7 @@ public class DialogueDatabase : MonoBehaviour
         TextAsset csvData = Resources.Load<TextAsset>("dialog/" + fileName);
         if (csvData == null)
         {
-            Debug.LogError($"CSV 파일 {fileName}을(를) 찾을 수 없습니다.");
+            Debug.LogError($"❌ CSV 파일 'dialog/{fileName}'을(를) 찾을 수 없습니다.");
             return;
         }
 
@@ -44,20 +56,22 @@ public class DialogueDatabase : MonoBehaviour
                 if (isFirstLine) { isFirstLine = false; continue; }
 
                 var values = line.Split(',');
-                if (values.Length >= 2)
+                if (values.Length >= 3)
                 {
                     string id = values[0].Trim();
-                    string text = values[1].Trim();
-                    dialogueDict[id] = text;
+                    string speaker = values[1].Trim();
+                    string text = values[2].Trim();
+                    dialogueDict[id] = new DialogueLine(speaker, text);
                 }
             }
         }
     }
 
-    public string GetTextById(string id)
+    public DialogueLine GetLineById(string id)
     {
         if (dialogueDict.TryGetValue(id, out var line))
             return line;
-        return $"<missing:{id}>";
+
+        return new DialogueLine("???", $"<missing:{id}>");
     }
 }

@@ -37,7 +37,7 @@ public class DialogueCSVGenerator : EditorWindow
         }
     }
 
-    private void AppendToCSV(NPC npc, string idPrefix, string fileName)
+   private void AppendToCSV(NPC npc, string idPrefix, string fileName)
 {
     string folderPath = Path.Combine(Application.dataPath, "Resources/dialog");
     Directory.CreateDirectory(folderPath);
@@ -56,7 +56,7 @@ public class DialogueCSVGenerator : EditorWindow
     }
 
     StringBuilder sb = new StringBuilder();
-    if (!File.Exists(filePath)) sb.AppendLine("id,text");
+    if (!File.Exists(filePath)) sb.AppendLine("id,speaker,text"); // ✅ 헤더 수정
 
     int lineCount = 1;
     for (int i = 0; i < npc.dialogueEntries.Length; i++)
@@ -75,8 +75,10 @@ public class DialogueCSVGenerator : EditorWindow
             npc.dialogueEntries[i] = entry;
         }
 
+        string safeSpeaker = string.IsNullOrEmpty(entry.speaker) ? "???" : entry.speaker.Replace(",", "，");
         string safeText = entry.text.Replace(",", "，").Replace("\n", "\\n");
-        sb.AppendLine($"{entry.id},{safeText}");
+
+        sb.AppendLine($"{entry.id},{safeSpeaker},{safeText}");
     }
 
     File.AppendAllText(filePath, sb.ToString(), Encoding.UTF8);
@@ -84,7 +86,8 @@ public class DialogueCSVGenerator : EditorWindow
     EditorUtility.SetDirty(npc);
     PrefabUtility.RecordPrefabInstancePropertyModifications(npc);
 
-    Debug.Log($"✅ {npc.dialogueEntries.Length}개의 대사가 '{filePath}'에 추가되었습니다.");
+    Debug.Log($"✅ {npc.dialogueEntries.Length}개의 대사가 '{filePath}'에 저장되었습니다. (speaker 포함)");
 }
+
 
 }
