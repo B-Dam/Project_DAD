@@ -10,12 +10,15 @@ public class DialogueDatabase : MonoBehaviour
     {
         public string speaker;
         public string text;
-
-        public DialogueLine(string speaker, string text)
-        {
-            this.speaker = speaker;
-            this.text = text;
-        }
+          
+        public string spritePath;
+        
+        public DialogueLine(string speaker, string text, string spritePath = "")
+    {
+        this.speaker = speaker;
+        this.text = text;
+        this.spritePath = spritePath;
+    }
     }
 
     private Dictionary<string, DialogueLine> dialogueDict = new();
@@ -57,12 +60,14 @@ public class DialogueDatabase : MonoBehaviour
 
                 var values = line.Split(',');
                 if (values.Length >= 3)
-                {
-                    string id = values[0].Trim();
-                    string speaker = values[1].Trim();
-                    string text = values[2].Trim();
-                    dialogueDict[id] = new DialogueLine(speaker, text);
-                }
+{
+    string id = values[0].Trim();
+    string speaker = values[1].Trim();
+    string text = values[2].Trim();
+    string spritePath = values.Length >= 4 ? values[3].Trim() : "";
+    dialogueDict[id] = new DialogueLine(speaker, text, spritePath);
+}
+
             }
         }
     }
