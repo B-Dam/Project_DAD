@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogueActive = false;
 
     public GameObject dialoguePanel;
+    public UnityEngine.UI.Image dialogBoxBackgroundImage;
     public TMPro.TextMeshProUGUI speakerText;
     public TMPro.TextMeshProUGUI dialogueText;
 
@@ -25,6 +26,9 @@ public class DialogueManager : MonoBehaviour
 private bool isTyping = false;
 private string fullText = "";
 private float typingSpeed = 0.02f; // 글자당 시간 (조절 가능)
+
+    public UnityEngine.UI.Image cutsceneImage;
+
 
 
     private void Awake()
@@ -108,16 +112,48 @@ private float typingSpeed = 0.02f; // 글자당 시간 (조절 가능)
         }
     }
 
-    private void DisplayCurrentLine()
+  private void DisplayCurrentLine()
+{
+    var line = currentDialogueLines[dialogueIndex];
+    speakerText.text = line.speaker;
+
+    // 컷신 이미지 출력 처리
+    bool hasCutscene = !string.IsNullOrEmpty(line.spritePath);
+    if (hasCutscene)
     {
-        var line = currentDialogueLines[dialogueIndex];
-        speakerText.text = line.speaker;
-
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
-
-        typingCoroutine = StartCoroutine(TypeText(line.text));
+        Sprite sprite = Resources.Load<Sprite>(line.spritePath);
+        if (sprite != null)
+        {
+            cutsceneImage.sprite = sprite;
+            cutsceneImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning($"컷신 이미지 로드 실패: {line.spritePath}");
+            cutsceneImage.gameObject.SetActive(false);
+        }
     }
+    else
+    {
+        cutsceneImage.gameObject.SetActive(false);
+    }
+
+    // ✅ 다이얼로그 박스 배경만 투명도 조절
+    if (dialogBoxBackgroundImage != null)
+    {
+        Color color = dialogBoxBackgroundImage.color;
+        color.a = hasCutscene ? 0f : 1f;
+        dialogBoxBackgroundImage.color = color;
+    }
+
+    // 대사 출력 (타이핑)
+    if (typingCoroutine != null)
+        StopCoroutine(typingCoroutine);
+
+    typingCoroutine = StartCoroutine(TypeText(line.text));
+}
+
+
 
 private IEnumerator TypeText(string text)
 {
@@ -141,6 +177,8 @@ private IEnumerator TypeText(string text)
         dialoguePanel.SetActive(false);
         lastDialogueEndTime = Time.time;
     }
+
+    
 
     public bool IsDialogueActive => isDialogueActive;
     public bool IsOnCooldown => Time.time - lastDialogueEndTime < dialogueCooldown;
