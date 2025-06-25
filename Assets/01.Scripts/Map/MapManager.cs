@@ -44,8 +44,9 @@ public class MapManager : MonoBehaviour
     public void MapUpdate()
     {
         // 씬 로드될 때 마다 맵 정보 새로고침
-        Database.Instance.Map.GetMapData(GameManager.Instance.currentMapName);
+        MapData mapDB = Database.Instance.Map.GetMapData(GameManager.Instance.currentMapName);
 
+        Debug.Log($"맵 아이디: {mapDB}");
     }
 
     public void GetMapID()

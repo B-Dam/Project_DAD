@@ -70,9 +70,7 @@ public class MapDB
             map.type = (MapType)Enum.Parse(typeof(MapType), fields[2]);
             map.prev_map_id = string.IsNullOrWhiteSpace(fields[3]) ? null : fields[3];
             map.next_map_id = string.IsNullOrWhiteSpace(fields[4]) ? null : fields[4];
-            map.contains_npcs = string.IsNullOrWhiteSpace(fields[5]) ? null : fields[5];
-            map.bgm = string.IsNullOrWhiteSpace(fields[6]) ? null : fields[6];
-            map.cutscene_resource_path = string.IsNullOrWhiteSpace(fields[7]) ? null : fields[7];
+            map.bgm = string.IsNullOrWhiteSpace(fields[5]) ? null : fields[5];
 
             dictionary.Add(map.map_id, map);
         }
