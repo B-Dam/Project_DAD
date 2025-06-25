@@ -1,22 +1,31 @@
 using UnityEngine;
+using System.Collections;
+
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
-    private string[] currentDialogueLines;
+    private DialogueDatabase.DialogueLine[] currentDialogueLines;
     private int dialogueIndex = 0;
     private bool isDialogueActive = false;
 
     public GameObject dialoguePanel;
+    public TMPro.TextMeshProUGUI speakerText;
     public TMPro.TextMeshProUGUI dialogueText;
 
     // ✅ 쿨타임 관련
     private float lastDialogueEndTime = -999f;
     public float dialogueCooldown = 0.5f;
 
-    private float dialogueInputDelay = 0.1f; // 최소 지연 시간 (입력 무시용)
-private float dialogueStartTime;
+    private float dialogueInputDelay = 0.1f;
+    private float dialogueStartTime;
+
+    private Coroutine typingCoroutine;
+private bool isTyping = false;
+private string fullText = "";
+private float typingSpeed = 0.02f; // 글자당 시간 (조절 가능)
+
 
     private void Awake()
     {
@@ -31,34 +40,44 @@ private float dialogueStartTime;
         dialoguePanel.SetActive(false);
     }
 
- private void Update()
+   private void Update()
 {
-    if (isDialogueActive &&
-        Input.GetKeyDown(KeyCode.Space) &&
-        Time.time - dialogueStartTime > dialogueInputDelay)  // ✅ 지연 이후에만 허용
+    if (!isDialogueActive) return;
+
+    if (Input.GetKeyDown(KeyCode.Space) && Time.time - dialogueStartTime > dialogueInputDelay)
     {
-        ShowNextLine();
+        if (isTyping)
+        {
+            // 전체 문장을 즉시 출력
+            if (typingCoroutine != null)
+                StopCoroutine(typingCoroutine);
+
+            dialogueText.text = fullText;
+            isTyping = false;
+        }
+        else
+        {
+            ShowNextLine();
+        }
     }
 }
 
 
     public void StartDialogueByIDs(string[] dialogueIDs)
-{
-    if (dialogueIDs == null || dialogueIDs.Length == 0) return;
-
-    currentDialogueLines = new string[dialogueIDs.Length];
-    for (int i = 0; i < dialogueIDs.Length; i++)
     {
-        currentDialogueLines[i] = DialogueDatabase.Instance.GetTextById(dialogueIDs[i]);
+        if (dialogueIDs == null || dialogueIDs.Length == 0) return;
+
+        currentDialogueLines = new DialogueDatabase.DialogueLine[dialogueIDs.Length];
+        for (int i = 0; i < dialogueIDs.Length; i++)
+        {
+            currentDialogueLines[i] = DialogueDatabase.Instance.GetLineById(dialogueIDs[i]);
+        }
+
+        StartDialogue(currentDialogueLines);
     }
 
-    StartDialogue(currentDialogueLines);
-}
-
-
-    public void StartDialogue(string[] lines)
+    public void StartDialogue(DialogueDatabase.DialogueLine[] lines)
     {
-        // ✅ 쿨타임 검사
         if (Time.time - lastDialogueEndTime < dialogueCooldown)
         {
             Debug.Log("⏳ 대화 쿨타임 중입니다.");
@@ -72,7 +91,7 @@ private float dialogueStartTime;
         isDialogueActive = true;
 
         dialoguePanel.SetActive(true);
-        dialogueText.text = currentDialogueLines[dialogueIndex];
+        DisplayCurrentLine();
         dialogueStartTime = Time.time;
     }
 
@@ -85,18 +104,44 @@ private float dialogueStartTime;
         }
         else
         {
-            dialogueText.text = currentDialogueLines[dialogueIndex];
+            DisplayCurrentLine();
         }
     }
+
+    private void DisplayCurrentLine()
+    {
+        var line = currentDialogueLines[dialogueIndex];
+        speakerText.text = line.speaker;
+
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        typingCoroutine = StartCoroutine(TypeText(line.text));
+    }
+
+private IEnumerator TypeText(string text)
+{
+    isTyping = true;
+    fullText = text;
+    dialogueText.text = "";
+
+    foreach (char c in text)
+    {
+        dialogueText.text += c;
+        yield return new WaitForSeconds(typingSpeed);
+    }
+
+    isTyping = false;
+}
+
 
     public void EndDialogue()
     {
         isDialogueActive = false;
         dialoguePanel.SetActive(false);
-        lastDialogueEndTime = Time.time; // ✅ 종료 시간 기록
+        lastDialogueEndTime = Time.time;
     }
 
     public bool IsDialogueActive => isDialogueActive;
-
-    public bool IsOnCooldown => Time.time - lastDialogueEndTime < dialogueCooldown; // ⏱️ 외부 접근용
+    public bool IsOnCooldown => Time.time - lastDialogueEndTime < dialogueCooldown;
 }
