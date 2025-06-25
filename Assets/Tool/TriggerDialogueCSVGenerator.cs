@@ -32,7 +32,7 @@ public class TriggerDialogueCSVGenerator : EditorWindow
 
         if (selectedTrigger.triggerDialogueEntries == null || selectedTrigger.triggerDialogueEntries.Length == 0)
         {
-            EditorGUILayout.HelpBox("triggerDialogueEntries가 비어 있습니다. 트리거 컴포넌트에서 입력하세요.", MessageType.Info);
+            EditorGUILayout.HelpBox("triggerDialogueEntries가 비어 있습니다.", MessageType.Info);
             return;
         }
 
@@ -59,7 +59,7 @@ public class TriggerDialogueCSVGenerator : EditorWindow
         }
 
         StringBuilder sb = new StringBuilder();
-        if (!File.Exists(filePath)) sb.AppendLine("id,text");
+        if (!File.Exists(filePath)) sb.AppendLine("id,speaker,text"); // ✅ 헤더 포함
 
         int lineCount = 1;
         for (int i = 0; i < selectedTrigger.triggerDialogueEntries.Length; i++)
@@ -80,8 +80,10 @@ public class TriggerDialogueCSVGenerator : EditorWindow
                 selectedTrigger.triggerDialogueEntries[i] = entry;
             }
 
+            string safeSpeaker = string.IsNullOrEmpty(entry.speaker) ? "???" : entry.speaker.Replace(",", "，");
             string safeText = entry.text.Replace(",", "，").Replace("\n", "\\n");
-            sb.AppendLine($"{entry.id},{safeText}");
+
+            sb.AppendLine($"{entry.id},{safeSpeaker},{safeText}");
         }
 
         File.AppendAllText(filePath, sb.ToString(), Encoding.UTF8);
@@ -89,6 +91,6 @@ public class TriggerDialogueCSVGenerator : EditorWindow
         EditorUtility.SetDirty(selectedTrigger);
         PrefabUtility.RecordPrefabInstancePropertyModifications(selectedTrigger);
 
-        Debug.Log($"✅ 트리거 대사 {selectedTrigger.triggerDialogueEntries.Length}개가 '{filePath}'에 추가되고 ID가 할당되었습니다.");
+        Debug.Log($" 트리거 대사 {selectedTrigger.triggerDialogueEntries.Length}개가 '{filePath}'에 추가되었습니다.");
     }
 }

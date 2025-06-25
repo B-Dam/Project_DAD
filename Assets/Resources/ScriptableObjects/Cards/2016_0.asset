@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe40cd1ad53f5a043a20b0bdf33eaf1d, type: 3}
+  m_Name: 2016_0
+  m_EditorClassIdentifier: 
+  cardId: 2016
+  displayName: "\uC6C0\uCC14\uC6C0\uCC14"
+  ownerID: 0
+  typePrimary: 1
+  typeSecondary: 0
+  effectAttackValue: 0
+  effectShieldValue: 0
+  effectAttackIncreaseValue: 0
+  effectAttackDebuffValue: -4
+  effectTurnValue: 1
+  effectText: "{turns} \uD134 \uB3D9\uC548 \uBAA8\uB178\uC758 \uACF5\uACA9\uB825\uC744
+    {debuff} \uAC10\uC18C \uC2DC\uD0A8\uB2E4."
+  rank: 1
+  animationID: 
+  resourcePath: 
+  costAP: 1
+  icon: {fileID: 0}
