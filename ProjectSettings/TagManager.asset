@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - NPC
+  - Undefined
+  - Box
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -27,7 +30,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Obstacle
   - 
   - 
   - 
