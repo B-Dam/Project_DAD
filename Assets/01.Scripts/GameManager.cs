@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
 	public string currentMapName;
 
+	private MapData _mapData;
+
     private void Awake()
     {
         if (_instance == null)
@@ -41,8 +43,7 @@ public class GameManager : MonoBehaviour
 		// 씬 이름을 map_id로 사용하기 보다는 MapObject의 하위 오브젝트의 이름을 map_id로 지어서 가져오기
 
 		currentMapName = GameObject.Find("MapObject")?.transform?.GetChild(0)?.name;
-        Database.Instance.Map.GetMapData(currentMapName);
-        MapManager.Instance.GetMapID();
+        _mapData = Database.Instance.Map.GetMapData(currentMapName);
 
 		Debug.Log($"Current Map Name: {currentMapName}");
     }
