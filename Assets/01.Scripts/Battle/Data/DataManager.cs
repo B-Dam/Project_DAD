@@ -69,11 +69,16 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 합성용: 특정 카드 ID와 별 등급에 해당하는 CardData 반환
+    /// 합성용: 특정 displayName과 rank에 해당하는 CardData 반환
     /// </summary>
-    public CardData GetCard(int cardId, int rank)
+    public CardData GetCard(string displayName, int rank)
     {
-        return allCards
-            .FirstOrDefault(c => c.cardId == cardId && c.rank == rank);
+        var card = allCards
+            .FirstOrDefault(c => 
+                c.displayName == displayName &&
+                c.rank        == rank);
+        if (card == null)
+            Debug.LogError($"GetCard 실패: '{displayName}' rank={rank} 카드가 없습니다.");
+        return card;
     }
 }

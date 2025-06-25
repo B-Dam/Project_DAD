@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
-public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler
 {
     [Header("UI 참조")]
     [SerializeField] Image iconImage;
@@ -31,6 +31,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         canvas       = GetComponentInParent<Canvas>();
         canvasGroup  = GetComponent<CanvasGroup>() 
                        ?? gameObject.AddComponent<CanvasGroup>();
+        canvasGroup.blocksRaycasts = true;
     }
 
     public void Initialize(CardData cardData, HandManager manager, RectTransform dropZone)
@@ -60,6 +61,8 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        canvasGroup.blocksRaycasts = false;  
+        
         // Tween 취소
         Rect.DOKill();
 
@@ -99,7 +102,25 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         // 투명도 복구 & Raycast 복원
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
+        handManager.isDraggingCard = false;
 
+        // 드롭된 화면 좌표를 handContainer 로컬 좌표로 변환
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            handManager.handContainer,
+            eventData.position,
+            canvas.worldCamera, out localPoint);
+        
+        // handContainer 안에 놓였는지 확인
+        bool droppedInHand = handManager.handContainer.rect.Contains(localPoint);
+        
+        // handContainer 안이면 무조건 원위치
+        if (droppedInHand)
+        {
+            handManager.LayoutHand();
+            return;
+        }
+        
         // 드롭 위치가 적 드롭 존 안인지 체크
         bool droppedOnEnemy = RectTransformUtility
             .RectangleContainsScreenPoint(enemyDropZone, eventData.position, canvas.worldCamera);
@@ -112,11 +133,36 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             canvasGroup.blocksRaycasts = false;
             return;
         }
-
-        // UseCard 실패(코스트 부족 또는 드롭 실패) 시
-        // 드래그 플래그 끄고 원위치로 레이아웃 복귀
-        handManager.isDraggingCard = false;
+        
         handManager.LayoutHand();
+    }
+    
+    // 카드 위로 다른 카드를 드롭했을 때 실행
+    public void OnDrop(PointerEventData e)
+    {
+        // 드래그 중이던 카드
+        var draggedGO = e.pointerDrag;
+        if (draggedGO == null) return;
+
+        var draggedCard = draggedGO.GetComponent<CardView>();
+        if (draggedCard == null) return;
+
+        // 자기 자신 위에 놓인 게 아니라면
+        if (draggedCard == this) return;
+
+        // 두 카드가 같은 Rank1이고, 아직 합성 중이 아니면
+        if (draggedCard.data.rank == 1 &&
+            this.data.rank == 1 &&
+            HandManager.Instance.currentAP >= HandManager.Instance.combineAPCost)
+        {
+            // handManager 에서 TryCombine 로직 실행
+            bool success = HandManager.Instance.TryCombine(draggedCard.data);
+            if (success)
+            {
+                // (선택) 시각적 효과, 사운드 등 추가
+                // 예: this.PlayCombineEffect();
+            }
+        }
     }
     
     public void OnPointerEnter(PointerEventData eventData)

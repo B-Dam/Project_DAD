@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
@@ -13,6 +14,20 @@ public class CombatUI : MonoBehaviour
     [SerializeField] TMP_Text enemyHPText;
     [SerializeField] TMP_Text enemyShieldText;
     
+    public static CombatUI instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         // 전투 시작과 턴 전환 이벤트 구독
@@ -54,7 +69,7 @@ public class CombatUI : MonoBehaviour
         UpdateUI();
     }
 
-    void UpdateUI()
+    public void UpdateUI()
     {
         var cm = CombatManager.Instance;
         if (cm == null) return;

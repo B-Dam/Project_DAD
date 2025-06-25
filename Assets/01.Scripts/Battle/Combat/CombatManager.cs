@@ -48,7 +48,6 @@ public class CombatManager : MonoBehaviour
         if (TurnManager.Instance != null)
         {
             TurnManager.Instance.OnPlayerTurnStart += OnPlayerTurnStart;
-            TurnManager.Instance.OnEnemyTurnStart += OnEnemyTurnStart;
         }
         else Debug.Log("CombatManager에서 TrunManager 이벤트 구독 실패");
     }
@@ -108,9 +107,14 @@ public class CombatManager : MonoBehaviour
 
     void OnPlayerTurnStart()
     {
+        // 버프 / 디버프 턴 감소
         UpdateModifiers(playerAttackMods);
+        // 모디파이어 합산
         RecalculateModifiers();
-        // UI에 PlayerHp 갱신, AP 초기화 등
+        // 플레이어 보호막 초기화
+        playerShield = 0;
+        // UI 갱신
+        OnStatsChanged?.Invoke();
     }
 
     void OnEnemyTurnStart()
@@ -139,6 +143,8 @@ public class CombatManager : MonoBehaviour
         int baseAtk   = isPlayer ? PlayerBaseAtk : EnemyBaseAtk;
         int modAtk    = isPlayer ? playerAtkMod   : enemyAtkMod;
         int rawAttack = baseAtk + data.effectAttackValue + modAtk;
+        
+        Debug.Log($"[ApplySkill] {(isPlayer?"Player":"Enemy")} uses {data.displayName} → base:{baseAtk} + effect:{data.effectAttackValue} + mod:{modAtk} = rawAttack:{rawAttack}");
 
         // 공격 계수가 0보다 클 때만 데미지 계산
         if (data.effectAttackValue > 0)
@@ -169,7 +175,10 @@ public class CombatManager : MonoBehaviour
             AddAttackModifier(isPlayer, data.effectAttackIncreaseValue, data.effectTurnValue);
 
         if (data.effectAttackDebuffValue != 0 && data.effectTurnValue > 0)
-            AddAttackModifier(!isPlayer, -data.effectAttackDebuffValue, data.effectTurnValue);
+        {
+            int debuffAmount = Mathf.Abs(data.effectAttackDebuffValue);
+            AddAttackModifier(!isPlayer, -debuffAmount, data.effectTurnValue);
+        }
 
         OnStatsChanged?.Invoke();
         RecalculateModifiers();

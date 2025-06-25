@@ -900,11 +900,13 @@ MonoBehaviour:
   cardPrefab: {fileID: 5887801255287582183, guid: 53e5b9a0e73349240876aa64a1e5f81f, type: 3}
   maxHandSize: 5
   enemyDropZone: {fileID: 658588196}
+  combineAPCost: 1
   cardWidth: 200
   spacing: 40
   animDuration: 0.25
   focusScale: 1.5
   focusShift: 50
+  focusLift: 200
   isDraggingCard: 0
 --- !u!1 &1286513254
 GameObject:
@@ -1231,6 +1233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85f7379c4632e3469981e227a8f28cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPreviewDuration: 2
 --- !u!114 &1319791121
 MonoBehaviour:
   m_ObjectHideFlags: 0
