@@ -188,6 +188,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5533055454072382179, guid: 7d73f3457ad143e439dfa59e80ca7e64, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533055454072382179, guid: 7d73f3457ad143e439dfa59e80ca7e64, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5533055454072382179, guid: 7d73f3457ad143e439dfa59e80ca7e64, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7978705540395031539, guid: 7d73f3457ad143e439dfa59e80ca7e64, type: 3}
       propertyPath: m_LocalPosition.x
       value: 960.00006
