@@ -6,7 +6,7 @@ public class BoomTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")||other.CompareTag("Box"))
         {
             Time.timeScale = 0f;
             Debug.Log("Boom!");

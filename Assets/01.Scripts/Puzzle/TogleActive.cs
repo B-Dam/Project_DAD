@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ToggleTarget : MonoBehaviour
+public class TogleActive : MonoBehaviour
 {
     public GameObject target;        // 토글할 오브젝트
     public Button toggleButton;      // 연결할 버튼
