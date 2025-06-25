@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    public string currentMapName { get; private set; }
 
     private void Awake()
     {
@@ -29,29 +31,5 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
-
-    // 각 맵에 map_id와 next, prev_map_id를 부여
-    // 플레이어가 영역 중앙에 들어오면 맵 이동
-
-
-    private void Start()
-    {
-
-    }
-
-    public void MapUpdate()
-    {
-        // 씬 로드될 때 마다 맵 정보 새로고침
-        MapData mapDB = Database.Instance.Map.GetMapData(GameManager.Instance.currentMapName);
-
-        Debug.Log($"맵 아이디: {mapDB}");
-    }
-
-    public void GetMapID()
-    {
-        
-    }
-
 }

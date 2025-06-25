@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using UnityEngine.Device;
 
 [Serializable]
@@ -9,11 +10,16 @@ public class MapData
     public string map_id;
     public string name;
     public MapType type;
-    public string prev_map_id;
-    public string next_map_id;
-    public string contains_npcs;
+    public string left_map;
+    public string right_map;
+    public string up_map;
+    public string down_map;
     public string bgm;
-    public string cutscene_resource_path;
+
+    public Vector2 player_position_left;
+    public Vector2 player_position_right;
+    public Vector2 player_position_up;
+    public Vector2 player_position_down;
 }
 
 public enum MapType
@@ -68,15 +74,48 @@ public class MapDB
             map.map_id = fields[0];
             map.name = fields[1];
             map.type = (MapType)Enum.Parse(typeof(MapType), fields[2]);
-            map.prev_map_id = string.IsNullOrWhiteSpace(fields[3]) ? null : fields[3];
-            map.next_map_id = string.IsNullOrWhiteSpace(fields[4]) ? null : fields[4];
-            map.bgm = string.IsNullOrWhiteSpace(fields[5]) ? null : fields[5];
+            map.left_map = fields[3];
+            map.right_map = fields[4];
+            map.up_map = fields[5];
+            map.down_map = fields[6];
+            map.player_position_left = ParseToVector2(fields[7]);
+            map.player_position_right = ParseToVector2(fields[8]);
+            map.player_position_up = ParseToVector2(fields[9]);
+            map.player_position_down = ParseToVector2(fields[10]);
+            map.bgm = fields[11];
+
 
             dictionary.Add(map.map_id, map);
         }
 
         return dictionary;
     }
+
+    private Vector2 ParseToVector2(string str)
+    {
+        if (string.IsNullOrWhiteSpace(str))
+            return Vector2.Zero;
+
+        string[] coords = str.Split('|');
+        if (coords.Length == 2)
+        {
+            float x, y;
+            if (float.TryParse(coords[0], out x) && float.TryParse(coords[1], out y))
+            {
+                return new Vector2(x, y);
+            }
+            else
+            {
+                throw new FormatException($"벡터로 초기화 할 수 없음 ({str})");
+            }
+        }
+        else
+        {
+            throw new FormatException($"벡터로 초기화 할 수 없음. 올바른 값은 x|y 형태가 되어야 합니다.\n현재 형태 {str}");
+            return Vector2.Zero;
+        }
+    }
+
 
     public MapData GetMapData(string mapId)
     {

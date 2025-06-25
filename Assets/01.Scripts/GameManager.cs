@@ -19,10 +19,6 @@ public class GameManager : MonoBehaviour
 		}
     }
 
-	public string currentMapName;
-
-	private MapData _mapData;
-
     private void Awake()
     {
         if (_instance == null)
@@ -35,23 +31,9 @@ public class GameManager : MonoBehaviour
 			Destroy(gameObject);
         }
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-	private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-	{
-		// 씬 이름을 map_id로 사용하기 보다는 MapObject의 하위 오브젝트의 이름을 map_id로 지어서 가져오기
 
-		currentMapName = GameObject.Find("MapObject")?.transform?.GetChild(0)?.name;
-        _mapData = Database.Instance.Map.GetMapData(currentMapName);
-
-		Debug.Log($"Current Map Name: {currentMapName}");
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
 
 
 }
