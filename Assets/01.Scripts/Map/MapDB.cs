@@ -111,7 +111,6 @@ public class MapDB
         }
         else
         {
-            throw new FormatException($"벡터로 초기화 할 수 없음. 올바른 값은 x|y 형태가 되어야 합니다.\n현재 형태 {str}");
             return Vector2.Zero;
         }
     }

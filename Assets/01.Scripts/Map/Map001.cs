@@ -12,13 +12,15 @@ public class Map001 : MapBase
 	{
 		// 맵을 들어갈 때 작동하는 로직
 
-		Debug.Log("Map001이 로드되었습니다");
+
+        
     }
 
     protected override void OnReleaseMap()
     {
         // 맵을 나갈 때 작동하는 로직
-
+        
+        prevMapID = MapManager.Instance.currentMapName;
         Debug.Log("Map001맵에서 나갔습니다");
     }
 }

@@ -18,7 +18,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public string currentMapName { get; private set; }
+    public string currentMapName;
 
     private void Awake()
     {
@@ -31,5 +31,11 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public string GetMapName()
+    {
+        currentMapName = SceneManager.GetActiveScene().name;
+        return currentMapName;
     }
 }

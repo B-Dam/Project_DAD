@@ -10,13 +10,22 @@ public abstract class MapBase : MonoBehaviour
 	/// </summary>
 	
 	protected MapData mapData;
-    private string currentMapName;
+	protected string prevMapID;
+    private string _currentMapName;
+	private GameObject _colliders;
+
 
 
     protected virtual void Awake()
 	{
-		currentMapName = gameObject.name;
-        mapData = Database.Instance.Map.GetMapData(currentMapName);
+		_colliders = GameObject.Find("Colliders");
+        _currentMapName = MapManager.Instance.GetMapName();
+
+        mapData = Database.Instance.Map.GetMapData(_currentMapName);
+		Debug.Log($"현재 맵은 {_currentMapName} 입니다.");
+
+        // 맵 이동 콜라이더 찾기
+
     }
 
     protected abstract void OnLoadMap();  // 맵을 호출할 때 작동하는 로직
