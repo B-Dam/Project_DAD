@@ -9,10 +9,12 @@ public class CombatUI : MonoBehaviour
     [SerializeField] TMP_Text playerHPText;
     [SerializeField] TMP_Text playerShieldText;
     [SerializeField] TMP_Text playerAPText;
+    [SerializeField] HealthBar playerHealthBar;
 
     [Header("적 스탯")]
     [SerializeField] TMP_Text enemyHPText;
     [SerializeField] TMP_Text enemyShieldText;
+    [SerializeField] HealthBar enemyHealthBar; 
     
     public static CombatUI instance;
 
@@ -75,12 +77,14 @@ public class CombatUI : MonoBehaviour
         if (cm == null) return;
 
         // 플레이어
-        playerHPText.text     = $"HP: {cm.playerHp}/{DataManager.Instance.playerData.maxHP}";
-        playerShieldText.text = $"Shield: {cm.playerShield}";
-        playerAPText.text     = $"AP: {HandManager.Instance.currentAP}/3";
+        playerHPText.text     = $"{cm.playerHp}/{DataManager.Instance.playerData.maxHP}";
+        playerShieldText.text = $"{cm.playerShield}";
+        playerAPText.text     = $"{HandManager.Instance.currentAP}/3";
+        playerHealthBar.SetHealth(cm.playerHp, DataManager.Instance.playerData.maxHP);
 
         // 적
-        enemyHPText.text      = $"HP: {cm.enemyHp}/{DataManager.Instance.enemyData.maxHP}";
-        enemyShieldText.text  = $"Shield: {cm.enemyShield}";
+        enemyHPText.text      = $"{cm.enemyHp}/{DataManager.Instance.enemyData.maxHP}";
+        enemyShieldText.text  = $"{cm.enemyShield}";
+        enemyHealthBar.SetHealth(cm.enemyHp, DataManager.Instance.enemyData.maxHP);
     }
 }
