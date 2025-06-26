@@ -11,7 +11,10 @@ public class Map001 : MapBase
     protected override void OnLoadMap()
 	{
 		// 맵을 들어갈 때 작동하는 로직
-
+        if (prevMapID == null)
+        {
+            
+        }
 
         
     }
