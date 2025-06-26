@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public abstract class MapBase : MonoBehaviour
@@ -8,14 +9,19 @@ public abstract class MapBase : MonoBehaviour
 	/// 맵 스크립트가 공통적으로 처리해야 하는 것들
 	/// 
 	/// 1. 현재 맵 정보 로드
-	/// 2. 
+	/// 2. 현재 맵의 워프 콜라이더 찾기
+    /// 3. 콜라이더의 이벤트 처리
 	/// </summary>
 	
+    // 맵 관련
 	protected MapData mapData;
 	protected string prevMapID;
     private string _currentMapName;
 	private GameObject _colliders;
-    
+
+    // 임시 플레이어 변수
+    protected Vector2 _playerPosition;
+
 
     protected virtual void Awake()
 	{
@@ -31,80 +37,88 @@ public abstract class MapBase : MonoBehaviour
 
     protected abstract void OnReleaseMap();  // 맵이 나갈 때 작동하는 로직
 
+    
+
+
+
+
 
 }
 
-
 public abstract class ColliderBase : MonoBehaviour
 {
-    protected string PlayerTag = "Player";
+    protected virtual void Awake()
+    {
+        // 맵 이동 콜라이더 찾기
+        GetColliderComponent();
 
+        MoveToRightMap += OnRightMap;
+        MoveToLeftMap += OnLeftMap;
+        MoveToUpMap += OnUpMap;
+        MoveToDownMap += OnDownMap;
+    }
+
+    // 맵 워프 관련
+    protected string PlayerTag = "Player";
     protected Action MoveToRightMap;
     protected Action MoveToLeftMap;
     protected Action MoveToUpMap;
     protected Action MoveToDownMap;
-    protected Dictionary<Collider2D, Action> mapMoveColliders;
+    protected Dictionary<string, Action> warpColliders;
 
-    private void Awake()
-    {
+    protected abstract void OnTriggerEnter2D(Collider2D collision);
 
-        // 맵 이동 콜라이더 찾기
-        GetColliderComponent();
-
-        MoveToRightMap += TempRightMessage;
-        MoveToLeftMap += TempLeftMessage;
-        MoveToUpMap += TempUpMessage;
-        MoveToDownMap += TempDownMessage;
-    }
     private void GetColliderComponent()
     {
-        mapMoveColliders = new Dictionary<Collider2D, Action>();
+        warpColliders = new Dictionary<string, Action>();
 
-        for (int i = 0; i < transform.childCount; i++)
+        GameObject obj = GameObject.Find("Colliders");
+
+        for (int i = 0; i < obj.transform.childCount; i++)
         {
-            Transform child = transform.GetChild(i);
+            Transform child = obj.transform.GetChild(i);
             Collider2D childCollider = child.GetComponent<Collider2D>();
 
             switch (child.name)
             {
                 case "Right":
-                    mapMoveColliders.Add(childCollider, MoveToRightMap);
+                    warpColliders.Add(childCollider.name, MoveToRightMap);
                     Debug.Log("Right collider added.");
                     break;
                 case "Left":
-                    mapMoveColliders.Add(childCollider, MoveToLeftMap);
+                    warpColliders.Add(childCollider.name, MoveToLeftMap);
                     Debug.Log("Left collider added.");
                     break;
                 case "Up":
-                    mapMoveColliders.Add(childCollider, MoveToUpMap);
+                    warpColliders.Add(childCollider.name, MoveToUpMap);
                     Debug.Log("Up collider added.");
                     break;
                 case "Down":
-                    mapMoveColliders.Add(childCollider, MoveToDownMap);
+                    warpColliders.Add(childCollider.name, MoveToDownMap);
                     Debug.Log("Down collider added.");
+                    break;
+                default:
                     break;
             }
         }
     }
 
-    protected abstract void OnTriggerEnter2D(Collider2D collision);
-
-    private void TempRightMessage()
+    private void OnRightMap()
     {
         Debug.Log("오른쪽 맵으로 이동합니다.");
     }
 
-    protected void TempLeftMessage()
+    protected void OnLeftMap()
     {
         Debug.Log("왼쪽 맵으로 이동합니다.");
     }
 
-    protected void TempUpMessage()
+    protected void OnUpMap()
     {
         Debug.Log("위쪽 맵으로 이동합니다.");
     }
 
-    protected void TempDownMessage()
+    protected void OnDownMap()
     {
         Debug.Log("아래쪽 맵으로 이동합니다.");
     }

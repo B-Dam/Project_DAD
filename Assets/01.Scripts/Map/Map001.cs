@@ -11,12 +11,14 @@ public class Map001 : MapBase
     protected override void OnLoadMap()
 	{
 		// 맵을 들어갈 때 작동하는 로직
-        if (prevMapID == null)
+        if (prevMapID == null)  // 맵이 변경돼서 스폰 포지션이 바뀌었다면 map.csv를 수정하면 됨
         {
-            
+            _playerPosition = mapData.player_position_left;
         }
-
-        
+        else
+        {
+           _playerPosition = mapData.player_position_right;
+        }
     }
 
     protected override void OnReleaseMap()

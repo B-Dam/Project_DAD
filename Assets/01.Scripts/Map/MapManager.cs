@@ -38,4 +38,9 @@ public class MapManager : MonoBehaviour
         currentMapName = SceneManager.GetActiveScene().name;
         return currentMapName;
     }
+
+    public void LoadMap(string mapName)
+    {
+        SceneManager.LoadScene(mapName);
+    }
 }
