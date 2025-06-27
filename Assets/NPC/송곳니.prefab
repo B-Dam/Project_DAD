@@ -102,22 +102,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueEntries:
-  - id: 
+  - id: npc001_1
     speaker: "\uC1A1\uACF3\uB2C8"
     text: "\uD081\uD081. \uC774\uAC8C \uBB34\uC2A8 \uB0C4\uC0C8\uC57C? \uAE30\uBD84
       \uB098\uC05C \uB0C4\uC0C8\uAC00 \uB098\uB2E4\uB0E5."
     focusTarget: {fileID: 0}
-  - id: 
+  - id: npc001_2
     speaker: "\uC1A1\uACF3\uB2C8"
     text: "\uC5EC\uAE34 \uC6B0\uB9AC \uAD6C\uC5ED\uC774\uB2E4\uB0E5, \uC560\uC1A1\uC774\uB294
       \uC369\uB098\uAC00\uB77C\uB0E5."
     focusTarget: {fileID: 0}
-  - id: 
+  - id: npc001_3
     speaker: "\uBAA8\uB178"
     text: "\u2026\uAE38 \uC880 \uBE44\uCF1C\uC8FC\uBA74 \uC88B\uACA0\uB294\uB370.
       \uC2F8\uC6B8 \uC0DD\uAC01\uC740 \uC5C6\uC5B4."
     focusTarget: {fileID: 0}
-  - id: 
+  - id: npc001_4
     speaker: "\uC1A1\uACF3\uB2C8"
     text: "\uC0DD\uAC01\uC774 \uC788\uACE0 \uC5C6\uACE0\uB294 \uC6B0\uB9AC\uAC00
       \uC815\uD558\uB294 \uAC70\uB2E4\uB0E5!"

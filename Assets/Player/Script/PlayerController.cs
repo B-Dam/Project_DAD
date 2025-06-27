@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -39,35 +39,38 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = velocity;
     }
 
-   private void Update()
-{
-    // 대화 중이면 이동/상호작용 입력 차단
-    if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
+    private void Update()
     {
-        moveInput = Vector2.zero;
-        rb.linearVelocity = Vector2.zero;  
-        UpdateAnimation(Vector2.zero);
-        return;
-    }
+        //게임 멈췄을 땐 아무것도 하지 않음
+        if (Time.timeScale == 0f) return;
 
-    HandleMovementInput();
-    UpdateAnimation(moveInput);
-    HandleInteractionInput();
-
-    if (moveInput.magnitude > 0.01f)
-    {
-        dustTimer += Time.deltaTime;
-        if (dustTimer >= dustSpawnInterval)
+        // 대화 중이면 이동/상호작용 입력 차단
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
         {
-            SpawnDustEffect();
+            moveInput = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
+            UpdateAnimation(Vector2.zero);
+            return;
+        }
+
+        HandleMovementInput();
+        UpdateAnimation(moveInput);
+        HandleInteractionInput();
+
+        if (moveInput.magnitude > 0.01f)
+        {
+            dustTimer += Time.deltaTime;
+            if (dustTimer >= dustSpawnInterval)
+            {
+                SpawnDustEffect();
+                dustTimer = 0f;
+            }
+        }
+        else
+        {
             dustTimer = 0f;
         }
     }
-    else
-    {
-        dustTimer = 0f;
-    }
-}
 
 
     private void FixedUpdate()
@@ -93,21 +96,21 @@ public class PlayerController : MonoBehaviour
     }
 
     private void UpdateAnimation(Vector2 direction)
-{
-    if (animator == null) return;
+    {
+        if (animator == null) return;
 
-    float speed = direction.magnitude;
-    animator.SetFloat("Run", speed); // 핵심 부분
+        float speed = direction.magnitude;
+        animator.SetFloat("Run", speed); // 핵심 부분
 
-    if (speed > 0.01f)
-        lastMoveDirection = direction;
+        if (speed > 0.01f)
+            lastMoveDirection = direction;
 
-    // 좌우 방향 전환
-    if (lastMoveDirection.x < 0)
-        transform.localScale = new Vector3(1, 1, 1); // 왼쪽
-    else if (lastMoveDirection.x > 0)
-        transform.localScale = new Vector3(-1, 1, 1); // 오른쪽
-}
+        // 좌우 방향 전환
+        if (lastMoveDirection.x < 0)
+            transform.localScale = new Vector3(1, 1, 1); // 왼쪽
+        else if (lastMoveDirection.x > 0)
+            transform.localScale = new Vector3(-1, 1, 1); // 오른쪽
+    }
 
 
     private void SpawnDustEffect()
@@ -120,40 +123,40 @@ public class PlayerController : MonoBehaviour
         GameObject effect = Instantiate(dustEffectPrefab, spawnPos, Quaternion.identity);
         Destroy(effect, 1f);
     }
-    
+
     private void HandleInteractionInput()
-{
-    if (Input.GetKeyDown(KeyCode.Space))
     {
-        Vector2 origin = transform.position;
-        Vector2 direction = lastMoveDirection.normalized;
-
-        Debug.DrawRay(origin, direction * interactRange, Color.red, 0.5f); // 시각화
-
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, interactRange, interactLayer);
-
-        if (hit.collider != null)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject target = hit.collider.gameObject;
+            Vector2 origin = transform.position;
+            Vector2 direction = lastMoveDirection.normalized;
 
-            if (target.CompareTag("NPC") || target.CompareTag("Item") || target.CompareTag("Interact"))
+            Debug.DrawRay(origin, direction * interactRange, Color.red, 0.5f); // 시각화
+
+            RaycastHit2D hit = Physics2D.Raycast(origin, direction, interactRange, interactLayer);
+
+            if (hit.collider != null)
             {
-                var interactable = target.GetComponent<IInteractable>();
-                if (interactable != null)
+                GameObject target = hit.collider.gameObject;
+
+                if (target.CompareTag("NPC") || target.CompareTag("Item") || target.CompareTag("Interact"))
                 {
-                    interactable.Interact();
-                }
-                else
-                {
-                    Debug.Log("⚠️ 충돌했지만 IInteractable 없음: " + target.name);
+                    var interactable = target.GetComponent<IInteractable>();
+                    if (interactable != null)
+                    {
+                        interactable.Interact();
+                    }
+                    else
+                    {
+                        Debug.Log("⚠️ 충돌했지만 IInteractable 없음: " + target.name);
+                    }
                 }
             }
-        }
-        else
-        {
-            Debug.Log("❌ 상호작용 대상 없음");
+            else
+            {
+                Debug.Log("❌ 상호작용 대상 없음");
+            }
         }
     }
-}
 
 }
