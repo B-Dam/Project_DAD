@@ -25,7 +25,7 @@ public class Map002 : MapBase
     {
         // 맵을 나갈 때 작동하는 로직
 
+        // 기존에 있던 맵을 이전 맵으로 만들기
         prevMapID = MapManager.Instance.currentMapID;
-        Debug.Log($"Map002맵에서 나갔습니다 (이전 맵: {prevMapID})");
     }
 }

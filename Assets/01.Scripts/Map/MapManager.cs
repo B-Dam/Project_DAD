@@ -55,7 +55,7 @@ public class MapManager : MonoBehaviour
 
     public void LoadMap(string mapID)
     {
-        //currentActiveMapScript.OnReleaseMap();
+        currentActiveMapScript.OnReleaseMap();
 
         SceneManager.LoadScene(mapID);
     }
