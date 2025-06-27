@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -93,7 +94,9 @@ public class MapDB
     private Vector2 ParseToVector2(string str)
     {
         if (string.IsNullOrWhiteSpace(str) || str == "null")
-            return Vector2.zero;
+        {
+            return new Vector2();
+        }
 
         string[] coords = str.Split('|');
         if (coords.Length == 2)

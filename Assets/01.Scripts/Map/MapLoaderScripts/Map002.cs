@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Map001 : MapBase
+public class Map002 : MapBase
 {
     protected override void Awake()
     {
@@ -9,23 +9,23 @@ public class Map001 : MapBase
     }
 
     protected override void OnLoadMap()
-	{
-		// 맵을 들어갈 때 작동하는 로직
-        if (prevMapID == null)  // 맵이 변경돼서 스폰 포지션이 바뀌었다면 map.csv를 수정하면 됨
+    {
+        // 맵을 들어갈 때 작동하는 로직
+        if (prevMapID == "001")
         {
             _playerPosition = mapData.player_position_left;
         }
-        else
+        else if (prevMapID == "101")
         {
-           _playerPosition = mapData.player_position_right;
+            _playerPosition = mapData.player_position_right;
         }
     }
 
-    protected override void OnReleaseMap()
+    public override void OnReleaseMap()
     {
         // 맵을 나갈 때 작동하는 로직
-        
+
         prevMapID = MapManager.Instance.currentMapID;
-        Debug.Log("Map001맵에서 나갔습니다");
+        Debug.Log($"Map002맵에서 나갔습니다 (이전 맵: {prevMapID})");
     }
 }

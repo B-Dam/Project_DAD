@@ -14,25 +14,25 @@ public class WarpCollider : ColliderBase
             {
                 case "Right":
                     // 오른쪽 맵으로 이동하는 메소드 호출
-                    MoveToRightMap?.Invoke();
+                    MoveToRightMap?.Invoke();  //1
                     break;
                 case "Left":
                     // 왼쪽 맵으로 이동하는 메소드 호출
-                    MoveToLeftMap?.Invoke(); 
+                    MoveToLeftMap?.Invoke();
                     break;
                 case "Up":
                     // 위쪽 맵으로 이동하는 메소드 호출
-                    MoveToUpMap?.Invoke(); 
+                    MoveToUpMap?.Invoke();
                     break;
                 case "Down":
                     // 아래쪽 맵으로 이동하는 메소드 호출
-                    MoveToDownMap?.Invoke(); 
+                    MoveToDownMap?.Invoke();
                     break;
                 default:
                     break;
             }
 
-            
+
         }
     }
 

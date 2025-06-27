@@ -19,7 +19,7 @@ public abstract class MapBase : MonoBehaviour
     private string _currentMapID;
 	private GameObject _colliders;
 
-    // 임시 플레이어 변수
+    // 임시 플레이어 포지션 변수
     protected Vector2 _playerPosition;
 
 
@@ -35,14 +35,7 @@ public abstract class MapBase : MonoBehaviour
 
     protected abstract void OnLoadMap();  // 맵을 호출할 때 작동하는 로직
 
-    protected abstract void OnReleaseMap();  // 맵이 나갈 때 작동하는 로직
-
-    
-
-
-
-
-
+    public abstract void OnReleaseMap();  // 맵이 나갈 때 작동하는 로직
 }
 
 public abstract class ColliderBase : MonoBehaviour
@@ -50,26 +43,27 @@ public abstract class ColliderBase : MonoBehaviour
     private MapData mapData;
     private string _currentMapID;
 
-    protected virtual void Awake()
-    {
-        _currentMapID = MapManager.Instance.GetMapName();
-        mapData = Database.Instance.Map.GetMapData(_currentMapID);
-        // 맵 이동 콜라이더 찾기
-        GetColliderComponent();
-
-        MoveToRightMap += OnRightMap;
-        MoveToLeftMap += OnLeftMap;
-        MoveToUpMap += OnUpMap;
-        MoveToDownMap += OnDownMap;
-    }
-
     // 맵 워프 관련
     protected string PlayerTag = "Player";
-    protected Action MoveToRightMap;
+    protected Action MoveToRightMap;  //2
     protected Action MoveToLeftMap;
     protected Action MoveToUpMap;
     protected Action MoveToDownMap;
     protected Dictionary<string, Action> warpColliders;
+
+    protected virtual void Awake()
+    {
+        _currentMapID = MapManager.Instance.GetMapName();
+        mapData = Database.Instance.Map.GetMapData(_currentMapID);
+
+        // 맵 이동 콜라이더 찾기
+        GetColliderComponent();
+
+        MoveToRightMap += OnRightMap;  //3
+        MoveToLeftMap += OnLeftMap;
+        MoveToUpMap += OnUpMap;
+        MoveToDownMap += OnDownMap;
+    }
 
     protected abstract void OnTriggerEnter2D(Collider2D collision);
 
@@ -112,25 +106,25 @@ public abstract class ColliderBase : MonoBehaviour
     /// 씬 로드 함수들어갈 함수들 (Action MoveTo...Map에 등록됨)
     /// </summary>
 
-    private void OnRightMap()
+    public void OnRightMap() //4
     {
         Debug.Log("오른쪽 맵으로 이동합니다.");
         MapManager.Instance.LoadMap(mapData.right_map);
     }
 
-    protected void OnLeftMap()
+    public void OnLeftMap()
     {
         Debug.Log("왼쪽 맵으로 이동합니다.");
         MapManager.Instance.LoadMap(mapData.left_map);
     }
 
-    protected void OnUpMap()
+    public void OnUpMap()
     {
         Debug.Log("위쪽 맵으로 이동합니다.");
         MapManager.Instance.LoadMap(mapData.up_map);
     }
 
-    protected void OnDownMap()
+    public void OnDownMap()
     {
         Debug.Log("아래쪽 맵으로 이동합니다.");
         MapManager.Instance.LoadMap(mapData.down_map);
