@@ -7,7 +7,7 @@ using System.Linq;
 public class SkillDataImporter : MonoBehaviour
 {
     // CSV 경로
-    private const string cardCsvPath = "Assets/07.Resources/skilldataDB.csv";
+    private const string cardCsvPath = "Assets/Resources/CSV/skilldataDB.csv";
 
     // SO를 저장할 폴더
     private const string cardSoFolder = "Assets/Resources/ScriptableObjects/Cards";

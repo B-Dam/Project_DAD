@@ -141,25 +141,28 @@ public class CombatManager : MonoBehaviour
     {
         // 기본 공격력 + 공격 모디파이어
         int baseAtk   = isPlayer ? PlayerBaseAtk : EnemyBaseAtk;
-        int modAtk    = isPlayer ? playerAtkMod   : enemyAtkMod;
+        int modAtk    = isPlayer ? playerAtkMod : enemyAtkMod;
         int rawAttack = baseAtk + data.effectAttackValue + modAtk;
         
-        Debug.Log($"[ApplySkill] {(isPlayer?"Player":"Enemy")} uses {data.displayName} → base:{baseAtk} + effect:{data.effectAttackValue} + mod:{modAtk} = rawAttack:{rawAttack}");
-
+        // 방어력
+        int def = isPlayer ? DataManager.Instance.playerData.def : DataManager.Instance.enemyData.def;
+        
+        rawAttack = Mathf.Max(0, rawAttack - def);
+        
         // 공격 계수가 0보다 클 때만 데미지 계산
-        if (data.effectAttackValue > 0)
+        if (rawAttack > 0)
         {
             if (isPlayer)
             {
                 int shielded = Mathf.Min(enemyShield, rawAttack);
                 enemyShield -= shielded;
-                enemyHp = Mathf.Max(0, enemyHp - (rawAttack - shielded));
+                enemyHp     = Mathf.Max(0, enemyHp - (rawAttack - shielded));
             }
             else
             {
                 int shielded = Mathf.Min(playerShield, rawAttack);
                 playerShield -= shielded;
-                playerHp = Mathf.Max(0, playerHp - (rawAttack - shielded));
+                playerHp     = Mathf.Max(0, playerHp - (rawAttack - shielded));
             }
         }
 
