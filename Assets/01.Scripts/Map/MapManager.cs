@@ -18,7 +18,10 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public string currentMapName;
+    private MapBase _mapBase;
+    public MapBase mapBase => _mapBase ??= FindAnyObjectByType<MapBase>();
+
+    public string currentMapID;
 
     private void Awake()
     {
@@ -35,8 +38,8 @@ public class MapManager : MonoBehaviour
 
     public string GetMapName()
     {
-        currentMapName = SceneManager.GetActiveScene().name;
-        return currentMapName;
+        currentMapID = SceneManager.GetActiveScene().name;
+        return currentMapID;
     }
 
     public void LoadMap(string mapName)

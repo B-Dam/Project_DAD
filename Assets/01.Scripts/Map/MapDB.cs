@@ -92,7 +92,7 @@ public class MapDB
 
     private Vector2 ParseToVector2(string str)
     {
-        if (string.IsNullOrWhiteSpace(str))
+        if (string.IsNullOrWhiteSpace(str) || str == "null")
             return Vector2.zero;
 
         string[] coords = str.Split('|');
@@ -110,6 +110,7 @@ public class MapDB
         }
         else
         {
+            Debug.Log($"좌표 값이 x|y 형태가 아닙니다 {str}");
             return Vector2.zero;
         }
     }

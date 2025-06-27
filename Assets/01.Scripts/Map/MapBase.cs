@@ -16,7 +16,7 @@ public abstract class MapBase : MonoBehaviour
     // 맵 관련
 	protected MapData mapData;
 	protected string prevMapID;
-    private string _currentMapName;
+    private string _currentMapID;
 	private GameObject _colliders;
 
     // 임시 플레이어 변수
@@ -26,10 +26,10 @@ public abstract class MapBase : MonoBehaviour
     protected virtual void Awake()
 	{
 		_colliders = GameObject.Find("Colliders");
-        _currentMapName = MapManager.Instance.GetMapName();
+        _currentMapID = MapManager.Instance.GetMapName();
 
-        mapData = Database.Instance.Map.GetMapData(_currentMapName);
-		Debug.Log($"현재 맵은 {_currentMapName} 입니다.");
+        mapData = Database.Instance.Map.GetMapData(_currentMapID);
+		Debug.Log($"현재 맵은 {_currentMapID} 입니다.");
 
     }
 
@@ -47,8 +47,13 @@ public abstract class MapBase : MonoBehaviour
 
 public abstract class ColliderBase : MonoBehaviour
 {
+    private MapData mapData;
+    private string _currentMapID;
+
     protected virtual void Awake()
     {
+        _currentMapID = MapManager.Instance.GetMapName();
+        mapData = Database.Instance.Map.GetMapData(_currentMapID);
         // 맵 이동 콜라이더 찾기
         GetColliderComponent();
 
@@ -103,24 +108,32 @@ public abstract class ColliderBase : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 씬 로드 함수들어갈 함수들 (Action MoveTo...Map에 등록됨)
+    /// </summary>
+
     private void OnRightMap()
     {
         Debug.Log("오른쪽 맵으로 이동합니다.");
+        MapManager.Instance.LoadMap(mapData.right_map);
     }
 
     protected void OnLeftMap()
     {
         Debug.Log("왼쪽 맵으로 이동합니다.");
+        MapManager.Instance.LoadMap(mapData.left_map);
     }
 
     protected void OnUpMap()
     {
         Debug.Log("위쪽 맵으로 이동합니다.");
+        MapManager.Instance.LoadMap(mapData.up_map);
     }
 
     protected void OnDownMap()
     {
         Debug.Log("아래쪽 맵으로 이동합니다.");
+        MapManager.Instance.LoadMap(mapData.down_map);
     }
 
 }
