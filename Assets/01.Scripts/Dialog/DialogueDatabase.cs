@@ -46,7 +46,7 @@ public class DialogueDatabase : MonoBehaviour
         TextAsset csvData = Resources.Load<TextAsset>("CSV/dialog/" + fileName);
         if (csvData == null)
         {
-            Debug.LogError($"❌ CSV 파일 'dialog/{fileName}'을(를) 찾을 수 없습니다.");
+            Debug.LogError($"❌ CSV 파일 'CSV/dialog/{fileName}'을(를) 찾을 수 없습니다.");
             return;
         }
 
