@@ -6,6 +6,7 @@ public class BoxPush : MonoBehaviour
     public float moveDistance = 1f;//한 블럭 거리
     public float moveSpeed = 5f;
     public LayerMask obstacleLayer; // 장애물 레이어
+    public LayerMask boxLayer;
 
     private Rigidbody2D rb;
     private bool isMoving = false;
@@ -74,8 +75,17 @@ public class BoxPush : MonoBehaviour
         {
             return; //장애물 있으면 이동 안함    
         }
-        //이동시작
-        targetPosition = nextPos;
-        isMoving = true;
+
+        //OverlapPoint 방식으로 겹침 감지 교체
+        Collider2D overlap = Physics2D.OverlapPoint(nextPos, boxLayer);
+        if (overlap != null && overlap.gameObject != gameObject)
+        {
+            Debug.Log($"[❌ Blocked] {gameObject.name} can't move. Blocked by {overlap.name}");
+            return;
+        }
+
+      //이동시작
+      targetPosition = nextPos;
+      isMoving = true;
     }
 }

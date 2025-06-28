@@ -42,7 +42,7 @@ public class MapDB
 
     private string[] ParseCsv()  // csv 파일을 전부 읽어오는 함수
     {
-        string fullPath = $"{Application.dataPath}/CSV/{CSV_FILE_NAME}";
+        string fullPath = $"{Application.dataPath}/Resources/CSV/map.csv";
 
         // 경로에 해당하는 파일이 없으면 예외 발생
         if (File.Exists(fullPath) == false)

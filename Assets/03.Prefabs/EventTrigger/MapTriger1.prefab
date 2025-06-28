@@ -149,25 +149,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerOnce: 1
   requireCondition: 1
-  triggerId: 5004
+  triggerId: 5000
   triggerDialogueEntries:
+  - id: 5000
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+  - id: 5001
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+  - id: 5002
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+  - id: 5003
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
   - id: 5004
-    speaker: "\uBAA8\uB178"
+    speaker: 
     text: 
     focusTarget: {fileID: 0}
   - id: 5005
-    speaker: "\uBAA8\uB178"
+    speaker: 
     text: 
     focusTarget: {fileID: 0}
   - id: 5006
-    speaker: "\uBAA8\uB178"
+    speaker: 
     text: 
     focusTarget: {fileID: 0}
   - id: 5007
-    speaker: "\uBAA8\uB178"
+    speaker: 
     text: 
     focusTarget: {fileID: 0}
   - id: 5008
-    speaker: "\uBAA8\uB178"
+    speaker: 
     text: 
     focusTarget: {fileID: 0}
