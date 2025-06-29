@@ -701,22 +701,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 810665284081206082, guid: 63aa3557ad93b5745a1c91fe82faf962, type: 3}
-      propertyPath: dialogueEntries.Array.data[0].id
-      value: npc001_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 810665284081206082, guid: 63aa3557ad93b5745a1c91fe82faf962, type: 3}
-      propertyPath: dialogueEntries.Array.data[1].id
-      value: npc001_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 810665284081206082, guid: 63aa3557ad93b5745a1c91fe82faf962, type: 3}
-      propertyPath: dialogueEntries.Array.data[2].id
-      value: npc001_3
-      objectReference: {fileID: 0}
-    - target: {fileID: 810665284081206082, guid: 63aa3557ad93b5745a1c91fe82faf962, type: 3}
-      propertyPath: dialogueEntries.Array.data[3].id
-      value: npc001_4
-      objectReference: {fileID: 0}
     - target: {fileID: 4930476247903334780, guid: 63aa3557ad93b5745a1c91fe82faf962, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.788
