@@ -92,7 +92,7 @@ public class MapDB
 
     private Vector2 ParseToVector2(string str)
     {
-        if (string.IsNullOrWhiteSpace(str))
+        if (str == "null")
             return Vector2.zero;
 
         string[] coords = str.Split('|');

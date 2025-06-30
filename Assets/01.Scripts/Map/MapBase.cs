@@ -40,13 +40,13 @@ public abstract class MapBase : MonoBehaviour
     protected void SpawnPointSet()
     {
         spawnPoint = new Dictionary<string, Vector2>();
-        if (mapData.left_map != null || mapData.left_map != "null")
+        if (mapData.left_map != "null")
             spawnPoint.Add(mapData.left_map, mapData.player_position_left);
-        if (mapData.right_map != null || mapData.right_map != "null")
+        if (mapData.right_map != "null")
             spawnPoint.Add(mapData.right_map, mapData.player_position_right);
-        if (mapData.up_map != null || mapData.up_map != "null")
+        if (mapData.up_map != "null")
             spawnPoint.Add(mapData.up_map, mapData.player_position_up);
-        if (mapData.down_map != null || mapData.down_map != "null")
+        if (mapData.down_map != "null")
             spawnPoint.Add(mapData.down_map, mapData.player_position_down);
     }
 
