@@ -42,17 +42,14 @@ public abstract class ColliderBase : MonoBehaviour
     {
         MapManager.Instance.LoadMap(mapData.right_map);
     }
-
     public void OnLeftMap()
     {
         MapManager.Instance.LoadMap(mapData.left_map);
     }
-
     public void OnUpMap()
     {
         MapManager.Instance.LoadMap(mapData.up_map);
     }
-
     public void OnDownMap()
     {
         MapManager.Instance.LoadMap(mapData.down_map);

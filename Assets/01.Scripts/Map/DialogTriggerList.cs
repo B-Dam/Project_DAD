@@ -2,11 +2,21 @@
 
 public class DialogTriggerList : MonoBehaviour
 {
-	
+    public GameObject triggerListPrefab;
 
-	// 001
+    private void Awake()
+    {
+        triggerListPrefab = GameObject.Find("Colliders").transform.Find("MapTrigger").gameObject;
+    }
+
+	
 	public void TriggerSetting()
 	{
+        /// <summary>
+        /// 1. 특정 상황에서 임의의 대사 트리거(콜라이더)를 온오프 해야함
+        /// 2. 트리거에 닿았을 때 대사 띄우기
+        /// </summary>
+
 		switch (MapManager.Instance.GetMapName())
 		{
 			case "001":
@@ -33,7 +43,7 @@ public class DialogTriggerList : MonoBehaviour
             case "109":
                 break;
             default:
-                Debug.Log($"현 재 맵은 {MapManager.Instance.GetMapName()}입니다");
+                Debug.Log($"현재 맵은 {MapManager.Instance.GetMapName()}입니다");
                 break;
         }
 	}
