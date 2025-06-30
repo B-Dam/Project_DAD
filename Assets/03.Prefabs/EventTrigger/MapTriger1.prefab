@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.7738, y: 0.1741, z: 0}
-  m_LocalScale: {x: 5.1431117, y: 8.88331, z: 1}
+  m_LocalScale: {x: 5.1431117, y: 3.5533242, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -149,22 +149,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerOnce: 1
   requireCondition: 1
-  triggerId: 1001
+  triggerId: 5004
   triggerDialogueEntries:
-  - id: event001_1
+  - id: 5004
     speaker: "\uBAA8\uB178"
-    text: "\u2026\uC8FC\uC778\uB2D8? \uC5B4\uB514\uB85C \uAC14\uC5B4?"
-  - id: event001_2
+    text: 
+    focusTarget: {fileID: 0}
+  - id: 5005
     speaker: "\uBAA8\uB178"
-    text: "\uC73D.. \uAE30\uC5B5\uC774 \uB098\uC9C8 \uC54A\uC544.."
-  - id: event001_3
+    text: 
+    focusTarget: {fileID: 0}
+  - id: 5006
     speaker: "\uBAA8\uB178"
-    text: "\uB0C4\uC0C8\uB97C \uB530\uB77C\uAC00\uC57C \uD574. \uC8FC\uC778\uB2D8\uC758
-      \uB0C4\uC0C8\uB97C\u2026 \uC7A0\uAE50. \uB0C4\uC0C8\uAC00\u2026 \uC0AC\uB77C\uC84C\uC5B4..."
-  - id: event001_4
+    text: 
+    focusTarget: {fileID: 0}
+  - id: 5007
     speaker: "\uBAA8\uB178"
-    text: "\uBC14\uB78C\uC5D0 \uD769\uC5B4\uC9C4 \uAC78\uAE4C? \uC544\uB2C8\uBA74\u2026"
-  - id: event001_5
+    text: 
+    focusTarget: {fileID: 0}
+  - id: 5008
     speaker: "\uBAA8\uB178"
-    text: "\uC55E\uC5D0 \uACE0\uC591\uC774\uB4E4\uC774 \uC788\uB124. \uBE44\uCF1C\uB2EC\uB77C\uACE0
-      \uD574\uBCFC\uAE4C?"
+    text: 
+    focusTarget: {fileID: 0}

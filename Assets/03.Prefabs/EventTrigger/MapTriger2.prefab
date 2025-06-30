@@ -149,21 +149,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerOnce: 1
   requireCondition: 0
-  triggerId: 1002
+  triggerId: 5009
   triggerDialogueEntries:
-  - id: event002_1
-    speaker: "\uBAA8\uB178"
-    text: "\uB0B4\uAC00 \uC788\uB358 \uACF3\uACFC\uB294 \uB2E4\uB978 \uAC70 \uAC19\uC544..."
-  - id: event002_2
-    speaker: "\uBAA8\uB178"
-    text: "\uC774\uACF3\uC5D0\uB294 \uCC1D\uCC1D\uD55C \uB0C4\uC0C8\uAC00 \uC548\uB098...\uAE30\uBD84\uC88B\uC740
-      \uB0C4\uC0C8\uAC00 \uB098!"
-  - id: event002_3
-    speaker: "\uBAA8\uB178"
-    text: "\uBAA8\uB4E0 \uAC8C\u2026 \uB0AF\uC124\uC5B4. \uC8FC\uC778\uB2D8\uC774\uB791
-      \uC5EC\uAE30 \uC628 \uAE30\uC5B5\uC740 \uC5C6\uB294\uB370. \uB0B4\uAC00 \uAE38\uC744
-      \uC798\uBABB \uB4E0 \uAC78\uAE4C?"
-  - id: event002_4
-    speaker: "\uBAA8\uB178"
-    text: "\uC624\uB978\uCABD\uC5D0\uC11C \uCE5C\uC219\uD55C \uB0C4\uC0C8\uAC00 \uB098\uB294
-      \uAC70 \uAC19\uC544. \uD55C \uBC88 \uAC00\uBCFC\uAE4C?"
+  - id: 5009
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
