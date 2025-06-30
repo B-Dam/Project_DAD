@@ -22,6 +22,7 @@ public string triggerId;
         if (requireCondition && !CheckCondition()) return;
 
         hasTriggered = true;
+
         TriggerEvent();
     }
 
