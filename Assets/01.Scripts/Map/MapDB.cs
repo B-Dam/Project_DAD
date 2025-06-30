@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -43,7 +42,7 @@ public class MapDB
 
     private string[] ParseCsv()  // csv 파일을 전부 읽어오는 함수
     {
-        string fullPath = $"{Application.dataPath}/Resources/CSV/{CSV_FILE_NAME}";
+        string fullPath = $"{Application.dataPath}/Resources/CSV/map.csv";
 
         // 경로에 해당하는 파일이 없으면 예외 발생
         if (File.Exists(fullPath) == false)
@@ -93,10 +92,8 @@ public class MapDB
 
     private Vector2 ParseToVector2(string str)
     {
-        if (string.IsNullOrWhiteSpace(str) || str == "null")
-        {
-            return new Vector2();
-        }
+        if (string.IsNullOrWhiteSpace(str))
+            return Vector2.zero;
 
         string[] coords = str.Split('|');
         if (coords.Length == 2)
