@@ -1,7 +1,7 @@
 map_id,name,type,left_map,right_map,up_map,down_map,player_position_left,player_position_right,player_position_up,player_position_down,bgm
-001,시골 들판,story,null,002,null,null,-8|-0.2,12|-0.2,null,null,null
-002,마을 입구,story,001,101,null,null,-8|-0.2,23|-0.2,null,null,null
-101,시골 마을 갈림길,story,002,103,null,102,-10|-0.2,18|5,null,5.5|-13,null
+001,시골 들판,story,null,2,null,null,-8|-0.2,12|-0.2,null,null,null
+002,마을 입구,story,1,101,null,null,-8|-0.2,23|-0.2,null,null,null
+101,시골 마을 갈림길,story,2,103,null,102,-10|-0.2,18|5,null,5.5|-13,null
 102,시골 집 마당,story,null,null,101,null,null,null,3.5|12.3,null,null
 103,시골 마을 갈림길2,story,101,104,105,107,-8|-6,23|7.2,3.5|12.2,15|14,null
 104,촌장 집,story,103,null,null,null,-10|-0.2,null,null,null,null

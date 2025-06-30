@@ -18,9 +18,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public MapBase currentActiveMapScript { get; private set; }
-
-    public string currentMapID {  get; private set; }  // MapBase 스크립트가 활성화 될 때 마다 GetMapName()을 호출하여 지정해줌
+    public string currentMapName;
 
     private void Awake()
     {
@@ -33,30 +31,16 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        currentActiveMapScript = FindAnyObjectByType<MapBase>();
     }
 
     public string GetMapName()
     {
-        currentMapID = SceneManager.GetActiveScene().name;
-        return currentMapID;
+        currentMapName = SceneManager.GetActiveScene().name;
+        return currentMapName;
     }
 
-    public void LoadMap(string mapID)
+    public void LoadMap(string mapName)
     {
-        currentActiveMapScript.OnReleaseMap();
-
-        SceneManager.LoadScene(mapID);
+        SceneManager.LoadScene(mapName);
     }
 }

@@ -1,37 +1,28 @@
 fileFormatVersion: 2
-guid: 41d0e4ef43eddf441b976c07bb6a192a
+guid: b2f3429e5207274458527565f95a9f40
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1263595926981062573
-    second: player_Mono_0
+      213: -2077083559882203912
+    second: duck8_0
   - first:
-      213: 8310049489028363303
-    second: player_Mono_1
+      213: -3773989277465669831
+    second: duck8_1
   - first:
-      213: 6271250655668180223
-    second: player_Mono_2
+      213: 6592641064058587845
+    second: duck8_2
   - first:
-      213: -6426748983218778401
-    second: player_Mono_3
+      213: 1647985900551992344
+    second: duck8_3
   - first:
-      213: -4854376806387107684
-    second: player_Mono_4
+      213: 6103689864049802462
+    second: duck8_4
   - first:
-      213: -4129764435154502521
-    second: player_Mono_5
+      213: -6446857466820254531
+    second: duck8_5
   - first:
-      213: 1338189775593400340
-    second: player_Mono_6
-  - first:
-      213: 4000199320789645370
-    second: player_Mono_7
-  - first:
-      213: -3015581658625093624
-    second: player_Mono_8
-  - first:
-      213: 8582547619373084019
-    second: player_Mono_9
+      213: 8491223584305160156
+    second: duck8_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -123,30 +114,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_Mono_0
+      name: duck8_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 164
-        width: 82
-        height: 75
+        x: 17
+        y: 165
+        width: 70
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,42 +133,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 350d9a0033ec67ee0800000000000000
-      internalID: -1263595926981062573
+      spriteID: 8fcda64d187bc23e0800000000000000
+      internalID: -2077083559882203912
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_Mono_1
+      name: duck8_1
       rect:
         serializedVersion: 2
         x: 101
-        y: 165
-        width: 82
-        height: 76
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 724b3735bf9335370800000000000000
-      internalID: 8310049489028363303
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_Mono_2
-      rect:
-        serializedVersion: 2
-        x: 198
         y: 163
-        width: 83
-        height: 77
+        width: 70
+        height: 62
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -199,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ff4998cae35f70750800000000000000
-      internalID: 6271250655668180223
+      spriteID: 93f86826fb810abc0800000000000000
+      internalID: -3773989277465669831
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_Mono_3
+      name: duck8_2
       rect:
         serializedVersion: 2
-        x: 294
+        x: 184
         y: 162
-        width: 83
-        height: 77
+        width: 70
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,20 +177,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fde44a2a9d99fc6a0800000000000000
-      internalID: -6426748983218778401
+      spriteID: 5ca8dd25e14cd7b50800000000000000
+      internalID: 6592641064058587845
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_Mono_4
+      name: duck8_3
       rect:
         serializedVersion: 2
-        x: 390
+        x: 264
         y: 162
-        width: 83
-        height: 77
+        width: 70
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -243,20 +199,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c98b661a30ac1acb0800000000000000
-      internalID: -4854376806387107684
+      spriteID: 814f045f172ded610800000000000000
+      internalID: 1647985900551992344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_Mono_5
+      name: duck8_4
       rect:
         serializedVersion: 2
-        x: 7
-        y: 63
-        width: 84
-        height: 74
+        x: 21
+        y: 85
+        width: 68
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -265,20 +221,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 78cf29c602120b6c0800000000000000
-      internalID: -4129764435154502521
+      spriteID: edc37d5b799a4b450800000000000000
+      internalID: 6103689864049802462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_Mono_6
+      name: duck8_5
       rect:
         serializedVersion: 2
-        x: 107
-        y: 63
-        width: 84
-        height: 73
+        x: 106
+        y: 85
+        width: 69
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -287,20 +243,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 418ed48c284329210800000000000000
-      internalID: 1338189775593400340
+      spriteID: db4aa947a492886a0800000000000000
+      internalID: -6446857466820254531
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_Mono_7
+      name: duck8_6
       rect:
         serializedVersion: 2
-        x: 205
-        y: 62
-        width: 84
-        height: 74
+        x: 193
+        y: 82
+        width: 69
+        height: 62
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,52 +265,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a38fc6a9610938730800000000000000
-      internalID: 4000199320789645370
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_Mono_8
-      rect:
-        serializedVersion: 2
-        x: 297
-        y: 61
-        width: 84
-        height: 74
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 800d77e65708626d0800000000000000
-      internalID: -3015581658625093624
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_Mono_9
-      rect:
-        serializedVersion: 2
-        x: 387
-        y: 60
-        width: 84
-        height: 74
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 37d6b9866955b1770800000000000000
-      internalID: 8582547619373084019
+      spriteID: cdf9dea8cd2e6d570800000000000000
+      internalID: 8491223584305160156
       vertices: []
       indices: 
       edges: []
@@ -373,16 +285,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_Mono_0: -1263595926981062573
-      player_Mono_1: 8310049489028363303
-      player_Mono_2: 6271250655668180223
-      player_Mono_3: -6426748983218778401
-      player_Mono_4: -4854376806387107684
-      player_Mono_5: -4129764435154502521
-      player_Mono_6: 1338189775593400340
-      player_Mono_7: 4000199320789645370
-      player_Mono_8: -3015581658625093624
-      player_Mono_9: 8582547619373084019
+      duck8_0: -2077083559882203912
+      duck8_1: -3773989277465669831
+      duck8_2: 6592641064058587845
+      duck8_3: 1647985900551992344
+      duck8_4: 6103689864049802462
+      duck8_5: -6446857466820254531
+      duck8_6: 8491223584305160156
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
