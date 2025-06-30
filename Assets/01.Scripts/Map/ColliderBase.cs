@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,6 @@ public abstract class ColliderBase : MonoBehaviour
     protected MapData mapData;
     private string _currentMapID;
 
-    // ¸Ê ¿öÇÁ °ü·Ã
     protected string PlayerTag = "Player";
 
     protected virtual void Awake()
@@ -17,10 +16,6 @@ public abstract class ColliderBase : MonoBehaviour
     }
 
     protected abstract void OnTriggerEnter2D(Collider2D collision);
-
-    /// <summary>
-    /// ¾À ·Îµå ÇÔ¼öµé¾î°¥ ÇÔ¼öµé (Action MoveTo...Map¿¡ µî·ÏµÊ)
-    /// </summary>
 
     protected void MapMove(string warpDir)
     {

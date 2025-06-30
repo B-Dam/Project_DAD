@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WarpCollider : ColliderBase
 {
@@ -6,7 +6,7 @@ public class WarpCollider : ColliderBase
     {
         if (collision.CompareTag(PlayerTag))
         {
-            string warpDir = gameObject.name;
+            string warpDir = gameObject.name;  // Right, Left 등
 
             MapMove(warpDir);
         }

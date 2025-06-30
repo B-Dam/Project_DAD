@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
 
     public MapBase currentActiveMapScript { get; private set; }
 
-    public string currentMapID {  get; private set; }  // MapBase ½ºÅ©¸³Æ®°¡ È°¼ºÈ­ µÉ ¶§ ¸¶´Ù GetMapName()À» È£ÃâÇÏ¿© ÁöÁ¤ÇØÁÜ
+    public string currentMapID {  get; private set; }  // MapBase ìŠ¤í¬ë¦½íŠ¸ê°€ í™œì„±í™” ë  ë•Œ ë§ˆë‹¤ GetMapName()ì„ í˜¸ì¶œí•˜ì—¬ ì§€ì •í•´ì¤Œ
 
     private void Awake()
     {

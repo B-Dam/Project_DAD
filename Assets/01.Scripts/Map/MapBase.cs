@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
@@ -6,34 +6,54 @@ using UnityEngine;
 public abstract class MapBase : MonoBehaviour
 {
 	/// <summary>
-	/// ¸Ê ½ºÅ©¸³Æ®°¡ °øÅëÀûÀ¸·Î Ã³¸®ÇØ¾ß ÇÏ´Â °Íµé
+	/// ë§µ ìŠ¤í¬ë¦½íŠ¸ê°€ ê³µí†µì ìœ¼ë¡œ ì²˜ë¦¬í•´ì•¼ í•˜ëŠ” ê²ƒë“¤
 	/// 
-	/// 1. ÇöÀç ¸Ê Á¤º¸ ·Îµå
-	/// 2. ÇöÀç ¸ÊÀÇ ¿öÇÁ Äİ¶óÀÌ´õ Ã£±â
-    /// 3. Äİ¶óÀÌ´õÀÇ ÀÌº¥Æ® Ã³¸®
+	/// 1. í˜„ì¬ ë§µ ì •ë³´ ë¡œë“œ
+	/// 2. í˜„ì¬ ë§µì˜ ì›Œí”„ ì½œë¼ì´ë” ì°¾ê¸°
+    /// 3. ì½œë¼ì´ë”ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬
 	/// </summary>
 	
-    // ¸Ê °ü·Ã
+    // ë§µ ê´€ë ¨
 	protected MapData mapData;
 	protected string prevMapID;
+    protected Dictionary<string, Vector2> spawnPoint;
     private string _currentMapID;
-	private GameObject _colliders;
 
-    // ÀÓ½Ã ÇÃ·¹ÀÌ¾î Æ÷Áö¼Ç º¯¼ö
+    // ì„ì‹œ í”Œë ˆì´ì–´ í¬ì§€ì…˜ ë³€ìˆ˜
     protected Vector2 _playerPosition;
 
 
     protected virtual void Awake()
 	{
-		_colliders = GameObject.Find("Colliders");
         _currentMapID = MapManager.Instance.GetMapName();
-
         mapData = Database.Instance.Map.GetMapData(_currentMapID);
-		Debug.Log($"ÇöÀç ¸ÊÀº {_currentMapID} ÀÔ´Ï´Ù.");
 
+        SpawnPointSet();
+
+        Debug.Log($"í˜„ì¬ ë§µì€ {_currentMapID} ì…ë‹ˆë‹¤.");
     }
 
-    protected abstract void OnLoadMap();  // ¸ÊÀ» È£ÃâÇÒ ¶§ ÀÛµ¿ÇÏ´Â ·ÎÁ÷
+    protected abstract void OnLoadMap();  // ë§µì„ í˜¸ì¶œí•  ë•Œ ì‘ë™í•˜ëŠ” ë¡œì§
 
-    public abstract void OnReleaseMap();  // ¸ÊÀÌ ³ª°¥ ¶§ ÀÛµ¿ÇÏ´Â ·ÎÁ÷
+    public abstract void OnReleaseMap();  // ë§µì´ ë‚˜ê°ˆ ë•Œ ì‘ë™í•˜ëŠ” ë¡œì§
+
+    protected void SpawnPointSet()
+    {
+        spawnPoint = new Dictionary<string, Vector2>();
+        if (mapData.left_map != null || mapData.left_map != "null")
+            spawnPoint.Add(mapData.left_map, mapData.player_position_left);
+        if (mapData.right_map != null || mapData.right_map != "null")
+            spawnPoint.Add(mapData.right_map, mapData.player_position_right);
+        if (mapData.up_map != null || mapData.up_map != "null")
+            spawnPoint.Add(mapData.up_map, mapData.player_position_up);
+        if (mapData.down_map != null || mapData.down_map != "null")
+            spawnPoint.Add(mapData.down_map, mapData.player_position_down);
+    }
+
+    /// <summary>
+    /// 1. ë”•ì…”ë„ˆë¦¬ prevMapID, player_position ë¬¶ì–´ë‘ê¸°
+    /// 2. ë§µì„ ë„˜ì–´ê°ˆ ë•Œ ê¸°ì¡´ì— ìˆë˜ ë§µì„ prevMapIDë¡œ ë„˜ê¸°ê¸°
+    /// 3. ë§µì„ ë„˜ì–´ê°€ë©´ OnLoadMap í•¨ìˆ˜ì—ì„œ prevMapID ê¸°ì¤€ í”Œë ˆì´ì–´ê°€ ë„˜ì–´ê°„ ë°©í–¥ì— ìˆëŠ” ë§µì˜ ìŠ¤í° í¬ì¸íŠ¸ë¡œ ì´ë™í•˜ê¸°
+    /// </summary>>
+
 }
