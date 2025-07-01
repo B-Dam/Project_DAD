@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEditor;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class BoxPush : MonoBehaviour
 {
-    public float moveDistance = 1f;//한 블럭 거리
-    public float moveSpeed = 5f;
+    [Header("이동 설정")]
+    public float moveDistance = 1f; // 박스가 한 번에 이동할 거리 (한 칸)
+    public float moveSpeed = 5f;// 이동 속도
+
+    [Header("충돌 감지 레이어")]
+    public LayerMask boxLayer;
     public LayerMask obstacleLayer; // 장애물 레이어
     public LayerMask boxLayer;
 
@@ -12,80 +18,227 @@ public class BoxPush : MonoBehaviour
     private bool isMoving = false;
     private Vector2 targetPosition;
 
+    [Header("막힘 알림 설정")]
+    public GameObject blockIndicatorPrefab; // 못 미는 경우 뜨는 UI 아이콘 프리팹
+    private Canvas canvas;
+    private GameObject currentIndicator;// 현재 표시 중인 아이콘
+    private float indicatorLifetime = 0.2f;// 아이콘 유지 시간
+                                           //private float indicatorTimer = 0f;
+
+    //stay 조금 지연 시키기
+    private float collisionProcessCooldown = 0.3f; // 최소 간격 0.3초
+    private float lastCollisionProcessTime = -999f; // 초기값은 아주 과거 시간
+
+    public float directionDominanceRatioX = 2.5f;
+    public float directionDominanceRatioY = 2.5f;
+
+
     private void Start()
     {
+        // Rigidbody2D 설정: 직접 위치 이동할 것이므로 Kinematic으로 설정
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;//직접 위치 이동 할 거니까
+
     }
     private void Update()
     {
+
+
+        // 이동 중이면 목표 위치까지 부드럽게 이동
         if (isMoving)
         {
             rb.MovePosition(Vector2.MoveTowards(rb.position, targetPosition, moveSpeed * Time.deltaTime));
 
+            // 목표 위치에 도달하면 이동 종료
             if (Vector2.Distance(rb.position, targetPosition) < 0.01f)
             {
-                rb.position = targetPosition;//위치를 즉시 바꿔 버림
+                rb.position = targetPosition;
                 isMoving = false;
             }
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        if (isMoving) return;
-        if (!collision.gameObject.CompareTag("Player")) return;
-        //충돌 지점 평균 구하기
-        Vector2 contactPoint = Vector2.zero;
-        foreach (ContactPoint2D contact in collision.contacts)
+#if UNITY_EDITOR
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col != null)
         {
-            contactPoint += contact.point;
-        }
-        contactPoint /= collision.contactCount;
+            Handles.color = Color.red;
+            Handles.matrix = transform.localToWorldMatrix;
 
-        Vector2 boxPos = rb.position;
-        //충돌 지점과 박스의 중심 위치 차이 계산
-        Vector2 localoffset = contactPoint - boxPos;
+            Vector2 half = col.size * 0.5f;
+            Vector2 offset1 = col.offset;
 
-        Vector2 pushDirection = Vector2.zero;
-        float threshold = 0.2f; //얼마나 중심에 가까워야 인정할지
-
-        if (Mathf.Abs(localoffset.x) > Mathf.Abs(localoffset.y))
-        {
-            //좌우면 y값이 작아야 중심 근처
-            if (Mathf.Abs(localoffset.y) < threshold)
+            Vector3[] corners = new Vector3[]
             {
-                pushDirection = new Vector2(-Mathf.Sign(localoffset.x), 0f);
-            }
-        }
-        else
-        {
-            //상하면 x값이 작아야 중심 근처
-            if (Mathf.Abs(localoffset.x) < threshold)
-            {
-                pushDirection = new Vector2(0f, -Mathf.Sign(localoffset.y));
-            }
-        }
-        if (pushDirection == Vector2.zero) return;//중앙이 아닌 구석 밀면 무시
+            offset1 + new Vector2(-half.x, -half.y),
+            offset1 + new Vector2(-half.x,  half.y),
+            offset1 + new Vector2( half.x,  half.y),
+            offset1 + new Vector2( half.x, -half.y),
+            offset1 + new Vector2(-half.x, -half.y) // 닫기
+            };
 
+            Handles.DrawAAPolyLine(10f, corners); // ← 여기서 3f는 선 두께
+        }
+#endif
+    }
+
+    // 플레이어가 박스를 밀려고 접촉 중일 때 호출됨
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        //  0.3초마다 한 번만 처리
+        if (Time.time - lastCollisionProcessTime < collisionProcessCooldown) return;
+        lastCollisionProcessTime = Time.time;
+
+        // 이미 이동 중이거나 플레이어가 아니라면 무시
+        if (isMoving || !collision.gameObject.CompareTag("Player")) return;
+
+        // 쿨타임 중이면 무시
+        PlayerController pc = collision.gameObject.GetComponent<PlayerController>();
+        if (pc == null) return;
+        if (Time.time - pc.lastPushTime < pc.boxPushCooldown) return;
+
+        // 어느 방향으로 밀었는지 판단
+        Vector2 pushDirection = GetPushDirection(collision);
+
+        if (pushDirection == Vector2.zero)
+        {
+            ShowBlockIndicator();
+            pc.lastPushTime = Time.time;
+            return;
+        }
+        // 다음 위치 계산
         Vector2 nextPos = rb.position + pushDirection * moveDistance;
 
-        //장애물 감지
-        RaycastHit2D hit = Physics2D.Raycast(rb.position, pushDirection, moveDistance, obstacleLayer);
-        if ((hit.collider != null))
+        // 이동 방향에 장애물이나 다른 박스가 있다면 알림 표시 후 중단
+        if (IsBlocked(nextPos, pushDirection))
         {
-            return; //장애물 있으면 이동 안함    
-        }
-
-        //OverlapPoint 방식으로 겹침 감지 교체
-        Collider2D overlap = Physics2D.OverlapPoint(nextPos, boxLayer);
-        if (overlap != null && overlap.gameObject != gameObject)
-        {
-            Debug.Log($"[❌ Blocked] {gameObject.name} can't move. Blocked by {overlap.name}");
+            ShowBlockIndicator();
+            pc.lastPushTime = Time.time; // 실패해도 쿨 적용
             return;
         }
 
-      //이동시작
-      targetPosition = nextPos;
-      isMoving = true;
+        targetPosition = nextPos;
+        isMoving = true;
+        pc.lastPushTime = Time.time; // 성공해도 쿨타임 적용
+
+    }
+
+    // 충돌 지점을 기반으로 플레이어가 어느 방향으로 밀었는지 계산
+    Vector2 GetPushDirection(Collision2D collision)
+    {
+        GameObject player = collision.gameObject;
+        PlayerController pc = player.GetComponent<PlayerController>();
+        if (pc == null) return Vector2.zero;
+
+        Vector2 input = pc.lastMoveInput;
+
+        // 대각선이면 무시
+        if (Mathf.Abs(input.x) > 0.1f && Mathf.Abs(input.y) > 0.1f)
+            return Vector2.zero;
+
+
+        // ▶ 기준을 콜라이더 중심으로!
+        Vector2 boxCenter = GetComponent<Collider2D>().bounds.center;
+        Vector2 playerCenter = collision.collider.bounds.center;
+        Vector2 delta = boxCenter - playerCenter;
+
+        float absX = Mathf.Abs(delta.x);
+        float absY = Mathf.Abs(delta.y);
+        Debug.Log($"[BoxPush] delta = {delta}, absX = {absX}, absY = {absY}, input = {input}");
+        // 좌우 방향이 더 뚜렷한 경우만 좌우 입력 허용
+        if (absX > absY * directionDominanceRatioX && absX > 0.1f)
+        {
+            if (delta.x > 0 && input.x > 0.1f) return Vector2.right;
+            if (delta.x < 0 && input.x < -0.1f) return Vector2.left;
+        }
+
+        // 상하 방향이 더 뚜렷한 경우만 상하 입력 허용
+        if (absY > absX * directionDominanceRatioY && absY > 0.1f)
+        {
+            if (delta.y > 0 && input.y > 0.1f) return Vector2.up;
+            if (delta.y < 0 && input.y < -0.1f) return Vector2.down;
+        }
+
+        return Vector2.zero;
+    }
+
+    //앞이 막혀 있는지 확인
+    bool IsBlocked(Vector2 nextPos, Vector2 direction)
+    {
+        // 앞에 장애물이 있으면 true 반환
+        if (Physics2D.Raycast(rb.position, direction, moveDistance, obstacleLayer))
+            return true;
+
+        // 다른 박스가 있으면 true 반환
+        Collider2D overlap = Physics2D.OverlapPoint(nextPos, boxLayer);
+        return overlap != null && overlap.gameObject != gameObject;
+    }
+
+    //실패 알림 아이콘 생성
+    void ShowBlockIndicator()
+    {
+        // Canvas가 없으면 찾아오기 (이름이 "UICanvas"인 객체에서 가져옴)
+        if (canvas == null)
+        {
+            //canvas = FindFirstObjectByType<Canvas>();
+            canvas = GameObject.Find("UICanvas")?.GetComponent<Canvas>();
+            if (canvas == null)
+            {
+                Debug.LogError("[BoxPush] Canvas를 찾을 수 없습니다!");
+                return;
+            }
+        }
+
+        // 프리팹 또는 캔버스가 없거나, 이미 표시 중이면 중단
+        if (blockIndicatorPrefab == null || canvas == null || currentIndicator != null) return;
+
+        // 플레이어 객체 찾기
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return;
+
+
+
+        // 카메라 찾기 (UI 위치 계산용)
+        Camera cam = Camera.main;
+        //canvas.worldCamera ?? Camera.main;
+        if (cam == null)
+        {
+            Debug.LogWarning("[BlockUI] 카메라 없음");
+            return;
+        }
+
+        //플레이어 위치를 기반으로 "UI를 띄울 월드 좌표"를 구함
+        Vector3 worldPos = GetIndicatorWorldPosition(player.transform.position);
+
+        //위에서 구한 월드 위치를 카메라 기준의 스크린 좌표로 변환
+        Vector2 screenPos = cam.WorldToScreenPoint(worldPos);
+
+        //blockIndicatorPrefab을 Canvas 안에 복제해서 생성
+        currentIndicator = Instantiate(blockIndicatorPrefab, canvas.transform);
+
+        //생성된 UI 이미지의 스크린 상 위치를 설정
+        currentIndicator.GetComponent<RectTransform>().position = screenPos;
+
+        //일정 시간 후(indicatorLifetime, 기본값은 0.2초)에
+        //UI 이미지를 자동으로 제거해서 화면에서 사라지게 함
+        Destroy(currentIndicator, indicatorLifetime);
+    }
+
+    //아이콘 위치 계산 (플레이어 머리 위)
+    Vector3 GetIndicatorWorldPosition(Vector3 playerPos)
+    {
+        //민 방향으로 뜨지만 바로 방향 바꿔도 뜬 곳에 그대로 있어서 보류
+        //Vector2 dir = (rb.position - (Vector2)playerPos).normalized;
+        //Vector3 offset = Vector3.up * 0.8f;
+
+        //if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        //    offset += Vector3.right * Mathf.Sign(dir.x) * 1f;
+        //else
+        //    offset += Vector3.up * 0.5f;
+
+        //return playerPos + offset;
+
+        return playerPos + new Vector3(0f, 1.2f, 0f);//단순 머리위 고정
     }
 }

@@ -134,7 +134,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.15, y: 0.15}
+  m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
 --- !u!50 &1217843818123127171
 Rigidbody2D:
@@ -189,8 +189,7 @@ GameObject:
   - component: {fileID: 2896646359136230535}
   - component: {fileID: 6715204640074060299}
   - component: {fileID: 2450525469793495373}
-  - component: {fileID: 4101493549174315194}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: PlayerBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,20 +339,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4101493549174315194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 416365717994153248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e02a9cb29ee1c1409090151a3191561, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  holeCoverPrefab: {fileID: 8095888957505315242, guid: 8c5b6191277f5834a803bac8b60d0b36, type: 3}
-  playerBlock: {fileID: 0}
 --- !u!1 &1866471394045237435
 GameObject:
   m_ObjectHideFlags: 0
