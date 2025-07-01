@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -33,18 +33,18 @@ public class MapDB
 
     private Dictionary<string, MapData> _mapDataList;
 
-    // »ı¼ºÀÚ
+    // ìƒì„±ì
     public MapDB()
     {
         string[] csvLines = ParseCsv();
         _mapDataList = ParseMapData(csvLines);
     }
 
-    private string[] ParseCsv()  // csv ÆÄÀÏÀ» ÀüºÎ ÀĞ¾î¿À´Â ÇÔ¼ö
+    private string[] ParseCsv()  // csv íŒŒì¼ì„ ì „ë¶€ ì½ì–´ì˜¤ëŠ” í•¨ìˆ˜
     {
         string fullPath = $"{Application.dataPath}/Resources/CSV/map.csv";
 
-        // °æ·Î¿¡ ÇØ´çÇÏ´Â ÆÄÀÏÀÌ ¾øÀ¸¸é ¿¹¿Ü ¹ß»ı
+        // ê²½ë¡œì— í•´ë‹¹í•˜ëŠ” íŒŒì¼ì´ ì—†ìœ¼ë©´ ì˜ˆì™¸ ë°œìƒ
         if (File.Exists(fullPath) == false)
             throw new($"Can not Read File {fullPath}");
 
@@ -53,7 +53,7 @@ public class MapDB
         return csvLines;
     }
 
-    private Dictionary<string, MapData> ParseMapData(string[] csvLines)  // ÀĞ¾î¿Â csv ÆÄÀÏÀ» ÁÙ º°, comma º°·Î ³ª´©´Â ÇÔ¼ö
+    private Dictionary<string, MapData> ParseMapData(string[] csvLines)  // ì½ì–´ì˜¨ csv íŒŒì¼ì„ ì¤„ ë³„, comma ë³„ë¡œ ë‚˜ëˆ„ëŠ” í•¨ìˆ˜
     {
         Dictionary<string, MapData> dictionary = new();
 
@@ -92,7 +92,7 @@ public class MapDB
 
     private Vector2 ParseToVector2(string str)
     {
-        if (string.IsNullOrWhiteSpace(str))
+        if (str == "null")
             return Vector2.zero;
 
         string[] coords = str.Split('|');
@@ -105,11 +105,12 @@ public class MapDB
             }
             else
             {
-                throw new FormatException($"º¤ÅÍ·Î ÃÊ±âÈ­ ÇÒ ¼ö ¾øÀ½ ({str})");
+                throw new FormatException($"ë²¡í„°ë¡œ ì´ˆê¸°í™” í•  ìˆ˜ ì—†ìŒ ({str})");
             }
         }
         else
         {
+            Debug.Log($"ì¢Œí‘œ ê°’ì´ x|y í˜•íƒœê°€ ì•„ë‹™ë‹ˆë‹¤ {str}");
             return Vector2.zero;
         }
     }
