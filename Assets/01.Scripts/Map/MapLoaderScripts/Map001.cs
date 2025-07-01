@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class Map001 : MapBase
 {
-    //protected override void Awake()
-    //{
-    //    base.Awake();
-    //    OnLoadMap();
-    //}
-
     private void Start()
     {
         OnLoadMap();

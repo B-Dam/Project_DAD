@@ -3,12 +3,13 @@
 public class DialogTriggerList : MonoBehaviour
 {
     public GameObject triggerObj;
-    public string mapTriggerPrefabPath = $"MapTrigger/{MapManager.Instance.GetMapName()}";
+    public string mapTriggerPrefabPath;
 
     private void Awake()
     {
         TriggerObjCheck();
 
+        mapTriggerPrefabPath = $"MapTrigger/{MapManager.Instance.GetMapName()}";
         TriggerReset();
         TriggerLoad();
     }
@@ -17,7 +18,28 @@ public class DialogTriggerList : MonoBehaviour
     {
         if (triggerObj == null)
         {
-            Debug.Log("triggerObj가 비어있습니다");
+            Debug.Log("triggerObj가 비어있습니다. Colliders 찾기를 시도합니다");
+            triggerObj = GameObject.Find("Colliders");
+            if (triggerObj != null)
+            {
+                Debug.Log($"triggerObj가 존재합니다. {triggerObj.name}\nMapTrigger 찾기를 시도합니다");
+                triggerObj = GameObject.Find("Colliders").transform.Find("MapTrigger").gameObject;
+                if (triggerObj.name == "MapTrigger")
+                {
+                    Debug.Log($"triggerObj에 MapTrigger를 할당했습니다. {triggerObj.name}");
+                }
+                else
+                {
+                    Debug.Log($"MapTrigger를 찾지 못했습니다. {triggerObj.name}");
+                }
+
+            }
+            else
+            {
+                Debug.Log("Colliders를 찾지 못했습니다.");
+                return;
+            }
+            
         }
     }
 
@@ -28,8 +50,8 @@ public class DialogTriggerList : MonoBehaviour
         {
             Transform child = triggerObj.transform.GetChild(i);
             
-            DestroyImmediate(child);
             Debug.Log($"맵 트리거 제거됨 : {child.name}");
+            DestroyImmediate(child.gameObject);
         }
     }
 
@@ -47,16 +69,9 @@ public class DialogTriggerList : MonoBehaviour
         foreach (GameObject prefab in loadedPrefabs)
         {
             GameObject obj = Instantiate(prefab);
+            obj.transform.SetParent(triggerObj.transform);
         }
     }
-
-
-
-
-
-
-
-
 
 	public void TriggerSetting()
 	{

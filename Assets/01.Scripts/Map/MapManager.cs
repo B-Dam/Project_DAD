@@ -12,7 +12,7 @@ public class MapManager : MonoBehaviour
                 _instance = FindAnyObjectByType<MapManager>();
 
             if (_instance == null)
-                _instance = new GameObject() { name = "MapManager" }.AddComponent<MapManager>();
+                _instance = new GameObject("MapManager").AddComponent<MapManager>();
 
             return _instance;
         }

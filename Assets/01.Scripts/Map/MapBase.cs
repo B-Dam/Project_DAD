@@ -27,6 +27,7 @@ public abstract class MapBase : MonoBehaviour
         mapData = Database.Instance.Map.GetMapData(_currentMapID);
 
         SpawnPointSet();
+        prevMapID = null;
 
         Debug.Log($"현재 맵은 {_currentMapID} 입니다.");
     }
