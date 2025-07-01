@@ -12,7 +12,6 @@ public class BoxPush : MonoBehaviour
     [Header("충돌 감지 레이어")]
     public LayerMask boxLayer;
     public LayerMask obstacleLayer; // 장애물 레이어
-    public LayerMask boxLayer;
 
     private Rigidbody2D rb;
     private bool isMoving = false;
