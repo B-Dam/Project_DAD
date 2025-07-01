@@ -6,14 +6,21 @@ public class SettingMenuController : MonoBehaviour
     public enum MenuType { Sound, Save, Load }
 
     [Header("메뉴 버튼")]
-    [SerializeField] private GameObject soundButton;
-    [SerializeField] private GameObject saveButton;
-    [SerializeField] private GameObject loadButton;
+    [SerializeField] private Image soundButtonImage;
+    [SerializeField] private Image saveButtonImage;
+    [SerializeField] private Image loadButtonImage;
+    
+    [Header("버튼 색상")]
+    [SerializeField] private Color normalColor   = Color.white;
+    [SerializeField] private Color selectedColor = Color.green;
 
     [Header("내용 패널")]
     [SerializeField] private GameObject soundContent;
     [SerializeField] private GameObject saveContent;
     [SerializeField] private GameObject loadContent;
+    
+    [Header("세이브 로드 매니저")]
+    [SerializeField] private SaveLoadManager saveLoadManager;
 
     private void Start()
     {
@@ -23,8 +30,17 @@ public class SettingMenuController : MonoBehaviour
 
     // 버튼 OnClick 으로 연결
     public void OnClickSound() => ShowMenu(MenuType.Sound);
-    public void OnClickSave()  => ShowMenu(MenuType.Save);
-    public void OnClickLoad()  => ShowMenu(MenuType.Load);
+    public void OnClickSave()
+    {
+        ShowMenu(MenuType.Save);
+        saveLoadManager.SwitchMode(SaveLoadManager.Mode.Save);
+    }
+
+    public void OnClickLoad()
+    {
+        ShowMenu(MenuType.Load);
+        saveLoadManager.SwitchMode(SaveLoadManager.Mode.Load);
+    }
 
     private void ShowMenu(MenuType type)
     {
@@ -32,5 +48,10 @@ public class SettingMenuController : MonoBehaviour
         soundContent.SetActive(type == MenuType.Sound);
         saveContent.SetActive(type == MenuType.Save);
         loadContent.SetActive(type == MenuType.Load);
+        
+        // 버튼 색상 강조
+        soundButtonImage.color = (type == MenuType.Sound) ? selectedColor : normalColor;
+        saveButtonImage.color = (type == MenuType.Save) ? selectedColor : normalColor;
+        loadButtonImage.color = (type == MenuType.Load) ? selectedColor : normalColor;
     }
 }
