@@ -2,20 +2,70 @@
 
 public class DialogTriggerList : MonoBehaviour
 {
-    public GameObject triggerListPrefab;
+    public GameObject triggerObj;
+    public string mapTriggerPrefabPath = $"MapTrigger/{MapManager.Instance.GetMapName()}";
 
     private void Awake()
     {
-        triggerListPrefab = GameObject.Find("Colliders").transform.Find("MapTrigger").gameObject;
+        TriggerObjCheck();
+
+        TriggerReset();
+        TriggerLoad();
     }
 
-	
+    private void TriggerObjCheck()
+    {
+        if (triggerObj == null)
+        {
+            Debug.Log("triggerObj가 비어있습니다");
+        }
+    }
+
+    private void TriggerReset()
+    {
+        int TriggerCount = triggerObj.transform.childCount;
+        for (int i = TriggerCount -1; i >= 0; i--)
+        {
+            Transform child = triggerObj.transform.GetChild(i);
+            
+            DestroyImmediate(child);
+            Debug.Log($"맵 트리거 제거됨 : {child.name}");
+        }
+    }
+
+	private void TriggerLoad()
+    {
+        GameObject[] loadedPrefabs = Resources.LoadAll<GameObject>(mapTriggerPrefabPath);
+
+        if (loadedPrefabs == null || loadedPrefabs.Length == 0)
+        {
+            Debug.LogWarning($"{mapTriggerPrefabPath} 경로에 대사 프리펩이 존재하지 않습니다");
+            return;
+        }
+
+        // 대사 트리거 소환용 foreach
+        foreach (GameObject prefab in loadedPrefabs)
+        {
+            GameObject obj = Instantiate(prefab);
+        }
+    }
+
+
+
+
+
+
+
+
+
 	public void TriggerSetting()
 	{
         /// <summary>
-        /// 1. 특정 상황에서 임의의 대사 트리거(콜라이더)를 온오프 해야함
-        /// 2. 트리거에 닿았을 때 대사 띄우기
+        /// 1. MapTrigger 안에 맵아이디_번호 형식으로 콜라이더 넣어 만들어 두기
+        /// 2. 특정 상황에서 임의의 대사 트리거(콜라이더)를 온오프 해야함
         /// </summary>
+
+
 
 		switch (MapManager.Instance.GetMapName())
 		{

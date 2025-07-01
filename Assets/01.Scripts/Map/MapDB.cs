@@ -70,18 +70,18 @@ public class MapDB
 
             // map.map_id = int.Parse(fields[0])
 
-            map.map_id = fields[0];
-            map.name = fields[1];
+            map.map_id = (fields[0].ToLower() == "null") ? null : fields[0];
+            map.name = (fields[1].ToLower() == "null") ? null : fields[1];
             map.type = (MapType)Enum.Parse(typeof(MapType), fields[2]);
-            map.left_map = fields[3];
-            map.right_map = fields[4];
-            map.up_map = fields[5];
-            map.down_map = fields[6];
+            map.left_map = (fields[3].ToLower() == "null") ? null : fields[3];
+            map.right_map = (fields[4].ToLower() == "null") ? null : fields[4];
+            map.up_map = (fields[5].ToLower() == "null") ? null : fields[5];
+            map.down_map = (fields[6].ToLower() == "null") ? null : fields[6];
             map.player_position_left = ParseToVector2(fields[7]);
             map.player_position_right = ParseToVector2(fields[8]);
             map.player_position_up = ParseToVector2(fields[9]);
             map.player_position_down = ParseToVector2(fields[10]);
-            map.bgm = fields[11];
+            map.bgm = (fields[11].ToLower() == "null") ? null : fields[11];
 
 
             dictionary.Add(map.map_id, map);
@@ -93,7 +93,9 @@ public class MapDB
     private Vector2 ParseToVector2(string str)
     {
         if (str == "null")
+        {
             return Vector2.zero;
+        }
 
         string[] coords = str.Split('|');
         if (coords.Length == 2)
