@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6811526002170421338}
   - component: {fileID: 8880489033118858939}
   - component: {fileID: 8041599568692218666}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Wall_Bridge (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -9,8 +10,8 @@ public class BoxPush : MonoBehaviour
     public float moveSpeed = 5f;// 이동 속도
 
     [Header("충돌 감지 레이어")]
-    public LayerMask obstacleLayer; // 장애물 레이어
     public LayerMask boxLayer;
+    public LayerMask obstacleLayer; // 장애물 레이어
 
     private Rigidbody2D rb;
     private bool isMoving = false;
@@ -21,7 +22,15 @@ public class BoxPush : MonoBehaviour
     private Canvas canvas;
     private GameObject currentIndicator;// 현재 표시 중인 아이콘
     private float indicatorLifetime = 0.2f;// 아이콘 유지 시간
-    //private float indicatorTimer = 0f;
+                                           //private float indicatorTimer = 0f;
+
+    //stay 조금 지연 시키기
+    private float collisionProcessCooldown = 0.3f; // 최소 간격 0.3초
+    private float lastCollisionProcessTime = -999f; // 초기값은 아주 과거 시간
+
+    public float directionDominanceRatioX = 2.5f;
+    public float directionDominanceRatioY = 2.5f;
+
 
     private void Start()
     {
@@ -32,6 +41,8 @@ public class BoxPush : MonoBehaviour
     }
     private void Update()
     {
+
+
         // 이동 중이면 목표 위치까지 부드럽게 이동
         if (isMoving)
         {
@@ -45,57 +56,110 @@ public class BoxPush : MonoBehaviour
             }
         }
     }
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col != null)
+        {
+            Handles.color = Color.red;
+            Handles.matrix = transform.localToWorldMatrix;
+
+            Vector2 half = col.size * 0.5f;
+            Vector2 offset1 = col.offset;
+
+            Vector3[] corners = new Vector3[]
+            {
+            offset1 + new Vector2(-half.x, -half.y),
+            offset1 + new Vector2(-half.x,  half.y),
+            offset1 + new Vector2( half.x,  half.y),
+            offset1 + new Vector2( half.x, -half.y),
+            offset1 + new Vector2(-half.x, -half.y) // 닫기
+            };
+
+            Handles.DrawAAPolyLine(10f, corners); // ← 여기서 3f는 선 두께
+        }
+#endif
+    }
 
     // 플레이어가 박스를 밀려고 접촉 중일 때 호출됨
     void OnCollisionStay2D(Collision2D collision)
     {
+        //  0.3초마다 한 번만 처리
+        if (Time.time - lastCollisionProcessTime < collisionProcessCooldown) return;
+        lastCollisionProcessTime = Time.time;
+
         // 이미 이동 중이거나 플레이어가 아니라면 무시
         if (isMoving || !collision.gameObject.CompareTag("Player")) return;
 
+        // 쿨타임 중이면 무시
+        PlayerController pc = collision.gameObject.GetComponent<PlayerController>();
+        if (pc == null) return;
+        if (Time.time - pc.lastPushTime < pc.boxPushCooldown) return;
+
         // 어느 방향으로 밀었는지 판단
         Vector2 pushDirection = GetPushDirection(collision);
-        if (pushDirection == Vector2.zero) return;
 
+        if (pushDirection == Vector2.zero)
+        {
+            ShowBlockIndicator();
+            pc.lastPushTime = Time.time;
+            return;
+        }
         // 다음 위치 계산
         Vector2 nextPos = rb.position + pushDirection * moveDistance;
 
         // 이동 방향에 장애물이나 다른 박스가 있다면 알림 표시 후 중단
         if (IsBlocked(nextPos, pushDirection))
         {
-            // 이동 수행
             ShowBlockIndicator();
+            pc.lastPushTime = Time.time; // 실패해도 쿨 적용
             return;
         }
 
         targetPosition = nextPos;
         isMoving = true;
+        pc.lastPushTime = Time.time; // 성공해도 쿨타임 적용
+
     }
 
     // 충돌 지점을 기반으로 플레이어가 어느 방향으로 밀었는지 계산
     Vector2 GetPushDirection(Collision2D collision)
     {
-        // 접촉 지점 평균 계산
-        Vector2 contactPoint = Vector2.zero;
-        foreach (var contact in collision.contacts)
-            contactPoint += contact.point;
-        contactPoint /= collision.contactCount;
+        GameObject player = collision.gameObject;
+        PlayerController pc = player.GetComponent<PlayerController>();
+        if (pc == null) return Vector2.zero;
 
-        Vector2 offset = contactPoint - rb.position;
-        float threshold = 0.2f; // 사선으로 민 경우를 무시하기 위한 임계값
+        Vector2 input = pc.lastMoveInput;
 
-        // 밀 방향 판단 (좌우 or 상하)
-        if (Mathf.Abs(offset.x) > Mathf.Abs(offset.y))
+        // 대각선이면 무시
+        if (Mathf.Abs(input.x) > 0.1f && Mathf.Abs(input.y) > 0.1f)
+            return Vector2.zero;
+
+
+        // ▶ 기준을 콜라이더 중심으로!
+        Vector2 boxCenter = GetComponent<Collider2D>().bounds.center;
+        Vector2 playerCenter = collision.collider.bounds.center;
+        Vector2 delta = boxCenter - playerCenter;
+
+        float absX = Mathf.Abs(delta.x);
+        float absY = Mathf.Abs(delta.y);
+        Debug.Log($"[BoxPush] delta = {delta}, absX = {absX}, absY = {absY}, input = {input}");
+        // 좌우 방향이 더 뚜렷한 경우만 좌우 입력 허용
+        if (absX > absY * directionDominanceRatioX && absX > 0.1f)
         {
-            if (Mathf.Abs(offset.y) < threshold)
-                return new Vector2(-Mathf.Sign(offset.x), 0f);
-        }
-        else
-        {
-            if (Mathf.Abs(offset.x) < threshold)
-                return new Vector2(0f, -Mathf.Sign(offset.y));
+            if (delta.x > 0 && input.x > 0.1f) return Vector2.right;
+            if (delta.x < 0 && input.x < -0.1f) return Vector2.left;
         }
 
-        return Vector2.zero;// 유효한 방향이 없으면 무시
+        // 상하 방향이 더 뚜렷한 경우만 상하 입력 허용
+        if (absY > absX * directionDominanceRatioY && absY > 0.1f)
+        {
+            if (delta.y > 0 && input.y > 0.1f) return Vector2.up;
+            if (delta.y < 0 && input.y < -0.1f) return Vector2.down;
+        }
+
+        return Vector2.zero;
     }
 
     //앞이 막혀 있는지 확인
@@ -121,12 +185,12 @@ public class BoxPush : MonoBehaviour
             if (canvas == null)
             {
                 Debug.LogError("[BoxPush] Canvas를 찾을 수 없습니다!");
+                return;
             }
         }
 
         // 프리팹 또는 캔버스가 없거나, 이미 표시 중이면 중단
         if (blockIndicatorPrefab == null || canvas == null || currentIndicator != null) return;
-        Debug.Log($"[BlockUI] Camera.main = {(Camera.main != null ? Camera.main.name : "null")}");
 
         // 플레이어 객체 찾기
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -148,7 +212,7 @@ public class BoxPush : MonoBehaviour
 
         //위에서 구한 월드 위치를 카메라 기준의 스크린 좌표로 변환
         Vector2 screenPos = cam.WorldToScreenPoint(worldPos);
-        Debug.Log($"[BlockUI] screenPos = {screenPos}");
+
         //blockIndicatorPrefab을 Canvas 안에 복제해서 생성
         currentIndicator = Instantiate(blockIndicatorPrefab, canvas.transform);
 

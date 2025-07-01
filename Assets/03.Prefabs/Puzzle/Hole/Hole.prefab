@@ -134,7 +134,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.15, y: 0.15}
+  m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
 --- !u!50 &1217843818123127171
 Rigidbody2D:
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 2896646359136230535}
   - component: {fileID: 6715204640074060299}
   - component: {fileID: 2450525469793495373}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: PlayerBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
