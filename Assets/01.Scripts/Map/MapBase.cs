@@ -1,30 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public abstract class MapBase : MonoBehaviour
 {
-	/// <summary>
-	/// 맵 스크립트가 공통적으로 처리해야 하는 것들
-	/// 
-	/// 1. 현재 맵 정보 로드
-	/// 2. 현재 맵의 워프 콜라이더 찾기
+    /// <summary>
+    /// 맵 스크립트가 공통적으로 처리해야 하는 것들
+    /// 
+    /// 1. 현재 맵 정보 로드
+    /// 2. 현재 맵의 워프 콜라이더 찾기
     /// 3. 콜라이더의 이벤트 처리
-	/// </summary>
-	
+    /// </summary>
+
     // 맵 관련
-	protected MapData mapData;
-	protected string prevMapID;
-    protected Dictionary<string, Vector2> spawnPoint;
+    protected MapData mapData;
+    protected Dictionary<string, Vector3> spawnPoint;
+    protected string prevMapID;
     private string _currentMapID;
 
-    // 임시 플레이어 포지션 변수
-    protected Vector2 _playerPosition;
+    // 플레이어 포지션 
 
 
     protected virtual void Awake()
-	{
+    {
         _currentMapID = MapManager.Instance.GetMapName();
         mapData = Database.Instance.Map.GetMapData(_currentMapID);
 
@@ -35,18 +33,27 @@ public abstract class MapBase : MonoBehaviour
 
     protected abstract void OnLoadMap();  // 맵을 호출할 때 작동하는 로직
 
-    public abstract void OnReleaseMap();  // 맵이 나갈 때 작동하는 로직
+    public virtual void OnReleaseMap()  // 맵이 나갈 때 작동하는 로직
+    {
+        // 기존에 있던 맵을 이전 맵으로 만들기
+        prevMapID = MapManager.Instance.currentMapID;
+        MapManager.Instance.lastPlayerScale = PlayerController.Instance.playerTransform.localScale;
+
+
+        // 맵을 나갈 때 트리거에 닿은 직후의 스케일 값을 저장해두기
+
+    }
 
     protected void SpawnPointSet()
     {
-        spawnPoint = new Dictionary<string, Vector2>();
-        if (mapData.left_map != "null")
+        spawnPoint = new Dictionary<string, Vector3>();
+        if (!string.IsNullOrEmpty(mapData.left_map))
             spawnPoint.Add(mapData.left_map, mapData.player_position_left);
-        if (mapData.right_map != "null")
+        if (!string.IsNullOrEmpty(mapData.right_map))
             spawnPoint.Add(mapData.right_map, mapData.player_position_right);
-        if (mapData.up_map != "null")
+        if (!string.IsNullOrEmpty(mapData.up_map))
             spawnPoint.Add(mapData.up_map, mapData.player_position_up);
-        if (mapData.down_map != "null")
+        if (!string.IsNullOrEmpty(mapData.down_map))
             spawnPoint.Add(mapData.down_map, mapData.player_position_down);
     }
 

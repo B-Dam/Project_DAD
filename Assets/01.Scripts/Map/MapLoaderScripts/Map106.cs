@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Map106 : MapBase
 {
@@ -6,23 +6,21 @@ public class Map106 : MapBase
 
     protected override void OnLoadMap()
     {
-        // ¸ÊÀ» µé¾î°¥ ¶§ ÀÛµ¿ÇÏ´Â ·ÎÁ÷
-        if (prevMapID == "001")
+        // ë§µì„ ë“¤ì–´ê°ˆ ë•Œ ì‘ë™í•˜ëŠ” ë¡œì§
+        Vector3 currentSpawnPoint;
+        if (prevMapID != null && spawnPoint.TryGetValue(prevMapID, out currentSpawnPoint))
         {
-            _playerPosition = mapData.player_position_left;
-        }
-        else if (prevMapID == "101")
-        {
-            _playerPosition = mapData.player_position_right;
+            PlayerController.Instance.playerTransform.position = currentSpawnPoint;
+            PlayerController.Instance.playerTransform.localScale = MapManager.Instance.lastPlayerScale;
         }
     }
 
     public override void OnReleaseMap()
     {
-        // ¸ÊÀ» ³ª°¥ ¶§ ÀÛµ¿ÇÏ´Â ·ÎÁ÷
+        // ë§µì„ ë‚˜ê°ˆ ë•Œ ì‘ë™í•˜ëŠ” ë¡œì§
 
         prevMapID = MapManager.Instance.currentMapID;
-        Debug.Log($"Map002¸Ê¿¡¼­ ³ª°¬½À´Ï´Ù (ÀÌÀü ¸Ê: {prevMapID})");
+        Debug.Log($"Map002ë§µì—ì„œ ë‚˜ê°”ìŠµë‹ˆë‹¤ (ì´ì „ ë§µ: {prevMapID})");
     }
 
 

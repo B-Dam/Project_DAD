@@ -21,6 +21,7 @@ public class MapManager : MonoBehaviour
     public MapBase currentActiveMapScript { get; private set; }
 
     public string currentMapID {  get; private set; }  // MapBase 스크립트가 활성화 될 때 마다 GetMapName()을 호출하여 지정해줌
+    public Vector3 lastPlayerScale;
 
     private void Awake()
     {

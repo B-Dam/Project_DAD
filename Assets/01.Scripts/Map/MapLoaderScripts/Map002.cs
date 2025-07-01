@@ -10,18 +10,17 @@ public class Map002 : MapBase
 
     protected override void OnLoadMap()
     {
-        Vector2 currentSpawnPoint;
+        Vector3 currentSpawnPoint;
         if (prevMapID != null && spawnPoint.TryGetValue(prevMapID, out currentSpawnPoint))
         {
-            _playerPosition = currentSpawnPoint;
+            PlayerController.Instance.playerTransform.position = currentSpawnPoint;
+            PlayerController.Instance.playerTransform.localScale = MapManager.Instance.lastPlayerScale;
         }
     }
 
     public override void OnReleaseMap()
     {
         // 맵을 나갈 때 작동하는 로직
-
-        // 기존에 있던 맵을 이전 맵으로 만들기
-        prevMapID = MapManager.Instance.currentMapID;
+        base.OnReleaseMap();
     }
 }

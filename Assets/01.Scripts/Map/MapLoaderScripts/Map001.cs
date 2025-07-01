@@ -1,32 +1,36 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class Map001 : MapBase
 {
-    protected override void Awake()
+    //protected override void Awake()
+    //{
+    //    base.Awake();
+    //    OnLoadMap();
+    //}
+
+    private void Start()
     {
-        base.Awake();
         OnLoadMap();
     }
 
     protected override void OnLoadMap()
 	{
-        Vector2 currentSpawnPoint;
-        if (prevMapID == null)
+        Vector3 currentSpawnPoint;
+        if (string.IsNullOrEmpty(prevMapID))
         {
-            _playerPosition = mapData.player_position_left;
-
+            PlayerController.Instance.playerTransform.position = mapData.player_position_left;
         }
-        else if (prevMapID != null && spawnPoint.TryGetValue(prevMapID, out currentSpawnPoint))
+        else if (!string.IsNullOrEmpty(prevMapID) && spawnPoint.TryGetValue(prevMapID, out currentSpawnPoint))
         {
-            _playerPosition = currentSpawnPoint;
+            PlayerController.Instance.playerTransform.position = currentSpawnPoint;
+            PlayerController.Instance.playerTransform.localScale = MapManager.Instance.lastPlayerScale;
         }
     }
 
     public override void OnReleaseMap()
     {
         // 맵을 나갈 때 작동하는 로직
-
-        // 기존에 있던 맵을 이전 맵으로 만들기
-        prevMapID = MapManager.Instance.currentMapID;
+        base.OnReleaseMap();
     }
 }
