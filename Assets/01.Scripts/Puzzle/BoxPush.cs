@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEditor;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class BoxPush : MonoBehaviour
@@ -22,7 +23,6 @@ public class BoxPush : MonoBehaviour
     private Canvas canvas;
     private GameObject currentIndicator;// 현재 표시 중인 아이콘
     private float indicatorLifetime = 0.2f;// 아이콘 유지 시간
-                                           //private float indicatorTimer = 0f;
 
     //stay 조금 지연 시키기
     private float collisionProcessCooldown = 0.3f; // 최소 간격 0.3초
@@ -37,18 +37,22 @@ public class BoxPush : MonoBehaviour
         // Rigidbody2D 설정: 직접 위치 이동할 것이므로 Kinematic으로 설정
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;//직접 위치 이동 할 거니까
-
     }
     private void Update()
     {
-
-
-        // 이동 중이면 목표 위치까지 부드럽게 이동
         if (isMoving)
         {
+            Vector2 moveDir = (targetPosition - rb.position).normalized;
+
+            if (moveDir == Vector2.zero || IsBlockedWhileMoving(moveDir))
+            {
+                //ShowBlockIndicator();
+                isMoving = false;
+                return;
+            }
+
             rb.MovePosition(Vector2.MoveTowards(rb.position, targetPosition, moveSpeed * Time.deltaTime));
 
-            // 목표 위치에 도달하면 이동 종료
             if (Vector2.Distance(rb.position, targetPosition) < 0.01f)
             {
                 rb.position = targetPosition;
@@ -56,31 +60,7 @@ public class BoxPush : MonoBehaviour
             }
         }
     }
-    private void OnDrawGizmos()
-    {
-#if UNITY_EDITOR
-        BoxCollider2D col = GetComponent<BoxCollider2D>();
-        if (col != null)
-        {
-            Handles.color = Color.red;
-            Handles.matrix = transform.localToWorldMatrix;
 
-            Vector2 half = col.size * 0.5f;
-            Vector2 offset1 = col.offset;
-
-            Vector3[] corners = new Vector3[]
-            {
-            offset1 + new Vector2(-half.x, -half.y),
-            offset1 + new Vector2(-half.x,  half.y),
-            offset1 + new Vector2( half.x,  half.y),
-            offset1 + new Vector2( half.x, -half.y),
-            offset1 + new Vector2(-half.x, -half.y) // 닫기
-            };
-
-            Handles.DrawAAPolyLine(10f, corners); // ← 여기서 3f는 선 두께
-        }
-#endif
-    }
 
     // 플레이어가 박스를 밀려고 접촉 중일 때 호출됨
     void OnCollisionStay2D(Collision2D collision)
@@ -100,7 +80,7 @@ public class BoxPush : MonoBehaviour
         // 어느 방향으로 밀었는지 판단
         Vector2 pushDirection = GetPushDirection(collision);
 
-        if (pushDirection == Vector2.zero)
+        if (pushDirection == Vector2.zero || IsBlockedForStart(pushDirection))
         {
             ShowBlockIndicator();
             pc.lastPushTime = Time.time;
@@ -108,14 +88,6 @@ public class BoxPush : MonoBehaviour
         }
         // 다음 위치 계산
         Vector2 nextPos = rb.position + pushDirection * moveDistance;
-
-        // 이동 방향에 장애물이나 다른 박스가 있다면 알림 표시 후 중단
-        if (IsBlocked(nextPos, pushDirection))
-        {
-            ShowBlockIndicator();
-            pc.lastPushTime = Time.time; // 실패해도 쿨 적용
-            return;
-        }
 
         targetPosition = nextPos;
         isMoving = true;
@@ -137,14 +109,14 @@ public class BoxPush : MonoBehaviour
             return Vector2.zero;
 
 
-        // ▶ 기준을 콜라이더 중심으로!
+        // 기준을 콜라이더 중심으로!
         Vector2 boxCenter = GetComponent<Collider2D>().bounds.center;
         Vector2 playerCenter = collision.collider.bounds.center;
         Vector2 delta = boxCenter - playerCenter;
 
         float absX = Mathf.Abs(delta.x);
         float absY = Mathf.Abs(delta.y);
-        Debug.Log($"[BoxPush] delta = {delta}, absX = {absX}, absY = {absY}, input = {input}");
+        //Debug.Log($"[BoxPush] delta = {delta}, absX = {absX}, absY = {absY}, input = {input}");
         // 좌우 방향이 더 뚜렷한 경우만 좌우 입력 허용
         if (absX > absY * directionDominanceRatioX && absX > 0.1f)
         {
@@ -162,17 +134,55 @@ public class BoxPush : MonoBehaviour
         return Vector2.zero;
     }
 
-    //앞이 막혀 있는지 확인
-    bool IsBlocked(Vector2 nextPos, Vector2 direction)
+    bool IsBlockedForStart(Vector2 direction) => IsBlocked(direction, true);
+    bool IsBlockedWhileMoving(Vector2 direction) => IsBlocked(direction, false);
+    bool IsBlocked(Vector2 direction, bool showDebug)//showDebug는 디버그용
     {
-        // 앞에 장애물이 있으면 true 반환
-        if (Physics2D.Raycast(rb.position, direction, moveDistance, obstacleLayer))
-            return true;
+        if (direction == Vector2.zero) return true;
 
-        // 다른 박스가 있으면 true 반환
-        Collider2D overlap = Physics2D.OverlapPoint(nextPos, boxLayer);
-        return overlap != null && overlap.gameObject != gameObject;
+        BoxCollider2D boxCol = GetComponent<BoxCollider2D>();
+        Vector2 boxSize = boxCol.bounds.size;
+        Vector2 boxCenter = boxCol.bounds.center;
+
+        float thickness = 0.01f;
+        Vector2 castSize;
+
+        if (Mathf.Abs(direction.x) > 0.1f)
+            castSize = new Vector2(1f, Mathf.Max(0.05f, boxSize.y - thickness));
+        else
+            castSize = new Vector2(Mathf.Max(0.05f, boxSize.x - thickness), 1f - 0.95f);
+
+        Vector2 castCenter = boxCenter + direction * (1f * 0.5f);
+
+        Collider2D[] hits = Physics2D.OverlapBoxAll(castCenter, castSize, 0f, obstacleLayer | boxLayer);
+        foreach (var hit in hits)
+        {
+            if (hit != null && hit.gameObject != gameObject)
+            {
+                int hitLayer = hit.gameObject.layer;
+
+                bool isUnmovable =
+                  hitLayer == LayerMask.NameToLayer("Obstacle") ||
+                  hitLayer == LayerMask.NameToLayer("PlayerBlocker")||
+                   hit.CompareTag("Box"); ;
+
+                if (showDebug)
+                    Debug.Log($"[BlockCheck] 감지됨: {hit.name}, 레이어: {LayerMask.LayerToName(hitLayer)}");
+
+                // 이미지 띄우는 건 못 미는 경우만
+                if (isUnmovable && showDebug)
+                {
+                    //ShowBlockIndicator();
+                }
+
+
+                return true;
+            }
+        }
+
+        return false;
     }
+
 
     //실패 알림 아이콘 생성
     void ShowBlockIndicator()
@@ -239,5 +249,30 @@ public class BoxPush : MonoBehaviour
         //return playerPos + offset;
 
         return playerPos + new Vector3(0f, 1.2f, 0f);//단순 머리위 고정
+    }
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        if (col != null)
+        {
+            Handles.color = Color.blue;
+            Handles.matrix = transform.localToWorldMatrix;
+
+            Vector2 half = col.size * 0.5f;
+            Vector2 offset1 = col.offset;
+
+            Vector3[] corners = new Vector3[]
+            {
+            offset1 + new Vector2(-half.x, -half.y),
+            offset1 + new Vector2(-half.x,  half.y),
+            offset1 + new Vector2( half.x,  half.y),
+            offset1 + new Vector2( half.x, -half.y),
+            offset1 + new Vector2(-half.x, -half.y)
+            };
+            Handles.DrawAAPolyLine(10f, corners);
+
+        }
+#endif
     }
 }
