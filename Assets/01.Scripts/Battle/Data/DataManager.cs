@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class DataManager : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class DataManager : MonoBehaviour
 
     [Header("SO 로드")]
     [SerializeField] CharacterDataSO defaultEnemy;
-    
+
     [Serializable]
     public class SaveMetadata
     {
@@ -18,7 +19,7 @@ public class DataManager : MonoBehaviour
         public string chapterName; // 저장용 챕터 이름
         public string questName;   // 저장용 퀘스트 이름
     }
-    
+
     [Serializable]
     public class GameState
     {
@@ -29,15 +30,15 @@ public class DataManager : MonoBehaviour
         public string currentQuest;
         public string[] seenDialogueIDs;
     }
-    
+
     public CharacterDataSO playerData { get; private set; }
     public CharacterDataSO enemyData { get; private set; }
     public CardData[] allCards { get; private set; }   // 모든 카드 SO
-    
-    public Dictionary<string, QuestData>      questTable;
-    public Dictionary<string, CharacterData>  characterTable;
-    public Dictionary<string, DialogueData>  dialogueTable;
-    
+
+    public Dictionary<string, QuestData> questTable;
+    public Dictionary<string, CharacterData> characterTable;
+    public Dictionary<string, DialogueData> dialogueTable;
+
     void Awake()
     {
         if (Instance == null)
@@ -66,15 +67,15 @@ public class DataManager : MonoBehaviour
         else
             enemyData = chars.First(c => c.characterId != playerData.characterId);
     }
-    
+
     private void LoadAllCsvData()
     {
-        questTable     = CsvDatabase.LoadCsvDict("questDB",    f => new QuestData(f));
-        characterTable = CsvDatabase.LoadCsvDict("characterDB",f => new CharacterData(f));
-        dialogueTable  = CsvDatabase.LoadCsvDict("dialogueDB", f => new DialogueData(f));
+        questTable = CsvDatabase.LoadCsvDict("questDB", f => new QuestData(f));
+        characterTable = CsvDatabase.LoadCsvDict("characterDB", f => new CharacterData(f));
+        dialogueTable = CsvDatabase.LoadCsvDict("dialogueDB", f => new DialogueData(f));
         Debug.Log($"퀘스트 {questTable.Count}개, 캐릭터 {characterTable.Count}개, 대화 {dialogueTable.Count}개 로드 완료");
     }
-    
+
     /// <summary>
     /// 런타임에 적을 변경하고 싶을 때 호출
     /// </summary>
@@ -86,7 +87,7 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// 플레이어 덱 구성용: ownerID가 playerData의 ID와 같고, 1성 카드만 반환
     /// </summary>
-    
+
     public CardData[] GetPlayerCards()
     {
         return allCards
@@ -110,14 +111,14 @@ public class DataManager : MonoBehaviour
     public CardData GetCard(string displayName, int rank)
     {
         var card = allCards
-            .FirstOrDefault(c => 
+            .FirstOrDefault(c =>
                 c.displayName == displayName &&
-                c.rank        == rank);
+                c.rank == rank);
         if (card == null)
             Debug.LogError($"GetCard 실패: '{displayName}' rank={rank} 카드가 없습니다.");
         return card;
     }
-    
+
     // 메타 정보만 불러오기
     public static SaveMetadata GetSaveMetadata(int slot)
     {
@@ -139,26 +140,27 @@ public class DataManager : MonoBehaviour
     {
         // DataManager.SaveGame(0) 호출로 자동 저장
         string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
-        
+
         // 메타 정보
         PlayerPrefs.SetString(key + "_Timestamp", DateTime.Now.Ticks.ToString());
         PlayerPrefs.SetString(key + "_Chapter", CurrentChapterName());
-        PlayerPrefs.SetString(key + "_Quest",   CurrentQuestName());
-        
+        PlayerPrefs.SetString(key + "_Quest", CurrentQuestName());
+
         // GameState 생성
-        GameState state = new GameState {
-            sceneName         = SceneManager.GetActiveScene().name,
-            playerPosition    = Player.Instance.transform.position,
-            playerRotation    = Player.Instance.transform.rotation,
-            currentChapter    = CurrentChapterName(),
-            currentQuest      = CurrentQuestName(),
-            seenDialogueIDs   = DialogueManager.Instance
+        GameState state = new GameState
+        {
+            sceneName = SceneManager.GetActiveScene().name,
+            playerPosition = Player.Instance.transform.position,
+            playerRotation = Player.Instance.transform.rotation,
+            currentChapter = CurrentChapterName(),
+            currentQuest = CurrentQuestName(),
+            seenDialogueIDs = DialogueManager.Instance
                                                .GetAllSeenIDs()  // HashSet<string> → string[]
                                                .ToArray()
         };
         string json = JsonUtility.ToJson(state);
         PlayerPrefs.SetString(key + "_Data", json);
-        
+
         PlayerPrefs.Save();
         Debug.Log($"SaveGame: 슬롯{slot} 저장 완료 → {json}");
     }
@@ -169,45 +171,52 @@ public class DataManager : MonoBehaviour
     {
         string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
         var meta = GetSaveMetadata(slot);
-        if (meta == null) { Debug.LogWarning($"슬롯{slot}에 데이터 없음"); return; }
-        
-        if (!PlayerPrefs.HasKey(key + "_Data")) {
+        if (meta == null)
+        {
+            Debug.LogWarning($"슬롯{slot}에 데이터 없음");
+            return;
+        }
+        if (!PlayerPrefs.HasKey(key + "_Data"))
+        {
             Debug.LogWarning($"슬롯{slot}의 GameState 데이터 없음");
             return;
         }
-        
+
         string json = PlayerPrefs.GetString(key + "_Data");
         GameState state = JsonUtility.FromJson<GameState>(json);
 
-        ApplyGameState(state);
+        // ApplyGameState 호출을 제거하고, 코루틴만 실행
+        Instance.StartCoroutine(Instance.RestoreCoroutine(state));
         Debug.Log($"LoadGame: 슬롯{slot} 불러옴 → 씬:{state.sceneName}");
     }
-    
-    private static void ApplyGameState(GameState state)
+
+    private IEnumerator RestoreCoroutine(GameState state)
     {
-        SceneManager.sceneLoaded += OnLoaded;
-        SceneManager.LoadScene(state.sceneName);
-        // 씬이 로드됐을 때만 복원
-        void OnLoaded(Scene scene, LoadSceneMode mode)
+        // 씬 비동기 로드
+        var op = SceneManager.LoadSceneAsync(state.sceneName);
+        yield return op;       // 씬 로드 완료 대기
+        yield return null;     // 한 프레임 더 대기
+
+        // 플레이어 위치·회전 복원
+        if (Player.Instance != null)
         {
-            if (scene.name != state.sceneName) return;
-            
             Player.Instance.transform.position = state.playerPosition;
             Player.Instance.transform.rotation = state.playerRotation;
-            
-            // 대화 진행 ID 복원
-            DialogueManager.Instance.LoadSeenIDs(state.seenDialogueIDs);
-            
-            // 등록 해제
-            SceneManager.sceneLoaded -= OnLoaded;
         }
+        else Debug.LogWarning("Restore: Player.Instance is null");
+
+        // 대화 진행 상태 복원
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.LoadSeenIDs(state.seenDialogueIDs);
+        else
+            Debug.LogWarning("Restore: DialogueManager.Instance is null");
     }
 
     static string CurrentChapterName()
     {
         // DataManager 인스턴스가 없으면 빈 문자열 반환
         if (Instance == null) return string.Empty;
-        
+
         // DialogueManager가 없으면 빈 문자열 반환
         if (DialogueManager.Instance == null) return string.Empty;
 
@@ -228,7 +237,7 @@ public class DataManager : MonoBehaviour
     {
         // DataManager 인스턴스가 없으면 빈 문자열 반환
         if (Instance == null) return string.Empty;
-        
+
         // DialogueManager가 없으면 빈 문자열 반환
         if (DialogueManager.Instance == null) return string.Empty;
 

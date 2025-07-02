@@ -7,5 +7,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 }
