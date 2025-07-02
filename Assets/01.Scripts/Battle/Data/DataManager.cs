@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -169,40 +170,45 @@ public class DataManager : MonoBehaviour
     {
         string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
         var meta = GetSaveMetadata(slot);
-        if (meta == null) { Debug.LogWarning($"슬롯{slot}에 데이터 없음"); return; }
-        
+        if (meta == null) { 
+            Debug.LogWarning($"슬롯{slot}에 데이터 없음"); 
+            return; 
+        }
         if (!PlayerPrefs.HasKey(key + "_Data")) {
             Debug.LogWarning($"슬롯{slot}의 GameState 데이터 없음");
             return;
         }
-        
-        string json = PlayerPrefs.GetString(key + "_Data");
+
+        string json  = PlayerPrefs.GetString(key + "_Data");
         GameState state = JsonUtility.FromJson<GameState>(json);
 
-        ApplyGameState(state);
+        // ApplyGameState 호출을 제거하고, 코루틴만 실행
+        Instance.StartCoroutine(Instance.RestoreCoroutine(state));
         Debug.Log($"LoadGame: 슬롯{slot} 불러옴 → 씬:{state.sceneName}");
     }
     
-    private static void ApplyGameState(GameState state)
+    private IEnumerator RestoreCoroutine(GameState state)
     {
-        SceneManager.sceneLoaded += OnLoaded;
-        SceneManager.LoadScene(state.sceneName);
-        // 씬이 로드됐을 때만 복원
-        void OnLoaded(Scene scene, LoadSceneMode mode)
+        // 씬 비동기 로드
+        var op = SceneManager.LoadSceneAsync(state.sceneName);
+        yield return op;       // 씬 로드 완료 대기
+        yield return null;     // 한 프레임 더 대기
+
+        // 플레이어 위치·회전 복원
+        if (Player.Instance != null)
         {
-            if (scene.name != state.sceneName) return;
-            
             Player.Instance.transform.position = state.playerPosition;
             Player.Instance.transform.rotation = state.playerRotation;
-            
-            // 대화 진행 ID 복원
-            DialogueManager.Instance.LoadSeenIDs(state.seenDialogueIDs);
-            
-            // 등록 해제
-            SceneManager.sceneLoaded -= OnLoaded;
         }
-    }
+        else Debug.LogWarning("Restore: Player.Instance is null");
 
+        // 대화 진행 상태 복원
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.LoadSeenIDs(state.seenDialogueIDs);
+        else
+            Debug.LogWarning("Restore: DialogueManager.Instance is null");
+    }
+    
     static string CurrentChapterName()
     {
         // DataManager 인스턴스가 없으면 빈 문자열 반환
