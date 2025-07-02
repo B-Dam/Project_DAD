@@ -1,14 +1,38 @@
-ï»¿using UnityEngine;
+using UnityEngine;
 
 public class WarpCollider : ColliderBase
 {
+
+
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(PlayerTag))
         {
-            string warpDir = gameObject.name;  // Right, Left ë“±
+            string warpDir = gameObject.name;
 
-            MapMove(warpDir);
+            switch (warpDir)
+            {
+                case "Right":
+                    // ¿À¸¥ÂÊ ¸ÊÀ¸·Î ÀÌµ¿ÇÏ´Â ¸Þ¼Òµå È£Ãâ
+                    MoveToRightMap?.Invoke();
+                    break;
+                case "Left":
+                    // ¿ÞÂÊ ¸ÊÀ¸·Î ÀÌµ¿ÇÏ´Â ¸Þ¼Òµå È£Ãâ
+                    MoveToLeftMap?.Invoke(); 
+                    break;
+                case "Up":
+                    // À§ÂÊ ¸ÊÀ¸·Î ÀÌµ¿ÇÏ´Â ¸Þ¼Òµå È£Ãâ
+                    MoveToUpMap?.Invoke(); 
+                    break;
+                case "Down":
+                    // ¾Æ·¡ÂÊ ¸ÊÀ¸·Î ÀÌµ¿ÇÏ´Â ¸Þ¼Òµå È£Ãâ
+                    MoveToDownMap?.Invoke(); 
+                    break;
+                default:
+                    break;
+            }
         }
     }
+
+
 }

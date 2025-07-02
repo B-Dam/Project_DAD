@@ -24,7 +24,7 @@ public class HoleTrigger : MonoBehaviour
             }
         }
     }
-    bool IsFullyInside(Collider2D inner, Collider2D outer)
+    bool IsFullyInside(Collider2D outer, Collider2D inner)
     {
         //지정된 좌표가 outer 콜라이더의 경계 안에 포함되어 있는지 확인
         return outer.bounds.Contains(inner.bounds.min) &&//inner 콜라이더의 좌하단 꼭짓점 좌표

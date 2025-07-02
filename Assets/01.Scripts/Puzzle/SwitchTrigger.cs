@@ -48,7 +48,7 @@ public class SwitchTrigger : MonoBehaviour
 
         if (openDoorPrefab != null && instantiatedOpenDoor == null)
         {
-            instantiatedOpenDoor = Instantiate(openDoorPrefab, targetDoor.transform.position, Quaternion.identity);
+            instantiatedOpenDoor = Instantiate(openDoorPrefab, targetDoor.transform.position, openDoorPrefab.transform.rotation);//Quaternion.identity회전없는상태
         }
     }
     private void CloseDoor()

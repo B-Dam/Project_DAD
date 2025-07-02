@@ -177,3 +177,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetDoor: {fileID: 0}
   switchCollider: {fileID: 2069544919789783608}
+  openDoorPrefab: {fileID: 3062157015245448347, guid: 1ca3b60150859b34aa38bf22df413e20, type: 3}

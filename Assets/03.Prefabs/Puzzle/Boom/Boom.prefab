@@ -175,4 +175,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb467c1661877a4c95f8d61059fd5dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resetUI: {fileID: 0}
+  canvas: {fileID: 0}
+  boomEffectPrefab: {fileID: 3181855367259496698, guid: 116bef04f0b882d47838ad68bc67f097, type: 3}
