@@ -29,7 +29,7 @@ public class HintMode : MonoBehaviour
     public Image hintDurationTimeBar;
     public Image hintCooldownTimeBar;
 
-    public Button resetBtn;
+    public Button HintBtn;
 
     public HintLineConnector[] hintLineRenderer;
 
@@ -43,9 +43,9 @@ public class HintMode : MonoBehaviour
         ResetHintCount();
 
         // 버튼이 할당되어 있으면 클릭 이벤트 연결
-        if (resetBtn != null)
+        if (HintBtn != null)
         {
-            resetBtn.onClick.AddListener(TryUseHintButton);
+            HintBtn.onClick.AddListener(TryUseHintButton);
         }
     }
     private void Update()

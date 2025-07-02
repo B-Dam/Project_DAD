@@ -6,30 +6,26 @@ using TMPro;
 public class SaveLoadManager : MonoBehaviour
 {
     public enum Mode { Save, Load }
-
-    [Header("Mode 선택 버튼")]
-    [SerializeField] Button saveTabButton;
-    [SerializeField] Button loadTabButton;
-
+    
     [Header("컨텐츠 패널")]
     [SerializeField] GameObject saveContent;  
     [SerializeField] GameObject loadContent;
 
     [Header("슬롯 버튼 & 라벨")]
     [SerializeField] Button[] saveSlots;     // [0]=Auto, [1..3]=Manual
-    [SerializeField] TextMeshPro[] saveSlotLabels;
+    [SerializeField] TMP_Text[] saveSlotLabels;
     [SerializeField] Button[] loadSlots;
-    [SerializeField] TextMeshPro[] loadSlotLabels;
+    [SerializeField] TMP_Text[] loadSlotLabels;
 
     [Header("저장 확인 패널")]
     [SerializeField] GameObject saveConfirmPanel;
-    [SerializeField] TextMeshPro saveConfirmText;
+    [SerializeField] TMP_Text saveConfirmText;
     [SerializeField] Button saveYesButton;
     [SerializeField] Button saveNoButton;
 
     [Header("불러오기 확인 패널")]
     [SerializeField] GameObject loadConfirmPanel;
-    [SerializeField] TextMeshPro loadConfirmText;
+    [SerializeField] TMP_Text loadConfirmText;
     [SerializeField] Button loadYesButton;
     [SerializeField] Button loadNoButton;
 
@@ -38,15 +34,18 @@ public class SaveLoadManager : MonoBehaviour
 
     void Start()
     {
-        // 
-        saveTabButton.onClick.AddListener(() => SwitchMode(Mode.Save));
-        loadTabButton.onClick.AddListener(() => SwitchMode(Mode.Load));
-
         for (int i = 0; i < saveSlots.Length; i++)
-            saveSlots[i].onClick.AddListener(() => OnClickSaveSlot(i));
-        for (int i = 0; i < loadSlots.Length; i++)
-            loadSlots[i].onClick.AddListener(() => OnClickLoadSlot(i));
+        {
+            int idx = i;
+            saveSlots[idx].onClick.AddListener(() => OnClickSaveSlot(idx));
+        }
 
+        for (int i = 0; i < loadSlots.Length; i++)
+        {
+            int idx = i;
+            loadSlots[i].onClick.AddListener(() => OnClickLoadSlot(idx));
+        }
+        
         saveYesButton.onClick.AddListener(OnConfirmSave);
         saveNoButton.onClick.AddListener(() => saveConfirmPanel.SetActive(false));
         loadYesButton.onClick.AddListener(OnConfirmLoad);
@@ -55,7 +54,7 @@ public class SaveLoadManager : MonoBehaviour
         SwitchMode(Mode.Save);
     }
 
-    void SwitchMode(Mode mode)
+    public void SwitchMode(Mode mode)
     {
         currentMode = mode;
         saveContent.SetActive(mode == Mode.Save);
@@ -75,7 +74,7 @@ public class SaveLoadManager : MonoBehaviour
             saveSlotLabels[i].text = hasData
                 ? $"{data.timestamp:yyyy.MM.dd HH:mm}\n{data.chapterName} - {data.questName}"
                 : "No Data";
-            // 자동(Auto) 슬롯(0번)은 Save 모드에서 비활성화
+            // 자동저장 슬롯(0번)은 Save 모드에서 비활성화
             saveSlots[i].interactable = !(i == 0 && currentMode == Mode.Save);
             
             // Load 모드에선 데이터 없는 슬롯 비활성화

@@ -1,126 +1,66 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public abstract class MapBase : MonoBehaviour
 {
-	/// <summary>
-	/// ¸Ê ½ºÅ©¸³Æ®°¡ °øÅëÀûÀ¸·Î Ã³¸®ÇØ¾ß ÇÏ´Â °Íµé
-	/// 
-	/// 1. ÇöÀç ¸Ê Á¤º¸ ·Îµå
-	/// 2. ÇöÀç ¸ÊÀÇ ¿öÇÁ Äİ¶óÀÌ´õ Ã£±â
-    /// 3. Äİ¶óÀÌ´õÀÇ ÀÌº¥Æ® Ã³¸®
-	/// </summary>
-	
-    // ¸Ê °ü·Ã
-	protected MapData mapData;
-	protected string prevMapID;
-    private string _currentMapName;
-	private GameObject _colliders;
+    /// <summary>
+    /// ë§µ ìŠ¤í¬ë¦½íŠ¸ê°€ ê³µí†µì ìœ¼ë¡œ ì²˜ë¦¬í•´ì•¼ í•˜ëŠ” ê²ƒë“¤
+    /// 
+    /// 1. í˜„ì¬ ë§µ ì •ë³´ ë¡œë“œ
+    /// 2. í˜„ì¬ ë§µì˜ ì›Œí”„ ì½œë¼ì´ë” ì°¾ê¸°
+    /// 3. ì½œë¼ì´ë”ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬
+    /// </summary>
 
-    // ÀÓ½Ã ÇÃ·¹ÀÌ¾î º¯¼ö
-    protected Vector2 _playerPosition;
+    // ë§µ ê´€ë ¨
+    protected MapData mapData;
+    protected Dictionary<string, Vector3> spawnPoint;
+    protected string prevMapID;
+    private string _currentMapID;
+
+    // í”Œë ˆì´ì–´ í¬ì§€ì…˜ 
 
 
     protected virtual void Awake()
-	{
-		_colliders = GameObject.Find("Colliders");
-        _currentMapName = MapManager.Instance.GetMapName();
-
-        mapData = Database.Instance.Map.GetMapData(_currentMapName);
-		Debug.Log($"ÇöÀç ¸ÊÀº {_currentMapName} ÀÔ´Ï´Ù.");
-
-    }
-
-    protected abstract void OnLoadMap();  // ¸ÊÀ» È£ÃâÇÒ ¶§ ÀÛµ¿ÇÏ´Â ·ÎÁ÷
-
-    protected abstract void OnReleaseMap();  // ¸ÊÀÌ ³ª°¥ ¶§ ÀÛµ¿ÇÏ´Â ·ÎÁ÷
-
-    
-
-
-
-
-
-}
-
-public abstract class ColliderBase : MonoBehaviour
-{
-    protected virtual void Awake()
     {
-        // ¸Ê ÀÌµ¿ Äİ¶óÀÌ´õ Ã£±â
-        GetColliderComponent();
+        _currentMapID = MapManager.Instance.GetMapName();
+        mapData = Database.Instance.Map.GetMapData(_currentMapID);
 
-        MoveToRightMap += OnRightMap;
-        MoveToLeftMap += OnLeftMap;
-        MoveToUpMap += OnUpMap;
-        MoveToDownMap += OnDownMap;
+        SpawnPointSet();
+
+        Debug.Log($"í˜„ì¬ ë§µì€ {_currentMapID} ì…ë‹ˆë‹¤.");
     }
 
-    // ¸Ê ¿öÇÁ °ü·Ã
-    protected string PlayerTag = "Player";
-    protected Action MoveToRightMap;
-    protected Action MoveToLeftMap;
-    protected Action MoveToUpMap;
-    protected Action MoveToDownMap;
-    protected Dictionary<string, Action> warpColliders;
+    protected abstract void OnLoadMap();  // ë§µì„ í˜¸ì¶œí•  ë•Œ ì‘ë™í•˜ëŠ” ë¡œì§
 
-    protected abstract void OnTriggerEnter2D(Collider2D collision);
-
-    private void GetColliderComponent()
+    public virtual void OnReleaseMap()  // ë§µì´ ë‚˜ê°ˆ ë•Œ ì‘ë™í•˜ëŠ” ë¡œì§
     {
-        warpColliders = new Dictionary<string, Action>();
+        // ê¸°ì¡´ì— ìˆë˜ ë§µì„ ì´ì „ ë§µìœ¼ë¡œ ë§Œë“¤ê¸°
+        prevMapID = MapManager.Instance.currentMapID;
+        MapManager.Instance.lastPlayerScale = PlayerController.Instance.playerTransform.localScale;
 
-        GameObject obj = GameObject.Find("Colliders");
 
-        for (int i = 0; i < obj.transform.childCount; i++)
-        {
-            Transform child = obj.transform.GetChild(i);
-            Collider2D childCollider = child.GetComponent<Collider2D>();
+        // ë§µì„ ë‚˜ê°ˆ ë•Œ íŠ¸ë¦¬ê±°ì— ë‹¿ì€ ì§í›„ì˜ ìŠ¤ì¼€ì¼ ê°’ì„ ì €ì¥í•´ë‘ê¸°
 
-            switch (child.name)
-            {
-                case "Right":
-                    warpColliders.Add(childCollider.name, MoveToRightMap);
-                    Debug.Log("Right collider added.");
-                    break;
-                case "Left":
-                    warpColliders.Add(childCollider.name, MoveToLeftMap);
-                    Debug.Log("Left collider added.");
-                    break;
-                case "Up":
-                    warpColliders.Add(childCollider.name, MoveToUpMap);
-                    Debug.Log("Up collider added.");
-                    break;
-                case "Down":
-                    warpColliders.Add(childCollider.name, MoveToDownMap);
-                    Debug.Log("Down collider added.");
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
-    private void OnRightMap()
+    protected void SpawnPointSet()
     {
-        Debug.Log("¿À¸¥ÂÊ ¸ÊÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.");
+        spawnPoint = new Dictionary<string, Vector3>();
+        if (!string.IsNullOrEmpty(mapData.left_map))
+            spawnPoint.Add(mapData.left_map, mapData.player_position_left);
+        if (!string.IsNullOrEmpty(mapData.right_map))
+            spawnPoint.Add(mapData.right_map, mapData.player_position_right);
+        if (!string.IsNullOrEmpty(mapData.up_map))
+            spawnPoint.Add(mapData.up_map, mapData.player_position_up);
+        if (!string.IsNullOrEmpty(mapData.down_map))
+            spawnPoint.Add(mapData.down_map, mapData.player_position_down);
     }
 
-    protected void OnLeftMap()
-    {
-        Debug.Log("¿ŞÂÊ ¸ÊÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.");
-    }
-
-    protected void OnUpMap()
-    {
-        Debug.Log("À§ÂÊ ¸ÊÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.");
-    }
-
-    protected void OnDownMap()
-    {
-        Debug.Log("¾Æ·¡ÂÊ ¸ÊÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.");
-    }
+    /// <summary>
+    /// 1. ë”•ì…”ë„ˆë¦¬ prevMapID, player_position ë¬¶ì–´ë‘ê¸°
+    /// 2. ë§µì„ ë„˜ì–´ê°ˆ ë•Œ ê¸°ì¡´ì— ìˆë˜ ë§µì„ prevMapIDë¡œ ë„˜ê¸°ê¸°
+    /// 3. ë§µì„ ë„˜ì–´ê°€ë©´ OnLoadMap í•¨ìˆ˜ì—ì„œ prevMapID ê¸°ì¤€ í”Œë ˆì´ì–´ê°€ ë„˜ì–´ê°„ ë°©í–¥ì— ìˆëŠ” ë§µì˜ ìŠ¤í° í¬ì¸íŠ¸ë¡œ ì´ë™í•˜ê¸°
+    /// </summary>>
 
 }
