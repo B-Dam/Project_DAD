@@ -153,4 +153,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetA: {fileID: 0}
   targetB: {fileID: 0}
-  lineParticles: {fileID: 3472902243940389595, guid: 45162b853a7e8eb4e8a86c5557a4c5f2, type: 3}
+  lineParticlePrefab: {fileID: 3472902243940389595, guid: 45162b853a7e8eb4e8a86c5557a4c5f2, type: 3}

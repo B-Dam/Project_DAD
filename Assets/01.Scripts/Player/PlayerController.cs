@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [Header("막힘 알림")]
     public GameObject blockIndicatorPrefab;
     public LayerMask obstacleLayer;
+    public LayerMask playerBlockerLayer;
     private Canvas canvas;
 
     private void Awake()
@@ -122,7 +123,7 @@ public class PlayerController : MonoBehaviour
         Vector2 dir = lastMoveInput.normalized;
         float distance = 0.7f;
 
-        RaycastHit2D hit = Physics2D.Raycast(origin, dir, distance, obstacleLayer);
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir, distance, obstacleLayer | playerBlockerLayer);
         if (hit.collider != null)
         {
             GameObject hitObj = hit.collider.gameObject;

@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
-public class SwitchTrigger : MonoBehaviour
+public class SwitchTrigger1 : MonoBehaviour
 {
-    public GameObject targetDoor;
+    public GameObject targetA;
+    public GameObject targetB;
     public Collider2D switchCollider;
-    [SerializeField] private GameObject openDoorPrefab;
 
     private bool isActivated = false; // 열린 상태 확인용
-    private GameObject instantiatedOpenDoor; // 생성된 열린 문 오브젝트 저장
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -18,7 +17,7 @@ public class SwitchTrigger : MonoBehaviour
         {
             Debug.Log(" 스위치가 대상 안에 완전히 들어옴 → 문 열기");
 
-            OpenDoor();
+            OpenTagetA();
 
             isActivated = true;
         }
@@ -36,30 +35,28 @@ public class SwitchTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Box"))
         {
-            CloseDoor();
-
+            CloseTagetB();
             isActivated = false;
         }
     }
-    private void OpenDoor()
+    private void OpenTagetA()
     {
-        if (targetDoor != null)
-            targetDoor.SetActive(false);
+        if (targetA != null)
+            targetA.SetActive(true);
 
-        if (openDoorPrefab != null && instantiatedOpenDoor == null)
+        if (targetB != null)
         {
-            instantiatedOpenDoor = Instantiate(openDoorPrefab, targetDoor.transform.position, openDoorPrefab.transform.rotation);//Quaternion.identity회전없는상태
+            targetB.SetActive(false);
         }
     }
-    private void CloseDoor()
+    private void CloseTagetB()
     {
-        if (targetDoor != null)
-            targetDoor.SetActive(true);
+        if (targetA != null)
+            targetA.SetActive(false);
 
-        if (instantiatedOpenDoor != null)
+        if (targetB != null)
         {
-            Destroy(instantiatedOpenDoor);
-            instantiatedOpenDoor = null;
+            targetB.SetActive(true);
         }
     }
 }

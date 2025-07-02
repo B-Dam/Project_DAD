@@ -1,25 +1,22 @@
 fileFormatVersion: 2
-guid: fd29ce72c26b6b84cbb7907c1536bbfb
+guid: 99de41c47dc282d4580e33335a65f551
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8258279479603881886
-    second: Barn structures_0
+      213: -1429771245721155302
+    second: mono_attack_0
   - first:
-      213: 4171897060135089035
-    second: Barn structures_1
+      213: -395357810626270214
+    second: mono_attack_1
   - first:
-      213: 4338649226449822077
-    second: Barn structures_2
+      213: 2314300395222585145
+    second: mono_attack_2
   - first:
-      213: -8095228434760745604
-    second: Barn structures_3
+      213: -6948878370628318716
+    second: mono_attack_3
   - first:
-      213: -5306670004362210327
-    second: Barn structures_4
-  - first:
-      213: 931112833711837319
-    second: Barn structures_5
+      213: -4942500821495727463
+    second: mono_attack_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -66,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -111,30 +108,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Barn structures_0
+      name: mono_attack_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 49
-        width: 16
-        height: 15
+        x: 13
+        y: 25
+        width: 88
+        height: 75
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +127,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e97efa5be6d4b9270800000000000000
-      internalID: 8258279479603881886
+      spriteID: a1909b490ae682ce0800000000000000
+      internalID: -1429771245721155302
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Barn structures_1
+      name: mono_attack_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
-        width: 17
-        height: 16
+        x: 111
+        y: 24
+        width: 88
+        height: 76
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,20 +149,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b8339d4c54e85e930800000000000000
-      internalID: 4171897060135089035
+      spriteID: afbe17a7a28638af0800000000000000
+      internalID: -395357810626270214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Barn structures_2
+      name: mono_attack_2
       rect:
         serializedVersion: 2
-        x: 19
-        y: 34
-        width: 26
-        height: 28
+        x: 207
+        y: 23
+        width: 94
+        height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +171,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d71a09bfb7af53c30800000000000000
-      internalID: 4338649226449822077
+      spriteID: 93fc9c0a2fb0e1020800000000000000
+      internalID: 2314300395222585145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Barn structures_3
+      name: mono_attack_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
-        width: 30
-        height: 16
+        x: 314
+        y: 23
+        width: 94
+        height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,52 +193,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c7db17201a8f7af80800000000000000
-      internalID: -8095228434760745604
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Barn structures_4
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 2
-        width: 13
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9e315c93fbbea56b0800000000000000
-      internalID: -5306670004362210327
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Barn structures_5
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 0
-        width: 18
-        height: 15
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7809333603afbec00800000000000000
-      internalID: 931112833711837319
+      spriteID: 99abba870b5b86bb0800000000000000
+      internalID: -4942500821495727463
       vertices: []
       indices: 
       edges: []
@@ -263,7 +203,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5cf4c507d4d556e408ab23623cef3fd0
+    spriteID: 8f8223c7fdb55564282eb08f9d946524
     internalID: 0
     vertices: []
     indices: 
@@ -273,12 +213,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Barn structures_0: 8258279479603881886
-      Barn structures_1: 4171897060135089035
-      Barn structures_2: 4338649226449822077
-      Barn structures_3: -8095228434760745604
-      Barn structures_4: -5306670004362210327
-      Barn structures_5: 931112833711837319
+      mono_attack_0: -1429771245721155302
+      mono_attack_1: -395357810626270214
+      mono_attack_2: 2314300395222585145
+      mono_attack_3: -6948878370628318716
+      mono_attack_4: -4942500821495727463
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
