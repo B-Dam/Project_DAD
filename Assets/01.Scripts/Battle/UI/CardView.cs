@@ -10,7 +10,8 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     [SerializeField] Image iconImage;
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI descText;
-    [SerializeField] TextMeshProUGUI costText;
+    [SerializeField] TextMeshProUGUI rankText;
+    [SerializeField] TextMeshProUGUI TypeText;
     
     [HideInInspector] public RectTransform enemyDropZone;
 
@@ -43,7 +44,8 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         // UI 바인딩
         iconImage.sprite = data.icon;
         nameText.text    = data.displayName;
-        costText.text    = data.costAP.ToString();
+        rankText.text    = data.rank.ToString();
+        TypeText.text    = data.typePrimary.ToString();
         descText.text    = TextFormatter.Format(
             data.effectText,
             new System.Collections.Generic.Dictionary<string,string> {
