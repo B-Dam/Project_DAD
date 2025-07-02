@@ -1,27 +1,33 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
     private DialogueDatabase.DialogueLine[] currentDialogueLines;
+    private string[] currentDialogueIDs;
     private int dialogueIndex = 0;
     private bool isDialogueActive = false;
+    
+    // 대화 ID별로 본 여부만 저장
+    private HashSet<string> seenIDs = new HashSet<string>();
 
+    [Header("UI 컴포넌트")]
     public GameObject dialoguePanel;
     public UnityEngine.UI.Image dialogBoxBackgroundImage;
     public TMPro.TextMeshProUGUI speakerText;
     public TMPro.TextMeshProUGUI dialogueText;
 
-    // ✅ 깜빡이는 UX 이미지
+    [Header("깜빡이는 이미지")]
     public UnityEngine.UI.Image uxBlinkImage;
     private Coroutine blinkCoroutine;
 
-    // ✅ 쿨타임 관련
+    [Header("쿨타임 관련")]
     private float lastDialogueEndTime = -999f;
     public float dialogueCooldown = 0.5f;
-
     private float dialogueInputDelay = 0.1f;
     private float dialogueStartTime;
 
@@ -30,6 +36,7 @@ public class DialogueManager : MonoBehaviour
     private string fullText = "";
     private float typingSpeed = 0.02f; // 글자당 시간 (조절 가능)
 
+    [Header("컷씬 이미지")]
     public UnityEngine.UI.Image cutsceneImage;
 
     private void Awake()
@@ -73,6 +80,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueIDs == null || dialogueIDs.Length == 0) return;
 
+        currentDialogueIDs = dialogueIDs;
         currentDialogueLines = new DialogueDatabase.DialogueLine[dialogueIDs.Length];
         for (int i = 0; i < dialogueIDs.Length; i++)
         {
@@ -120,6 +128,12 @@ public class DialogueManager : MonoBehaviour
     {
         var line = currentDialogueLines[dialogueIndex];
         speakerText.text = line.speaker;
+        
+        // 대화 본 ID만 기록 (StartDialogueByIDs 통해 설정된 ID 사용)
+        if (currentDialogueIDs != null && dialogueIndex < currentDialogueIDs.Length)
+        {
+            seenIDs.Add(currentDialogueIDs[dialogueIndex]);
+        }
 
         // 컷신 이미지 출력 처리
         bool hasCutscene = !string.IsNullOrEmpty(line.spritePath);
@@ -216,6 +230,26 @@ public class DialogueManager : MonoBehaviour
         lastDialogueEndTime = Time.time;
 
         StopBlinkUX();
+    }
+    
+    /// <summary>
+    /// 주어진 ID를 본 적이 있는지 반환
+    /// </summary>
+    public bool HasSeen(string id)
+    {
+        return seenIDs.Contains(id);
+    }
+    
+    public string[] GetAllSeenIDs()
+    {
+        return seenIDs.ToArray();
+    }
+    
+    public void LoadSeenIDs(string[] ids)
+    {
+        seenIDs.Clear();
+        foreach (var id in ids)
+            seenIDs.Add(id);
     }
 
     public bool IsDialogueActive => isDialogueActive;
