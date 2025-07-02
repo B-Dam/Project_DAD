@@ -29,6 +29,11 @@ public class CombatManager : MonoBehaviour
     List<TimedModifier> playerAttackMods = new List<TimedModifier>();
     List<TimedModifier> enemyAttackMods  = new List<TimedModifier>();
 
+    
+    public event Action<CardData> OnPlayerSkillUsed;
+    public event Action<CardData> OnEnemySkillUsed;
+    
+    
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
     int EnemyBaseAtk  => DataManager.Instance.enemyData.atk;
@@ -139,6 +144,10 @@ public class CombatManager : MonoBehaviour
     /// <param name="isPlayer">플레이어가 사용했으면 true, 적이면 false</param>
     public void ApplySkill(CardData data, bool isPlayer)
     {
+        // 애니메이션 트리거용 이벤트 먼저 발행
+        if (isPlayer) OnPlayerSkillUsed?.Invoke(data);
+        else          OnEnemySkillUsed?.Invoke(data);
+        
         // 기본 공격력 + 공격 모디파이어
         int baseAtk   = isPlayer ? PlayerBaseAtk : EnemyBaseAtk;
         int modAtk    = isPlayer ? playerAtkMod : enemyAtkMod;

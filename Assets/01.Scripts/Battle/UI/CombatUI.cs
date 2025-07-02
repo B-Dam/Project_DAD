@@ -10,11 +10,13 @@ public class CombatUI : MonoBehaviour
     [SerializeField] TMP_Text playerShieldText;
     [SerializeField] TMP_Text playerAPText;
     [SerializeField] HealthBar playerHealthBar;
+    [SerializeField] GameObject playerBarrier;
 
     [Header("적 스탯")]
     [SerializeField] TMP_Text enemyHPText;
     [SerializeField] TMP_Text enemyShieldText;
-    [SerializeField] HealthBar enemyHealthBar; 
+    [SerializeField] HealthBar enemyHealthBar;
+    [SerializeField] GameObject enemyBarrier;
     
     public static CombatUI instance;
 
@@ -57,6 +59,17 @@ public class CombatUI : MonoBehaviour
             TurnManager.Instance.OnEnemySkillPreview   -= OnEnemySkillPreview;
             TurnManager.Instance.OnEnemyTurnStart      -= OnEnemyTurnStart;
         }
+    }
+
+    private void Update()
+    {
+        if (CombatManager.Instance.playerShield <= 0)
+            playerBarrier.SetActive(false);
+        else playerBarrier.SetActive(true);
+        
+        if (CombatManager.Instance.enemyShield <= 0)
+            enemyBarrier.SetActive(false);
+        else enemyBarrier.SetActive(true);
     }
 
     void OnCombatStart()       => StartCoroutine(DelayedUpdateUI());
