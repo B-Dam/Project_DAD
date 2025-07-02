@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Battle/CharacterData")]
-public class CharacterData : ScriptableObject
+public class CharacterDataSO : ScriptableObject
 {
     [Header("식별 정보")]
     public string characterId;    // 예: "Mono", "CatBoss"

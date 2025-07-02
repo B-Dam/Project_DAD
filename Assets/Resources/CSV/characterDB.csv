@@ -1,0 +1,13 @@
+charater_id,name        ,type        ,health,attack,deffence,related_map,appearance_condition
+1000,모노,player,100,null,null,null,null
+1001,송곳니,enemy,30,null,null,2,5008
+1002,길고양이1,npc,null,null,null,2,5008
+1003,길고양이2,npc,null,null,null,2,5008
+1004,송곳니,enemy,80,null,null,107,5063
+1005,길고양이1,npc,null,null,null,107,5063
+1006,길고양이2,npc,null,null,null,107,5063
+1007,바우,npc,null,null,null,102,null
+1008,바우,npc,null,null,null,101,5035
+1009,바우,npc,null,null,null,103,5036
+1010,바우,npc,null,null,null,104,5037
+1011,덕팔이,npc,null,null,null,104,5037

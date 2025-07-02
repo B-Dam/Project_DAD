@@ -21,11 +21,26 @@ public class SettingMenuController : MonoBehaviour
     
     [Header("세이브 로드 매니저")]
     [SerializeField] private SaveLoadManager saveLoadManager;
+    
+    [Header("설정창 전체 Panel")]
+    [SerializeField] private GameObject settingsPanel;
 
     private void Start()
     {
+        settingsPanel.SetActive(false);
         // 시작할 때 기본 메뉴 선택
         ShowMenu(MenuType.Sound);
+    }
+    
+    private void Update()
+    {
+        // Esc 키를 누르면 토글
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            bool isOn = settingsPanel.activeSelf;
+            settingsPanel.SetActive(!isOn);
+            if (!isOn) ShowMenu(MenuType.Sound); // 열 때 기본 탭 지정
+        }
     }
 
     // 버튼 OnClick 으로 연결
