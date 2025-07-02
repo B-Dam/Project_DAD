@@ -7204,6 +7204,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1163117044}
     - target: {fileID: 7575569492832515779, guid: 2fcff6076cf53ea4eb11e4d9dc6f1517, type: 3}
+      propertyPath: HintBtn
+      value: 
+      objectReference: {fileID: 1800094083}
+    - target: {fileID: 7575569492832515779, guid: 2fcff6076cf53ea4eb11e4d9dc6f1517, type: 3}
       propertyPath: resetBtn
       value: 
       objectReference: {fileID: 1800094083}
@@ -7272,6 +7276,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 416365717994153248, guid: 7db59932dc3551f4d8399ef50fd429c7, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1866471394045237435, guid: 7db59932dc3551f4d8399ef50fd429c7, type: 3}
       propertyPath: m_Name
       value: Hole
