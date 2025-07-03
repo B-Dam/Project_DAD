@@ -5,64 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/EnemyAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/EnemyAI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/TurnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/TurnManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatUI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Baw_Walk.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Baw_Walk.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Baw_idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Baw_idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat2_idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat2_idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat3_idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat3_idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat3_walk.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat3_walk.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat4_Walk.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat4_Walk.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat4_idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat4_idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat_1_Attack.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat_1_Attack.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat_1_idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat_1_idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat_1_walk.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat_1_walk.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat_walk.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Cat_walk.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Duck8_idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/Duck8_idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/길냥이 무리1.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/길냥이 무리1.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/길냥이 무리2.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/길냥이 무리2.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/길냥이 무리3.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/길냥이 무리3.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/덕팔.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/덕팔.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/바우.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/바우.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/송곳니.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/NPC/송곳니.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Attack.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Attack.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Awake.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Awake.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Def.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Def.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Hint.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Hint.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Run.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_Run.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_idle.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/Player_idle.anim.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/player_bark.anim" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/04.Animations/Player/player_bark.anim.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,20 +40,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/Battle",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/Battle&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Unity 에디터에 연결.Unity 에디터에 연결">
     <configuration name="유닛 테스트(배치 모드)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.1.8f1\Editor\Unity.exe" />
@@ -172,7 +121,8 @@
       <workItem from="1751339055946" duration="14014000" />
       <workItem from="1751415355823" duration="19245000" />
       <workItem from="1751437284304" duration="3235000" />
-      <workItem from="1751455920812" duration="2264000" />
+      <workItem from="1751455920812" duration="2564000" />
+      <workItem from="1751501048839" duration="12004000" />
     </task>
     <servers />
   </component>

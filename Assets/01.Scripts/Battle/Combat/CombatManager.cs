@@ -4,10 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Random = UnityEngine.Random;
 
+public enum ModifierType
+{
+    AttackBuff,
+    AttackDebuff
+}
+
 public class TimedModifier
 {
-    public int value;
-    public int remainingTurns;
+    public ModifierType type;
+    public int           value;
+    public int           remainingTurns;
 }
 
 public class CombatManager : MonoBehaviour
@@ -28,11 +35,9 @@ public class CombatManager : MonoBehaviour
     
     List<TimedModifier> playerAttackMods = new List<TimedModifier>();
     List<TimedModifier> enemyAttackMods  = new List<TimedModifier>();
-
     
     public event Action<CardData> OnPlayerSkillUsed;
     public event Action<CardData> OnEnemySkillUsed;
-    
     
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
@@ -41,6 +46,8 @@ public class CombatManager : MonoBehaviour
     public event Action OnCombatStart;
     public event Action OnStatsChanged;
     
+    public IEnumerable<TimedModifier> PlayerAttackModifiers => playerAttackMods;
+    public IEnumerable<TimedModifier> EnemyAttackModifiers  => enemyAttackMods;
 
     void Awake()
     {
@@ -53,6 +60,7 @@ public class CombatManager : MonoBehaviour
         if (TurnManager.Instance != null)
         {
             TurnManager.Instance.OnPlayerTurnStart += OnPlayerTurnStart;
+            TurnManager.Instance.OnEnemyTurnStart  += OnEnemyTurnStart;
         }
         else Debug.Log("CombatManager에서 TrunManager 이벤트 구독 실패");
     }
@@ -132,9 +140,6 @@ public class CombatManager : MonoBehaviour
         var skills = DataManager.Instance.GetEnemySkills();
         var skill = skills[Random.Range(0, skills.Length)];
         ApplySkill(skill, false);
-
-        // 다음 Player 턴으로
-        TurnManager.Instance.StartPlayerTurn();
     }
 
     /// <summary>
@@ -182,27 +187,58 @@ public class CombatManager : MonoBehaviour
             else          enemyShield  += data.effectShieldValue;
         }
 
-        // 공격력 버프/디버프
+        // 공격력 버프
         if (data.effectAttackIncreaseValue != 0 && data.effectTurnValue > 0)
-            AddAttackModifier(isPlayer, data.effectAttackIncreaseValue, data.effectTurnValue);
+            AddAttackModifier(
+                isPlayer,
+                ModifierType.AttackBuff,
+                data.effectAttackIncreaseValue,
+                data.effectTurnValue
+            );
 
+        // 공격력 디버프
         if (data.effectAttackDebuffValue != 0 && data.effectTurnValue > 0)
         {
             int debuffAmount = Mathf.Abs(data.effectAttackDebuffValue);
-            AddAttackModifier(!isPlayer, -debuffAmount, data.effectTurnValue);
+            AddAttackModifier(
+                !isPlayer,
+                ModifierType.AttackDebuff,
+                -debuffAmount,
+                data.effectTurnValue
+            );
         }
 
-        OnStatsChanged?.Invoke();
         RecalculateModifiers();
+        OnStatsChanged?.Invoke();
         CheckEnd();
     }
-
     
     //  모디파이어 추가
-    void AddAttackModifier(bool targetIsPlayer, int value, int turns)
+    void AddAttackModifier(bool targetIsPlayer, ModifierType type, int value, int turns)
     {
         var list = targetIsPlayer ? playerAttackMods : enemyAttackMods;
-        list.Add(new TimedModifier { value = value, remainingTurns = turns });
+
+        // 같은 효과 종류(modifierType) 검색
+        var existing = list.FirstOrDefault(m => m.type == type);
+        if (existing != null)
+        {
+            // 1) 값은 합산
+            existing.value += value;
+            // 2) 지속 턴은 더 긴 쪽
+            existing.remainingTurns = Mathf.Max(existing.remainingTurns, turns);
+        }
+        else
+        {
+            list.Add(new TimedModifier {
+                type           = type,
+                value          = value,
+                remainingTurns = turns
+            });
+        }
+
+        // 변경 즉시 재계산 및 UI 갱신
+        RecalculateModifiers();
+        OnStatsChanged?.Invoke();
     }
 
     // 적이나 아군 체력을 확인하고 종료 로직 작동

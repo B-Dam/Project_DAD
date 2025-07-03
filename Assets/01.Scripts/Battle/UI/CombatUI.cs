@@ -1,23 +1,33 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class CombatUI : MonoBehaviour
 {
-    [Header("플레이어 스탯")]
-    [SerializeField] TMP_Text playerHPText;
+    [Header("플레이어 스탯")] [SerializeField] TMP_Text playerHPText;
     [SerializeField] TMP_Text playerShieldText;
     [SerializeField] TMP_Text playerAPText;
     [SerializeField] HealthBar playerHealthBar;
     [SerializeField] GameObject playerBarrier;
 
-    [Header("적 스탯")]
-    [SerializeField] TMP_Text enemyHPText;
+    [Header("적 스탯")] [SerializeField] TMP_Text enemyHPText;
     [SerializeField] TMP_Text enemyShieldText;
     [SerializeField] HealthBar enemyHealthBar;
     [SerializeField] GameObject enemyBarrier;
-    
+
+    [Header("버프/디버프 표시용")] [SerializeField]
+    private Transform playerStatusBar;
+
+    [SerializeField] private Transform enemyStatusBar;
+    [SerializeField] private GameObject statusIconPrefab; // 단일 아이콘 Prefab
+    [SerializeField] private Sprite statusIconSprite; // 아이콘
+    [SerializeField] private Color positiveTextColor; // 양수일 때 텍스트 색 (예: 하늘색)
+    [SerializeField] private Color negativeTextColor; // 음수일 때 텍스트 색 (예: 빨간색)
+
     public static CombatUI instance;
 
     private void Awake()
@@ -35,11 +45,11 @@ public class CombatUI : MonoBehaviour
     void Start()
     {
         // 전투 시작과 턴 전환 이벤트 구독
-        CombatManager.Instance.OnCombatStart       += OnCombatStart;
-        CombatManager.Instance.OnStatsChanged      += UpdateUI;
-        TurnManager.Instance.OnPlayerTurnStart     += OnPlayerTurnStart;
-        TurnManager.Instance.OnEnemySkillPreview   += OnEnemySkillPreview;
-        TurnManager.Instance.OnEnemyTurnStart      += OnEnemyTurnStart;
+        CombatManager.Instance.OnCombatStart += OnCombatStart;
+        CombatManager.Instance.OnStatsChanged += UpdateUI;
+        TurnManager.Instance.OnPlayerTurnStart += OnPlayerTurnStart;
+        TurnManager.Instance.OnEnemySkillPreview += OnEnemySkillPreview;
+        TurnManager.Instance.OnEnemyTurnStart += OnEnemyTurnStart;
 
         // 씬 로드 직후(전투 시작 전일 수도 있지만) 한번 갱신
         StartCoroutine(DelayedUpdateUI());
@@ -49,15 +59,15 @@ public class CombatUI : MonoBehaviour
     {
         if (CombatManager.Instance != null)
         {
-            CombatManager.Instance.OnCombatStart  -= OnCombatStart;
+            CombatManager.Instance.OnCombatStart -= OnCombatStart;
             CombatManager.Instance.OnStatsChanged -= UpdateUI;
         }
 
         if (TurnManager.Instance != null)
         {
-            TurnManager.Instance.OnPlayerTurnStart     -= OnPlayerTurnStart;
-            TurnManager.Instance.OnEnemySkillPreview   -= OnEnemySkillPreview;
-            TurnManager.Instance.OnEnemyTurnStart      -= OnEnemyTurnStart;
+            TurnManager.Instance.OnPlayerTurnStart -= OnPlayerTurnStart;
+            TurnManager.Instance.OnEnemySkillPreview -= OnEnemySkillPreview;
+            TurnManager.Instance.OnEnemyTurnStart -= OnEnemyTurnStart;
         }
     }
 
@@ -66,16 +76,16 @@ public class CombatUI : MonoBehaviour
         if (CombatManager.Instance.playerShield <= 0)
             playerBarrier.SetActive(false);
         else playerBarrier.SetActive(true);
-        
+
         if (CombatManager.Instance.enemyShield <= 0)
             enemyBarrier.SetActive(false);
         else enemyBarrier.SetActive(true);
     }
 
-    void OnCombatStart()       => StartCoroutine(DelayedUpdateUI());
-    void OnPlayerTurnStart()   => StartCoroutine(DelayedUpdateUI());
+    void OnCombatStart() => StartCoroutine(DelayedUpdateUI());
+    void OnPlayerTurnStart() => StartCoroutine(DelayedUpdateUI());
     void OnEnemySkillPreview() => StartCoroutine(DelayedUpdateUI());
-    void OnEnemyTurnStart()    => StartCoroutine(DelayedUpdateUI());
+    void OnEnemyTurnStart() => StartCoroutine(DelayedUpdateUI());
 
     IEnumerator DelayedUpdateUI()
     {
@@ -90,14 +100,61 @@ public class CombatUI : MonoBehaviour
         if (cm == null) return;
 
         // 플레이어
-        playerHPText.text     = $"{cm.playerHp}/{DataManager.Instance.playerData.maxHP}";
+        playerHPText.text = $"{cm.playerHp}/{DataManager.Instance.playerData.maxHP}";
         playerShieldText.text = $"{cm.playerShield}";
-        playerAPText.text     = $"{HandManager.Instance.currentAP}/3";
+        playerAPText.text = $"{HandManager.Instance.currentAP}/3";
         playerHealthBar.SetHealth(cm.playerHp, DataManager.Instance.playerData.maxHP);
 
         // 적
-        enemyHPText.text      = $"{cm.enemyHp}/{DataManager.Instance.enemyData.maxHP}";
-        enemyShieldText.text  = $"{cm.enemyShield}";
+        enemyHPText.text = $"{cm.enemyHp}/{DataManager.Instance.enemyData.maxHP}";
+        enemyShieldText.text = $"{cm.enemyShield}";
         enemyHealthBar.SetHealth(cm.enemyHp, DataManager.Instance.enemyData.maxHP);
+
+        // 버프/디버프 아이콘 채우기
+        PopulateStatusBar(playerStatusBar, cm.PlayerAttackModifiers);
+        PopulateStatusBar(enemyStatusBar, cm.EnemyAttackModifiers);
+    }
+
+    void ClearStatusBar(Transform bar)
+    {
+        foreach (Transform t in bar)
+            Destroy(t.gameObject);
+    }
+
+    void PopulateStatusBar(Transform bar, IEnumerable<TimedModifier> mods)
+    {
+        // 0인 모디파이어는 건너뛰기
+        var nonZero = mods.Where(m => m.value != 0).ToList();
+
+        // 리스트가 비어 있으면 컨테이너 비활성화
+        bar.gameObject.SetActive(nonZero.Count > 0);
+        if (nonZero.Count == 0) return;
+
+        // 기존 아이콘 모두 삭제
+        foreach (Transform t in bar) Destroy(t.gameObject);
+
+        // 아이콘 + 숫자 생성
+        foreach (var mod in nonZero)
+        {
+            var go = Instantiate(statusIconPrefab, bar);
+            var img = go.GetComponent<Image>();
+            var txt = go.GetComponentInChildren<TMP_Text>();
+            if (txt == null)
+            {
+                Debug.LogError("[CombatUI] Instantiate된 아이콘에 TMP_Text가 없습니다!", go);
+                continue;
+            }
+
+            // 동일한 아이콘 사용
+            img.sprite = statusIconSprite;
+
+            // 절댓값 표시
+            txt.text = Mathf.Abs(mod.value).ToString();
+
+            // 값에 따라 텍스트 색 변경
+            txt.color = mod.value > 0
+                ? positiveTextColor
+                : negativeTextColor;
+        }
     }
 }
