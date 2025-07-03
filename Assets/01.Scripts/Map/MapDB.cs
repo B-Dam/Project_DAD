@@ -120,7 +120,11 @@ public class MapDB
 
     public MapData GetMapData(string mapID)
     {
-        Debug.Log($"맵 데이터 요청: {mapID}");
+        if (!_mapDataList.ContainsKey(mapID))
+        {
+            Debug.LogError($"맵 ID '{mapID}'는 등록되어 있지 않습니다.");
+            return null;
+        }
         MapData data = _mapDataList[mapID];
 
         return data;

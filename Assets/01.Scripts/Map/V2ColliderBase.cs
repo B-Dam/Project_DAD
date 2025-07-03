@@ -7,6 +7,7 @@ public class V2ColliderBase : MonoBehaviour
 
     protected void V2MapMove(string warpDir)
     {
+        Debug.Log($"V2MapMove 호출됨: {warpDir}");
         switch (warpDir)
         {
             // currentMapID 바꾸기

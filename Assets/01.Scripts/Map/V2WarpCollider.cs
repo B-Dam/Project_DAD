@@ -6,7 +6,7 @@ public class V2WarpCollider : V2ColliderBase
     {
         if (other.CompareTag(PlayerTag))
         {
-            string warpDir = gameObject.name;  // Right, Left 등
+            string warpDir = this.gameObject.name;  // Right, Left 등
 
             V2MapMove(warpDir);
         }

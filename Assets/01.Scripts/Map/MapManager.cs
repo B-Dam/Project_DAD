@@ -22,7 +22,7 @@ public class MapManager : MonoBehaviour
     public MapData mapData;
 
     public string prevMapID;
-    public string currentMapID;  // MapBase에서 첫 시작 시 001로 설정, 이후엔 콜라이더에서 맵 이동 시 Instance의 메서드에 의해 변경
+    public string currentMapID;  // 첫 시작 시 001로 설정
     public Vector3 lastPlayerScale;
 
     private void Awake()
@@ -43,10 +43,12 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        if (prevMapID == null || prevMapID == "")
+        if (currentMapID == null || currentMapID == "")
         {
-            prevMapID = "001";
+            currentMapID = "001";
         }
+
+        mapData = Database.Instance.Map.GetMapData(currentMapID);
     }
 
     // Scene 관련이지만 삭제 예정
@@ -57,12 +59,6 @@ public class MapManager : MonoBehaviour
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    // 맵 세팅 관련
-    public void SetCurrentMap(string mapID)  // 현재 맵 변수 바꿔주기, OnDirMap 함수에 공통으로 들어갈 내용
-    {
-        currentMapID = mapID;  // 맵을 이동 했을 때 현재 맵을 새로 이동한 맵의 ID로 설정
     }
 
     // currentMapID를 이동한 맵 ID로 바꾸고 mapData를 currentMapID로 업데이트 하고 현재 맵의 플레이어 좌표를 지정한 좌표로 이동하기
@@ -77,12 +73,16 @@ public class MapManager : MonoBehaviour
 
     public void OnLeftMap()
     {
+        Debug.Log($"OnLeftMap 함수 작동\nleftMap: {mapData.left_map}");
         UpdateMapData(mapData.left_map);
+        Debug.Log($"playerPosition: {mapData.player_position_right}");
         PlayerController.Instance.playerTransform.position = mapData.player_position_right;
     }
     public void OnRightMap()
     {
+        Debug.Log($"OnRightMap 함수 작동\nrightMap: {mapData.right_map}");
         UpdateMapData(mapData.right_map);
+        Debug.Log($"playerPosition: {mapData.player_position_left}");
         PlayerController.Instance.playerTransform.position = mapData.player_position_left;
     }
     public void OnUpMap()
