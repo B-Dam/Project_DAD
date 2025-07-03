@@ -38,6 +38,7 @@ public abstract class ColliderBase : MonoBehaviour
         }
     }
 
+    // SceneLoad가 아니라 좌표 이동으로 변경될 예정
     public void OnRightMap()
     {
         MapManager.Instance.LoadMap(mapData.right_map);

@@ -11,7 +11,7 @@ public class Map002 : MapBase
     protected override void OnLoadMap()
     {
         Vector3 currentSpawnPoint;
-        if (prevMapID != null && spawnPoint.TryGetValue(prevMapID, out currentSpawnPoint))
+        if (MapManager.Instance.prevMapID != null && spawnPoint.TryGetValue(MapManager.Instance.prevMapID, out currentSpawnPoint))
         {
             PlayerController.Instance.playerTransform.position = currentSpawnPoint;
             PlayerController.Instance.playerTransform.localScale = MapManager.Instance.lastPlayerScale;

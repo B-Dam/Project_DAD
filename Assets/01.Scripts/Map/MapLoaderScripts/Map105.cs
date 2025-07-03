@@ -8,7 +8,7 @@ public class Map105 : MapBase
     {
         // 맵을 들어갈 때 작동하는 로직
         Vector3 currentSpawnPoint;
-        if (prevMapID != null && spawnPoint.TryGetValue(prevMapID, out currentSpawnPoint))
+        if (MapManager.Instance.prevMapID != null && spawnPoint.TryGetValue(MapManager.Instance.prevMapID, out currentSpawnPoint))
         {
             PlayerController.Instance.playerTransform.position = currentSpawnPoint;
             PlayerController.Instance.playerTransform.localScale = MapManager.Instance.lastPlayerScale;
@@ -19,8 +19,8 @@ public class Map105 : MapBase
     {
         // 맵을 나갈 때 작동하는 로직
 
-        prevMapID = MapManager.Instance.currentMapID;
-        Debug.Log($"Map002맵에서 나갔습니다 (이전 맵: {prevMapID})");
+        MapManager.Instance.prevMapID = MapManager.Instance.currentMapID;
+        Debug.Log($"Map002맵에서 나갔습니다 (이전 맵: {MapManager.Instance.prevMapID})");
     }
 
 

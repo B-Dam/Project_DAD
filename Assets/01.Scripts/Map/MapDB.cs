@@ -118,9 +118,10 @@ public class MapDB
     }
 
 
-    public MapData GetMapData(string mapId)
+    public MapData GetMapData(string mapID)
     {
-        MapData data = _mapDataList[mapId];
+        Debug.Log($"맵 데이터 요청: {mapID}");
+        MapData data = _mapDataList[mapID];
 
         return data;
     }

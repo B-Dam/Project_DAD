@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public abstract class MapBase : MonoBehaviour
 {
     /// <summary>
     /// 맵 스크립트가 공통적으로 처리해야 하는 것들
-    /// 
     /// 1. 현재 맵 정보 로드
     /// 2. 현재 맵의 워프 콜라이더 찾기
     /// 3. 콜라이더의 이벤트 처리
@@ -15,11 +15,7 @@ public abstract class MapBase : MonoBehaviour
     // 맵 관련
     protected MapData mapData;
     protected Dictionary<string, Vector3> spawnPoint;
-    protected string prevMapID;
     private string _currentMapID;
-
-    // 플레이어 포지션 
-
 
     protected virtual void Awake()
     {
@@ -27,7 +23,6 @@ public abstract class MapBase : MonoBehaviour
         mapData = Database.Instance.Map.GetMapData(_currentMapID);
 
         SpawnPointSet();
-        prevMapID = null;
 
         Debug.Log($"현재 맵은 {_currentMapID} 입니다.");
     }
@@ -37,7 +32,7 @@ public abstract class MapBase : MonoBehaviour
     public virtual void OnReleaseMap()  // 맵이 나갈 때 작동하는 로직
     {
         // 기존에 있던 맵을 이전 맵으로 만들기
-        prevMapID = MapManager.Instance.currentMapID;
+        MapManager.Instance.prevMapID = MapManager.Instance.currentMapID;
         MapManager.Instance.lastPlayerScale = PlayerController.Instance.playerTransform.localScale;
 
 

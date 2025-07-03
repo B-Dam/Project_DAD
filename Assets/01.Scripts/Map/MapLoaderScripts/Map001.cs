@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Map001 : MapBase
 {
@@ -11,11 +10,11 @@ public class Map001 : MapBase
     protected override void OnLoadMap()
 	{
         Vector3 currentSpawnPoint;
-        if (string.IsNullOrEmpty(prevMapID))
+        if (string.IsNullOrEmpty(MapManager.Instance.prevMapID))
         {
             PlayerController.Instance.playerTransform.position = mapData.player_position_left;
         }
-        else if (!string.IsNullOrEmpty(prevMapID) && spawnPoint.TryGetValue(prevMapID, out currentSpawnPoint))
+        else if (!string.IsNullOrEmpty(MapManager.Instance.prevMapID) && spawnPoint.TryGetValue(MapManager.Instance.prevMapID, out currentSpawnPoint))
         {
             PlayerController.Instance.playerTransform.position = currentSpawnPoint;
             PlayerController.Instance.playerTransform.localScale = MapManager.Instance.lastPlayerScale;
