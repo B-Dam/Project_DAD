@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -189,7 +190,7 @@ public class DataManager : MonoBehaviour
         Instance.StartCoroutine(Instance.RestoreCoroutine(state));
         Debug.Log($"LoadGame: 슬롯{slot} 불러옴 → 씬:{state.sceneName}");
     }
-
+    
     private IEnumerator RestoreCoroutine(GameState state)
     {
         // 씬 비동기 로드
@@ -211,7 +212,7 @@ public class DataManager : MonoBehaviour
         else
             Debug.LogWarning("Restore: DialogueManager.Instance is null");
     }
-
+    
     static string CurrentChapterName()
     {
         // DataManager 인스턴스가 없으면 빈 문자열 반환
