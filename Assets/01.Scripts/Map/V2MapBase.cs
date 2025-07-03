@@ -11,12 +11,17 @@ public class V2MapBase : MonoBehaviour
     /// 2-1. 처음 시작했을 땐 001로 설정 V
     /// 2-2. 콜라이더로 이동시키면 currentMapID를 변경 V
     /// 2-3. 변경 방법 : 현재 맵(mapData)의 dir_map 변수에 따르기 V
-    /// 3. 맵 방향에 맞는 콜라이더 오브젝트에 맵 이동 타일 그리기 -
+    /// 3. 맵 방향에 맞는 콜라이더 오브젝트에 맵 이동 타일 그리기 - (001, 002 V)
+    /// 4. 스토리 버전과 퍼즐 버전이 있는 맵은 bool 값으로 처리해서 따로 띄우기 -
     /// </summary>
 
     // 타일맵 설정
     public List<Tilemap> tilemaps;
     private Dictionary<string, BoundsInt> mapBounds = new Dictionary<string, BoundsInt>();
+
+    // 퍼즐 버전 맵 클리어 여부
+    public bool isClear105 = false;
+    public bool isClear108 = false;
 
     private void Start()
     {
