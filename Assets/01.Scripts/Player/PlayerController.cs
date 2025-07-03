@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask interactLayer;
 
     [Header("박스 밀기 쿨타임")]
-     public float boxPushCooldown = 0.3f; // 밀기 쿨타임
+    public float boxPushCooldown = 0.3f; // 밀기 쿨타임
     [HideInInspector] public float lastPushTime = -10f;//박스 밀 때 쿨타임용
 
 
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask obstacleLayer;
     public LayerMask playerBlockerLayer;
     private Canvas canvas;
+
+    private Coroutine walkSfxCoroutine;
 
     private void Awake()
     {
@@ -90,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-     
+
         // 2. 콜라이더 크기 그리기 (BoxCollider2D 기준)
         BoxCollider2D col = GetComponent<BoxCollider2D>();
         if (col != null)
@@ -185,7 +189,14 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Run", speed); // 핵심 부분
 
         if (speed > 0.01f)
+        {
             lastMoveDirection = direction;
+            StartWalkingSFX();
+        }
+        else
+        {
+            StopWalkingSFX();
+        }
 
         // 좌우 방향 전환
         if (lastMoveDirection.x < 0)
@@ -241,4 +252,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void StartWalkingSFX()
+    {
+        if (walkSfxCoroutine == null)
+            walkSfxCoroutine = StartCoroutine(PlayWalkingSFX());
+    }
+
+    private IEnumerator PlayWalkingSFX()
+    {
+        while (true)
+        {
+            AudioManager.Instance.PlaySFX("Walk");
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void StopWalkingSFX()
+    {
+        if (walkSfxCoroutine != null)
+        {
+            StopCoroutine(walkSfxCoroutine);
+            walkSfxCoroutine = null;
+        }
+    }
 }

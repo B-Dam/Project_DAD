@@ -12,6 +12,7 @@ public class Map001 : MapBase
     private void Start()
     {
         OnLoadMap();
+        AudioManager.Instance.PlayBGM("LostSouls", true);
     }
 
     protected override void OnLoadMap()
