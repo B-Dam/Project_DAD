@@ -31,8 +31,8 @@ public class HandManager : MonoBehaviour
     [HideInInspector] public bool isDraggingCard;
 
     // 내부 덱 / 디스카드 / 핸드 뷰
-    List<CardData> deck = new List<CardData>();
-    List<CardData> discard = new List<CardData>();
+    public List<CardData> deck = new List<CardData>();
+    public List<CardData> discard = new List<CardData>();
     List<CardView> handViews = new List<CardView>();
 
     CardView currentlyDiscarding;
