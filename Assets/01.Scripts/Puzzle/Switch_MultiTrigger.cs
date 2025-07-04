@@ -12,43 +12,52 @@ public class Switch_MultiTrigger : MonoBehaviour
 
     private bool isActivated = false; // 열린 상태 확인용
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void Update()
     {
-        if (isActivated) return;
-        // 완전히 스위치 영역 안에 들어왔는지 확인
-        if ((other.CompareTag("Player") || other.CompareTag("Box")) &&
-            AllSwitchInside(other)) // 순서: 스위치가 대상 안에 있는가?
+        if (AllSwitchesAreOccupied())
         {
-            Debug.Log(" 스위치가 대상 안에 완전히 들어옴 → 문 열기");
-
-            OpenTagetB();
-            isActivated = true;
+            if (!isActivated)
+            {
+                Debug.Log(" 모든 스위치가 누름 상태 → 작동!");
+                OpenTargetB();
+                isActivated = true;
+            }
+        }
+        else
+        {
+            if (isActivated)
+            {
+                Debug.Log(" 하나 이상 비었음 → 꺼짐");
+                CloseTargetB();
+                isActivated = false;
+            }
         }
     }
 
-    bool AllSwitchInside(Collider2D outer)
+    bool AllSwitchesAreOccupied()
     {
         foreach(Collider2D switchCol in switchColliders)
         {
-            if(switchCol == null) continue; // 스위치 콜라이더가 비어있으면 건너뛰기
-            if (!IsFullyInside(switchCol, outer))
+            Collider2D[] hits = Physics2D.OverlapBoxAll(switchCol.bounds.center, switchCol.bounds.size, 0f);
+            bool occupied = false;
+            foreach (Collider2D hit in hits)
             {
-                return false;
+                if (hit.CompareTag("Player") || hit.CompareTag("Box"))
+                {
+                    occupied = true;
+                    break;
+                }
             }
+            if (!occupied)
+                return false; // 이 스위치는 비어 있음
         }
         return true;
     }
     
-    //  스위치 Collider가 상대 Collider 안에 완전히 포함됐는지 확인
-    bool IsFullyInside(Collider2D inner, Collider2D outer)
-    {
-        //지정된 좌표가 outer 콜라이더의 경계 안에 포함되어 있는지 확인
-        return outer.bounds.Contains(inner.bounds.min) &&//inner 콜라이더의 좌하단 꼭짓점 좌표
-               outer.bounds.Contains(inner.bounds.max);//inner 콜라이더의 우상단 꼭짓점 좌표
-    }
+ 
 
   
-    private void OpenTagetB()
+    private void OpenTargetB()
     {
         if (targetA != null)
             targetA.SetActive(false);
@@ -58,14 +67,14 @@ public class Switch_MultiTrigger : MonoBehaviour
             targetB.SetActive(true);
         }
     }
-    //private void CloseTagetB()
-    //{
-    //    if (targetA != null)
-    //        targetA.SetActive(false);
+    private void CloseTargetB()
+    {
+        if (targetA != null)
+            targetA.SetActive(true);
 
-    //    if (targetB != null)
-    //    {
-    //        targetB.SetActive(true);
-    //    }
-    //}
+        if (targetB != null)
+        {
+            targetB.SetActive(false);
+        }
+    }
 }
