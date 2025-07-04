@@ -118,9 +118,14 @@ public class MapDB
     }
 
 
-    public MapData GetMapData(string mapId)
+    public MapData GetMapData(string mapID)
     {
-        MapData data = _mapDataList[mapId];
+        if (!_mapDataList.ContainsKey(mapID))
+        {
+            Debug.LogError($"맵 ID '{mapID}'는 등록되어 있지 않습니다.");
+            return null;
+        }
+        MapData data = _mapDataList[mapID];
 
         return data;
     }
