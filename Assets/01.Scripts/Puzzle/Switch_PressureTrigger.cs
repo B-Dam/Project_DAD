@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 
-public class SwitchTrigger : MonoBehaviour
+public class Switch_PressureTrigger : MonoBehaviour
 {
-    public GameObject targetDoor;
+    [Header("누르면 SetActive(false)")]
+    public GameObject targetA;
+
+    [Header("누르면 SetActive(true)")]
+    [SerializeField] private GameObject targetB;
+
+    [Header("스위치")]
     public Collider2D switchCollider;
-    [SerializeField] private GameObject openDoorPrefab;
 
     private bool isActivated = false; // 열린 상태 확인용
     private GameObject instantiatedOpenDoor; // 생성된 열린 문 오브젝트 저장
@@ -43,18 +48,18 @@ public class SwitchTrigger : MonoBehaviour
     }
     private void OpenDoor()
     {
-        if (targetDoor != null)
-            targetDoor.SetActive(false);
+        if (targetA != null)
+            targetA.SetActive(false);
 
-        if (openDoorPrefab != null && instantiatedOpenDoor == null)
+        if (targetB != null && instantiatedOpenDoor == null)
         {
-            instantiatedOpenDoor = Instantiate(openDoorPrefab, targetDoor.transform.position, openDoorPrefab.transform.rotation);//Quaternion.identity회전없는상태
+            instantiatedOpenDoor = Instantiate(targetB, targetA.transform.position, targetB.transform.rotation);//Quaternion.identity회전없는상태
         }
     }
     private void CloseDoor()
     {
-        if (targetDoor != null)
-            targetDoor.SetActive(true);
+        if (targetA != null)
+            targetA.SetActive(true);
 
         if (instantiatedOpenDoor != null)
         {
