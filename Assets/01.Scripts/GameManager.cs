@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 		}
     }
 
+	public DialogTriggerList Trigger;
+
     private void Awake()
     {
         if (_instance == null)
@@ -30,7 +32,6 @@ public class GameManager : MonoBehaviour
 		{
 			Destroy(gameObject);
         }
-
     }
 
 }

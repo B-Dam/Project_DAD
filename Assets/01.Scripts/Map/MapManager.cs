@@ -12,16 +12,22 @@ public class MapManager : MonoBehaviour
                 _instance = FindAnyObjectByType<MapManager>();
 
             if (_instance == null)
-                _instance = new GameObject() { name = "MapManager" }.AddComponent<MapManager>();
+                _instance = new GameObject("MapManager").AddComponent<MapManager>();
 
             return _instance;
         }
     }
 
-    public MapBase currentActiveMapScript { get; private set; }
+    public V2MapBase MapBase;
+    public MapData mapData;
 
-    public string currentMapID {  get; private set; }  // MapBase 스크립트가 활성화 될 때 마다 GetMapName()을 호출하여 지정해줌
+    public string prevMapID;
+    public string currentMapID;  // 첫 시작 시 001로 설정
     public Vector3 lastPlayerScale;
+
+    // 퍼즐 버전 맵 클리어 여부
+    public bool isClear105 = false;
+    public bool isClear108 = false;
 
     private void Awake()
     {
@@ -34,30 +40,48 @@ public class MapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDestroy()
+    private void Start()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (currentMapID == null || currentMapID == "")
+        {
+            currentMapID = "001";
+        }
+        AudioManager.Instance.PlayBGM("LostSouls");  // 기본 BGM 설정
+        mapData = Database.Instance.Map.GetMapData(currentMapID);
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // prevMapID를 기존 맵 ID로 바꾸고 currentMapID를 새 맵 ID로 바꾸고
+    // mapData를 currentMapID로 업데이트 하고 현재 맵의 플레이어 좌표를 지정한 좌표로 이동하기
+    public void UpdateMapData(string newMapID)
     {
-        currentActiveMapScript = FindAnyObjectByType<MapBase>();
+        prevMapID = currentMapID;
+        currentMapID = newMapID;
+
+        mapData = Database.Instance.Map.GetMapData(currentMapID);
+
+        Debug.Log($"맵 데이터가 업데이트되었습니다: {currentMapID}");
     }
 
-    public string GetMapName()
+    public void OnLeftMap()
     {
-        currentMapID = SceneManager.GetActiveScene().name;
-        return currentMapID;
+        UpdateMapData(mapData.left_map);
+        PlayerController.Instance.transform.position = mapData.player_position_right;
     }
-
-    public void LoadMap(string mapID)
+    public void OnRightMap()
     {
-        currentActiveMapScript.OnReleaseMap();
-
-        SceneManager.LoadScene(mapID);
+        UpdateMapData(mapData.right_map);
+        PlayerController.Instance.transform.position = mapData.player_position_left;
+    }
+    public void OnUpMap()
+    {
+        UpdateMapData(mapData.up_map);
+        PlayerController.Instance.transform.position = mapData.player_position_down;
+    }
+    public void OnDownMap()
+    {
+        UpdateMapData(mapData.down_map);
+        PlayerController.Instance.transform.position = mapData.player_position_up;
     }
 }

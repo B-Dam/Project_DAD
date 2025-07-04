@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
     public float moveSpeed = 5f;
-    public Transform playerTransform;
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveInput;
@@ -21,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask interactLayer;
 
     [Header("박스 밀기 쿨타임")]
-     public float boxPushCooldown = 0.3f; // 밀기 쿨타임
+    public float boxPushCooldown = 0.3f; // 밀기 쿨타임
     [HideInInspector] public float lastPushTime = -10f;//박스 밀 때 쿨타임용
 
 
@@ -34,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask playerBlockerLayer;
     private Canvas canvas;
 
+    private Coroutine walkSfxCoroutine;
+
     private void Awake()
     {
         if (Instance == null)
@@ -43,7 +44,6 @@ public class PlayerController : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerTransform = transform;
     }
 
     public Vector2 GetVelocity()
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-     
+
         // 2. 콜라이더 크기 그리기 (BoxCollider2D 기준)
         BoxCollider2D col = GetComponent<BoxCollider2D>();
         if (col != null)
@@ -186,7 +186,14 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Run", speed); // 핵심 부분
 
         if (speed > 0.01f)
+        {
             lastMoveDirection = direction;
+            StartWalkingSFX();
+        }
+        else
+        {
+            StopWalkingSFX();
+        }
 
         // 좌우 방향 전환
         if (lastMoveDirection.x < 0)
@@ -242,4 +249,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void StartWalkingSFX()
+    {
+        if (walkSfxCoroutine == null)
+            walkSfxCoroutine = StartCoroutine(PlayWalkingSFX());
+    }
+
+    private IEnumerator PlayWalkingSFX()
+    {
+        while (true)
+        {
+            AudioManager.Instance.PlaySFX("Walk");
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void StopWalkingSFX()
+    {
+        if (walkSfxCoroutine != null)
+        {
+            StopCoroutine(walkSfxCoroutine);
+            walkSfxCoroutine = null;
+        }
+    }
 }
