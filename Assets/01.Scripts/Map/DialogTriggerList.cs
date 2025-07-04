@@ -11,7 +11,7 @@ public class DialogTriggerList : MonoBehaviour
 
         TriggerObjCheck();
 
-        mapTriggerPrefabPath = $"MapTrigger/{MapManager.Instance.GetMapName()}";
+        mapTriggerPrefabPath = $"MapTrigger/{MapManager.Instance.currentMapID}";
         TriggerReset();
         TriggerLoad();
     }

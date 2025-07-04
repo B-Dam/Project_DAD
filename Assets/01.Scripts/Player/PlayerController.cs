@@ -4,7 +4,6 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
     public float moveSpeed = 5f;
-    public Transform playerTransform;
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveInput;
@@ -42,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        playerTransform = transform;
     }
 
     public Vector2 GetVelocity()
