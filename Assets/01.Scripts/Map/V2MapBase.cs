@@ -53,7 +53,6 @@ public class V2MapBase : MonoBehaviour
         }
     }
 
-
     private void LateUpdate()
     {
         if (!mapBounds.ContainsKey(MapManager.Instance.currentMapID)) return;
