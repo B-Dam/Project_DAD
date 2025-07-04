@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialogueEventTrigger : MonoBehaviour
 {
     public OffscreenWatcher offscreenWatcher;
-
+    public InteractHintController hintController;
     [Header("감지할 대사 ID 목록")]
     public List<string> triggerIDs;
 
@@ -48,6 +48,12 @@ public class DialogueEventTrigger : MonoBehaviour
                     {
                         if (obj == null) continue;
 
+                        //콜라이더 isTrigger 활성화
+                        Collider2D col = obj.GetComponent<Collider2D>();
+                        if (col != null)
+                        {
+                            col.isTrigger = true;
+                        }
                         Debug.Log($" 대상 '{obj.name}' → {destinationTarget.position} 으로 이동 시작");
                         StartCoroutine(MoveToPosition(obj, destinationTarget.position, moveDuration));
 
@@ -63,10 +69,13 @@ public class DialogueEventTrigger : MonoBehaviour
                             Debug.Log(" 모든 대상 제거 완료 → 플레이어 다시 활성화");
                             if (PlayerController.Instance != null)
                                 PlayerController.Instance.enabled = true;
+                            hintController.EnableHint();
                         });
                     }
 
                     hasTriggered = true;
+                    hintController.DisableHint();
+
                 }
             }
         }
