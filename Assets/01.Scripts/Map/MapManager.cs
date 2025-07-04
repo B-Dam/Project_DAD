@@ -47,7 +47,7 @@ public class MapManager : MonoBehaviour
         {
             currentMapID = "001";
         }
-
+        AudioManager.Instance.PlayBGM("LostSouls");  // 기본 BGM 설정
         mapData = Database.Instance.Map.GetMapData(currentMapID);
     }
 
