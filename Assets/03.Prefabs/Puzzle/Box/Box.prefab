@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minY: -50
   maxY: 50
-  minOrder: 0
+  minOrder: 3
   maxOrder: 100
 --- !u!61 &6187139159557794361
 BoxCollider2D:
