@@ -68,24 +68,20 @@ public class MapManager : MonoBehaviour
     {
         UpdateMapData(mapData.left_map);
         PlayerController.Instance.transform.position = mapData.player_position_right;
-        MapBase.CameraUpdate();
     }
     public void OnRightMap()
     {
         UpdateMapData(mapData.right_map);
         PlayerController.Instance.transform.position = mapData.player_position_left;
-        MapBase.CameraUpdate();
     }
     public void OnUpMap()
     {
         UpdateMapData(mapData.up_map);
         PlayerController.Instance.transform.position = mapData.player_position_down;
-        MapBase.CameraUpdate();
     }
     public void OnDownMap()
     {
         UpdateMapData(mapData.down_map);
         PlayerController.Instance.transform.position = mapData.player_position_up;
-        MapBase.CameraUpdate();
     }
 }

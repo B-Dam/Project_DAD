@@ -22,7 +22,7 @@ public class V2MapBase : MonoBehaviour
 
     // 카메라 변수
     private Vector3 camVelocity = Vector3.zero;
-    private float smoothTime = 0.2f;
+    private float smoothTime = 0.05f;
     public Camera cam;
 
     private void Awake()
@@ -33,23 +33,26 @@ public class V2MapBase : MonoBehaviour
     private void Start()
     {
         // 카메라 초기화
-        cam = Camera.main;        
+        cam = Camera.main;
 
         // 타일맵들 좌표 영역 설정
         foreach (Tilemap tilemap in tilemaps)
         {
-            string mapName = tilemap.gameObject.name;
-            Bounds localBounds = tilemap.localBounds;
-            Vector3 worldCenter = tilemap.transform.TransformPoint(localBounds.center);
-            Bounds worldBounds = new Bounds(worldCenter, localBounds.size);
-            mapBounds[mapName] = worldBounds;  // 각 맵의 좌표 영역 정보를 딕셔너리에 저장
-        }
+            tilemap.CompressBounds();  // 실제 타일이 있는 부분만 계산하는 기능
 
-        foreach (var kvp in mapBounds)
-        {
-            Debug.Log($"맵 ID: {kvp.Key}, 좌표 영역: {kvp.Value}");
+            string mapName = tilemap.gameObject.name;
+
+            BoundsInt cellBounds = tilemap.cellBounds;
+            Vector3 worldMin = tilemap.CellToWorld(cellBounds.min);
+            Vector3 worldMax = tilemap.CellToWorld(cellBounds.max);
+            Vector3 worldCenter = (worldMin + worldMax) / 2f;
+            Vector3 worldSize = worldMax - worldMin;
+
+            Bounds worldBounds = new Bounds(worldCenter, worldSize);
+            mapBounds[mapName] = worldBounds;
         }
     }
+
 
     private void LateUpdate()
     {
@@ -71,31 +74,6 @@ public class V2MapBase : MonoBehaviour
 
         Vector3 desiredPos = new Vector3(clampedX, clampedY, cam.transform.position.z);
         cam.transform.position = Vector3.SmoothDamp(cam.transform.position, desiredPos, ref camVelocity, smoothTime);
-
-        Debug.Log($"[카메라 클램프] 맵ID: {MapManager.Instance.currentMapID}, bounds: {bounds.min.x} ~ {bounds.max.x}");
-        Debug.Log($"halfWidth: {halfWidth}, targetX: {targetPos.x}, clampedX: {clampedX}");
-
-    }
-
-    public void CameraUpdate()
-    {
-        if (!mapBounds.ContainsKey(MapManager.Instance.currentMapID)) return;
-
-        Bounds bounds = mapBounds[MapManager.Instance.currentMapID];
-
-        float halfHeight = cam.orthographicSize;
-        float halfWidth = halfHeight * cam.aspect;
-
-        float minX = bounds.min.x + halfWidth;
-        float maxX = bounds.max.x - halfWidth;
-        float minY = bounds.min.y + halfHeight;
-        float maxY = bounds.max.y - halfHeight;
-
-        Vector2 targetPos = PlayerController.Instance.transform.position;
-        float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
-        float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
-
-        cam.transform.position = new Vector3(clampedX, clampedY, cam.transform.position.z);
     }
 
     // 맵 아이디를 키로 검색하면 해당 맵의 좌표값 반환
