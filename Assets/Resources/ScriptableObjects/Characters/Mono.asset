@@ -15,6 +15,6 @@ MonoBehaviour:
   characterId: Mono
   displayName: "\uBAA8\uB178"
   ownerID: 1000
-  maxHP: 30
-  atk: 10
-  def: 10
+  maxHP: 100
+  atk: 0
+  def: 0

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CombatAnimationController : MonoBehaviour
 {
+    [Header("애니메이터")]
     public Animator playerAnimator;
     public Animator enemyAnimator;
     
@@ -11,6 +12,15 @@ public class CombatAnimationController : MonoBehaviour
     public GameObject enemyCharacter;
     public float attackMoveDistance = 100f;    // 얼마나 이동할지
     public float attackMoveDuration = 0.2f;  // 얼마나 빠르게
+    
+    [Header("공격 모션 딜레이")]
+    [SerializeField] private float attackPause = 1f;  
+    
+    private bool isEnemyMoving;
+    private bool isPlayerMoving;
+    
+    private Coroutine playerMoveCoroutine;
+    private Coroutine enemyMoveCoroutine;
 
     private void Start()
     {
@@ -39,7 +49,11 @@ public class CombatAnimationController : MonoBehaviour
         {
             case "물기":
                 playerAnimator.SetTrigger("Attack");
-                StartCoroutine(PlayerDoAttackStep(playerCharacter.transform));
+                // 이전 코루틴이 돌고 있으면 중단
+                if (playerMoveCoroutine != null)
+                    StopCoroutine(playerMoveCoroutine);
+                // 새 코루틴 시작하고 레퍼런스 저장
+                playerMoveCoroutine = StartCoroutine(PlayerDoAttackStep(playerCharacter.transform));
                 break;
             case "으르렁거리기":
                 playerAnimator.SetTrigger("Bark");
@@ -55,7 +69,10 @@ public class CombatAnimationController : MonoBehaviour
     
     private IEnumerator PlayerDoAttackStep(Transform tf)
     {
-        Vector3 startPos = tf.position;
+        if (isPlayerMoving) yield break;
+        isPlayerMoving = true;
+        
+        Vector3 startPos = tf.localPosition;
         Vector3 midPos   = startPos + Vector3.right * attackMoveDistance;
         float   halfDur  = attackMoveDuration * 0.5f;
         float   elapsed  = 0f;
@@ -63,23 +80,25 @@ public class CombatAnimationController : MonoBehaviour
         // 앞쪽으로 이동
         while (elapsed < halfDur)
         {
-            tf.position = Vector3.Lerp(startPos, midPos, elapsed / halfDur);
+            tf.localPosition = Vector3.Lerp(startPos, midPos, elapsed / halfDur);
             elapsed    += Time.deltaTime;
             yield return null;
         }
-        tf.position = midPos;
+        tf.localPosition = midPos;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(attackPause);
 
         // 뒤로 돌아오기
         elapsed = 0f;
         while (elapsed < halfDur)
         {
-            tf.position = Vector3.Lerp(midPos, startPos, elapsed / halfDur);
+            tf.localPosition = Vector3.Lerp(midPos, startPos, elapsed / halfDur);
             elapsed    += Time.deltaTime;
             yield return null;
         }
-        tf.position = startPos;
+        tf.localPosition = startPos;
+        
+        isPlayerMoving = false;
     }
     
    
@@ -90,7 +109,8 @@ public class CombatAnimationController : MonoBehaviour
         {
             case "할퀴기":
                 enemyAnimator.SetTrigger("Attack");
-                StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
+                if (!isEnemyMoving)
+                    enemyMoveCoroutine = StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
                 break;
             default :
                 break;
@@ -99,7 +119,10 @@ public class CombatAnimationController : MonoBehaviour
     
     private IEnumerator EnemyDoAttackStep(Transform tf)
     {
-        Vector3 startPos = tf.position;
+        if (isEnemyMoving) yield break;
+        isEnemyMoving = true;
+        
+        Vector3 startPos = tf.localPosition;
         Vector3 midPos   = startPos + Vector3.left * attackMoveDistance;
         float   halfDur  = attackMoveDuration * 0.5f;
         float   elapsed  = 0f;
@@ -107,23 +130,24 @@ public class CombatAnimationController : MonoBehaviour
         // 앞쪽으로 이동
         while (elapsed < halfDur)
         {
-            tf.position = Vector3.Lerp(startPos, midPos, elapsed / halfDur);
+            tf.localPosition = Vector3.Lerp(startPos, midPos, elapsed / halfDur);
             elapsed    += Time.deltaTime;
             yield return null;
         }
-        tf.position = midPos;
+        tf.localPosition = midPos;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(attackPause);
 
         // 뒤로 돌아오기
         elapsed = 0f;
         while (elapsed < halfDur)
         {
-            tf.position = Vector3.Lerp(midPos, startPos, elapsed / halfDur);
+            tf.localPosition = Vector3.Lerp(midPos, startPos, elapsed / halfDur);
             elapsed    += Time.deltaTime;
             yield return null;
         }
-        tf.position = startPos;
-    }
+        tf.localPosition = startPos;
 
+        isEnemyMoving = false;
+    }
 }

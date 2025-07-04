@@ -25,8 +25,8 @@ public class CombatUI : MonoBehaviour
     [SerializeField] private Transform enemyStatusBar;
     [SerializeField] private GameObject statusIconPrefab; // 단일 아이콘 Prefab
     [SerializeField] private Sprite statusIconSprite; // 아이콘
-    [SerializeField] private Color positiveTextColor; // 양수일 때 텍스트 색 (예: 하늘색)
-    [SerializeField] private Color negativeTextColor; // 음수일 때 텍스트 색 (예: 빨간색)
+    [SerializeField] private Color positiveTextColor; // 양수일 때 텍스트 색
+    [SerializeField] private Color negativeTextColor; // 음수일 때 텍스트 색
 
     public static CombatUI instance;
 
@@ -148,8 +148,8 @@ public class CombatUI : MonoBehaviour
             // 동일한 아이콘 사용
             img.sprite = statusIconSprite;
 
-            // 절댓값 표시
-            txt.text = Mathf.Abs(mod.value).ToString();
+            // 텍스트 값 할당
+            txt.text = mod.value.ToString();
 
             // 값에 따라 텍스트 색 변경
             txt.color = mod.value > 0

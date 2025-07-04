@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public enum ModifierType
@@ -59,18 +60,24 @@ public class CombatManager : MonoBehaviour
     {
         if (TurnManager.Instance != null)
         {
-            TurnManager.Instance.OnPlayerTurnStart += OnPlayerTurnStart;
-            TurnManager.Instance.OnEnemyTurnStart  += OnEnemyTurnStart;
+            // 턴 시작에 적 스킬 발동
+            TurnManager.Instance.OnEnemyTurnStart += OnEnemyTurnStart;
+            // 턴 종료에 모디파이어 감소
+            TurnManager.Instance.OnEnemyTurnEnd   += OnEnemyTurnEnd;
+            // 플레이어 쪽도 동일하게 분리
+            TurnManager.Instance.OnPlayerTurnStart += OnPlayerTurnStart;       // (UI 갱신만)
+            TurnManager.Instance.OnPlayerTurnEnd   += OnPlayerTurnEnd;         // (모디파이어 감소)
         }
-        else Debug.Log("CombatManager에서 TrunManager 이벤트 구독 실패");
     }
 
     void OnDestroy()
     {
         if (TurnManager.Instance != null)
         {
-            TurnManager.Instance.OnPlayerTurnStart -= OnPlayerTurnStart;
             TurnManager.Instance.OnEnemyTurnStart -= OnEnemyTurnStart;
+            TurnManager.Instance.OnEnemyTurnEnd   -= OnEnemyTurnEnd;
+            TurnManager.Instance.OnPlayerTurnStart-= OnPlayerTurnStart;
+            TurnManager.Instance.OnPlayerTurnEnd  -= OnPlayerTurnEnd;
         }
     }
 
@@ -120,26 +127,43 @@ public class CombatManager : MonoBehaviour
 
     void OnPlayerTurnStart()
     {
-        // 버프 / 디버프 턴 감소
-        UpdateModifiers(playerAttackMods);
-        // 모디파이어 합산
-        RecalculateModifiers();
-        // 플레이어 보호막 초기화
-        playerShield = 0;
         // UI 갱신
+        OnStatsChanged?.Invoke();
+    }
+    
+    void OnPlayerTurnEnd()
+    {
+        UpdateModifiers(playerAttackMods);
+        RecalculateModifiers();
         OnStatsChanged?.Invoke();
     }
 
     void OnEnemyTurnStart()
     {
-        // 적 전용 모디파이어 업데이트
-        UpdateModifiers(enemyAttackMods);
-        RecalculateModifiers();
-        
         // 적 스킬 사용
         var skills = DataManager.Instance.GetEnemySkills();
         var skill = skills[Random.Range(0, skills.Length)];
         ApplySkill(skill, false);
+    }
+    
+    // 턴 종료 시 호출될 메서드: 모디파이어만 감소시키고 UI 갱신
+    void OnEnemyTurnEnd()
+    {
+        UpdateModifiers(enemyAttackMods);
+        RecalculateModifiers();
+        OnStatsChanged?.Invoke();
+    }
+    
+    public void ResetPlayerShield()
+    {
+        playerShield = 0;
+        OnStatsChanged?.Invoke();
+    }
+    
+    public void ResetEnemyShield()
+    {
+        enemyShield = 0;
+        OnStatsChanged?.Invoke();
     }
 
     /// <summary>
@@ -248,6 +272,7 @@ public class CombatManager : MonoBehaviour
         {
             Debug.Log("Victory!");
             // 승리 시 추가 로직
+            SceneManager.UnloadSceneAsync("Battle");
         }
         else if (playerHp <= 0)
         {

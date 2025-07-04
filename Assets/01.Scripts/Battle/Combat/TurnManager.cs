@@ -19,6 +19,7 @@ public class TurnManager : MonoBehaviour
     public event Action OnPlayerTurnEnd;
     public event Action OnEnemySkillPreview;
     public event Action OnEnemyTurnStart;
+    public event Action OnEnemyTurnEnd;
     
     [Tooltip("Enemy 스킬 프리뷰 후 실제 적 턴 시작까지의 대기 시간(초)")]
     public float enemyPreviewDuration = 1f;
@@ -43,6 +44,10 @@ public class TurnManager : MonoBehaviour
     public void StartPlayerTurn()
     {
         currentPhase = Phase.Player;
+        
+        // 실드 초기화
+        CombatManager.Instance.ResetPlayerShield();
+        
         OnPlayerTurnStart?.Invoke();
         
         // 턴 종료 버튼 활성화
@@ -76,6 +81,10 @@ public class TurnManager : MonoBehaviour
     public void StartEnemyTurn()
     {
         currentPhase = Phase.Enemy;
+        
+        // 실드 초기화
+        CombatManager.Instance.ResetEnemyShield();
+        
         OnEnemyTurnStart?.Invoke();
         StartCoroutine(EnemyAnimationDelay());
     }
@@ -91,6 +100,9 @@ public class TurnManager : MonoBehaviour
 
         // 실제 애니메이션 길이만큼 대기
         yield return new WaitForSeconds(duration);
+        
+        // 적 턴이 완전히 끝나갈 때 이벤트 호출
+        OnEnemyTurnEnd?.Invoke();
 
         // 플레이어 턴 시작
         StartPlayerTurn();
