@@ -103,10 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabf0b0a002cabe4badf6bcdfee3356c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minY: -50
+  minY: -15
   maxY: 50
   minOrder: 3
-  maxOrder: 100
+  maxOrder: 70
 --- !u!61 &6187139159557794361
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.4, y: 0.8}
+  m_Size: {x: 1.65, y: 0.8}
   m_EdgeRadius: 0
 --- !u!50 &1408919700121137899
 Rigidbody2D:
