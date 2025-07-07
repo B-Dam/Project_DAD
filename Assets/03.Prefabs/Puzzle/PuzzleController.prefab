@@ -67,7 +67,6 @@ MonoBehaviour:
   - {fileID: 0}
   hintDurationTimeBar: {fileID: 0}
   hintCooldownTimeBar: {fileID: 0}
-  resetBtn: {fileID: 0}
+  HintBtn: {fileID: 0}
   hintLineRenderer:
-  - {fileID: 0}
   - {fileID: 0}

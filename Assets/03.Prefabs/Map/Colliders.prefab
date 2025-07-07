@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6633541942654196631}
   - component: {fileID: 9179737204041571923}
   - component: {fileID: 7954554628706041202}
+  - component: {fileID: 9054117283005926763}
   m_Layer: 8
   m_Name: MapTrigger5
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 744954026779265262}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 103.85, y: -143.71, z: 0}
+  m_LocalPosition: {x: 103.85, y: -141.47, z: 0}
   m_LocalScale: {x: 10, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -155,6 +156,35 @@ MonoBehaviour:
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+--- !u!114 &9054117283005926763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744954026779265262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1175bc8407bc0440b4a9320dadafd5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startId: 5035
+  endId: 
+  onConditionMet:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 744954026779265262}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &765399347543368150
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3276285653211198904
 Transform:
   m_ObjectHideFlags: 0
@@ -336,7 +366,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809120975327381055}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 140, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -388,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3960426820293700870
 Transform:
   m_ObjectHideFlags: 0
@@ -398,7 +428,7 @@ Transform:
   m_GameObject: {fileID: 1376603551422111026}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 233.63, y: -136.81, z: 0}
+  m_LocalPosition: {x: 233.63, y: -134.65, z: 0}
   m_LocalScale: {x: 20, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -826,7 +856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1320298684759152222
 Transform:
   m_ObjectHideFlags: 0
@@ -23148,7 +23178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6843622060480595265
 Transform:
   m_ObjectHideFlags: 0
@@ -23158,7 +23188,7 @@ Transform:
   m_GameObject: {fileID: 8509829498728547073}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 157.39, y: -143.76, z: 0}
+  m_LocalPosition: {x: 158.18, y: -143.76, z: 0}
   m_LocalScale: {x: 1, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23470,7 +23500,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5070343268093753003
 Transform:
   m_ObjectHideFlags: 0
