@@ -19,14 +19,19 @@ public class DialogueTriggerCondition : MonoBehaviour
 
     private void Start()
     {
+        if (DialogueManager.Instance == null)
+        {
+            enabled = false; // 이 컴포넌트를 비활성화하여 Update 호출 중지
+            return;
+        }
+    }
+    private void Update()
+    {
         var dm = DialogueManager.Instance;
-        if (dm == null || hasTriggered) return;
 
-        // startId를 봤는지
         bool sawStart = !string.IsNullOrEmpty(startId) && dm.HasSeen(startId);
-        // endId를 봤는지
-        bool sawEnd   = !string.IsNullOrEmpty(endId)   && dm.HasSeen(endId);
-        
+        bool sawEnd = !string.IsNullOrEmpty(endId) && dm.HasSeen(endId);
+
         // startId를 봤고 endId는 아직 안 봤다면 이벤트 실행
         if (sawStart && !sawEnd)
         {
