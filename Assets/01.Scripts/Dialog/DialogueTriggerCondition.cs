@@ -21,8 +21,6 @@ public class DialogueTriggerCondition : MonoBehaviour
     {
         if (DialogueManager.Instance == null)
         {
-            Debug.LogError("[DialogueTriggerCondition] DialogueManager.Instance가 null입니다. DialogueManager가 씬에 있는지, 올바르게 초기화되었는지 확인하세요.");
-            // 만약 DialogueManager가 없으면 조건 확인 자체를 할 수 없으므로 early exit
             enabled = false; // 이 컴포넌트를 비활성화하여 Update 호출 중지
             return;
         }
@@ -30,15 +28,13 @@ public class DialogueTriggerCondition : MonoBehaviour
     private void Update()
     {
         var dm = DialogueManager.Instance;
-        // startId를 봤는지
+
         bool sawStart = !string.IsNullOrEmpty(startId) && dm.HasSeen(startId);
-        // endId를 봤는지
         bool sawEnd = !string.IsNullOrEmpty(endId) && dm.HasSeen(endId);
 
         // startId를 봤고 endId는 아직 안 봤다면 이벤트 실행
         if (sawStart && !sawEnd)
         {
-            Debug.Log($"[DialogueTriggerCondition] '{gameObject.name}' 조건 만족! 이벤트 실행. StartId: {startId}");
             onConditionMet?.Invoke();
             hasTriggered = true;
         }
