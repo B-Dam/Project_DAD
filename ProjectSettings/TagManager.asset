@@ -8,6 +8,7 @@ TagManager:
   - Undefined
   - Box
   - Door
+  - Item
   layers:
   - Default
   - TransparentFX
