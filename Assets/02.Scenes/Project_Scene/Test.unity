@@ -327,6 +327,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 892278064}
     m_Modifications:
     - target: {fileID: 709308697927129378, guid: 983cee079230bac43916bab998e50a06, type: 3}
+      propertyPath: boxLayer.m_Bits
+      value: 1048576
+      objectReference: {fileID: 0}
+    - target: {fileID: 709308697927129378, guid: 983cee079230bac43916bab998e50a06, type: 3}
       propertyPath: obstacleLayer.m_Bits
       value: 2097152
       objectReference: {fileID: 0}
@@ -373,6 +377,10 @@ PrefabInstance:
     - target: {fileID: 3805618631017616282, guid: 983cee079230bac43916bab998e50a06, type: 3}
       propertyPath: m_Name
       value: Box (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805618631017616282, guid: 983cee079230bac43916bab998e50a06, type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8062869904182929936, guid: 983cee079230bac43916bab998e50a06, type: 3}
       propertyPath: m_SortingOrder
@@ -1205,6 +1213,86 @@ PrefabInstance:
     - target: {fileID: 8837574335265317053, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
       propertyPath: m_Name
       value: MapTriger1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[0].id
+      value: 5001
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[1].id
+      value: 5002
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[2].id
+      value: 5003
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[3].id
+      value: 5004
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[4].id
+      value: 5005
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[5].id
+      value: 5006
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[6].id
+      value: 5007
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[7].id
+      value: 5008
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[8].id
+      value: 5009
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[9].id
+      value: 5010
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[10].id
+      value: 5006
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[10].text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[0].speaker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[1].speaker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[2].speaker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[3].speaker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[4].speaker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[5].speaker
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843203200769542348, guid: c8bd6a6c855291a40ad804fde38b0d22, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[6].speaker
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7785,6 +7873,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 892278064}
     m_Modifications:
     - target: {fileID: 709308697927129378, guid: 983cee079230bac43916bab998e50a06, type: 3}
+      propertyPath: boxLayer.m_Bits
+      value: 1048576
+      objectReference: {fileID: 0}
+    - target: {fileID: 709308697927129378, guid: 983cee079230bac43916bab998e50a06, type: 3}
       propertyPath: obstacleLayer.m_Bits
       value: 2097152
       objectReference: {fileID: 0}
@@ -7831,6 +7923,10 @@ PrefabInstance:
     - target: {fileID: 3805618631017616282, guid: 983cee079230bac43916bab998e50a06, type: 3}
       propertyPath: m_Name
       value: Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 3805618631017616282, guid: 983cee079230bac43916bab998e50a06, type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8062869904182929936, guid: 983cee079230bac43916bab998e50a06, type: 3}
       propertyPath: m_SortingOrder

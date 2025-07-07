@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class InteractHintController : MonoBehaviour
@@ -10,17 +10,24 @@ public class InteractHintController : MonoBehaviour
     private GameObject currentHintUI;
     private Transform currentTarget;
 
-   private void Update()
-{
-    // 대화 중이면 강제로 힌트 숨기기
-    if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
-    {
-        HideHint();
-        return;
-    }
+    private bool hintDisabled = false; //  힌트 감지 비활성화 여부
 
-    DetectInteractable();
-}
+    private void Update()
+    {
+        // 대화 중이면 강제로 힌트 숨기기
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive || hintDisabled)
+        {
+            HideHint();
+            return;
+        }
+        //외부에서 힌트 비활성화 요청이 들어오면
+        if (hintDisabled)
+        {
+            HideHint();
+            return;
+        }
+        DetectInteractable();
+    }
 
 
     private void DetectInteractable()
@@ -59,8 +66,19 @@ public class InteractHintController : MonoBehaviour
         currentHintUI.SetActive(true);
         currentHintUI.transform.position = target.position + Vector3.up * 1.2f; // 오브젝트 위
     }
+    //  외부에서 힌트 비활성화
+    public void DisableHint()
+    {
+        hintDisabled = true;
+        HideHint();
+    }
 
-    private void HideHint()
+    //  다시 힌트 활성화
+    public void EnableHint()
+    {
+        hintDisabled = false;
+    }
+    void HideHint()
     {
         if (currentHintUI != null)
         {

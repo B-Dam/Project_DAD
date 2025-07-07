@@ -29,10 +29,10 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Box
   - Obstacle
-  - 
-  - 
+  - HintParticle
+  - PlayerBlocker
   - 
   - 
   - 

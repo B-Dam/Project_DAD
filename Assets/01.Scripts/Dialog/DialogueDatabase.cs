@@ -24,7 +24,7 @@ public class DialogueDatabase : MonoBehaviour
     private Dictionary<string, DialogueLine> dialogueDict = new();
 
     [Header("🔤 다이얼로그 CSV (Resources 폴더 내)")]
-    public string csvFileName = "dialogue_ko"; // 예: dialogue_ko.csv
+    public string csvFileName = "dialogueDB"; // 예: dialogue_ko.csv
 
     private void Awake()
     {
