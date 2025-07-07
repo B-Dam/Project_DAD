@@ -17,9 +17,6 @@ public class CombatSceneController : MonoBehaviour
         if (data != null)
         {
             SetupCombat(data);
-            
-            // 전투 시작
-            CombatManager.Instance.StartCombat();
         }
         else
         {

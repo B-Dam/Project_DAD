@@ -41,9 +41,6 @@ public class CombatTriggerEvent : MonoBehaviour
             var battle = SceneManager.GetSceneByName("Battle");
             if (battle.IsValid())
                 SceneManager.SetActiveScene(battle);
-            
-            if (CombatManager.Instance != null)
-                CombatManager.Instance.StartCombat();
         };
     }
     
