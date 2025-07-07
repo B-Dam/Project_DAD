@@ -674,7 +674,7 @@ MonoBehaviour:
   triggerIDs:
   - 5083
   targetObjects:
-  - {fileID: 3840834250059300439}
+  - {fileID: 7433362750832463180}
   destinationTarget: {fileID: 4376814846568134573}
   moveDuration: 100
 --- !u!212 &823682331953563237
@@ -995,7 +995,7 @@ MonoBehaviour:
   triggerIDs:
   - 5083
   targetObjects:
-  - {fileID: 5761123751647511423}
+  - {fileID: 1353910839136675813}
   destinationTarget: {fileID: 2643544679940249947}
   moveDuration: 100
 --- !u!212 &8837306491971932315
