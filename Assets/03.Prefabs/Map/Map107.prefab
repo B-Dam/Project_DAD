@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 3955688485641152643}
   - component: {fileID: 823682331953563237}
   m_Layer: 0
-  m_Name: NPCDelete (4)
+  m_Name: NPCDelete7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -957,7 +957,7 @@ GameObject:
   - component: {fileID: 1484987774392675971}
   - component: {fileID: 8837306491971932315}
   m_Layer: 0
-  m_Name: NPCDelete (5)
+  m_Name: NPCDelete8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1064,7 +1064,7 @@ GameObject:
   - component: {fileID: 2643544679940249947}
   - component: {fileID: 7146803624777420454}
   m_Layer: 0
-  m_Name: NPCEndPoint (5)
+  m_Name: NPCEndPoint8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33866,7 +33866,7 @@ GameObject:
   - component: {fileID: 4376814846568134573}
   - component: {fileID: 4835750652589134549}
   m_Layer: 0
-  m_Name: NPCEndPoint (4)
+  m_Name: NPCEndPoint7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
