@@ -13,10 +13,10 @@ public class CombatSceneController : MonoBehaviour
     private void Start()
     {
         CombatSetupData data = CombatDataHolder.GetData();
+        
         if (data != null)
         {
             SetupCombat(data);
-            CombatDataHolder.Clear();
             
             // 전투 시작
             CombatManager.Instance.StartCombat();

@@ -4,7 +4,9 @@ using UnityEngine;
 public static class CombatDataHolder
 {
     private static CombatSetupData currentData;
-
+    
+    public static CombatTriggerEvent LastTrigger { get; set; }
+    
     public static void SetData(CombatSetupData data)
     {
         currentData = data;
@@ -19,4 +21,6 @@ public static class CombatDataHolder
     {
         currentData = null;
     }
+    
+    public static void ClearTrigger() => LastTrigger = null;
 }

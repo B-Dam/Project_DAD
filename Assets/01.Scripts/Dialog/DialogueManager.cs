@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ public class DialogueManager : MonoBehaviour
     
     // 대화 ID별로 본 여부만 저장
     private HashSet<string> seenIDs = new HashSet<string>();
+    
+    // NPC 대화 엔트리 배열 저장
+    private DialogueEntry[] currentDialogueEntries;
 
     [Header("UI 컴포넌트")]
     public GameObject dialoguePanel;
@@ -75,6 +79,20 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
+    
+    /// <summary>
+    /// NPC에서 대화 엔트리 배열을 직접 넘겨 받을 때 사용
+    /// </summary>
+    public void StartDialogueWithEntries(DialogueEntry[] entries)
+    {
+        if (entries == null || entries.Length == 0) return;
+        if (Time.time - lastDialogueEndTime < dialogueCooldown) return;
+
+        currentDialogueEntries = entries;
+        // ID만 뽑아서 기존 StartDialogueByIDs 호출
+        string[] ids = entries.Select(e => e.id).ToArray();
+        StartDialogueByIDs(ids);
+    }
 
     public void StartDialogueByIDs(string[] dialogueIDs)
     {
@@ -112,8 +130,29 @@ public class DialogueManager : MonoBehaviour
     private void ShowNextLine()
     {
         StopBlinkUX();
+        
+        // 현재 엔트리 안전하게 얻기
+        DialogueEntry entry = null;
+        if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+            entry = currentDialogueEntries[dialogueIndex];
 
+        // CombatTriggerEvent가 연결된 엔트리일 경우 전투 트리거 및 대화 일시정지
+        if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
+        {
+            // 전투 트리거
+            entry.OnDialogueEnd();
+
+            // 다음 대사로 이어지도록 인덱스 미리 증가
+            dialogueIndex++;
+
+            // 대화 일시정지
+            isDialogueActive = false;
+            dialoguePanel.SetActive(false);
+            return;
+        }
+        
         dialogueIndex++;
+        
         if (dialogueIndex >= currentDialogueLines.Length)
         {
             EndDialogue();
@@ -123,9 +162,25 @@ public class DialogueManager : MonoBehaviour
             DisplayCurrentLine();
         }
     }
+    
+    public void ResumeDialogue()
+    {
+        if (dialogueIndex < currentDialogueLines.Length)
+        {
+            isDialogueActive = true;
+            dialoguePanel.SetActive(true);
+            DisplayCurrentLine();
+            dialogueStartTime = Time.time;
+        }
+    }
 
     private void DisplayCurrentLine()
     {
+        // currentDialogueEntries는 StartDialogueWithEntries에서만 사용됨
+        DialogueEntry entry = currentDialogueEntries != null
+            ? currentDialogueEntries[dialogueIndex]
+            : null;
+        
         var line = currentDialogueLines[dialogueIndex];
         speakerText.text = line.speaker;
         
@@ -168,6 +223,7 @@ public class DialogueManager : MonoBehaviour
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeText(line.text));
     }
 
@@ -176,18 +232,15 @@ public class DialogueManager : MonoBehaviour
         isTyping = true;
         fullText = text;
         dialogueText.text = "";
+        if (uxBlinkImage != null) uxBlinkImage.gameObject.SetActive(false);
 
-        if (uxBlinkImage != null)
-            uxBlinkImage.gameObject.SetActive(false); // 타이핑 중 숨김
-
-        foreach (char c in text)
+        foreach (var ch in text)
         {
-            dialogueText.text += c;
+            dialogueText.text += ch;
             yield return new WaitForSeconds(typingSpeed);
         }
-
         isTyping = false;
-        StartBlinkUX(); // 타이핑 끝났으므로 UX 시작
+        StartBlinkUX();
     }
 
     private void StartBlinkUX()
@@ -230,6 +283,10 @@ public class DialogueManager : MonoBehaviour
         lastDialogueEndTime = Time.time;
 
         StopBlinkUX();
+        
+        // 컷씬 이미지도 끄기
+        if (cutsceneImage != null)
+            cutsceneImage.gameObject.SetActive(false);
     }
     
     /// <summary>

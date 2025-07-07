@@ -34,6 +34,9 @@ public class CombatManager : MonoBehaviour
     public int playerAtkMod { get; private set; }
     public int enemyAtkMod  { get; private set; }
     
+    // 전투 중인지 확인용
+    public bool IsInCombat { get; private set; }
+    
     List<TimedModifier> playerAttackMods = new List<TimedModifier>();
     List<TimedModifier> enemyAttackMods  = new List<TimedModifier>();
     
@@ -52,7 +55,11 @@ public class CombatManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else Destroy(gameObject);
     }
 
@@ -84,6 +91,8 @@ public class CombatManager : MonoBehaviour
     /// <summary>전투 개시</summary>
     public void StartCombat()
     {
+        IsInCombat = true;
+            
         // HP 초기화
         playerHp = DataManager.Instance.playerData.maxHP;
         enemyHp  = DataManager.Instance.enemyData.maxHP;
@@ -268,16 +277,24 @@ public class CombatManager : MonoBehaviour
     // 적이나 아군 체력을 확인하고 종료 로직 작동
     void CheckEnd()
     {
+        if (!IsInCombat) return;
+        
         if (enemyHp <= 0)
         {
             Debug.Log("Victory!");
             // 승리 시 추가 로직
-            SceneManager.UnloadSceneAsync("Battle");
+            
+            // 전투 종료
+            IsInCombat = false;
+            
+            Debug.Log($"▶ CheckEnd: LastTrigger = {CombatDataHolder.LastTrigger}");
+            CombatDataHolder.LastTrigger?.OnBattleEnd();
         }
         else if (playerHp <= 0)
         {
             Debug.Log("Defeat...");
             // 패배 시 추가 로직
+            IsInCombat = false;
         }
     }
 }

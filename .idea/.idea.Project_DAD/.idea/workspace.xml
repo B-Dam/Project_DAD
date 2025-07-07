@@ -7,21 +7,18 @@
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/TurnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/TurnManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatDataHolder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatDataHolder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSceneController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSceneController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatTriggerEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatTriggerEvent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueEntry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueEntry.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueTriggerCondition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueTriggerCondition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPC.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPC.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Player/PlayerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/UI/BuffIcon.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/UI/BuffIcon.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/EnemyCharacter.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/EnemyCharacter.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang_Attack.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang_Attack.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ScriptableObjects/Characters/CaptainCat.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ScriptableObjects/Characters/CaptainCat.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ScriptableObjects/Characters/CaptainCat2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ScriptableObjects/Characters/CaptainCat2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ScriptableObjects/Characters/Mono.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ScriptableObjects/Characters/Mono.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Marge2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Marge2.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/SceneConnect/MainScene/EnemyFangTrigger.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/SceneConnect/MainScene/EnemyFangTrigger.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Puzzle/ParticleFlower.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Puzzle/ParticleFlower.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +35,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSceneController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSetupData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatTriggerEvent.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/GameStateManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/SceneLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/BattleStartButton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/DeckUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/TooltipController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -140,6 +136,9 @@
       <workItem from="1751455920812" duration="2564000" />
       <workItem from="1751501048839" duration="20027000" />
       <workItem from="1751588214152" duration="16621000" />
+      <workItem from="1751624815213" duration="7899000" />
+      <workItem from="1751847614920" duration="6558000" />
+      <workItem from="1751879209689" duration="1590000" />
     </task>
     <servers />
   </component>

@@ -17,4 +17,3 @@ public class DialogueEntry
         onEndEvents?.Invoke();
     }
 }
-
