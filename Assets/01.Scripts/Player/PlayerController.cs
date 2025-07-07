@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
             {
                 GameObject target = hit.collider.gameObject;
 
-                if (target.CompareTag("NPC") || target.CompareTag("Item") || target.CompareTag("Interact"))
+                if (target.CompareTag("NPC") || target.CompareTag("Door") || target.CompareTag("Item") || target.CompareTag("Interact"))
                 {
                     var interactable = target.GetComponent<IInteractable>();
                     if (interactable != null)
