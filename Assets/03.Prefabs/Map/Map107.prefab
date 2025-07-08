@@ -1308,7 +1308,7 @@ GameObject:
   - component: {fileID: 9077199323329407924}
   - component: {fileID: 2680375379162133833}
   m_Layer: 0
-  m_Name: DialogueActivator (6)
+  m_Name: DialogueActivator8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

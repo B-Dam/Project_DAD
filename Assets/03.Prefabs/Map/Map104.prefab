@@ -1567,7 +1567,7 @@ GameObject:
   - component: {fileID: 3506963704475756008}
   - component: {fileID: 8538040811039692447}
   m_Layer: 0
-  m_Name: DialogueActivator (2)
+  m_Name: DialogueActivator4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1901,7 +1901,7 @@ GameObject:
   - component: {fileID: 2274712253171141989}
   - component: {fileID: 5730846787537107583}
   m_Layer: 0
-  m_Name: DialogueActivator (4)
+  m_Name: DialogueActivator6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4362,38 +4362,65 @@ MonoBehaviour:
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5056
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5057
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5058
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5059
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5060
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5061
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5062
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5063
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!95 &3326177230372763445
 Animator:
   serializedVersion: 7
@@ -28966,7 +28993,7 @@ GameObject:
   - component: {fileID: 3755097547721944748}
   - component: {fileID: 8426525239550535301}
   m_Layer: 0
-  m_Name: DialogueActivator (3)
+  m_Name: DialogueActivator5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
