@@ -108,7 +108,7 @@ public class DialogueEventTrigger : MonoBehaviour
             yield return null;
         }
 
-        npc.Stop(); // 멈춤 처리
+        npc.Destroy(); // 멈춤 처리
         Debug.Log($" {obj.name} 이동 완료: {targetPos}");
     }
 }

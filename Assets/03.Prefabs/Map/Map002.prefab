@@ -12236,7 +12236,7 @@ Transform:
   m_GameObject: {fileID: 3260629358400169064}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.100006, y: 8.599998, z: 0}
+  m_LocalPosition: {x: 12.68, y: -12.84, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14889,22 +14889,49 @@ MonoBehaviour:
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5011
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5012
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5013
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: CombatTriggerEvent, Assembly-CSharp
+          m_MethodName: TriggerCombat
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - id: 5014
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!61 &2836730007081918651
 BoxCollider2D:
   m_ObjectHideFlags: 0
