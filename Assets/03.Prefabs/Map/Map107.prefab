@@ -1201,6 +1201,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &4118654676816328254
 GameObject:
   m_ObjectHideFlags: 0
@@ -34051,78 +34063,135 @@ MonoBehaviour:
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5066
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5067
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5068
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5069
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5070
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5071
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5072
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5073
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5074
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5075
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5076
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5077
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5078
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5079
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5080
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5081
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5082
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5083
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!61 &3349485271545875227
 BoxCollider2D:
   m_ObjectHideFlags: 0

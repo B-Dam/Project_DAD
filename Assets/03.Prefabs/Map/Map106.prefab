@@ -21111,6 +21111,7 @@ GameObject:
   - component: {fileID: 8182380758783606027}
   - component: {fileID: 5585354323814667644}
   - component: {fileID: 8569001600143763996}
+  - component: {fileID: 4664680156255274419}
   m_Layer: 6
   m_Name: Ball
   m_TagString: Item
@@ -21205,6 +21206,9 @@ MonoBehaviour:
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!61 &5585354323814667644
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21278,6 +21282,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &4664680156255274419
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6169963732228945721}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 74c8d469b7ab1ac4692e01597789613b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6366773084454479107
 GameObject:
   m_ObjectHideFlags: 0
