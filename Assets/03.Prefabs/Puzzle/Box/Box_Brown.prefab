@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1408919700121137899}
   - component: {fileID: 2213109757027590740}
   m_Layer: 20
-  m_Name: Box
+  m_Name: Box_Brown
   m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 8258279479603881886, guid: fd29ce72c26b6b84cbb7907c1536bbfb, type: 3}
+  m_Sprite: {fileID: 3369028770649640057, guid: 81f70a2149c9a934096c9dc04fb11d22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,13 +145,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6, y: 1.5}
+    oldSize: {x: 1.85, y: 1.55}
     newSize: {x: 1.7, y: 1.7}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.65, y: 0.8}
+  m_Size: {x: 1.6, y: 0.8}
   m_EdgeRadius: 0
 --- !u!50 &1408919700121137899
 Rigidbody2D:
@@ -201,5 +201,3 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2097152
   blockIndicatorPrefab: {fileID: 6173811841931134668, guid: efbdda0008253ff4a9491acd85f62c3d, type: 3}
-  directionDominanceRatioX: 2.7
-  directionDominanceRatioY: 1.4
