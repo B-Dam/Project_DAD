@@ -1,0 +1,524 @@
+fileFormatVersion: 2
+guid: 6dc91ff5e22e68e4c9dcf0891c620b3e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4526767935567111814
+    second: enemyskillicon_0
+  - first:
+      213: -8877654610475350961
+    second: enemyskillicon_1
+  - first:
+      213: 5835994746221923717
+    second: enemyskillicon_2
+  - first:
+      213: -4975461531417526803
+    second: enemyskillicon_3
+  - first:
+      213: -7108518353612790137
+    second: enemyskillicon_4
+  - first:
+      213: 9196338970187460845
+    second: enemyskillicon_5
+  - first:
+      213: 2877303705543187057
+    second: enemyskillicon_6
+  - first:
+      213: 4313157360727339455
+    second: enemyskillicon_7
+  - first:
+      213: 5989550996138750336
+    second: enemyskillicon_8
+  - first:
+      213: -3128165268128091706
+    second: enemyskillicon_9
+  - first:
+      213: -6463085809727264881
+    second: enemyskillicon_10
+  - first:
+      213: 1200232323256176115
+    second: enemyskillicon_11
+  - first:
+      213: 8719133268894521074
+    second: enemyskillicon_12
+  - first:
+      213: -8902807374948222163
+    second: enemyskillicon_13
+  - first:
+      213: -8885611720894562503
+    second: enemyskillicon_14
+  - first:
+      213: 2327730943969058114
+    second: enemyskillicon_15
+  - first:
+      213: -7698873029062150494
+    second: enemyskillicon_16
+  - first:
+      213: -8588104593673227128
+    second: enemyskillicon_17
+  - first:
+      213: 3275227952095957096
+    second: enemyskillicon_18
+  - first:
+      213: 5171431855488620884
+    second: enemyskillicon_19
+  - first:
+      213: 4603873454620865869
+    second: enemyskillicon_20
+  - first:
+      213: 6258322560192565089
+    second: enemyskillicon_21
+  - first:
+      213: -4796817787593778733
+    second: enemyskillicon_22
+  - first:
+      213: -8239106019947185442
+    second: enemyskillicon_23
+  - first:
+      213: -6640859820657176956
+    second: enemyskillicon_24
+  - first:
+      213: -5039945282230092543
+    second: enemyskillicon_25
+  - first:
+      213: 2356326107384444045
+    second: enemyskillicon_26
+  - first:
+      213: -2318380411442797259
+    second: enemyskillicon_27
+  - first:
+      213: 7818692251514972251
+    second: enemyskillicon_28
+  - first:
+      213: -4892758118637793629
+    second: enemyskillicon_29
+  - first:
+      213: 6895427373937940567
+    second: enemyskillicon_30
+  - first:
+      213: 9131096767345564170
+    second: enemyskillicon_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: enemyskillicon_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 61
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a79d4e3eb80bd21c0800000000000000
+      internalID: -4526767935567111814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 60
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f440208ea2c3cc480800000000000000
+      internalID: -8877654610475350961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_2
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 62
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58d8a9f1d4e9df050800000000000000
+      internalID: 5835994746221923717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_3
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 62
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dedbc3a291c93fab0800000000000000
+      internalID: -4975461531417526803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_4
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 63
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 2.953102, y: 0.38344985}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 786a09d4838795d90800000000000000
+      internalID: -7108518353612790137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_5
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 57
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de0fa10b195ff9f70800000000000000
+      internalID: 9196338970187460845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_6
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 10
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17a11dfb97c3ee720800000000000000
+      internalID: 2877303705543187057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_7
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 10
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1b38a74c96bdb30800000000000000
+      internalID: 4313157360727339455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_8
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 10
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 081ffe0a5e82f1350800000000000000
+      internalID: 5989550996138750336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_9
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 12
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.26387233, y: -8.230158}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c1b28a23468694d0800000000000000
+      internalID: -3128165268128091706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_10
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 10
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f87a65ee2b18e46a0800000000000000
+      internalID: -6463085809727264881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemyskillicon_11
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 14
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fd40ab50f418a010800000000000000
+      internalID: 1200232323256176115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 88771d5159fab864ba5423575641196f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      enemyskillicon_0: -4526767935567111814
+      enemyskillicon_1: -8877654610475350961
+      enemyskillicon_10: -6463085809727264881
+      enemyskillicon_11: 1200232323256176115
+      enemyskillicon_12: 8719133268894521074
+      enemyskillicon_13: -8902807374948222163
+      enemyskillicon_14: -8885611720894562503
+      enemyskillicon_15: 2327730943969058114
+      enemyskillicon_16: -7698873029062150494
+      enemyskillicon_17: -8588104593673227128
+      enemyskillicon_18: 3275227952095957096
+      enemyskillicon_19: 5171431855488620884
+      enemyskillicon_2: 5835994746221923717
+      enemyskillicon_20: 4603873454620865869
+      enemyskillicon_21: 6258322560192565089
+      enemyskillicon_22: -4796817787593778733
+      enemyskillicon_23: -8239106019947185442
+      enemyskillicon_24: -6640859820657176956
+      enemyskillicon_25: -5039945282230092543
+      enemyskillicon_26: 2356326107384444045
+      enemyskillicon_27: -2318380411442797259
+      enemyskillicon_28: 7818692251514972251
+      enemyskillicon_29: -4892758118637793629
+      enemyskillicon_3: -4975461531417526803
+      enemyskillicon_30: 6895427373937940567
+      enemyskillicon_31: 9131096767345564170
+      enemyskillicon_4: -7108518353612790137
+      enemyskillicon_5: 9196338970187460845
+      enemyskillicon_6: 2877303705543187057
+      enemyskillicon_7: 4313157360727339455
+      enemyskillicon_8: 5989550996138750336
+      enemyskillicon_9: -3128165268128091706
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
