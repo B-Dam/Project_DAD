@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 3955688485641152643}
   - component: {fileID: 823682331953563237}
   m_Layer: 0
-  m_Name: NPCDelete (4)
+  m_Name: NPCDelete7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -957,7 +957,7 @@ GameObject:
   - component: {fileID: 1484987774392675971}
   - component: {fileID: 8837306491971932315}
   m_Layer: 0
-  m_Name: NPCDelete (5)
+  m_Name: NPCDelete8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1064,7 +1064,7 @@ GameObject:
   - component: {fileID: 2643544679940249947}
   - component: {fileID: 7146803624777420454}
   m_Layer: 0
-  m_Name: NPCEndPoint (5)
+  m_Name: NPCEndPoint8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1189,6 +1189,18 @@ MonoBehaviour:
   onConditionMet:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -33866,7 +33878,7 @@ GameObject:
   - component: {fileID: 4376814846568134573}
   - component: {fileID: 4835750652589134549}
   m_Layer: 0
-  m_Name: NPCEndPoint (4)
+  m_Name: NPCEndPoint7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34051,78 +34063,135 @@ MonoBehaviour:
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5066
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5067
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5068
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5069
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5070
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5071
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5072
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5073
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5074
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5075
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5076
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5077
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5078
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5079
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5080
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5081
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5082
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
   - id: 5083
     speaker: 
     text: 
     focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!61 &3349485271545875227
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -7328,7 +7328,7 @@ GameObject:
   - component: {fileID: 6250188545595591020}
   - component: {fileID: 3843452078344922128}
   m_Layer: 0
-  m_Name: NPCDelete (3)
+  m_Name: NPCDelete3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32169,7 +32169,7 @@ GameObject:
   - component: {fileID: 9142980111889155280}
   - component: {fileID: 171811787339712961}
   m_Layer: 0
-  m_Name: NPCEndPoint (3)
+  m_Name: NPCEndPoint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
