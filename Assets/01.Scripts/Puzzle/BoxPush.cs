@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
@@ -10,49 +11,49 @@ public class BoxPush : MonoBehaviour
     public float moveDistance = 1f; // 박스가 한 번에 이동할 거리 (한 칸)
     public float moveSpeed = 5f;// 이동 속도
 
+    //충돌 감지 레이어 (장애물, 다른 박스)
     [Header("충돌 감지 레이어")]
     public LayerMask boxLayer;
-    public LayerMask obstacleLayer; // 장애물 레이어
+    public LayerMask obstacleLayer;
 
     private Rigidbody2D rb;
-    private bool isMoving = false;
-    private Vector2 targetPosition;
+    private bool isMoving = false; // 이동 중 여부
+    private Vector2 targetPosition;  // 이동 목표 위치
 
+    // 이동 불가 시 표시할 인디케이터
     [Header("막힘 알림 설정")]
-    public GameObject blockIndicatorPrefab; // 못 미는 경우 뜨는 UI 아이콘 프리팹
+    public GameObject blockIndicatorPrefab; 
     private Canvas canvas;
     private GameObject currentIndicator;// 현재 표시 중인 아이콘
     private float indicatorLifetime = 0.2f;// 아이콘 유지 시간
 
-    //stay 조금 지연 시키기
+    // OnCollisionStay2D가 너무 자주 호출되는 걸 막음
     private float collisionProcessCooldown = 0.3f; // 최소 간격 0.3초
     private float lastCollisionProcessTime = -999f; // 초기값은 아주 과거 시간
 
-    public float directionDominanceRatioX = 2.5f;
-    public float directionDominanceRatioY = 2.5f;
-
+    //대각선 오립력을 막기 위함 X차이(absX)가 Y차이(absY)의 2.5배 이상일 때만 → 좌우 방향 입력을 유효하다고 인정
+    private float directionDominanceRatioX = 2.7f;
+    private float directionDominanceRatioY = 1.4f;
 
     private void Start()
     {
         // Rigidbody2D 설정: 직접 위치 이동할 것이므로 Kinematic으로 설정
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;//직접 위치 이동 할 거니까
+
+        // 콜라이더 크기 고정
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
     }
     private void Update()
     {
         if (isMoving)
         {
+            //이동 중일 때 목표 위치까지 보간 이동
             Vector2 moveDir = (targetPosition - rb.position).normalized;
-
-            if (moveDir == Vector2.zero || IsBlockedWhileMoving(moveDir))
-            {
-                //ShowBlockIndicator();
-                isMoving = false;
-                return;
-            }
 
             rb.MovePosition(Vector2.MoveTowards(rb.position, targetPosition, moveSpeed * Time.deltaTime));
 
+            // 목표 도착 판정
             if (Vector2.Distance(rb.position, targetPosition) < 0.01f)
             {
                 rb.position = targetPosition;
@@ -80,10 +81,12 @@ public class BoxPush : MonoBehaviour
         // 어느 방향으로 밀었는지 판단
         Vector2 pushDirection = GetPushDirection(collision);
 
+        //이동 불가: 방향 없음 or 막힘
         if (pushDirection == Vector2.zero || IsBlockedForStart(pushDirection))
         {
             ShowBlockIndicator();
             pc.lastPushTime = Time.time;
+           
             return;
         }
         // 다음 위치 계산
@@ -117,6 +120,7 @@ public class BoxPush : MonoBehaviour
         float absX = Mathf.Abs(delta.x);
         float absY = Mathf.Abs(delta.y);
         //Debug.Log($"[BoxPush] delta = {delta}, absX = {absX}, absY = {absY}, input = {input}");
+
         // 좌우 방향이 더 뚜렷한 경우만 좌우 입력 허용
         if (absX > absY * directionDominanceRatioX && absX > 0.1f)
         {
@@ -134,8 +138,11 @@ public class BoxPush : MonoBehaviour
         return Vector2.zero;
     }
 
+    //감지 시작 시 막힘 체크
     bool IsBlockedForStart(Vector2 direction) => IsBlocked(direction, true);
+    //이동 중 막힘 체크 (현재는 미사용)
     bool IsBlockedWhileMoving(Vector2 direction) => IsBlocked(direction, false);
+    //주어진 방향에 OverlapBox로 충돌 체크
     bool IsBlocked(Vector2 direction, bool showDebug)//showDebug는 디버그용
     {
         if (direction == Vector2.zero) return true;
@@ -146,15 +153,25 @@ public class BoxPush : MonoBehaviour
 
         float thickness = 0.01f;
         Vector2 castSize;
-
+        float sizeX = boxCol.bounds.size.x;
+        float sizeY = boxCol.bounds.size.y;
         if (Mathf.Abs(direction.x) > 0.1f)
-            castSize = new Vector2(1f, Mathf.Max(0.05f, boxSize.y - thickness));
+            castSize = new Vector2(sizeX, sizeY); // 가로 감지
         else
-            castSize = new Vector2(Mathf.Max(0.05f, boxSize.x - thickness), 1f - 0.95f);
+            castSize = new Vector2(sizeX, sizeY+1f); // 세로 감지
 
         Vector2 castCenter = boxCenter + direction * (1f * 0.5f);
 
-        Collider2D[] hits = Physics2D.OverlapBoxAll(castCenter, castSize, 0f, obstacleLayer | boxLayer);
+        if (showDebug)
+        {
+            Debug.Log($"[BoxPush][Cast Info]");
+            Debug.Log($"- boxSize = {boxSize}");
+            Debug.Log($"- direction = {direction}");
+            Debug.Log($"- castSize = {castSize}");
+            Debug.Log($"- castCenter = {castCenter}");
+        }
+        //충돌 체크
+        Collider2D[] hits = Physics2D.OverlapBoxAll(castCenter, castSize, 0f, obstacleLayer | boxLayer);//0f는 회전값
         foreach (var hit in hits)
         {
             if (hit != null && hit.gameObject != gameObject)
@@ -163,7 +180,6 @@ public class BoxPush : MonoBehaviour
 
                 bool isUnmovable =
                   hitLayer == LayerMask.NameToLayer("Obstacle") ||
-                  hitLayer == LayerMask.NameToLayer("PlayerBlocker")||
                    hit.CompareTag("Box"); ;
 
                 if (showDebug)
@@ -174,7 +190,6 @@ public class BoxPush : MonoBehaviour
                 {
                     //ShowBlockIndicator();
                 }
-
 
                 return true;
             }
@@ -237,30 +252,50 @@ public class BoxPush : MonoBehaviour
     //아이콘 위치 계산 (플레이어 머리 위)
     Vector3 GetIndicatorWorldPosition(Vector3 playerPos)
     {
-        //민 방향으로 뜨지만 바로 방향 바꿔도 뜬 곳에 그대로 있어서 보류
-        //Vector2 dir = (rb.position - (Vector2)playerPos).normalized;
-        //Vector3 offset = Vector3.up * 0.8f;
-
-        //if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
-        //    offset += Vector3.right * Mathf.Sign(dir.x) * 1f;
-        //else
-        //    offset += Vector3.up * 0.5f;
-
-        //return playerPos + offset;
-
         return playerPos + new Vector3(0f, 1.2f, 0f);//단순 머리위 고정
     }
+    //    private void OnDrawGizmos()
+    //    {
+    //#if UNITY_EDITOR
+    //        BoxCollider2D col = GetComponent<BoxCollider2D>();
+    //        if (col != null)
+    //        {
+    //            Handles.color = Color.blue;
+    //            Handles.matrix = transform.localToWorldMatrix;
+
+    //            Vector2 half = col.size * 0.5f;
+    //            Vector2 offset1 = col.offset;
+
+    //            Vector3[] corners = new Vector3[]
+    //            {
+    //            offset1 + new Vector2(-half.x, -half.y),
+    //            offset1 + new Vector2(-half.x,  half.y),
+    //            offset1 + new Vector2( half.x,  half.y),
+    //            offset1 + new Vector2( half.x, -half.y),
+    //            offset1 + new Vector2(-half.x, -half.y)
+    //            };
+    //            Handles.DrawAAPolyLine(10f, corners);
+
+    //        }
+    //#endif
+    //    }
+
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
         BoxCollider2D col = GetComponent<BoxCollider2D>();
+        //float a = 2f / 1.2f * 100f;
+        //float b = 1f / 1.2f * 100f;
+        //col.size = new Vector2((Mathf.Floor(a)/100)-0.01f, (Mathf.Floor(b)/100)-0.03f);
         if (col != null)
         {
+            // 🔵 기존 콜라이더 파란색 라인
             Handles.color = Color.blue;
-            Handles.matrix = transform.localToWorldMatrix;
-
-            Vector2 half = col.size * 0.5f;
-            Vector2 offset1 = col.offset;
+            //Handles.matrix = transform.localToWorldMatrix;
+            Handles.matrix = Matrix4x4.identity;
+            Vector2 half = col.bounds.size * 0.5f;
+            //Vector2 offset1 = col.offset;
+            Vector2 offset1 = col.bounds.center;
 
             Vector3[] corners = new Vector3[]
             {
@@ -272,7 +307,30 @@ public class BoxPush : MonoBehaviour
             };
             Handles.DrawAAPolyLine(10f, corners);
 
+            // 🟡 박스올 감지 영역 (4방향)
+            Vector2 boxSize = col.bounds.size;
+            Vector2 boxCenter = col.bounds.center;
+
+            Vector2[] directions = { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
+            foreach (var dir in directions)
+            {
+                Vector2 castSize = (Mathf.Abs(dir.x) > 0.1f)
+                    ? new Vector2(col.bounds.size.x, col.bounds.size.y)
+                    : new Vector2(col.bounds.size.x, col.bounds.size.y+1f);
+                //: new Vector2(2f, 1f);
+
+                //Vector2 castCenter = boxCenter + dir* (1f * 1f);
+                //Debug.Log($"sss{dir}");
+                Vector2 castCenter = boxCenter + dir * ((Mathf.Abs(dir.x) > 0.1f) ? col.bounds.size.x/ 2 : col.bounds.size.y );
+
+                Gizmos.color = Color.black;
+                Gizmos.DrawWireCube(castCenter, castSize);
+
+
+            }
         }
 #endif
     }
+
+
 }
