@@ -6,34 +6,39 @@ public class CombatTriggerEvent : MonoBehaviour
 {
     [Header("전투 정보")]
     public CombatSetupData setupData;
-    
+
     [Header("메인 UI 루트 (씬 전환 시 숨길 것)")]
     public GameObject mainUI;
-    
+
     private Scene _previousScene;
+
+    bool hasTriggered = false;
 
     private void Awake()
     {
         // 트리거 오브젝트가 Battle 씬 로딩/언로드 때 파괴되지 않도록
         DontDestroyOnLoad(gameObject);
     }
-    
+
     public void TriggerCombat()
     {
+        if (hasTriggered) return;  // 이미 실행됐으면 무시
+        hasTriggered = true;
+
         // 대화 컷씬 숨기기
         if (DialogueManager.Instance != null)
             DialogueManager.Instance.EndDialogue();
-        
+
         // UI 숨기기
         if (mainUI != null) mainUI.SetActive(false);
 
-      if (InteractHintController.Instance != null)
-    InteractHintController.Instance.DisableHint();
+        if (InteractHintController.Instance != null)
+            InteractHintController.Instance.DisableHint();
 
-        
+
         // 이전 씬 저장
         _previousScene = SceneManager.GetActiveScene();
-        
+
         // 전투 데이터 전달
         CombatDataHolder.SetData(setupData);
         CombatDataHolder.LastTrigger = this;
@@ -47,13 +52,13 @@ public class CombatTriggerEvent : MonoBehaviour
                 SceneManager.SetActiveScene(battle);
         };
     }
-    
+
     // 전투가 끝났을 때 호출
     public void OnBattleEnd()
     {
         StartCoroutine(UnloadBattleSceneRoutine());
     }
-    
+
     private IEnumerator UnloadBattleSceneRoutine()
     {
         // Battle 씬을 비동기로 언로드
@@ -64,7 +69,7 @@ public class CombatTriggerEvent : MonoBehaviour
         {
             yield return null;
         }
-    
+
         // 이전 씬을 다시 활성 씬으로 설정
         if (_previousScene.IsValid())
         {
@@ -76,10 +81,10 @@ public class CombatTriggerEvent : MonoBehaviour
 
         // 대화 재개 (안전하게 호출)
         DialogueManager.Instance?.ResumeDialogue();
-    
+
         // 모든 작업이 끝난 후 데이터 정리
         CombatDataHolder.Clear();
-        
+
         // 진짜 다 끝나고 트리거 초기화
         CombatDataHolder.ClearTrigger();
     }
