@@ -26,6 +26,10 @@ public class CombatTriggerEvent : MonoBehaviour
         
         // UI 숨기기
         if (mainUI != null) mainUI.SetActive(false);
+
+      if (InteractHintController.Instance != null)
+    InteractHintController.Instance.DisableHint();
+
         
         // 이전 씬 저장
         _previousScene = SceneManager.GetActiveScene();
