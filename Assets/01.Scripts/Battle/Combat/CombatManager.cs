@@ -35,13 +35,17 @@ public class CombatManager : MonoBehaviour
     public int enemyAtkMod  { get; private set; }
     
     // 전투 중인지 확인용
-    public bool IsInCombat { get; private set; }
+    public bool IsInCombat { get; set; }
     
     List<TimedModifier> playerAttackMods = new List<TimedModifier>();
     List<TimedModifier> enemyAttackMods  = new List<TimedModifier>();
     
     public event Action<CardData> OnPlayerSkillUsed;
     public event Action<CardData> OnEnemySkillUsed;
+    public event Action OnPlayerHit;
+    public event Action OnEnemyHit;
+    public event Action OnPlayerDeath;
+    public event Action OnEnemyDeath;
     
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
@@ -92,6 +96,7 @@ public class CombatManager : MonoBehaviour
     public void StartCombat()
     {
         IsInCombat = true;
+        Time.timeScale = 1;
             
         // HP 초기화
         playerHp = DataManager.Instance.playerData.maxHP;
@@ -203,13 +208,27 @@ public class CombatManager : MonoBehaviour
             {
                 int shielded = Mathf.Min(enemyShield, rawAttack);
                 enemyShield -= shielded;
+                
+                // 적 데미지
                 enemyHp     = Mathf.Max(0, enemyHp - (rawAttack - shielded));
+                // 적 피격 이벤트
+                OnEnemyHit?.Invoke();
+                
+                if (enemyHp <= 0)
+                    OnEnemyDeath?.Invoke();
             }
             else
             {
                 int shielded = Mathf.Min(playerShield, rawAttack);
                 playerShield -= shielded;
+                
+                // 플레이어 데미지
                 playerHp     = Mathf.Max(0, playerHp - (rawAttack - shielded));
+                // 플레이어 피격 이벤트
+                OnPlayerHit?.Invoke();
+                
+                if (playerHp <= 0)
+                    OnPlayerDeath?.Invoke();
             }
         }
 
@@ -287,7 +306,7 @@ public class CombatManager : MonoBehaviour
             // 전투 종료
             IsInCombat = false;
             
-            Debug.Log($"▶ CheckEnd: LastTrigger = {CombatDataHolder.LastTrigger}");
+            Debug.Log($"CheckEnd: LastTrigger = {CombatDataHolder.LastTrigger}");
             CombatDataHolder.LastTrigger?.OnBattleEnd();
         }
         else if (playerHp <= 0)

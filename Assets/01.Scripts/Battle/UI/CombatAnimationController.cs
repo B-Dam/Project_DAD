@@ -16,6 +16,10 @@ public class CombatAnimationController : MonoBehaviour
     [Header("공격 모션 딜레이")]
     [SerializeField] private float attackPause = 1f;  
     
+    [Header("UI 제어용")]
+    [SerializeField] private CanvasGroup gameUIGroup;
+    [SerializeField] private GameObject retryPanel;
+    
     private bool isEnemyMoving;
     private bool isPlayerMoving;
     
@@ -30,6 +34,11 @@ public class CombatAnimationController : MonoBehaviour
         {
             cm.OnPlayerSkillUsed += HandlePlayerSkill;
             cm.OnEnemySkillUsed  += HandleEnemySkill;
+            cm.OnPlayerHit       += HandlePlayerHit;
+            cm.OnEnemyHit        += HandleEnemyHit;
+            cm.OnPlayerDeath     += HandlePlayerDeath;
+            cm.OnEnemyDeath      += HandleEnemyDeath;
+            cm.OnCombatStart     += HandleCombatStart;
         }
     }
 
@@ -40,6 +49,11 @@ public class CombatAnimationController : MonoBehaviour
         {
             cm.OnPlayerSkillUsed -= HandlePlayerSkill;
             cm.OnEnemySkillUsed  -= HandleEnemySkill;
+            cm.OnPlayerHit       -= HandlePlayerHit;
+            cm.OnEnemyHit        -= HandleEnemyHit;
+            cm.OnPlayerDeath     -= HandlePlayerDeath;
+            cm.OnEnemyDeath      -= HandleEnemyDeath;
+            cm.OnCombatStart     -= HandleCombatStart;
         }
     }
 
@@ -149,5 +163,67 @@ public class CombatAnimationController : MonoBehaviour
         tf.localPosition = startPos;
 
         isEnemyMoving = false;
+    }
+    
+    private void HandlePlayerHit()
+    {
+        playerAnimator.SetTrigger("Hit");
+    }
+
+    private void HandleEnemyHit()
+    {
+        enemyAnimator.SetTrigger("Hit");
+    }
+    
+    private void HandlePlayerDeath()
+    {
+        // GameUI 잠금
+        LockGameUI();
+        // 남아 있는 Hit 트리거 클리어
+        playerAnimator.ResetTrigger("Hit");
+        // Die 트리거 활성
+        playerAnimator.SetTrigger("Die");
+        StartCoroutine(ShowRetryAfterDelay());
+    }
+    
+    private void LockGameUI()
+    {
+        // 모든 버튼/슬롯을 비활성화
+        gameUIGroup.interactable     = false;
+        gameUIGroup.blocksRaycasts   = false;
+    }
+    
+    private void HandleCombatStart()
+    {
+        if (CombatDataHolder.IsRetry)
+        {
+            playerAnimator.SetTrigger("Retry");
+            // 한 번만 실행되도록 플래그 리셋
+            CombatDataHolder.IsRetry = false;
+        }
+    }
+    
+    private IEnumerator ShowRetryAfterDelay()
+    {
+        // 3초 이후 재시작 패널 활성화
+        yield return new WaitForSeconds(3f);
+        retryPanel.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    private void HandleEnemyDeath()
+    {
+        // GameUI 잠금
+        LockGameUI();
+        // Die 트리거 활성
+        enemyAnimator.SetTrigger("Die");
+        StartCoroutine(DelayedBattleEnd());
+    }
+    
+    private IEnumerator DelayedBattleEnd()
+    {
+        yield return new WaitForSeconds(3f);
+        // 기존 OnBattleEnd 이벤트 호출
+        CombatDataHolder.LastTrigger?.OnBattleEnd();
     }
 }
