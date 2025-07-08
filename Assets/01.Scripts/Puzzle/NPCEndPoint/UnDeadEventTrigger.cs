@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueEventTrigger : MonoBehaviour
+public class UnDeadEventTrigger : MonoBehaviour
 {
     public OffscreenWatcher offscreenWatcher;
     public InteractHintController hintController;
@@ -108,7 +108,7 @@ public class DialogueEventTrigger : MonoBehaviour
             yield return null;
         }
 
-        npc.Destroy(); // 멈춤 처리
+        npc.Stop(); // 멈춤 처리
         Debug.Log($" {obj.name} 이동 완료: {targetPos}");
     }
 }

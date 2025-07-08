@@ -812,7 +812,7 @@ Transform:
   m_GameObject: {fileID: 1322600199}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 277.8, y: -162.7, z: -10}
+  m_LocalPosition: {x: -10, y: -140, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1493,7 +1493,7 @@ Transform:
   m_GameObject: {fileID: 6470921915788491321}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 277.8, y: -162.7, z: -10}
+  m_LocalPosition: {x: -10, y: -140, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1845,11 +1845,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1256572786534334348, guid: 2fab71ae4ca0a4643bcd200c3daa2437, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 277.8
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 1256572786534334348, guid: 2fab71ae4ca0a4643bcd200c3daa2437, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -162.7
+      value: -140
       objectReference: {fileID: 0}
     - target: {fileID: 1256572786534334348, guid: 2fab71ae4ca0a4643bcd200c3daa2437, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2280,11 +2280,19 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 480320269}
     m_Modifications:
-    - target: {fileID: 1484987774392675971, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+    - target: {fileID: 859877061271855718, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: hintController
       value: 
       objectReference: {fileID: 1785497267512329401}
-    - target: {fileID: 1484987774392675971, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+    - target: {fileID: 859877061271855718, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: offscreenWatcher
+      value: 
+      objectReference: {fileID: 1322600205}
+    - target: {fileID: 1205702833867651826, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: hintController
+      value: 
+      objectReference: {fileID: 1785497267512329401}
+    - target: {fileID: 1205702833867651826, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
@@ -2296,14 +2304,6 @@ PrefabInstance:
       propertyPath: onConditionMet.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1664991894}
-    - target: {fileID: 3955688485641152643, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
-      propertyPath: hintController
-      value: 
-      objectReference: {fileID: 1785497267512329401}
-    - target: {fileID: 3955688485641152643, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
-      propertyPath: offscreenWatcher
-      value: 
-      objectReference: {fileID: 1322600205}
     - target: {fileID: 4551406852212282684, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 160

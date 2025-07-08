@@ -633,8 +633,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1915348621899836491}
-  - component: {fileID: 3955688485641152643}
   - component: {fileID: 823682331953563237}
+  - component: {fileID: 859877061271855718}
   m_Layer: 0
   m_Name: NPCDelete7
   m_TagString: Untagged
@@ -657,26 +657,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5902093647596867905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3955688485641152643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1281914483942142653}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7e7372288442a4384f1b3e6438da84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offscreenWatcher: {fileID: 0}
-  hintController: {fileID: 0}
-  triggerIDs:
-  - 5083
-  targetObjects:
-  - {fileID: 7433362750832463180}
-  destinationTarget: {fileID: 4376814846568134573}
-  moveDuration: 100
 --- !u!212 &823682331953563237
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -732,6 +712,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &859877061271855718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281914483942142653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d8064600861dd41a5c29f3eeb8aed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offscreenWatcher: {fileID: 0}
+  hintController: {fileID: 0}
+  triggerIDs:
+  - 5083
+  targetObjects:
+  - {fileID: 7433362750832463180}
+  destinationTarget: {fileID: 4376814846568134573}
+  moveDuration: 100
 --- !u!1 &1710926081260894910
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,8 +954,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2310852790058389143}
-  - component: {fileID: 1484987774392675971}
   - component: {fileID: 8837306491971932315}
+  - component: {fileID: 1205702833867651826}
   m_Layer: 0
   m_Name: NPCDelete8
   m_TagString: Untagged
@@ -978,26 +978,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5902093647596867905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1484987774392675971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2183879730648001073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7e7372288442a4384f1b3e6438da84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offscreenWatcher: {fileID: 0}
-  hintController: {fileID: 0}
-  triggerIDs:
-  - 5083
-  targetObjects:
-  - {fileID: 1353910839136675813}
-  destinationTarget: {fileID: 2643544679940249947}
-  moveDuration: 100
 --- !u!212 &8837306491971932315
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1053,6 +1033,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1205702833867651826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2183879730648001073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d8064600861dd41a5c29f3eeb8aed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offscreenWatcher: {fileID: 0}
+  hintController: {fileID: 0}
+  triggerIDs:
+  - 5083
+  targetObjects:
+  - {fileID: 1353910839136675813}
+  destinationTarget: {fileID: 2643544679940249947}
+  moveDuration: 100
 --- !u!1 &2432741053745284060
 GameObject:
   m_ObjectHideFlags: 0
