@@ -6376,7 +6376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3335705548614706108}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 100, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6412,7 +6412,6 @@ GameObject:
   - component: {fileID: 6137133505602835772}
   - component: {fileID: 6909151317519445020}
   - component: {fileID: 5935152545209317769}
-  - component: {fileID: 485520210060799240}
   m_Layer: 6
   m_Name: "\uBC14\uC6B0"
   m_TagString: NPC
@@ -6429,7 +6428,7 @@ Transform:
   m_GameObject: {fileID: 4335649153869710636}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.3099976, y: 0.95000076, z: 0}
+  m_LocalPosition: {x: 4.96, y: 0.95000076, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6498,7 +6497,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4335649153869710636}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -6582,7 +6581,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -6598,19 +6597,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.09375, y: 0.953125}
   m_EdgeRadius: 0
---- !u!114 &485520210060799240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4335649153869710636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 072fc5dcdec6f7b488f76e3e5bc64d9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueEntries: []
 --- !u!1 &4520667349881925103
 GameObject:
   m_ObjectHideFlags: 0
@@ -6745,7 +6731,7 @@ Transform:
   m_GameObject: {fileID: 5940441138481149766}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.21, y: 5.27, z: 0}
+  m_LocalPosition: {x: 12.25, y: 2.85, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

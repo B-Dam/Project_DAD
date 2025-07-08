@@ -36,7 +36,7 @@ public class InteractHintController : MonoBehaviour
         Vector2 direction = Vector2.zero;
 
         Collider2D hit = Physics2D.OverlapCircle(origin, detectRange, interactLayer);
-        if (hit != null && (hit.CompareTag("NPC") || hit.CompareTag("Item") || hit.CompareTag("Interact")))
+        if (hit != null && (hit.CompareTag("NPC") || hit.CompareTag("Door") || hit.CompareTag("Item") || hit.CompareTag("Interact")))
         {
             if (currentTarget != hit.transform)
             {
