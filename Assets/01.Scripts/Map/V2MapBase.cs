@@ -62,7 +62,6 @@ public class V2MapBase : MonoBehaviour
         if (!mapBounds.ContainsKey(MapManager.Instance.currentMapID)) return;
 
         Bounds bounds = mapBounds[MapManager.Instance.currentMapID];
-
         float halfHeight = cam.orthographicSize;
         float halfWidth = halfHeight * cam.aspect;
 

@@ -95,7 +95,7 @@ public class BoxPush : MonoBehaviour
 
         while (timer < requiredHoldTime)
         {
-            Debug.Log(timer+ "초 동안 밀기 유지 중...");
+            //Debug.Log(timer+ "초 동안 밀기 유지 중...");
             //한프레임 대기
             yield return null;
             // 방향 바뀌면 종료
