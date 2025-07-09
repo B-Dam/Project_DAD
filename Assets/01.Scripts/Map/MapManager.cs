@@ -19,6 +19,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    public V2MapBase MapBase;
     private MapData mapData;
     private FadeManager fadeManager;
 
