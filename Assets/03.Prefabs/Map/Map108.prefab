@@ -2885,7 +2885,6 @@ GameObject:
   - component: {fileID: 3512319725418374431}
   - component: {fileID: 8645781621671139467}
   - component: {fileID: 2275065723396466376}
-  - component: {fileID: 1369598179635299298}
   m_Layer: 0
   m_Name: Ground10
   m_TagString: Untagged
@@ -43376,37 +43375,6 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &1369598179635299298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2636305881892809747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c0702151e937a4e8ead43614a8d6c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MapBase: {fileID: 0}
-  mapData:
-    map_id: 
-    name: 
-    type: 0
-    left_map: 
-    right_map: 
-    up_map: 
-    down_map: 
-    bgm: 
-    player_position_left: {x: 0, y: 0}
-    player_position_right: {x: 0, y: 0}
-    player_position_up: {x: 0, y: 0}
-    player_position_down: {x: 0, y: 0}
-  prevMapID: 
-  currentMapID: 
-  lastPlayerScale: {x: 0, y: 0, z: 0}
-  isClear105: 0
-  isClear108: 0
 --- !u!1 &2690853451012185417
 GameObject:
   m_ObjectHideFlags: 0
