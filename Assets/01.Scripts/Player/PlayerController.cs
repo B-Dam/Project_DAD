@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     [Header("박스 밀기 쿨타임")]
     public float boxPushCooldown = 0.3f; // 밀기 쿨타임
     [HideInInspector] public float lastPushTime = -10f;//박스 밀 때 쿨타임용
-
+    public bool isPushingInputHeld { get; private set; }
 
     public Vector2 lastMoveInput { get; private set; }
 
@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
         UpdateAnimation(moveInput);
         HandleInteractionInput();
 
+        // 박스가 있는지 확인하고 밀기 시도
+        TryAutoPushBox();
+
         if (moveInput.magnitude > 0.01f)
         {
             dustTimer += Time.deltaTime;
@@ -89,19 +92,20 @@ public class PlayerController : MonoBehaviour
             dustTimer = 0f;
         }
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
 
-        // 2. 콜라이더 크기 그리기 (BoxCollider2D 기준)
-        BoxCollider2D col = GetComponent<BoxCollider2D>();
-        if (col != null)
+
+        CircleCollider2D circleCol = GetComponent<CircleCollider2D>();
+        if (circleCol != null)
         {
             Gizmos.color = Color.red;
             Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.DrawWireCube(col.offset, col.size);
+            Gizmos.DrawWireSphere(circleCol.offset, circleCol.radius);
         }
     }
+#endif
     private void FixedUpdate()
     {
         MovePlayer();
@@ -138,7 +142,26 @@ public class PlayerController : MonoBehaviour
             lastPushTime = Time.time;
         }
     }
+    private void TryAutoPushBox()
+    {
+        if (Time.time - lastPushTime < boxPushCooldown) return;
+        if (moveInput == Vector2.zero) return;
 
+        Vector2 origin = transform.position;
+        Vector2 dir = moveInput.normalized;
+        float distance = 0.6f;
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir, distance, LayerMask.GetMask("Box"));
+        if (hit.collider != null)
+        {
+            GameObject hitBox = hit.collider.gameObject;
+            BoxPush box = hitBox.GetComponent<BoxPush>();
+            if (box != null)
+            {
+                lastPushTime = Time.time;
+            }
+        }
+    }
     private void ShowBlockIndicator(Vector3 worldPos)//P
     {
         // 캔버스 찾기
@@ -166,6 +189,9 @@ public class PlayerController : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         moveInput = new Vector2(moveX, moveY).normalized;
+
+        // 입력 유지 상태 감지
+        isPushingInputHeld = moveX != 0 || moveY != 0;
 
         if (moveInput != Vector2.zero)
         {

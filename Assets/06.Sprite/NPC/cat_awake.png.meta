@@ -161,12 +161,12 @@ TextureImporter:
       name: cat_awake_0
       rect:
         serializedVersion: 2
-        x: 15
+        x: 14
         y: 165
-        width: 88
+        width: 84
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -180,67 +180,23 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cat_awake_1
+      name: cat_awake_2
       rect:
         serializedVersion: 2
         x: 108
         y: 165
-        width: 88
+        width: 84
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abc72115ee915f741a6f367b07a6acd1
-      internalID: 775065881
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cat_awake_2
-      rect:
-        serializedVersion: 2
-        x: 222
-        y: 162
-        width: 88
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2bf49cbf751e51e4ebdae3ceb483e266
-      internalID: -200597488
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cat_awake_3
-      rect:
-        serializedVersion: 2
-        x: 340
-        y: 163
-        width: 88
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4062cb55f7c565b42bcb0659882aa46b
-      internalID: -1455265071
+      spriteID: 67f70ff20e70218499984f7d1dba59f9
+      internalID: -244944190
       vertices: []
       indices: 
       edges: []
@@ -249,64 +205,20 @@ TextureImporter:
       name: cat_awake_4
       rect:
         serializedVersion: 2
-        x: 17
-        y: 42
-        width: 88
+        x: 222
+        y: 162
+        width: 84
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c92ed39f2ff2ac744bb196dff4a46ae7
-      internalID: 1515681989
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cat_awake_5
-      rect:
-        serializedVersion: 2
-        x: 110
-        y: 40
-        width: 88
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9453880ba23db3349adfca8ca1e539d6
-      internalID: -811389336
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cat_awake_6
-      rect:
-        serializedVersion: 2
-        x: 229
-        y: 38
-        width: 88
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 353a701c076f4b84fb0fae8eb37e7c0a
-      internalID: 1304552431
+      spriteID: 2d863466ae5ff13429d4c115513cbe78
+      internalID: -551370561
       vertices: []
       indices: 
       edges: []
@@ -315,20 +227,108 @@ TextureImporter:
       name: cat_awake_7
       rect:
         serializedVersion: 2
-        x: 335
-        y: 35
-        width: 88
+        x: 340
+        y: 163
+        width: 84
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 085df7e9a018a1044a39cd73b1f1fdae
-      internalID: -200596619
+      spriteID: 262bbbb781e432a4395a6a5c77387045
+      internalID: -782352862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cat_awake_9
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 42
+        width: 87
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 636f2108882a46a42962af960a9373d9
+      internalID: 1603754396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cat_awake_10
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 40
+        width: 87
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 580b9cbe8b2f586418be1119843957bd
+      internalID: -1259783140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cat_awake_12
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 38
+        width: 87
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 005c6f24bb43e314f8633ef0979cf6a3
+      internalID: -1935898423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cat_awake_14
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 35
+        width: 87
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d03125ee9f65ad46915434c2ee3a040
+      internalID: -485991832
       vertices: []
       indices: 
       edges: []
@@ -337,7 +337,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 71a2d5974d4c38246aa4802e96bbdc26
+    spriteID: 46d2ac0b01207e44d84675a62c3e0d96
     internalID: 0
     vertices: []
     indices: 
@@ -350,16 +350,21 @@ TextureImporter:
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       cat_awake_0: 2724359182058286846
-      cat_awake_1: 775065881
-      cat_awake_11: 1491018222
-      cat_awake_13: -1708831988
-      cat_awake_2: -200597488
-      cat_awake_3: -1455265071
-      cat_awake_4: 1515681989
-      cat_awake_5: -811389336
-      cat_awake_6: 1304552431
-      cat_awake_7: -200596619
-      cat_awake_8: 703874606
+      cat_awake_1: 800028027
+      cat_awake_10: -1259783140
+      cat_awake_11: -2046301992
+      cat_awake_12: -1935898423
+      cat_awake_13: -1528195173
+      cat_awake_14: -485991832
+      cat_awake_15: 1008026637
+      cat_awake_2: -244944190
+      cat_awake_3: -969976662
+      cat_awake_4: -551370561
+      cat_awake_5: -1409627809
+      cat_awake_6: 1783312404
+      cat_awake_7: -782352862
+      cat_awake_8: -92935499
+      cat_awake_9: 1603754396
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

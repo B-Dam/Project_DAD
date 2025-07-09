@@ -6609,7 +6609,7 @@ GameObject:
   - component: {fileID: 8868691408255431936}
   - component: {fileID: 8192389246021652373}
   m_Layer: 0
-  m_Name: NPCDelete (1)
+  m_Name: NPCDelete1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6716,7 +6716,7 @@ GameObject:
   - component: {fileID: 2608982266372235768}
   - component: {fileID: 807094928182449576}
   m_Layer: 0
-  m_Name: NPCEndPoint (1)
+  m_Name: NPCEndPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
