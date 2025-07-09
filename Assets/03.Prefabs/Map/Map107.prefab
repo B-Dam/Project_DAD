@@ -34780,6 +34780,13 @@ MonoBehaviour:
     onEndEvents:
       m_PersistentCalls:
         m_Calls: []
+  - id: 5094
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!61 &3349485271545875227
 BoxCollider2D:
   m_ObjectHideFlags: 0
