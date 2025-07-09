@@ -49,7 +49,7 @@ public class CombatManager : MonoBehaviour
     
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
-    int EnemyBaseAtk  => DataManager.Instance.enemyData.atk;
+    public int EnemyBaseAtk  => DataManager.Instance.enemyData.atk;
     
     public event Action OnCombatStart;
     public event Action OnStatsChanged;
@@ -71,8 +71,6 @@ public class CombatManager : MonoBehaviour
     {
         if (TurnManager.Instance != null)
         {
-            // 턴 시작에 적 스킬 발동
-            TurnManager.Instance.OnEnemyTurnStart += OnEnemyTurnStart;
             // 턴 종료에 모디파이어 감소
             TurnManager.Instance.OnEnemyTurnEnd   += OnEnemyTurnEnd;
             // 플레이어 쪽도 동일하게 분리
@@ -85,7 +83,6 @@ public class CombatManager : MonoBehaviour
     {
         if (TurnManager.Instance != null)
         {
-            TurnManager.Instance.OnEnemyTurnStart -= OnEnemyTurnStart;
             TurnManager.Instance.OnEnemyTurnEnd   -= OnEnemyTurnEnd;
             TurnManager.Instance.OnPlayerTurnStart-= OnPlayerTurnStart;
             TurnManager.Instance.OnPlayerTurnEnd  -= OnPlayerTurnEnd;
@@ -150,14 +147,6 @@ public class CombatManager : MonoBehaviour
         UpdateModifiers(playerAttackMods);
         RecalculateModifiers();
         OnStatsChanged?.Invoke();
-    }
-
-    void OnEnemyTurnStart()
-    {
-        // 적 스킬 사용
-        var skills = DataManager.Instance.GetEnemySkills();
-        var skill = skills[Random.Range(0, skills.Length)];
-        ApplySkill(skill, false);
     }
     
     // 턴 종료 시 호출될 메서드: 모디파이어만 감소시키고 UI 갱신
@@ -305,9 +294,6 @@ public class CombatManager : MonoBehaviour
             
             // 전투 종료
             IsInCombat = false;
-            
-            Debug.Log($"CheckEnd: LastTrigger = {CombatDataHolder.LastTrigger}");
-            CombatDataHolder.LastTrigger?.OnBattleEnd();
         }
         else if (playerHp <= 0)
         {

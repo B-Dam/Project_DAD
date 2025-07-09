@@ -43,9 +43,9 @@ public class PreviewUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         string formatted = TextFormatter.Format(
             raw,
             new Dictionary<string, string> {
-                { "damage", (CombatManager.Instance.PlayerBaseAtk
+                { "damage", (CombatManager.Instance.EnemyBaseAtk
                              + currentSkill.effectAttackValue
-                             + CombatManager.Instance.playerAtkMod)
+                             + CombatManager.Instance.enemyAtkMod)
                     .ToString() },
                 { "turns",  currentSkill.effectTurnValue.ToString() },
                 { "shield", currentSkill.effectShieldValue.ToString() },

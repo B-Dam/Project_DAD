@@ -3502,7 +3502,15 @@ PrefabInstance:
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: dialogueEntries.Array.data[3].onEndEvents.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
@@ -3510,20 +3518,40 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6287681483781990604}
+    - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: dialogueEntries.Array.data[3].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6287681483781990604}
     - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: dialogueEntries.Array.data[3].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TriggerCombat
       objectReference: {fileID: 0}
     - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: dialogueEntries.Array.data[3].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: TriggerCombat
       objectReference: {fileID: 0}
     - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CombatTriggerEvent, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: dialogueEntries.Array.data[3].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: CombatTriggerEvent, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
+      propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3668530860729930077, guid: f9cb3e684306d21429055c81ffd25c2e, type: 3}
       propertyPath: dialogueEntries.Array.data[3].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
