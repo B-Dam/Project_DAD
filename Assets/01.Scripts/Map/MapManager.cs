@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
@@ -17,16 +19,17 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public V2MapBase MapBase;
-    public MapData mapData;
+    private MapData mapData;
+    private FadeManager fadeManager;
+
+    private Dictionary<string, bool> puzzleClearStatus = new Dictionary<string, bool>
+    {
+        { "105", false },
+        { "108", false }
+    };
 
     public string prevMapID;
     public string currentMapID;  // 첫 시작 시 001로 설정
-    public Vector3 lastPlayerScale;
-
-    // 퍼즐 버전 맵 클리어 여부
-    public bool isClear105 = false;
-    public bool isClear108 = false;
 
     private void Awake()
     {
@@ -57,30 +60,59 @@ public class MapManager : MonoBehaviour
     {
         prevMapID = currentMapID;
         currentMapID = newMapID;
-
         mapData = Database.Instance.Map.GetMapData(currentMapID);
+
+        PuzzleCheck();
 
         Debug.Log($"맵 데이터가 업데이트되었습니다: {currentMapID}");
     }
 
-    public void OnLeftMap()
+    public void PuzzleCheck()
     {
+        // 만약 현재 맵 아이디의 타입이 puzzle이라면
+        if (mapData.type == MapType.puzzle)
+        {
+            // bool isClear를 검수하고 false라면 퍼즐 오브젝트를 SetActive(false)로 설정
+            puzzleClearStatus.TryGetValue(currentMapID, out bool isClear);
+            if (isClear)
+            {
+
+            }
+        }
+
+        // Bridge 프리펩을 MapObjects에도 넣어 놓고 해당 맵으로 돌아올 때 isClear가 true라면 Bridge 오브젝트를 활성화
+    }
+
+    public IEnumerator OnLeftMap()
+    {
+        yield return fadeManager.fadeCoroutine = StartCoroutine(fadeManager.FadeOut(1f));
         UpdateMapData(mapData.left_map);
         PlayerController.Instance.transform.position = mapData.player_position_right;
+        yield return new WaitForSeconds(0.5f);
+        yield return fadeManager.fadeCoroutine = StartCoroutine(fadeManager.FadeIn(1f));
     }
-    public void OnRightMap()
+    public IEnumerator OnRightMap()
     {
+        yield return fadeManager.fadeCoroutine = StartCoroutine(fadeManager.FadeOut(1f));
         UpdateMapData(mapData.right_map);
         PlayerController.Instance.transform.position = mapData.player_position_left;
+        yield return new WaitForSeconds(0.5f);
+        yield return fadeManager.fadeCoroutine = StartCoroutine(fadeManager.FadeIn(1f));
     }
-    public void OnUpMap()
+    public IEnumerator OnUpMap()
     {
+        yield return fadeManager.fadeCoroutine = StartCoroutine(fadeManager.FadeOut(1f));
         UpdateMapData(mapData.up_map);
         PlayerController.Instance.transform.position = mapData.player_position_down;
+        yield return new WaitForSeconds(0.5f);
+        yield return fadeManager.fadeCoroutine = StartCoroutine(fadeManager.FadeIn(1f));
     }
-    public void OnDownMap()
+    public IEnumerator OnDownMap()
     {
+        yield return fadeManager.fadeCoroutine = StartCoroutine(fadeManager.FadeOut(1f));
         UpdateMapData(mapData.down_map);
         PlayerController.Instance.transform.position = mapData.player_position_up;
+        yield return new WaitForSeconds(0.5f);
+        yield return fadeManager.fadeCoroutine = StartCoroutine(fadeManager.FadeIn(1f));
     }
 }

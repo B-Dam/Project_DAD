@@ -15,16 +15,16 @@ public class V2ColliderBase : MonoBehaviour
 
             // 참조를 너무 자주 하니까 웬만하면 참조해야할 스크립트에서 함수로 구현 해두고 한번 씩만 참조 하도록
             case "Left":
-                MapManager.Instance.OnLeftMap();
+                StartCoroutine(MapManager.Instance.OnLeftMap());
                 break;
             case "Right":
-                MapManager.Instance.OnRightMap();
+                StartCoroutine(MapManager.Instance.OnRightMap());
                 break;
             case "Up":
-                MapManager.Instance.OnUpMap();
+                StartCoroutine(MapManager.Instance.OnUpMap());
                 break;
             case "Down":
-                MapManager.Instance.OnDownMap();
+                StartCoroutine(MapManager.Instance.OnDownMap());
                 break;
             default:
                 Debug.LogWarning($"올바르지 않은 콜라이더 방향입니다: {warpDir}");
