@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
-
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     [Header("박스 밀기 쿨타임")]
     public float boxPushCooldown = 0.3f; // 밀기 쿨타임
     [HideInInspector] public float lastPushTime = -10f;//박스 밀 때 쿨타임용
-
+    public bool isPushingInputHeld { get; private set; }
 
     public Vector2 lastMoveInput { get; private set; }
 
@@ -89,19 +89,20 @@ public class PlayerController : MonoBehaviour
             dustTimer = 0f;
         }
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
 
-        // 2. 콜라이더 크기 그리기 (BoxCollider2D 기준)
-        BoxCollider2D col = GetComponent<BoxCollider2D>();
-        if (col != null)
+     
+        CircleCollider2D circleCol = GetComponent<CircleCollider2D>();
+        if (circleCol != null)
         {
             Gizmos.color = Color.red;
             Gizmos.matrix = transform.localToWorldMatrix;
-            Gizmos.DrawWireCube(col.offset, col.size);
+            Gizmos.DrawWireSphere(circleCol.offset, circleCol.radius);
         }
     }
+#endif
     private void FixedUpdate()
     {
         MovePlayer();
@@ -167,6 +168,9 @@ public class PlayerController : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical");
         moveInput = new Vector2(moveX, moveY).normalized;
 
+        // 입력 유지 상태 감지
+        isPushingInputHeld = moveX != 0 || moveY != 0;
+
         if (moveInput != Vector2.zero)
         {
             lastMoveDirection = moveInput;
@@ -230,7 +234,7 @@ public class PlayerController : MonoBehaviour
             {
                 GameObject target = hit.collider.gameObject;
 
-                if (target.CompareTag("NPC") || target.CompareTag("Item") || target.CompareTag("Interact"))
+                if (target.CompareTag("NPC") || target.CompareTag("Door") || target.CompareTag("Item") || target.CompareTag("Interact"))
                 {
                     var interactable = target.GetComponent<IInteractable>();
                     if (interactable != null)
