@@ -2,12 +2,20 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+
+public enum ModifierType
+{
+    AttackBuff,
+    AttackDebuff
+}
 
 public class TimedModifier
 {
-    public int value;
-    public int remainingTurns;
+    public ModifierType type;
+    public int           value;
+    public int           remainingTurns;
 }
 
 public class CombatManager : MonoBehaviour
@@ -26,9 +34,19 @@ public class CombatManager : MonoBehaviour
     public int playerAtkMod { get; private set; }
     public int enemyAtkMod  { get; private set; }
     
+    // 전투 중인지 확인용
+    public bool IsInCombat { get; set; }
+    
     List<TimedModifier> playerAttackMods = new List<TimedModifier>();
     List<TimedModifier> enemyAttackMods  = new List<TimedModifier>();
-
+    
+    public event Action<CardData> OnPlayerSkillUsed;
+    public event Action<CardData> OnEnemySkillUsed;
+    public event Action OnPlayerHit;
+    public event Action OnEnemyHit;
+    public event Action OnPlayerDeath;
+    public event Action OnEnemyDeath;
+    
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
     int EnemyBaseAtk  => DataManager.Instance.enemyData.atk;
@@ -36,10 +54,16 @@ public class CombatManager : MonoBehaviour
     public event Action OnCombatStart;
     public event Action OnStatsChanged;
     
+    public IEnumerable<TimedModifier> PlayerAttackModifiers => playerAttackMods;
+    public IEnumerable<TimedModifier> EnemyAttackModifiers  => enemyAttackMods;
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else Destroy(gameObject);
     }
 
@@ -47,23 +71,33 @@ public class CombatManager : MonoBehaviour
     {
         if (TurnManager.Instance != null)
         {
-            TurnManager.Instance.OnPlayerTurnStart += OnPlayerTurnStart;
+            // 턴 시작에 적 스킬 발동
+            TurnManager.Instance.OnEnemyTurnStart += OnEnemyTurnStart;
+            // 턴 종료에 모디파이어 감소
+            TurnManager.Instance.OnEnemyTurnEnd   += OnEnemyTurnEnd;
+            // 플레이어 쪽도 동일하게 분리
+            TurnManager.Instance.OnPlayerTurnStart += OnPlayerTurnStart;       // (UI 갱신만)
+            TurnManager.Instance.OnPlayerTurnEnd   += OnPlayerTurnEnd;         // (모디파이어 감소)
         }
-        else Debug.Log("CombatManager에서 TrunManager 이벤트 구독 실패");
     }
 
     void OnDestroy()
     {
         if (TurnManager.Instance != null)
         {
-            TurnManager.Instance.OnPlayerTurnStart -= OnPlayerTurnStart;
             TurnManager.Instance.OnEnemyTurnStart -= OnEnemyTurnStart;
+            TurnManager.Instance.OnEnemyTurnEnd   -= OnEnemyTurnEnd;
+            TurnManager.Instance.OnPlayerTurnStart-= OnPlayerTurnStart;
+            TurnManager.Instance.OnPlayerTurnEnd  -= OnPlayerTurnEnd;
         }
     }
 
     /// <summary>전투 개시</summary>
     public void StartCombat()
     {
+        IsInCombat = true;
+        Time.timeScale = 1;
+            
         // HP 초기화
         playerHp = DataManager.Instance.playerData.maxHP;
         enemyHp  = DataManager.Instance.enemyData.maxHP;
@@ -107,29 +141,43 @@ public class CombatManager : MonoBehaviour
 
     void OnPlayerTurnStart()
     {
-        // 버프 / 디버프 턴 감소
-        UpdateModifiers(playerAttackMods);
-        // 모디파이어 합산
-        RecalculateModifiers();
-        // 플레이어 보호막 초기화
-        playerShield = 0;
         // UI 갱신
+        OnStatsChanged?.Invoke();
+    }
+    
+    void OnPlayerTurnEnd()
+    {
+        UpdateModifiers(playerAttackMods);
+        RecalculateModifiers();
         OnStatsChanged?.Invoke();
     }
 
     void OnEnemyTurnStart()
     {
-        // 적 전용 모디파이어 업데이트
-        UpdateModifiers(enemyAttackMods);
-        RecalculateModifiers();
-        
         // 적 스킬 사용
         var skills = DataManager.Instance.GetEnemySkills();
         var skill = skills[Random.Range(0, skills.Length)];
         ApplySkill(skill, false);
-
-        // 다음 Player 턴으로
-        TurnManager.Instance.StartPlayerTurn();
+    }
+    
+    // 턴 종료 시 호출될 메서드: 모디파이어만 감소시키고 UI 갱신
+    void OnEnemyTurnEnd()
+    {
+        UpdateModifiers(enemyAttackMods);
+        RecalculateModifiers();
+        OnStatsChanged?.Invoke();
+    }
+    
+    public void ResetPlayerShield()
+    {
+        playerShield = 0;
+        OnStatsChanged?.Invoke();
+    }
+    
+    public void ResetEnemyShield()
+    {
+        enemyShield = 0;
+        OnStatsChanged?.Invoke();
     }
 
     /// <summary>
@@ -139,6 +187,10 @@ public class CombatManager : MonoBehaviour
     /// <param name="isPlayer">플레이어가 사용했으면 true, 적이면 false</param>
     public void ApplySkill(CardData data, bool isPlayer)
     {
+        // 애니메이션 트리거용 이벤트 먼저 발행
+        if (isPlayer) OnPlayerSkillUsed?.Invoke(data);
+        else          OnEnemySkillUsed?.Invoke(data);
+        
         // 기본 공격력 + 공격 모디파이어
         int baseAtk   = isPlayer ? PlayerBaseAtk : EnemyBaseAtk;
         int modAtk    = isPlayer ? playerAtkMod : enemyAtkMod;
@@ -156,13 +208,27 @@ public class CombatManager : MonoBehaviour
             {
                 int shielded = Mathf.Min(enemyShield, rawAttack);
                 enemyShield -= shielded;
+                
+                // 적 데미지
                 enemyHp     = Mathf.Max(0, enemyHp - (rawAttack - shielded));
+                // 적 피격 이벤트
+                OnEnemyHit?.Invoke();
+                
+                if (enemyHp <= 0)
+                    OnEnemyDeath?.Invoke();
             }
             else
             {
                 int shielded = Mathf.Min(playerShield, rawAttack);
                 playerShield -= shielded;
+                
+                // 플레이어 데미지
                 playerHp     = Mathf.Max(0, playerHp - (rawAttack - shielded));
+                // 플레이어 피격 이벤트
+                OnPlayerHit?.Invoke();
+                
+                if (playerHp <= 0)
+                    OnPlayerDeath?.Invoke();
             }
         }
 
@@ -173,41 +239,81 @@ public class CombatManager : MonoBehaviour
             else          enemyShield  += data.effectShieldValue;
         }
 
-        // 공격력 버프/디버프
+        // 공격력 버프
         if (data.effectAttackIncreaseValue != 0 && data.effectTurnValue > 0)
-            AddAttackModifier(isPlayer, data.effectAttackIncreaseValue, data.effectTurnValue);
+            AddAttackModifier(
+                isPlayer,
+                ModifierType.AttackBuff,
+                data.effectAttackIncreaseValue,
+                data.effectTurnValue
+            );
 
+        // 공격력 디버프
         if (data.effectAttackDebuffValue != 0 && data.effectTurnValue > 0)
         {
             int debuffAmount = Mathf.Abs(data.effectAttackDebuffValue);
-            AddAttackModifier(!isPlayer, -debuffAmount, data.effectTurnValue);
+            AddAttackModifier(
+                !isPlayer,
+                ModifierType.AttackDebuff,
+                -debuffAmount,
+                data.effectTurnValue
+            );
         }
 
-        OnStatsChanged?.Invoke();
         RecalculateModifiers();
+        OnStatsChanged?.Invoke();
         CheckEnd();
     }
-
     
     //  모디파이어 추가
-    void AddAttackModifier(bool targetIsPlayer, int value, int turns)
+    void AddAttackModifier(bool targetIsPlayer, ModifierType type, int value, int turns)
     {
         var list = targetIsPlayer ? playerAttackMods : enemyAttackMods;
-        list.Add(new TimedModifier { value = value, remainingTurns = turns });
+
+        // 같은 효과 종류(modifierType) 검색
+        var existing = list.FirstOrDefault(m => m.type == type);
+        if (existing != null)
+        {
+            // 1) 값은 합산
+            existing.value += value;
+            // 2) 지속 턴은 더 긴 쪽
+            existing.remainingTurns = Mathf.Max(existing.remainingTurns, turns);
+        }
+        else
+        {
+            list.Add(new TimedModifier {
+                type           = type,
+                value          = value,
+                remainingTurns = turns
+            });
+        }
+
+        // 변경 즉시 재계산 및 UI 갱신
+        RecalculateModifiers();
+        OnStatsChanged?.Invoke();
     }
 
     // 적이나 아군 체력을 확인하고 종료 로직 작동
     void CheckEnd()
     {
+        if (!IsInCombat) return;
+        
         if (enemyHp <= 0)
         {
             Debug.Log("Victory!");
             // 승리 시 추가 로직
+            
+            // 전투 종료
+            IsInCombat = false;
+            
+            Debug.Log($"CheckEnd: LastTrigger = {CombatDataHolder.LastTrigger}");
+            CombatDataHolder.LastTrigger?.OnBattleEnd();
         }
         else if (playerHp <= 0)
         {
             Debug.Log("Defeat...");
             // 패배 시 추가 로직
+            IsInCombat = false;
         }
     }
 }

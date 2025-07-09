@@ -50,8 +50,9 @@ public class MapManager : MonoBehaviour
         {
             currentMapID = "001";
         }
-        AudioManager.Instance.PlayBGM("LostSouls");  // 기본 BGM 설정
         mapData = Database.Instance.Map.GetMapData(currentMapID);
+
+        AudioManager.Instance.PlayBGM("LostSouls"); // 기본 BGM 설정
     }
 
     // prevMapID를 기존 맵 ID로 바꾸고 currentMapID를 새 맵 ID로 바꾸고
@@ -63,6 +64,22 @@ public class MapManager : MonoBehaviour
         mapData = Database.Instance.Map.GetMapData(currentMapID);
 
         PuzzleCheck();
+
+        string targetBGM;
+
+        if (currentMapID == "105" || currentMapID == "108")
+        {
+            targetBGM = "Puzzle_Sound";
+        }
+        else
+        {
+            targetBGM = "LostSouls";
+        }
+
+        if (AudioManager.Instance != null && AudioManager.Instance.currentBGMName != targetBGM)
+        {
+            AudioManager.Instance.PlayBGM(targetBGM);
+        }
 
         Debug.Log($"맵 데이터가 업데이트되었습니다: {currentMapID}");
     }

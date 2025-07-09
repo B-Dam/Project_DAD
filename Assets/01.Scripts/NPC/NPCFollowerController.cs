@@ -39,6 +39,13 @@ public class NPCMovementController : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
     }
 
+    public void Destroy()
+    {
+        moveDirection = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
+        Destroy(gameObject);
+    }
+
     private void UpdateAnimation(Vector2 velocity)
     {
         float speed = velocity.magnitude;

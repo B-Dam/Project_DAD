@@ -1,12 +1,12 @@
 map_id,name,type,left_map,right_map,up_map,down_map,player_position_left,player_position_right,player_position_up,player_position_down,bgm
-001,시골 들판,story,001,002,null,null,-270|37,-259|37,null,null,null
-002,마을 입구,story,001,101,null,null,-236|38,23|-0.2,null,null,null
-101,시골 마을 갈림길,story,002,103,null,102,-10|-0.2,18|5,null,5.5|-13,null
-102,시골 집 마당,story,null,null,101,null,null,null,3.5|12.3,null,null
-103,시골 마을 갈림길2,story,101,104,105,107,-8|-6,23|7.2,3.5|12.2,15|14,null
-104,촌장 집,story,103,null,null,null,-10|-0.2,null,null,null,null
-105,마을 외곽 숲길,puzzle,null,null,106,103,null,null,1.6|38.2,0.5|-4.2,null
-106,마을 뒷 숲,story,null,null,null,105,null,null,null,0.5|-4.2,null
-107,마을 출구,story,null,108,103,null,null,17|14.2,-9.5|16.2,null,null
-108,들판,puzzle,107,109,null,null,-8|-4,15.5|18.5,null,null,null
-109,트럭 적재장,story,108,null,null,null,-8|-4,null,null,null,null
+001,시골 들판,story,001,002,null,null,-10|-140,3|-140,null,null,null
+002,마을 입구,story,001,101,null,null,36|-140,60|-140,null,null,null
+101,시골 마을 갈림길,story,002,103,null,102,92|-140,118|-135,null,105.5|-154,null
+102,시골 집 마당,story,null,null,101,null,null,null,103.5|-178,null,null
+103,시골 마을 갈림길2,story,101,104,105,107,146|-146,182|-132.5,158.5|-127,170|-154,null
+104,촌장 집,story,103,null,null,null,212|-140,null,null,null,null
+105,마을 외곽 숲길,puzzle,null,null,106,103,null,null,155.5|-61,160.5|-102,null
+106,마을 뒷 숲,story,null,null,null,105,null,null,null,160.5|-37,null
+107,마을 출구,story,null,108,103,null,null,174|-248,150.5|-245,null,null
+108,들판,puzzle,107,109,null,null,215.5|-234,248|-182,null,null,null
+109,트럭 적재장,story,108,null,null,null,273|-168,null,null,null,null

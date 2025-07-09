@@ -15,7 +15,7 @@ MonoBehaviour:
   cardId: 2002
   displayName: "\uC73C\uB974\uB801\uAC70\uB9AC\uAE30"
   ownerID: 1000
-  typePrimary: 1
+  typePrimary: 4
   typeSecondary: 0
   effectAttackValue: 0
   effectShieldValue: 0
@@ -25,7 +25,5 @@ MonoBehaviour:
   effectText: "{turns} \uD134 \uB3D9\uC548 \uC801\uC758 \uACF5\uACA9\uB825\uC744
     {debuff} \uAC10\uC18C \uC2DC\uD0A8\uB2E4."
   rank: 1
-  animationID: 
-  resourcePath: 
   costAP: 1
-  icon: {fileID: 0}
+  icon: {fileID: 7780264574027006942, guid: 139d107a9e442a942853a88a064edf0d, type: 3}
