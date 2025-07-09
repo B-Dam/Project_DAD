@@ -132,6 +132,7 @@ public class BoxPush : MonoBehaviour
         {
             targetPosition = rb.position + pushDirection * moveDistance;
             isMoving = true; // 이동 시작
+            AudioManager.Instance.PlaySFX("Puzzle_Box_drrr");
             pCon2.lastPushTime = Time.time; // 쿨타임 갱신
         }
         pushCoroutine = null; // 코루틴 종료 후 초기화
@@ -156,6 +157,7 @@ public class BoxPush : MonoBehaviour
             {
                 if(hit.gameObject.layer == LayerMask.NameToLayer("Obstacle") ||hit.CompareTag("Box"))
                 {
+                    AudioManager.Instance.PlaySFX("Puzzle_Beep sound effect");
                     //Debug.Log($"충돌 감지: {hit.gameObject.name}");
                     return true; // 충돌이 있으면 막힘
                 }

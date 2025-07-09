@@ -65,12 +65,16 @@ public class CombatAnimationController : MonoBehaviour
             case "물기":
                 playerAnimator.SetTrigger("Attack");
                 StartCoroutine(HandlePlayerAttack(data));
+                AudioManager.Instance.PlaySFX("Cat_Scratch");
                 break;
             case "으르렁거리기":
                 playerAnimator.SetTrigger("Bark");
+                AudioManager.Instance.PlaySFX("Dog_Growl");
+
                 break;
             case "웅크리기":
                 playerAnimator.SetTrigger("Def");
+                AudioManager.Instance.PlaySFX("Dog_barrier");
                 break;
             default:
                 playerAnimator.SetTrigger("Attack");
@@ -124,6 +128,7 @@ public class CombatAnimationController : MonoBehaviour
                 {
                     case "할퀴기":
                         enemyAnimator.SetTrigger("Attack");
+                        AudioManager.Instance.PlaySFX("Cat_Scratch");
                         if (!isEnemyMoving)
                             enemyMoveCoroutine = StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
                         break;

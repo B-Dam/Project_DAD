@@ -21,6 +21,7 @@ public class HoleTrigger : MonoBehaviour
             if (box != null)
             {
                 FillHole(box); // 박스가 구멍에 들어오면 구멍을 채움
+                AudioManager.Instance.PlaySFX("Puzzle_Box_drop");
             }
         }
     }

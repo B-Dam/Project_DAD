@@ -12,6 +12,17 @@ public class Switch_MultiTrigger : MonoBehaviour
 
     private bool isActivated = false; // 열린 상태 확인용
 
+    private Dictionary<Collider2D, bool> switchStates;
+
+    private void Awake()
+    {
+        switchStates = new Dictionary<Collider2D, bool>();
+        foreach (Collider2D switchCol in switchColliders)
+        {
+            switchStates[switchCol] = false;
+        }
+    }
+
     private void Update()
     {
         if (AllSwitchesAreOccupied())
@@ -48,6 +59,13 @@ public class Switch_MultiTrigger : MonoBehaviour
                     break;
                 }
             }
+
+            if (occupied && !switchStates[switchCol])
+            {
+                AudioManager.Instance.PlaySFX("Puzzle_Switch_button");
+            }
+            switchStates[switchCol] = occupied;
+
             if (!occupied)
                 return false; // 이 스위치는 비어 있음
         }
@@ -65,6 +83,7 @@ public class Switch_MultiTrigger : MonoBehaviour
         if (targetB != null)
         {
             targetB.SetActive(true);
+            AudioManager.Instance.PlaySFX("Door-metal");
         }
     }
     private void CloseTargetB()
