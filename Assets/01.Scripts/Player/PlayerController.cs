@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
         UpdateAnimation(moveInput);
         HandleInteractionInput();
 
+        // 박스가 있는지 확인하고 밀기 시도
+        TryAutoPushBox();
+
         if (moveInput.magnitude > 0.01f)
         {
             dustTimer += Time.deltaTime;
@@ -93,7 +96,7 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
 
-     
+
         CircleCollider2D circleCol = GetComponent<CircleCollider2D>();
         if (circleCol != null)
         {
@@ -139,7 +142,26 @@ public class PlayerController : MonoBehaviour
             lastPushTime = Time.time;
         }
     }
+    private void TryAutoPushBox()
+    {
+        if (Time.time - lastPushTime < boxPushCooldown) return;
+        if (moveInput == Vector2.zero) return;
 
+        Vector2 origin = transform.position;
+        Vector2 dir = moveInput.normalized;
+        float distance = 0.6f;
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir, distance, LayerMask.GetMask("Box"));
+        if (hit.collider != null)
+        {
+            GameObject hitBox = hit.collider.gameObject;
+            BoxPush box = hitBox.GetComponent<BoxPush>();
+            if (box != null)
+            {
+                lastPushTime = Time.time;
+            }
+        }
+    }
     private void ShowBlockIndicator(Vector3 worldPos)//P
     {
         // 캔버스 찾기
