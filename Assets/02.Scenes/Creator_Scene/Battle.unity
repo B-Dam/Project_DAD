@@ -304,7 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 4981225}
   tooltipText: {fileID: 708237432}
-  offset: {x: 80, y: -40}
+  offset: {x: -100, y: -50}
 --- !u!225 &4981230
 CanvasGroup:
   m_ObjectHideFlags: 0
