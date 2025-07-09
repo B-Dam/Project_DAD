@@ -7,7 +7,7 @@ using System.Linq;
 public class SkillDataImporter : MonoBehaviour
 {
     // CSV 경로
-    private const string cardCsvPath = "Assets/Resources/CSV/skilldataDB.csv";
+    private const string cardCsvPath = "Assets/Resources/CSV/skillcardDB.csv";
 
     // SO를 저장할 폴더
     private const string cardSoFolder = "Assets/Resources/ScriptableObjects/Cards";
@@ -29,25 +29,27 @@ public class SkillDataImporter : MonoBehaviour
             return v;
         }
 
-        static string ParseStringOrDefault(string raw, string defaultValue = "") {
+        /*static string ParseStringOrDefault(string raw, string defaultValue = "") {
             raw = raw?.Trim();
             if (string.IsNullOrEmpty(raw) || raw.ToLower() == "null")
                 return defaultValue;
             return raw;
-        }
+        }*/
         
         // 첫 줄은 헤더이므로 i=1부터
         for (int i = 1; i < lines.Length; i++)
         {
             var cols = lines[i].Split(',');
-            if (cols.Length < 14)
+            if (cols.Length < 13)
             {
-                Debug.LogWarning($"[ImportCards] {i+1}행 컬럼 부족({cols.Length}/14), 스킵");
+                Debug.LogWarning($"[ImportCards] {i+1}행 컬럼 부족({cols.Length}/13), 스킵");
                 continue;
             }
             
             string id = cols[0].Trim();
             string ownerRaw  = cols[2].Trim();
+            if (string.IsNullOrEmpty(ownerRaw) || ownerRaw.ToLower() == "")
+                continue;
             var ownerTokens  = ownerRaw.Split('|');
             foreach (var tok in ownerTokens)
             {
@@ -96,12 +98,6 @@ public class SkillDataImporter : MonoBehaviour
                 {
                     so.rank = 1;
                 }
-                
-                // 애니메이션
-                so.animationID = ParseStringOrDefault(cols[12], /*빈 문자열*/"" );
-
-                // resourcePath
-                so.resourcePath = ParseStringOrDefault(cols[13], /*빈 문자열*/"" );
                 
                 // icon 과 costAP 는 CSV에 없으니 에디터에서 수동 할당
 

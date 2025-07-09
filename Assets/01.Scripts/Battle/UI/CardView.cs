@@ -128,7 +128,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             .RectangleContainsScreenPoint(enemyDropZone, eventData.position, canvas.worldCamera);
 
         // 방어 카드거나, (공격/약화 카드면서) 적 위에 드롭됐으면 UseCard 시도
-        if ((data.typePrimary == CardTypePrimary.방어 || droppedOnEnemy)
+        if ((data.typePrimary == CardTypePrimary.실드 || droppedOnEnemy)
             && handManager.UseCard(this))
         {
             // 블록 레이캐스트를 꺼서 사용된 카드가 더 이상 드래그/클릭되지 않도록 함

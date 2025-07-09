@@ -15,7 +15,7 @@ MonoBehaviour:
   cardId: 2009
   displayName: "\uC704\uD611\uC801\uC778 \uD3EC\uD6A8"
   ownerID: 0
-  typePrimary: 1
+  typePrimary: 3
   typeSecondary: 0
   effectAttackValue: 0
   effectShieldValue: 0
@@ -24,7 +24,5 @@ MonoBehaviour:
   effectTurnValue: 1
   effectText: "{turns} \uD134 \uB3D9\uC548 \uACF5\uACA9\uB825\uC774 {buff} \uC99D\uAC00\uD55C\uB2E4."
   rank: 1
-  animationID: 
-  resourcePath: 
   costAP: 1
   icon: {fileID: 0}

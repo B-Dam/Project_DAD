@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe40cd1ad53f5a043a20b0bdf33eaf1d, type: 3}
-  m_Name: 2016_0
+  m_Name: 2016_1004
   m_EditorClassIdentifier: 
   cardId: 2016
   displayName: "\uC6C0\uCC14\uC6C0\uCC14"
-  ownerID: 0
-  typePrimary: 1
+  ownerID: 1004
+  typePrimary: 4
   typeSecondary: 0
   effectAttackValue: 0
   effectShieldValue: 0
@@ -25,7 +25,5 @@ MonoBehaviour:
   effectText: "{turns} \uD134 \uB3D9\uC548 \uBAA8\uB178\uC758 \uACF5\uACA9\uB825\uC744
     {debuff} \uAC10\uC18C \uC2DC\uD0A8\uB2E4."
   rank: 1
-  animationID: 
-  resourcePath: 
   costAP: 1
-  icon: {fileID: 0}
+  icon: {fileID: -4975461531417526803, guid: 6dc91ff5e22e68e4c9dcf0891c620b3e, type: 3}

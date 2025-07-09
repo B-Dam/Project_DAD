@@ -15,13 +15,13 @@ public class CombatSceneController : MonoBehaviour
         CombatSetupData data = CombatDataHolder.GetData();
         
         if (data != null)
-        {
             SetupCombat(data);
-        }
         else
-        {
             Debug.LogWarning("전투 세팅 데이터가 없습니다.");
-        }
+        
+        var animCtrl = enemyObject.GetComponentInChildren<CombatAnimationController>();
+        if (animCtrl != null)
+            animCtrl.enemyAnimator = this.enemyAnimator;
     }
 
     private void SetupCombat(CombatSetupData data)
@@ -31,8 +31,8 @@ public class CombatSceneController : MonoBehaviour
             backgroundImage.sprite = data.backgroundSprite;
 
         // 적 애니메이터 설정
-        if (enemyAnimator != null && data.enemyAnimator != null)
-            enemyAnimator.runtimeAnimatorController = data.enemyAnimator;
+        if (enemyAnimator != null && data.animatorController != null)
+            enemyAnimator.runtimeAnimatorController = data.animatorController;
 
         // 적 데이터 설정
         if (data.enemyCharacterSO != null)

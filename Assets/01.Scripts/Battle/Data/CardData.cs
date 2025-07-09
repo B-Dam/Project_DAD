@@ -1,7 +1,7 @@
 using UnityEngine;
 
-public enum CardTypePrimary { 공격, 약화, 방어 }
-public enum CardTypeSecondary { None, 공격, 약화, 방어 }
+public enum CardTypePrimary { 공격, 약화, 실드, 버프, 디버프 }
+public enum CardTypeSecondary { None, 공격, 약화, 실드, 버프, 디버프 }
 
 [CreateAssetMenu(menuName = "Battle/CardData")]
 public class CardData : ScriptableObject
@@ -29,12 +29,6 @@ public class CardData : ScriptableObject
 
     [Header("등급")]
     public int rank;                   // 카드의 등급 (1성=1, 2성=2)
-    
-    [Header("애니메이션")]
-    public string animationID;         // 재생할 애니메이션 트리거
-    
-    [Header("Resource Path")]
-    public string resourcePath;
     
     [Header("소모 AP")]
     public int costAP;                 // 기본적으로는 1만을 소모하지만 확장성을 위해 추가

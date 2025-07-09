@@ -118,17 +118,26 @@ public class CombatAnimationController : MonoBehaviour
    
     private void HandleEnemySkill(CardData data)
     {
-        // 적도 동일하게 분기 가능
-        switch (data.displayName)
+        switch(data.ownerID)
         {
-            case "할퀴기":
-                enemyAnimator.SetTrigger("Attack");
-                if (!isEnemyMoving)
-                    enemyMoveCoroutine = StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
+            case 1001 :
+            case 1004 :
+                switch (data.displayName)
+                {
+                    case "할퀴기":
+                        enemyAnimator.SetTrigger("Attack");
+                        if (!isEnemyMoving)
+                            enemyMoveCoroutine = StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
+                        break;
+                    case "움찔움찔":
+                        enemyAnimator.SetTrigger("Twtich"); break;
+                    case "마지막 발악":
+                        enemyAnimator.SetTrigger("Enrage"); break;
+                    default:
+                        break;
+                }
                 break;
-            default :
-                break;
-        }
+        };
     }
     
     private IEnumerator EnemyDoAttackStep(Transform tf)
