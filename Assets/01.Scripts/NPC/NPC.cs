@@ -10,13 +10,8 @@ public class NPC : MonoBehaviour, IInteractable
         if (DialogueManager.Instance == null) return;
         if (DialogueManager.Instance.IsDialogueActive) return;
         if (DialogueManager.Instance.IsOnCooldown) return;
+        if (CombatManager.Instance != null && CombatManager.Instance.IsInCombat) return;
 
-        string[] ids = new string[dialogueEntries.Length];
-        for (int i = 0; i < dialogueEntries.Length; i++)
-        {
-            ids[i] = dialogueEntries[i].id;
-        }
-
-        DialogueManager.Instance.StartDialogueByIDs(ids);
+        DialogueManager.Instance.StartDialogueWithEntries(dialogueEntries);
     }
 }

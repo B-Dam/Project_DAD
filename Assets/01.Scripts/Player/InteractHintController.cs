@@ -1,42 +1,67 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class InteractHintController : MonoBehaviour
 {
+    public static InteractHintController Instance { get; private set; }
+
     public float detectRange = 1f;
     public LayerMask interactLayer;
     public GameObject hintUIPrefab;
 
     private GameObject currentHintUI;
     private Transform currentTarget;
+    private bool hintDisabled = false;
 
-    private bool hintDisabled = false; //  힌트 감지 비활성화 여부
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        // 필요시 인스턴스 제거 (씬 분리될 경우)
+        if (Instance == this)
+            Instance = null;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        HideHint(); // ✅ 씬 전환 시 UI 자동 제거
+    }
 
     private void Update()
     {
-        // 대화 중이면 강제로 힌트 숨기기
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive || hintDisabled)
         {
             HideHint();
             return;
         }
-        //외부에서 힌트 비활성화 요청이 들어오면
-        if (hintDisabled)
-        {
-            HideHint();
-            return;
-        }
+
         DetectInteractable();
     }
-
 
     private void DetectInteractable()
     {
         Vector2 origin = transform.position;
-        Vector2 direction = Vector2.zero;
 
         Collider2D hit = Physics2D.OverlapCircle(origin, detectRange, interactLayer);
-        if (hit != null && (hit.CompareTag("NPC") || hit.CompareTag("Item") || hit.CompareTag("Interact")))
+        if (hit != null && (hit.CompareTag("NPC") || hit.CompareTag("Door") || hit.CompareTag("Item") || hit.CompareTag("Interact")))
         {
             if (currentTarget != hit.transform)
             {
@@ -64,21 +89,21 @@ public class InteractHintController : MonoBehaviour
         }
 
         currentHintUI.SetActive(true);
-        currentHintUI.transform.position = target.position + Vector3.up * 1.2f; // 오브젝트 위
+        currentHintUI.transform.position = target.position + Vector3.up * 1.2f;
     }
-    //  외부에서 힌트 비활성화
+
     public void DisableHint()
     {
         hintDisabled = true;
         HideHint();
     }
 
-    //  다시 힌트 활성화
     public void EnableHint()
     {
         hintDisabled = false;
     }
-    void HideHint()
+
+    private void HideHint()
     {
         if (currentHintUI != null)
         {
