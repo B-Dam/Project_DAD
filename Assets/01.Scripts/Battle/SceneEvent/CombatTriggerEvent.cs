@@ -14,8 +14,6 @@ public class CombatTriggerEvent : MonoBehaviour
     
     bool hasTriggered = false;
 
-    bool hasTriggered = false;
-
     private void Awake()
     {
         // 트리거 오브젝트가 Battle 씬 로딩/언로드 때 파괴되지 않도록
