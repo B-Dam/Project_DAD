@@ -1507,7 +1507,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072fc5dcdec6f7b488f76e3e5bc64d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEntries: []
+  dialogueEntries:
+  - id: 5088
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+  - id: 5089
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!95 &1497121154684285277
 Animator:
   serializedVersion: 7
@@ -1867,7 +1881,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072fc5dcdec6f7b488f76e3e5bc64d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEntries: []
+  dialogueEntries:
+  - id: 5090
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+  - id: 5091
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+  - id: 5093
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &2714561839262613054
 GameObject:
   m_ObjectHideFlags: 0
@@ -4429,6 +4464,13 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - id: 5063
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+  - id: 5092
     speaker: 
     text: 
     focusTarget: {fileID: 0}
