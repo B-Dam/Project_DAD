@@ -16,6 +16,10 @@ public class CombatAnimationController : MonoBehaviour
     [Header("공격 모션 딜레이")]
     [SerializeField] private float attackPause = 1f;  
     
+    [Header("UI 제어용")]
+    [SerializeField] private CanvasGroup gameUIGroup;
+    [SerializeField] private GameObject retryPanel;
+    
     private bool isEnemyMoving;
     private bool isPlayerMoving;
     
@@ -30,6 +34,11 @@ public class CombatAnimationController : MonoBehaviour
         {
             cm.OnPlayerSkillUsed += HandlePlayerSkill;
             cm.OnEnemySkillUsed  += HandleEnemySkill;
+            cm.OnPlayerHit       += HandlePlayerHit;
+            cm.OnEnemyHit        += HandleEnemyHit;
+            cm.OnPlayerDeath     += HandlePlayerDeath;
+            cm.OnEnemyDeath      += HandleEnemyDeath;
+            cm.OnCombatStart     += HandleCombatStart;
         }
     }
 
@@ -40,20 +49,22 @@ public class CombatAnimationController : MonoBehaviour
         {
             cm.OnPlayerSkillUsed -= HandlePlayerSkill;
             cm.OnEnemySkillUsed  -= HandleEnemySkill;
+            cm.OnPlayerHit       -= HandlePlayerHit;
+            cm.OnEnemyHit        -= HandleEnemyHit;
+            cm.OnPlayerDeath     -= HandlePlayerDeath;
+            cm.OnEnemyDeath      -= HandleEnemyDeath;
+            cm.OnCombatStart     -= HandleCombatStart;
         }
     }
 
+    // 플레이어 스킬 사용 시 애니메이션 트리거
     private void HandlePlayerSkill(CardData data)
     {
         switch (data.displayName)  // 또는 data.id, data.skillName 등에 맞게
         {
             case "물기":
                 playerAnimator.SetTrigger("Attack");
-                // 이전 코루틴이 돌고 있으면 중단
-                if (playerMoveCoroutine != null)
-                    StopCoroutine(playerMoveCoroutine);
-                // 새 코루틴 시작하고 레퍼런스 저장
-                playerMoveCoroutine = StartCoroutine(PlayerDoAttackStep(playerCharacter.transform));
+                StartCoroutine(HandlePlayerAttack(data));
                 break;
             case "으르렁거리기":
                 playerAnimator.SetTrigger("Bark");
@@ -67,6 +78,7 @@ public class CombatAnimationController : MonoBehaviour
         }
     }
     
+    // 플레이어 공격 시 이동 로직
     private IEnumerator PlayerDoAttackStep(Transform tf)
     {
         if (isPlayerMoving) yield break;
@@ -101,22 +113,32 @@ public class CombatAnimationController : MonoBehaviour
         isPlayerMoving = false;
     }
     
-   
+   // 적 스킬 사용시 애니메이션 트리거
     private void HandleEnemySkill(CardData data)
     {
-        // 적도 동일하게 분기 가능
-        switch (data.displayName)
+        switch(data.ownerID)
         {
-            case "할퀴기":
-                enemyAnimator.SetTrigger("Attack");
-                if (!isEnemyMoving)
-                    enemyMoveCoroutine = StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
+            case 1001 :
+            case 1004 :
+                switch (data.displayName)
+                {
+                    case "할퀴기":
+                        enemyAnimator.SetTrigger("Attack");
+                        if (!isEnemyMoving)
+                            enemyMoveCoroutine = StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
+                        break;
+                    case "움찔움찔":
+                        enemyAnimator.SetTrigger("Twitch"); break;
+                    case "마지막 발악":
+                        enemyAnimator.SetTrigger("Enrage"); break;
+                    default:
+                        break;
+                }
                 break;
-            default :
-                break;
-        }
+        };
     }
     
+    // 적 공격시 이동 로직
     private IEnumerator EnemyDoAttackStep(Transform tf)
     {
         if (isEnemyMoving) yield break;
@@ -149,5 +171,89 @@ public class CombatAnimationController : MonoBehaviour
         tf.localPosition = startPos;
 
         isEnemyMoving = false;
+    }
+    
+    // 플레이어 피격 트리거
+    private void HandlePlayerHit()
+    {
+        playerAnimator.SetTrigger("Hit");
+    }
+
+    // 적 피격 트리거
+    private void HandleEnemyHit()
+    {
+        enemyAnimator.SetTrigger("Hit");
+    }
+    
+    // 플레이어 사망 로직
+    private void HandlePlayerDeath()
+    {
+        // GameUI 잠금
+        LockGameUI();
+        // 남아 있는 Hit 트리거 클리어
+        playerAnimator.ResetTrigger("Hit");
+        // Die 트리거 활성
+        playerAnimator.SetTrigger("Die");
+        StartCoroutine(ShowRetryAfterDelay());
+    }
+    
+    // UI 잠금 메서드
+    private void LockGameUI()
+    {
+        // 모든 버튼/슬롯을 비활성화
+        gameUIGroup.interactable     = false;
+        gameUIGroup.blocksRaycasts   = false;
+    }
+    
+    // 재시작시 애니메이션 트리거
+    private void HandleCombatStart()
+    {
+        if (CombatDataHolder.IsRetry)
+        {
+            playerAnimator.SetTrigger("Retry");
+            enemyAnimator.SetTrigger("Retry");
+            // 한 번만 실행되도록 플래그 리셋
+            CombatDataHolder.IsRetry = false;
+        }
+    }
+    
+    // 플레이어 사망 이후 재시작 패널 활성화
+    private IEnumerator ShowRetryAfterDelay()
+    {
+        // 3초 이후 재시작 패널 활성화
+        yield return new WaitForSeconds(3f);
+        retryPanel.SetActive(true);
+        Time.timeScale = 0;
+    }
+    
+    // 플레이어 연속 공격시 이동 멈춤 방지용 로직
+    private IEnumerator HandlePlayerAttack(CardData data)
+    {
+        if (isPlayerMoving)
+        {
+            // 이전 이동이 끝날 때까지 잠깐 대기
+            while (isPlayerMoving)
+                yield return null;
+        }
+
+        // 이동 시작
+        yield return StartCoroutine(PlayerDoAttackStep(playerCharacter.transform));
+    }
+
+    // 적 사망 이후 전투 종료
+    private void HandleEnemyDeath()
+    {
+        // GameUI 잠금
+        LockGameUI();
+        // Die 트리거 활성
+        enemyAnimator.SetTrigger("Die");
+        StartCoroutine(DelayedBattleEnd());
+    }
+    
+    private IEnumerator DelayedBattleEnd()
+    {
+        yield return new WaitForSeconds(3f);
+        // 기존 OnBattleEnd 이벤트 호출
+        CombatDataHolder.LastTrigger?.OnBattleEnd();
     }
 }
