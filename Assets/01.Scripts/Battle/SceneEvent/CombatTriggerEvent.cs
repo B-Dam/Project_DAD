@@ -50,6 +50,7 @@ public class CombatTriggerEvent : MonoBehaviour
             var battle = SceneManager.GetSceneByName("Battle");
             if (battle.IsValid())
                 SceneManager.SetActiveScene(battle);
+                AudioManager.Instance.PlayBGM("Battle_Sound");
         };
     }
 
@@ -57,6 +58,7 @@ public class CombatTriggerEvent : MonoBehaviour
     public void OnBattleEnd()
     {
         StartCoroutine(UnloadBattleSceneRoutine());
+        AudioManager.Instance.PlayBGM("LostSouls");
     }
 
     private IEnumerator UnloadBattleSceneRoutine()
