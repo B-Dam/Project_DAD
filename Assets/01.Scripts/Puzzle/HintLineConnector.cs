@@ -49,17 +49,9 @@ public class HintLineConnector : MonoBehaviour
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 lineParticlesInstance.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-                // 진행 방향을 Z+ → X+ (Y축 기준 -90도) 회전
+                // 파티클 길이 조정
                 var shape = lineParticlesInstance.shape;
-                shape.rotation = new Vector3(0f, -90f, 0f); // 입자 진행 방향 회전
                 shape.scale = new Vector3(dist, shape.scale.y, shape.scale.z);
-
-                // 입자 자체의 회전도 적용 (입자 이미지 방향 회전)
-                var main = lineParticlesInstance.main;
-                main.startRotation3D = true;
-                main.startRotationX = 0f;
-                main.startRotationY = Mathf.Deg2Rad * -90f; // Y축 기준 회전
-                main.startRotationZ = 0f;
             }
 
             UpdateParticleAlphaByDistance();

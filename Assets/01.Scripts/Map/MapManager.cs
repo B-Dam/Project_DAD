@@ -35,6 +35,11 @@ public class MapManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);
+
+            if (string.IsNullOrEmpty(currentMapID))
+            {
+                currentMapID = "001";
+            }
         }
         else if (_instance != this)
         {
