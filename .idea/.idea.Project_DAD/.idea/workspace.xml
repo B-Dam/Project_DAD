@@ -7,9 +7,11 @@
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/DeckUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/DeckUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang_Enrage.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang_Enrage.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang_Twitch.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang_Twitch.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/hp_Bar.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/hp_Bar.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +137,7 @@
       <workItem from="1751940051011" duration="13388000" />
       <workItem from="1752019604049" duration="6338000" />
       <workItem from="1752033271189" duration="8268000" />
-      <workItem from="1752107053016" duration="3137000" />
+      <workItem from="1752107053016" duration="6298000" />
     </task>
     <servers />
   </component>

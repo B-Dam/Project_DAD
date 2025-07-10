@@ -28,6 +28,13 @@ public class DeckUIManager : MonoBehaviour
     // Draw 버튼
     public void ShowDrawPile()
     {
+        // 이미 열려 있으면 닫기
+        if (panel.activeSelf)
+        {
+            ClosePanel();
+            return;
+        }
+
         Populate(HandManager.Instance.deck);
         panel.SetActive(true);
     }
@@ -35,6 +42,13 @@ public class DeckUIManager : MonoBehaviour
     // Discard 버튼
     public void ShowDiscardPile()
     {
+        // 이미 열려 있으면 닫기
+        if (panel.activeSelf)
+        {
+            ClosePanel();
+            return;
+        }
+
         Populate(HandManager.Instance.discard);
         panel.SetActive(true);
     }
