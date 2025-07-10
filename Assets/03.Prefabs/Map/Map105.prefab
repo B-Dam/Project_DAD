@@ -37078,6 +37078,57 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!1 &5011915157446986536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3527340251900811801}
+  - component: {fileID: 8267756700035566379}
+  m_Layer: 0
+  m_Name: Switches
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3527340251900811801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5011915157446986536}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5930140849911126147}
+  - {fileID: 8643277999858377952}
+  m_Father: {fileID: 3338038348441532069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8267756700035566379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5011915157446986536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1e456a02048514f9a653c35120ecfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetA: {fileID: 5676024091273392058}
+  targetB: {fileID: 8023195704564930542}
+  switchColliders:
+  - {fileID: 3443817191122846869}
+  - {fileID: 753760686462433526}
 --- !u!1 &5992505668157257646
 GameObject:
   m_ObjectHideFlags: 0
@@ -37161,8 +37212,7 @@ Transform:
   - {fileID: 598119201170883485}
   - {fileID: 4645285404934031603}
   - {fileID: 4981084521332636675}
-  - {fileID: 5930140849911126147}
-  - {fileID: 8643277999858377952}
+  - {fileID: 3527340251900811801}
   - {fileID: 1665761664610555160}
   - {fileID: 4134174250781646076}
   - {fileID: 3761810354945448447}
@@ -42397,7 +42447,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 3338038348441532069}
+    m_TransformParent: {fileID: 3527340251900811801}
     m_Modifications:
     - target: {fileID: 3985937142978150549, guid: 7c79ee01c7c5875489a8bb25f0c92491, type: 3}
       propertyPath: m_LocalPosition.x
@@ -42629,7 +42679,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 3338038348441532069}
+    m_TransformParent: {fileID: 3527340251900811801}
     m_Modifications:
     - target: {fileID: 3240837140966449197, guid: 7c79ee01c7c5875489a8bb25f0c92491, type: 3}
       propertyPath: targetA
@@ -42690,33 +42740,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7749292137099803774, guid: 7c79ee01c7c5875489a8bb25f0c92491, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8545753824692387326}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c79ee01c7c5875489a8bb25f0c92491, type: 3}
---- !u!1 &1051580882572043368 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7749292137099803774, guid: 7c79ee01c7c5875489a8bb25f0c92491, type: 3}
-  m_PrefabInstance: {fileID: 7285965588474877974}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8545753824692387326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051580882572043368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d1e456a02048514f9a653c35120ecfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetA: {fileID: 5676024091273392058}
-  targetB: {fileID: 8023195704564930542}
-  switchColliders:
-  - {fileID: 3443817191122846869}
-  - {fileID: 753760686462433526}
 --- !u!61 &3443817191122846869 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 5392522225368767619, guid: 7c79ee01c7c5875489a8bb25f0c92491, type: 3}
