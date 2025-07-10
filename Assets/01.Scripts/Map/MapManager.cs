@@ -69,7 +69,7 @@ public class MapManager : MonoBehaviour
         currentMapID = newMapID;
         mapData = Database.Instance.Map.GetMapData(currentMapID);
 
-        PuzzleCheck();
+        PuzzleActiveCheck();
 
         string targetBGM;
 
@@ -90,23 +90,51 @@ public class MapManager : MonoBehaviour
         Debug.Log($"맵 데이터가 업데이트되었습니다: {currentMapID}");
     }
 
-    public void PuzzleCheck()
+    private void PuzzleActiveCheck()
     {
-        // 만약 현재 맵 아이디의 타입이 puzzle이라면
+        // 만약 현재 맵 타입이 puzzle이라면
         if (mapData.type == MapType.puzzle)
         {
-            // bool isClear를 검수하고 false라면 퍼즐 오브젝트를 SetActive(false)로 설정
+            GameObject puzzleObj = GameObject.Find(currentMapID)?.transform.parent.Find("Puzzle")?.gameObject;
+            ResetGame resetGame = FindAnyObjectByType<ResetGame>();
+
+            // bool isClear를 검수하고 false라면 퍼즐 오브젝트를 활성화
             puzzleClearStatus.TryGetValue(currentMapID, out bool isClear);
-            if (!isClear)
+            if (isClear == false)
             {
-                // 클리어 되지 않았다면 현재 맵 아이디에 해당하는 오브젝트의 부모의 자식 중에 퍼즐 오브젝트를 찾아서 활성화
-                GameObject puzzleObj = GameObject.Find(currentMapID)?.transform.parent.Find("Puzzle")?.gameObject;
-                // 부모로 찾아 올라가서 퍼즐 자식 찾기
+                puzzleObj?.SetActive(true);
+                resetGame?.ResetCurrentMap();
+                return;
+            }
+            else
+            {
+                puzzleObj?.SetActive(false);
                 return;
             }
         }
+        else
+        {
+            return;
+        }
+    }
 
-        // Bridge 프리펩을 MapObjects에도 넣어 놓고 해당 맵으로 돌아올 때 isClear가 true라면 Bridge 오브젝트를 활성화
+    public bool isPuzzleUIActive()
+    {
+        if (mapData.type == MapType.puzzle)
+        {
+            puzzleClearStatus.TryGetValue(currentMapID, out bool isClear);
+            if (isClear == false)
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+    // 퍼즐 클리어 했을 때 puzzleClearStatus를 true로 변경하는 함수
+    public void PuzzleClear()
+    {
+        puzzleClearStatus[currentMapID] = true;
     }
 
     public IEnumerator OnLeftMap()
