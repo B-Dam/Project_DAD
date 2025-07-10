@@ -47,7 +47,9 @@ public class Switch_MultiTrigger : MonoBehaviour
 
     bool AllSwitchesAreOccupied()
     {
-        foreach(Collider2D switchCol in switchColliders)
+        bool allOccupied = true;
+
+        foreach (Collider2D switchCol in switchColliders)
         {
             Collider2D[] hits = Physics2D.OverlapBoxAll(switchCol.bounds.center, switchCol.bounds.size, 0f);
             bool occupied = false;
@@ -62,19 +64,27 @@ public class Switch_MultiTrigger : MonoBehaviour
 
             if (occupied && !switchStates[switchCol])
             {
-                AudioManager.Instance.PlaySFX("Puzzle_Switch_button");
+                if (AudioManager.Instance != null)
+                {
+                    AudioManager.Instance.PlaySFX("Puzzle_Switch_button");
+                    Debug.Log($"스위치 '{switchCol.name}' 활성화 효과음 재생! (상태 변경 감지)");
+                }
+                else
+                {
+                    Debug.LogWarning($"스위치 '{switchCol.name}': AudioManager.Instance가 null이라 효과음 재생 실패.");
+                }
             }
             switchStates[switchCol] = occupied;
 
             if (!occupied)
-                return false; // 이 스위치는 비어 있음
+                allOccupied = false; // 이 스위치는 비어 있음
         }
-        return true;
+        return allOccupied;
     }
-    
- 
 
-  
+
+
+
     private void OpenTargetB()
     {
         if (targetA != null)
