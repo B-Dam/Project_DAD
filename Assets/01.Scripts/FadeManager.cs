@@ -34,7 +34,6 @@ public class FadeManager : MonoBehaviour
     public IEnumerator FadeOut(float duration)
     {
         fadePanel.gameObject.SetActive(true);
-        Debug.Log($"페이드 아웃이 시작 되었고 페이드 패널의 상태가 {fadePanel.gameObject.activeSelf} 입니다");
         if (fadePanel.gameObject.activeSelf == true && fadeCoroutine == null)
         {
             float timer = 0f;
@@ -80,10 +79,5 @@ public class FadeManager : MonoBehaviour
         {
             Debug.LogError($"페이드 패널: {fadePanel.gameObject.activeSelf}, 코루틴: {fadeCoroutine}");
         }
-    }
-
-    private void OtherCoroutineStop()
-    {
-
     }
 }
