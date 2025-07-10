@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: f34a9028ae2d3424f95a884b4a7a492f
+guid: 3ebfe6245569507428573b458d8a64ec
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5782612712305329354
-    second: "ChatGPT Image 2025\uB144 6\uC6D4 26\uC77C \uC624\uD6C4 05_34_34_0"
+      213: 1282281668142398115
+    second: hpbar_0
   - first:
-      213: 5054762300416434525
-    second: "ChatGPT Image 2025\uB144 6\uC6D4 26\uC77C \uC624\uD6C4 05_34_34_1"
+      213: 4693065618294235174
+    second: hpbar_1
   - first:
-      213: 6138283065817124113
-    second: "ChatGPT Image 2025\uB144 6\uC6D4 26\uC77C \uC624\uD6C4 05_34_34_2"
-  - first:
-      213: -8949902394442105477
-    second: "ChatGPT Image 2025\uB144 6\uC6D4 26\uC77C \uC624\uD6C4 05_34_34_3"
+      213: -59309324015629649
+    second: hpbar_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -84,7 +81,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -122,23 +119,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HealtBarSprite_0
+      name: hpbar_0
       rect:
         serializedVersion: 2
-        x: 216
-        y: 427
-        width: 1103
-        height: 168
+        x: 5
+        y: 75
+        width: 130
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1, y: 0, z: 0, w: 0}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: cd902244bfebb8145ba847fab63b9fb9
-      internalID: -353344467
+      spriteID: 3aa7f9322649bc110800000000000000
+      internalID: 1282281668142398115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hpbar_1
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 59
+        width: 126
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 620e60e905e112140800000000000000
+      internalID: 4693065618294235174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hpbar_2
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 18
+        width: 42
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faa0e2aeb7a4d2ff0800000000000000
+      internalID: -59309324015629649
       vertices: []
       indices: 
       edges: []
@@ -147,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 2150e8f8862c0074881b37ea96030572
     internalID: 0
     vertices: []
     indices: 
@@ -159,17 +200,9 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      HealtBarSprite_0: -353344467
-      HealtBarSprite_1: 1408821967
-      HealtBarSprite_10: -1431954715
-      HealtBarSprite_2: 619740484
-      HealtBarSprite_3: -1370146803
-      HealtBarSprite_4: 469678010
-      HealtBarSprite_5: 1365179462
-      HealtBarSprite_6: 1171603045
-      HealtBarSprite_7: -1680274267
-      HealtBarSprite_8: -1009069233
-      HealtBarSprite_9: 1847769878
+      hpbar_0: 1282281668142398115
+      hpbar_1: 4693065618294235174
+      hpbar_2: -59309324015629649
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
