@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour
 
     public V2MapBase MapBase;
     public MapData mapData;
-    private FadeManager fadeManager;
+    public FadeManager fadeManager;
 
     private Dictionary<string, bool> puzzleClearStatus = new Dictionary<string, bool>
     {
@@ -97,9 +97,12 @@ public class MapManager : MonoBehaviour
         {
             // bool isClear를 검수하고 false라면 퍼즐 오브젝트를 SetActive(false)로 설정
             puzzleClearStatus.TryGetValue(currentMapID, out bool isClear);
-            if (isClear)
+            if (!isClear)
             {
-
+                // 클리어 되지 않았다면 현재 맵 아이디에 해당하는 오브젝트의 부모의 자식 중에 퍼즐 오브젝트를 찾아서 활성화
+                GameObject puzzleObj = GameObject.Find(currentMapID)?.transform.parent.Find("Puzzle")?.gameObject;
+                // 부모로 찾아 올라가서 퍼즐 자식 찾기
+                return;
             }
         }
 

@@ -10,7 +10,7 @@ public class FadeManager : MonoBehaviour
 
     private void Awake()
     {
-        fadePanel = GameObject.Find("FadePanel")?.GetComponent<Image>();
+        fadePanel = GameObject.Find("SettingCanvas")?.transform.Find("FadePanel")?.GetComponent<Image>();
         if (fadePanel == null)
         {
             Debug.LogError("페이드 패널 없음");
@@ -24,12 +24,17 @@ public class FadeManager : MonoBehaviour
             fadePanel.gameObject.SetActive(false);
             return;
         }
+    }
 
+    private void Start()
+    {
+        fadePanel.gameObject.SetActive(false);
     }
 
     public IEnumerator FadeOut(float duration)
     {
         fadePanel.gameObject.SetActive(true);
+        Debug.Log($"페이드 아웃이 시작 되었고 페이드 패널의 상태가 {fadePanel.gameObject.activeSelf} 입니다");
         if (fadePanel.gameObject.activeSelf == true && fadeCoroutine == null)
         {
             float timer = 0f;
@@ -44,7 +49,6 @@ public class FadeManager : MonoBehaviour
                 yield return null;
             }
             fadePanel.color = targetColor;
-            fadeCoroutine = null;
         }
         else
         {
@@ -54,7 +58,7 @@ public class FadeManager : MonoBehaviour
 
     public IEnumerator FadeIn(float duration)
     {
-        if (fadePanel.gameObject.activeSelf == true && fadeCoroutine == null)
+        if (fadePanel.gameObject.activeSelf == true)
         {
             float timer = 0f;
             Color startColor = new Color(0f, 0f, 0f, 1f);
@@ -76,5 +80,10 @@ public class FadeManager : MonoBehaviour
         {
             Debug.LogError($"페이드 패널: {fadePanel.gameObject.activeSelf}, 코루틴: {fadeCoroutine}");
         }
+    }
+
+    private void OtherCoroutineStop()
+    {
+
     }
 }
