@@ -215,7 +215,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogBoxBackgroundImage != null)
         {
             Color color = dialogBoxBackgroundImage.color;
-            color.a = hasCutscene ? 0.2f : 1f;
+            color.a = hasCutscene ? 0f : 1f;
             dialogBoxBackgroundImage.color = color;
         }
 
