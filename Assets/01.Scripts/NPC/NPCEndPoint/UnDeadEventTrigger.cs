@@ -50,14 +50,10 @@ public class UnDeadEventTrigger : MonoBehaviour
 
                         Debug.Log($" 대상 '{obj.name}' → {destinationTarget.position} 으로 이동 시작");
                         StartCoroutine(MoveToPosition(obj, destinationTarget.position, moveDuration));
-
-                        if (offscreenWatcher != null)
-                            offscreenWatcher.Register(obj); // 감시자에 등록
                     }
 
                     hasTriggered = true;
                     hintController.DisableHint();
-
                 }
             }
         }

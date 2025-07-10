@@ -20,9 +20,6 @@ public class PlayerController : MonoBehaviour
     public float interactRange = 1.5f;
     public LayerMask interactLayer;
 
-    [Header("박스 밀기 쿨타임")]
-    public float boxPushCooldown = 0.3f; // 밀기 쿨타임
-    [HideInInspector] public float lastPushTime = -10f;//박스 밀 때 쿨타임용
     public bool isPushingInputHeld { get; private set; }
 
     public Vector2 lastMoveInput { get; private set; }
@@ -134,8 +131,6 @@ public class PlayerController : MonoBehaviour
     private void TryShowObstacleIndicator()//P
     {
 
-        if (Time.time - lastPushTime < boxPushCooldown) return; // 쿨타임 내엔 실행 X
-
         // 조건 1: 방향 입력 중일 때만
         if (moveInput == Vector2.zero) return;
 
@@ -157,12 +152,10 @@ public class PlayerController : MonoBehaviour
 
             // 장애물이거나, BoxPush 없는 오브젝트일 경우 → UI 띄움
             ShowBlockIndicator(transform.position + new Vector3(0f, 1.2f, 0f));
-            lastPushTime = Time.time;
         }
     }
     private void TryAutoPushBox()
     {
-        if (Time.time - lastPushTime < boxPushCooldown) return;
         if (moveInput == Vector2.zero) return;
 
         Vector2 origin = transform.position;
@@ -176,7 +169,7 @@ public class PlayerController : MonoBehaviour
             BoxPush box = hitBox.GetComponent<BoxPush>();
             if (box != null)
             {
-                lastPushTime = Time.time;
+
             }
         }
     }
