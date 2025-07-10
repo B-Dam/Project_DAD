@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour
 
     public V2MapBase MapBase;
     public MapData mapData;
-    private FadeManager fadeManager;
+    public FadeManager fadeManager;
 
     private Dictionary<string, bool> puzzleClearStatus = new Dictionary<string, bool>
     {
