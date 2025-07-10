@@ -103,7 +103,7 @@ public class MapManager : MonoBehaviour
             if (isClear == false)
             {
                 puzzleObj?.SetActive(true);
-                resetGame?.ResetCurrentMap();
+                //resetGame?.ResetCurrentMap();
                 return;
             }
             else

@@ -764,7 +764,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.22, y: 2.32, z: 0}
-  m_LocalScale: {x: 1.2550515, y: 1.2841138, z: 1}
+  m_LocalScale: {x: -1.255051, y: 1.2841138, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5902093647596867905}
@@ -882,7 +882,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072fc5dcdec6f7b488f76e3e5bc64d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEntries: []
+  dialogueEntries:
+  - id: 5094
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+  - id: 5095
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!50 &5013453488774913851
 Rigidbody2D:
   serializedVersion: 5
@@ -8402,7 +8416,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.79, y: 3.13, z: 0}
-  m_LocalScale: {x: 1.255051, y: 1.2841138, z: 1}
+  m_LocalScale: {x: -1.255051, y: 1.2841138, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5902093647596867905}
@@ -8520,7 +8534,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072fc5dcdec6f7b488f76e3e5bc64d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEntries: []
+  dialogueEntries:
+  - id: 5094
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+  - id: 5095
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!50 &1369582175483834533
 Rigidbody2D:
   serializedVersion: 5
@@ -9021,7 +9049,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.7200012, y: 5.4, z: 0}
-  m_LocalScale: {x: 1.2550515, y: 1.2841138, z: 1}
+  m_LocalScale: {x: -1.255051, y: 1.2841138, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5902093647596867905}
@@ -9139,7 +9167,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072fc5dcdec6f7b488f76e3e5bc64d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEntries: []
+  dialogueEntries:
+  - id: 5094
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+  - id: 5095
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!50 &429505185468828146
 Rigidbody2D:
   serializedVersion: 5
@@ -36815,7 +36857,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.23, y: 4.31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5902093647596867905}
@@ -36887,7 +36929,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072fc5dcdec6f7b488f76e3e5bc64d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEntries: []
+  dialogueEntries:
+  - id: 5094
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+  - id: 5095
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!61 &5519811938079407648
 BoxCollider2D:
   m_ObjectHideFlags: 0

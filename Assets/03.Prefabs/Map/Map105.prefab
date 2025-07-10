@@ -37127,8 +37127,8 @@ MonoBehaviour:
   targetA: {fileID: 5676024091273392058}
   targetB: {fileID: 8023195704564930542}
   switchColliders:
-  - {fileID: 3443817191122846869}
   - {fileID: 753760686462433526}
+  - {fileID: 3443817191122846869}
 --- !u!1 &5992505668157257646
 GameObject:
   m_ObjectHideFlags: 0
