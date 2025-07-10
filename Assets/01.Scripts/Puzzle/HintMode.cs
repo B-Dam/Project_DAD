@@ -88,7 +88,7 @@ public class HintMode : MonoBehaviour
         else
         {
             DeactivateHint();
-            
+
         }
     }
 
@@ -216,8 +216,31 @@ public class HintMode : MonoBehaviour
         }
     }
 
-    public void ResetHintCount()
+    void ResetHintCount()
     {
         hintCount = maxHintCount; // 힌트 카운트 초기화
+    }
+
+    public void ForceResetHintState()
+    {
+        // 힌트 효과 비활성화 (그레이스케일 해제, 선 끄기)
+        isGrayscale = false;
+        isInCooldown = false;
+        hintDurationTimer = 0f;
+        hintCooldownTimer = 0f;
+
+        if (colorAdjustments != null)
+            colorAdjustments.saturation.value = 0f;
+
+        foreach (var connector in hintLineRenderer)
+            connector.SetActive(false);
+
+        // 카운트 초기화
+        ResetHintCount();
+
+        // UI 초기화
+        UpdateHintIcon();
+        UpdateHintUI();
+        UpdateHintTimeBar();
     }
 }

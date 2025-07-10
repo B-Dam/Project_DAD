@@ -64,14 +64,29 @@ public class ResetGame : MonoBehaviour
             newMap.name = "105";  // 이름 다시 지정해서 접근 쉽게
             Debug.Log("맵 105 리셋 완료");
 
+            // 만약 리셋 후 새 오브젝트 참조도 업데이트하고 싶다면:
+            map105ParentInScene = newMap.transform;
+
             // 플레이어 위치도 초기화
             PlayerController.Instance.transform.position = MapManager.Instance.mapData.player_position_down;
 
-            // 만약 리셋 후 새 오브젝트 참조도 업데이트하고 싶다면:
-            map105ParentInScene = newMap.transform;
-            }
+                HintMode hintMode = Object.FindFirstObjectByType<HintMode>();
+                if (hintMode != null)
+                {
+                    hintMode.ForceResetHintState();
+                    Debug.Log("힌트 사용 횟수 초기화 완료");
+                }
+                else
+                {
+                    Debug.LogWarning("HintMode 오브젝트를 찾을 수 없습니다!");
+                }
 
-        }  
+                Debug.Log("맵 105 리셋 완료");
+            
+        }
+        
+
+    }  
         // 맵 108번 (ID: "108") 리셋
         else if (currentID == "108")
         {
@@ -91,6 +106,19 @@ public class ResetGame : MonoBehaviour
             PlayerController.Instance.transform.position = MapManager.Instance.mapData.player_position_left;
             Debug.Log("맵 108 리셋 완료");
             map108ParentInScene = newMap.transform;
+
+            HintMode hintMode = Object.FindFirstObjectByType<HintMode>();
+            if (hintMode != null)
+            {
+                hintMode.ForceResetHintState();
+                Debug.Log("힌트 사용 횟수 초기화 완료");
+            }
+            else
+            {
+                Debug.LogWarning("HintMode 오브젝트를 찾을 수 없습니다!");
+            }
+
+            Debug.Log("맵 108 리셋 완료");
         }
     }
 }
