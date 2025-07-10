@@ -69,7 +69,7 @@ public class BoxPush : MonoBehaviour
         if (isMoving || !collision.gameObject.CompareTag("Player")) return;
 
         PlayerController pCon = collision.gameObject.GetComponent<PlayerController>();
-        if (pCon == null || Time.time - pCon.lastPushTime < pCon.boxPushCooldown) return; // 쿨타임 체크
+        //if (pCon == null || Time.time - pCon.lastPushTime < pCon.boxPushCooldown) return; // 쿨타임 체크
 
         if (pushCoroutine == null)
         {
@@ -95,7 +95,7 @@ public class BoxPush : MonoBehaviour
 
         while (timer < requiredHoldTime)
         {
-            //Debug.Log(timer+ "초 동안 밀기 유지 중...");
+            Debug.Log(timer+ "초 동안 밀기 유지 중...");
             //한프레임 대기
             yield return null;
             // 방향 바뀌면 종료
@@ -126,14 +126,14 @@ public class BoxPush : MonoBehaviour
         if (IsBlocked(pushDirection))
         {
             ShowBlockIndicator();
-            pCon2.lastPushTime = Time.time; // 쿨타임 갱신
+            //pCon2.lastPushTime = Time.time; // 쿨타임 갱신
         }
         else
         {
             targetPosition = rb.position + pushDirection * moveDistance;
             isMoving = true; // 이동 시작
             AudioManager.Instance.PlaySFX("Puzzle_Box_drrr");
-            pCon2.lastPushTime = Time.time; // 쿨타임 갱신
+            //pCon2.lastPushTime = Time.time; // 쿨타임 갱신
         }
         pushCoroutine = null; // 코루틴 종료 후 초기화
     }
