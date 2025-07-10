@@ -229,6 +229,7 @@ public class CombatAnimationController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         retryPanel.SetActive(true);
         Time.timeScale = 0;
+        CombatManager.Instance.IsInCombat = false;
     }
     
     // 플레이어 연속 공격시 이동 멈춤 방지용 로직
@@ -259,6 +260,7 @@ public class CombatAnimationController : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         // 기존 OnBattleEnd 이벤트 호출
+        CombatManager.Instance.IsInCombat = false;
         CombatDataHolder.LastTrigger?.OnBattleEnd();
     }
 }

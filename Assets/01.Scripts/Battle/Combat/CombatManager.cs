@@ -62,7 +62,6 @@ public class CombatManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
     }
@@ -291,15 +290,10 @@ public class CombatManager : MonoBehaviour
         {
             Debug.Log("Victory!");
             // 승리 시 추가 로직
-            
-            // 전투 종료
-            IsInCombat = false;
         }
         else if (playerHp <= 0)
         {
             Debug.Log("Defeat...");
-            // 패배 시 추가 로직
-            IsInCombat = false;
         }
     }
 }
