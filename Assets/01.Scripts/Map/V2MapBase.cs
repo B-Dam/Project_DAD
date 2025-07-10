@@ -55,10 +55,13 @@ public class V2MapBase : MonoBehaviour
 
     private void LateUpdate()
     {
+        // currentMapID가 null이면 바로 리턴
+        if (string.IsNullOrEmpty(MapManager.Instance.currentMapID))
+            return;
+
         if (!mapBounds.ContainsKey(MapManager.Instance.currentMapID)) return;
 
         Bounds bounds = mapBounds[MapManager.Instance.currentMapID];
-
         float halfHeight = cam.orthographicSize;
         float halfWidth = halfHeight * cam.aspect;
 

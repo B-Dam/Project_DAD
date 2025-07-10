@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
     }
 
     public V2MapBase MapBase;
-    private MapData mapData;
+    public MapData mapData;
     private FadeManager fadeManager;
 
     private Dictionary<string, bool> puzzleClearStatus = new Dictionary<string, bool>
@@ -38,6 +38,11 @@ public class MapManager : MonoBehaviour
         {
             _instance = this;
             DontDestroyOnLoad(gameObject);
+
+            if (string.IsNullOrEmpty(currentMapID))
+            {
+                currentMapID = "001";
+            }
         }
         else if (_instance != this)
         {
@@ -52,7 +57,7 @@ public class MapManager : MonoBehaviour
             currentMapID = "001";
         }
         mapData = Database.Instance.Map.GetMapData(currentMapID);
-
+        fadeManager = FindAnyObjectByType<FadeManager>();
         AudioManager.Instance.PlayBGM("LostSouls"); // 기본 BGM 설정
     }
 
