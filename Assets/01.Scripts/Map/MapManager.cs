@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class MapManager : MonoBehaviour
             return _instance;
         }
     }
+
+    public static Action<string> OnMapDataUpdated;  // string에 이동한 맵의 ID가 들어있으니 참고할 것
 
     public V2MapBase MapBase;
     public MapData mapData;
@@ -52,10 +55,6 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        if (currentMapID == null || currentMapID == "")
-        {
-            currentMapID = "001";
-        }
         mapData = Database.Instance.Map.GetMapData(currentMapID);
         fadeManager = FindAnyObjectByType<FadeManager>();
         AudioManager.Instance.PlayBGM("LostSouls"); // 기본 BGM 설정
@@ -70,6 +69,7 @@ public class MapManager : MonoBehaviour
         mapData = Database.Instance.Map.GetMapData(currentMapID);
 
         PuzzleActiveCheck();
+        MapBase.TileMapSetting();
 
         string targetBGM;
 
@@ -87,6 +87,7 @@ public class MapManager : MonoBehaviour
             AudioManager.Instance.PlayBGM(targetBGM);
         }
 
+        OnMapDataUpdated?.Invoke(newMapID);
         Debug.Log($"맵 데이터가 업데이트되었습니다: {currentMapID}");
     }
 
@@ -103,7 +104,7 @@ public class MapManager : MonoBehaviour
             if (isClear == false)
             {
                 puzzleObj?.SetActive(true);
-                //resetGame?.ResetCurrentMap();
+                resetGame?.ResetCurrentMap();
                 return;
             }
             else
