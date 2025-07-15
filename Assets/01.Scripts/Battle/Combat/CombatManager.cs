@@ -35,17 +35,21 @@ public class CombatManager : MonoBehaviour
     public int enemyAtkMod  { get; private set; }
     
     // 전투 중인지 확인용
-    public bool IsInCombat { get; private set; }
+    public bool IsInCombat { get; set; }
     
     List<TimedModifier> playerAttackMods = new List<TimedModifier>();
     List<TimedModifier> enemyAttackMods  = new List<TimedModifier>();
     
     public event Action<CardData> OnPlayerSkillUsed;
     public event Action<CardData> OnEnemySkillUsed;
+    public event Action OnPlayerHit;
+    public event Action OnEnemyHit;
+    public event Action OnPlayerDeath;
+    public event Action OnEnemyDeath;
     
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
-    int EnemyBaseAtk  => DataManager.Instance.enemyData.atk;
+    public int EnemyBaseAtk  => DataManager.Instance.enemyData.atk;
     
     public event Action OnCombatStart;
     public event Action OnStatsChanged;
@@ -58,7 +62,6 @@ public class CombatManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
     }
@@ -67,8 +70,6 @@ public class CombatManager : MonoBehaviour
     {
         if (TurnManager.Instance != null)
         {
-            // 턴 시작에 적 스킬 발동
-            TurnManager.Instance.OnEnemyTurnStart += OnEnemyTurnStart;
             // 턴 종료에 모디파이어 감소
             TurnManager.Instance.OnEnemyTurnEnd   += OnEnemyTurnEnd;
             // 플레이어 쪽도 동일하게 분리
@@ -81,7 +82,6 @@ public class CombatManager : MonoBehaviour
     {
         if (TurnManager.Instance != null)
         {
-            TurnManager.Instance.OnEnemyTurnStart -= OnEnemyTurnStart;
             TurnManager.Instance.OnEnemyTurnEnd   -= OnEnemyTurnEnd;
             TurnManager.Instance.OnPlayerTurnStart-= OnPlayerTurnStart;
             TurnManager.Instance.OnPlayerTurnEnd  -= OnPlayerTurnEnd;
@@ -92,6 +92,7 @@ public class CombatManager : MonoBehaviour
     public void StartCombat()
     {
         IsInCombat = true;
+        Time.timeScale = 1;
             
         // HP 초기화
         playerHp = DataManager.Instance.playerData.maxHP;
@@ -146,14 +147,6 @@ public class CombatManager : MonoBehaviour
         RecalculateModifiers();
         OnStatsChanged?.Invoke();
     }
-
-    void OnEnemyTurnStart()
-    {
-        // 적 스킬 사용
-        var skills = DataManager.Instance.GetEnemySkills();
-        var skill = skills[Random.Range(0, skills.Length)];
-        ApplySkill(skill, false);
-    }
     
     // 턴 종료 시 호출될 메서드: 모디파이어만 감소시키고 UI 갱신
     void OnEnemyTurnEnd()
@@ -203,13 +196,27 @@ public class CombatManager : MonoBehaviour
             {
                 int shielded = Mathf.Min(enemyShield, rawAttack);
                 enemyShield -= shielded;
+                
+                // 적 데미지
                 enemyHp     = Mathf.Max(0, enemyHp - (rawAttack - shielded));
+                // 적 피격 이벤트
+                OnEnemyHit?.Invoke();
+                
+                if (enemyHp <= 0)
+                    OnEnemyDeath?.Invoke();
             }
             else
             {
                 int shielded = Mathf.Min(playerShield, rawAttack);
                 playerShield -= shielded;
+                
+                // 플레이어 데미지
                 playerHp     = Mathf.Max(0, playerHp - (rawAttack - shielded));
+                // 플레이어 피격 이벤트
+                OnPlayerHit?.Invoke();
+                
+                if (playerHp <= 0)
+                    OnPlayerDeath?.Invoke();
             }
         }
 
@@ -283,18 +290,10 @@ public class CombatManager : MonoBehaviour
         {
             Debug.Log("Victory!");
             // 승리 시 추가 로직
-            
-            // 전투 종료
-            IsInCombat = false;
-            
-            Debug.Log($"▶ CheckEnd: LastTrigger = {CombatDataHolder.LastTrigger}");
-            CombatDataHolder.LastTrigger?.OnBattleEnd();
         }
         else if (playerHp <= 0)
         {
             Debug.Log("Defeat...");
-            // 패배 시 추가 로직
-            IsInCombat = false;
         }
     }
 }

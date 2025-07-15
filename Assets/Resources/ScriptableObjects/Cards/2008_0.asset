@@ -17,14 +17,12 @@ MonoBehaviour:
   ownerID: 0
   typePrimary: 0
   typeSecondary: 0
-  effectAttackValue: 15
+  effectAttackValue: 30
   effectShieldValue: 0
   effectAttackIncreaseValue: 0
   effectAttackDebuffValue: 0
   effectTurnValue: 0
   effectText: "\uBAA8\uB178\uC5D0\uAC8C {damage}\uC758 \uD53C\uD574\uB97C \uC900\uB2E4."
   rank: 1
-  animationID: 
-  resourcePath: 
   costAP: 1
   icon: {fileID: 0}

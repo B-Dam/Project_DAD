@@ -16,10 +16,12 @@ public class AudioManager : MonoBehaviour
     private float bgmVolume = 0.5f;
     private float sfxVolume = 0.5f;
 
+    public string currentBGMName { get; private set; }
+
     /*외부 호출시 다음 메서드 사용
     AudioManager.Instance.PlaySFX("효과음 이름");
     AudioManager.Instance.PlayBGM("BGM 이름");*/
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -91,12 +93,18 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void PlayBGM(string key, bool loop = true)
     {
+        if (currentBGMName == key && bgmSource.isPlaying)
+        {
+            return;
+        }
+
         var clip = LoadClip($"Audio/BGM/{key}");
         if (clip != null)
         {
             bgmSource.clip = clip;
             bgmSource.loop = loop;
             bgmSource.Play();
+            currentBGMName = key;
         }
         else
             Debug.LogWarning($"BGM 키 \"{key}\" 에 해당하는 클립을 찾을 수 없습니다.");

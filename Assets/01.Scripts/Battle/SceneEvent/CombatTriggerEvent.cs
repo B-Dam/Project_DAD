@@ -11,7 +11,7 @@ public class CombatTriggerEvent : MonoBehaviour
     public GameObject mainUI;
 
     private Scene _previousScene;
-
+    
     bool hasTriggered = false;
 
     private void Awake()
@@ -24,7 +24,6 @@ public class CombatTriggerEvent : MonoBehaviour
     {
         if (hasTriggered) return;  // 이미 실행됐으면 무시
         hasTriggered = true;
-
         // 대화 컷씬 숨기기
         if (DialogueManager.Instance != null)
             DialogueManager.Instance.EndDialogue();
@@ -34,7 +33,6 @@ public class CombatTriggerEvent : MonoBehaviour
 
         if (InteractHintController.Instance != null)
             InteractHintController.Instance.DisableHint();
-
 
         // 이전 씬 저장
         _previousScene = SceneManager.GetActiveScene();
@@ -50,6 +48,8 @@ public class CombatTriggerEvent : MonoBehaviour
             var battle = SceneManager.GetSceneByName("Battle");
             if (battle.IsValid())
                 SceneManager.SetActiveScene(battle);
+            CombatManager.Instance.IsInCombat = true;
+            AudioManager.Instance.PlayBGM("Battle_Sound");
         };
     }
 
@@ -57,6 +57,7 @@ public class CombatTriggerEvent : MonoBehaviour
     public void OnBattleEnd()
     {
         StartCoroutine(UnloadBattleSceneRoutine());
+        AudioManager.Instance.PlayBGM("LostSouls");
     }
 
     private IEnumerator UnloadBattleSceneRoutine()

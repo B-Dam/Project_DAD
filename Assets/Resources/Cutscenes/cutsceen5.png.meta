@@ -3,8 +3,8 @@ guid: 60069aa0fdbcd1c44b337ee2d72f1fef
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1277720832158937906
-    second: cutsceen4_0
+      213: 7638731681023927363
+    second: cutsceen5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cutsceen4_0
+      name: cutsceen5_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ecccc0d3caf944ee0800000000000000
-      internalID: -1277720832158937906
+      spriteID: 34424fdfdf9320a60800000000000000
+      internalID: 7638731681023927363
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cutsceen4_0: -1277720832158937906
+      cutsceen5_0: 7638731681023927363
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

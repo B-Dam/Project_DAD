@@ -53,6 +53,10 @@ public class HandManager : MonoBehaviour
 
     void Start()
     {
+        // 처음 한 번 덱 초기화, 섞기
+        InitializeDeck();
+        
+        // 턴 시작 구독
         if (TurnManager.Instance != null)
             TurnManager.Instance.OnPlayerTurnStart += StartPlayerTurn;
         else
@@ -64,20 +68,21 @@ public class HandManager : MonoBehaviour
         if (TurnManager.Instance != null)
             TurnManager.Instance.OnPlayerTurnStart -= StartPlayerTurn;
     }
+    
+    void InitializeDeck()
+    {
+        // DataManager에서 플레이어 기본 카드 3종을 가져와서 5장씩 복제
+        var baseCards = DataManager.Instance.GetPlayerCards();
+        deck = baseCards
+               .SelectMany(cd => Enumerable.Repeat(cd, 5))
+               .ToList();
+
+        Shuffle(deck);
+    }
 
     // 플레이어 턴이 시작될 때 호출
     void StartPlayerTurn()
     {
-        // 덱 초기화: 1성 카드 3종을 5복제 > 15장
-        var baseCards = DataManager.Instance.GetPlayerCards(); // 3종 반환
-        deck = baseCards
-               .SelectMany(cd => Enumerable.Repeat(cd, 5)) // 각 카드 5장씩 복제
-               .ToList();
-
-        Shuffle(deck);
-
-        // 이전 턴 사용 기록 비우기
-        discard.Clear();
         ClearHand();
         currentAP = 3;
 
@@ -85,7 +90,7 @@ public class HandManager : MonoBehaviour
         for (int i = 0; i < maxHandSize; i++)
             DrawCard();
         
-        // ▶ 즉시가 아니라 다음 프레임에 레이아웃 걸기
+        // 즉시가 아니라 다음 프레임에 레이아웃 걸기
         DOVirtual.DelayedCall(0f, () => {
             DOTween.Kill("Layout");
             LayoutHand();
@@ -153,8 +158,9 @@ public class HandManager : MonoBehaviour
         currentAP -= cv.data.costAP;
         CombatManager.Instance.ApplySkill(cv.data, isPlayer: true);
 
-        // discard에 이동
-        discard.Add(cv.data);
+        // 기본 카드(rank==1)만 discard에 추가하고, 합성된 카드(rank>1)는 버리지 않음
+        if (cv.data.rank == 1)
+            discard.Add(cv.data);
 
         // 현재 카드만 LayoutHand 스킵하기 위한 플래그
         currentlyDiscarding = cv;
@@ -213,6 +219,10 @@ public class HandManager : MonoBehaviour
         // 두 장 제거 (트윈 끊지 않도록 바로 DOKill + Destroy)
         foreach (var cv in candidates.Take(2))
         {
+            // 소모 카드 데이터를 discard에 추가
+            discard.Add(cv.data);
+            
+            // 핸드에서 제거
             handViews.Remove(cv);
             Destroy(cv.gameObject);
         }
@@ -347,9 +357,12 @@ public class HandManager : MonoBehaviour
     /// </summary>
     public void OnEndTurnButton()
     {
-        // 핸드에 남은 카드 전부 Discard로 이동
+        // 기본 카드(rank==1)만 Discard에 추가, 합성 카드(rank>1)는 제외
         foreach (var cv in handViews)
-            discard.Add(cv.data);
+        {
+            if (cv.data.rank == 1)
+                discard.Add(cv.data);
+        }
         
         ClearHand();
         TurnManager.Instance.EndPlayerTurn();

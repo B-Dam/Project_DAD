@@ -25,7 +25,5 @@ MonoBehaviour:
   effectText: "\uC774\uBC88 \uD134\uC5D0 \uBC1B\uC744 \uD53C\uD574\uB97C \uB9C9\uB294
     \uBCF4\uD638\uB9C9\uC744 {shield} \uC0DD\uC131\uD55C\uB2E4."
   rank: 1
-  animationID: 
-  resourcePath: 
   costAP: 1
   icon: {fileID: -8566626792118560811, guid: 93bdf86227767ee4590e4930377d95a5, type: 3}

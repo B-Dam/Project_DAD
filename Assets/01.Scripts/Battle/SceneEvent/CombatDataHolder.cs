@@ -6,6 +6,7 @@ public static class CombatDataHolder
     private static CombatSetupData currentData;
     
     public static CombatTriggerEvent LastTrigger { get; set; }
+    public static bool IsRetry = false;
     
     public static void SetData(CombatSetupData data)
     {

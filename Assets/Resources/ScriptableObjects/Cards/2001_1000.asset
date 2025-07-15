@@ -25,7 +25,5 @@ MonoBehaviour:
   effectText: "\uC801\uC5D0\uAC8C {damage}\uC758 \uBB3C\uB9AC \uD53C\uD574\uB97C
     \uC900\uB2E4."
   rank: 2
-  animationID: 
-  resourcePath: 
   costAP: 1
   icon: {fileID: -2531592630910638397, guid: 72e24bf230b83c54c8a959d89e2a320e, type: 3}

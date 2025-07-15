@@ -12,6 +12,8 @@ public class QuestGuideUI : MonoBehaviour
     [Header("출력할 텍스트")]
     public TextMeshProUGUI guideText;
 
+    private string currentDisplayedQuestName = "";
+
     void Update()
     {
         if (DialogueManager.Instance == null || DataManager.Instance == null)
@@ -28,5 +30,12 @@ public class QuestGuideUI : MonoBehaviour
 
         // 해당하는 퀘스트가 있으면 이름 표시, 없으면 빈 문자열 (필요시 기본 메시지 작성)
         guideText.text = activeQuest != null ? activeQuest.questName : string.Empty;
+
+        if (guideText.text != currentDisplayedQuestName)
+        {
+            AudioManager.Instance.PlaySFX("Quest_signal");
+        }
+
+        currentDisplayedQuestName = guideText.text;
     }
 }

@@ -48,34 +48,12 @@ public class UnDeadEventTrigger : MonoBehaviour
                     {
                         if (obj == null) continue;
 
-                        //콜라이더 isTrigger 활성화
-                        Collider2D col = obj.GetComponent<Collider2D>();
-                        if (col != null)
-                        {
-                            col.isTrigger = true;
-                        }
                         Debug.Log($" 대상 '{obj.name}' → {destinationTarget.position} 으로 이동 시작");
                         StartCoroutine(MoveToPosition(obj, destinationTarget.position, moveDuration));
-
-                        if (offscreenWatcher != null)
-                            offscreenWatcher.Register(obj); // 감시자에 등록
-                    }
-
-                    // 모든 대상 제거될 때까지 감시 → 콜백으로 플레이어 활성화
-                    if (offscreenWatcher != null)
-                    {
-                        offscreenWatcher.WatchUntilAllRemoved(() =>
-                        {
-                            Debug.Log(" 모든 대상 제거 완료 → 플레이어 다시 활성화");
-                            if (PlayerController.Instance != null)
-                                PlayerController.Instance.enabled = true;
-                            hintController.EnableHint();
-                        });
                     }
 
                     hasTriggered = true;
                     hintController.DisableHint();
-
                 }
             }
         }
@@ -110,5 +88,9 @@ public class UnDeadEventTrigger : MonoBehaviour
 
         npc.Stop(); // 멈춤 처리
         Debug.Log($" {obj.name} 이동 완료: {targetPos}");
+
+        if (PlayerController.Instance != null)
+            PlayerController.Instance.enabled = true;
+        hintController.EnableHint();
     }
 }

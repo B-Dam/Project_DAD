@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 3595965434251469461}
   - component: {fileID: 1933342226717747855}
   m_Layer: 0
-  m_Name: NPCEndPoint6
+  m_Name: NPCEndPoint8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2829,7 +2829,7 @@ GameObject:
   - component: {fileID: 6780598980893395134}
   - component: {fileID: 1101999336287453743}
   m_Layer: 0
-  m_Name: Ground8
+  m_Name: 106
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20968,7 +20968,7 @@ GameObject:
   - component: {fileID: 4348700870138598184}
   - component: {fileID: 7653366895475231967}
   m_Layer: 0
-  m_Name: NPCDelete6
+  m_Name: NPCDelete8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

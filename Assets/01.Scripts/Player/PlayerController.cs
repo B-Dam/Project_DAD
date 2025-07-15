@@ -20,9 +20,6 @@ public class PlayerController : MonoBehaviour
     public float interactRange = 1.5f;
     public LayerMask interactLayer;
 
-    [Header("박스 밀기 쿨타임")]
-    public float boxPushCooldown = 0.3f; // 밀기 쿨타임
-    [HideInInspector] public float lastPushTime = -10f;//박스 밀 때 쿨타임용
     public bool isPushingInputHeld { get; private set; }
 
     public Vector2 lastMoveInput { get; private set; }
@@ -62,18 +59,15 @@ public class PlayerController : MonoBehaviour
         //게임 멈췄을 땐 아무것도 하지 않음
         if (Time.timeScale == 0f) return;
 
-        // 대화 중이면 이동/상호작용 입력 차단
-        if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
-        {
-            moveInput = Vector2.zero;
-            rb.linearVelocity = Vector2.zero;
-            UpdateAnimation(Vector2.zero);
-            return;
-        }
-
         HandleMovementInput();
         UpdateAnimation(moveInput);
         HandleInteractionInput();
+
+        // 이동 가능 여부 확인
+        CanMove();
+
+        // 박스가 있는지 확인하고 밀기 시도
+        TryAutoPushBox();
 
         if (moveInput.magnitude > 0.01f)
         {
@@ -92,8 +86,6 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-
-     
         CircleCollider2D circleCol = GetComponent<CircleCollider2D>();
         if (circleCol != null)
         {
@@ -105,15 +97,39 @@ public class PlayerController : MonoBehaviour
 #endif
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (CanMove())
+            MovePlayer();
 
         // 앞에 장애물 감지 + UI 표시
         TryShowObstacleIndicator();
     }
+    private bool CanMove()
+    {
+        // 대화 중이면 이동/상호작용 입력 차단
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
+        {
+            MoveMentReset();
+            return false;
+        }
+
+        // 맵 이동 트랜지션 중에 이동 차단
+        if (MapManager.Instance.fadeManager.fadeCoroutine != null)
+        {
+            MoveMentReset();
+            StopWalkingSFX();
+            return false;
+        }
+
+        return true;
+    }
+    public void MoveMentReset()
+    {
+        moveInput = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
+        UpdateAnimation(Vector2.zero);
+    }
     private void TryShowObstacleIndicator()//P
     {
-
-        if (Time.time - lastPushTime < boxPushCooldown) return; // 쿨타임 내엔 실행 X
 
         // 조건 1: 방향 입력 중일 때만
         if (moveInput == Vector2.zero) return;
@@ -136,10 +152,27 @@ public class PlayerController : MonoBehaviour
 
             // 장애물이거나, BoxPush 없는 오브젝트일 경우 → UI 띄움
             ShowBlockIndicator(transform.position + new Vector3(0f, 1.2f, 0f));
-            lastPushTime = Time.time;
         }
     }
+    private void TryAutoPushBox()
+    {
+        if (moveInput == Vector2.zero) return;
 
+        Vector2 origin = transform.position;
+        Vector2 dir = moveInput.normalized;
+        float distance = 0.6f;
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, dir, distance, LayerMask.GetMask("Box"));
+        if (hit.collider != null)
+        {
+            GameObject hitBox = hit.collider.gameObject;
+            BoxPush box = hitBox.GetComponent<BoxPush>();
+            if (box != null)
+            {
+
+            }
+        }
+    }
     private void ShowBlockIndicator(Vector3 worldPos)//P
     {
         // 캔버스 찾기
@@ -164,17 +197,20 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovementInput()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-        moveInput = new Vector2(moveX, moveY).normalized;
-
-        // 입력 유지 상태 감지
-        isPushingInputHeld = moveX != 0 || moveY != 0;
-
-        if (moveInput != Vector2.zero)
+        if (CanMove())
         {
-            lastMoveDirection = moveInput;
-            lastMoveInput = moveInput;
+            float moveX = Input.GetAxisRaw("Horizontal");
+            float moveY = Input.GetAxisRaw("Vertical");
+            moveInput = new Vector2(moveX, moveY).normalized;
+
+            // 입력 유지 상태 감지
+            isPushingInputHeld = moveX != 0 || moveY != 0;
+
+            if (moveInput != Vector2.zero)
+            {
+                lastMoveDirection = moveInput;
+                lastMoveInput = moveInput;
+            }
         }
     }
 
