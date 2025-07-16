@@ -136,20 +136,22 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
             entry = currentDialogueEntries[dialogueIndex];
 
-        // CombatTriggerEvent가 연결된 엔트리일 경우 전투 트리거 및 대화 일시정지
-        if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
-        {
-            // 전투 트리거
-            entry.OnDialogueEnd();
+       if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
+{
+    entry.OnDialogueEnd();
 
-            // 다음 대사로 이어지도록 인덱스 미리 증가
-            dialogueIndex++;
+    if (dialogueIndex + 1 >= currentDialogueLines.Length)
+    {
+        EndDialogue();
+        return;
+    }
 
-            // 대화 일시정지
-            isDialogueActive = false;
-            dialoguePanel.SetActive(false);
-            return;
-        }
+    dialogueIndex++;
+    isDialogueActive = false;
+    dialoguePanel.SetActive(false);
+    return;
+}
+
         
         dialogueIndex++;
         
@@ -163,16 +165,21 @@ public class DialogueManager : MonoBehaviour
         }
     }
     
-    public void ResumeDialogue()
+   public void ResumeDialogue()
+{
+    if (dialogueIndex >= currentDialogueLines.Length)
     {
-        if (dialogueIndex < currentDialogueLines.Length)
-        {
-            isDialogueActive = true;
-            dialoguePanel.SetActive(true);
-            DisplayCurrentLine();
-            dialogueStartTime = Time.time;
-        }
+        Debug.LogWarning("❗ 대사 인덱스 초과로 Resume 실패");
+        EndDialogue();
+        return;
     }
+
+    isDialogueActive = true;
+    dialoguePanel.SetActive(true);
+    DisplayCurrentLine();
+    dialogueStartTime = Time.time;
+}
+
 
     private void DisplayCurrentLine()
     {
