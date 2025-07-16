@@ -33,6 +33,11 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine walkSfxCoroutine;
 
+    // 박스 미리 유지 시간 관련 변수
+    public float boxPushHoldTime = 0.5f;
+    private float pushTimer = 0f;
+    private bool isTryingToPush = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -66,8 +71,7 @@ public class PlayerController : MonoBehaviour
         // 이동 가능 여부 확인
         CanMove();
 
-        // 박스가 있는지 확인하고 밀기 시도
-        TryAutoPushBox();
+        CheckPushHoldAndTry();
 
         if (moveInput.magnitude > 0.01f)
         {
@@ -169,7 +173,7 @@ public class PlayerController : MonoBehaviour
             BoxPush box = hitBox.GetComponent<BoxPush>();
             if (box != null)
             {
-
+                box.TryPush(dir);
             }
         }
     }
@@ -311,6 +315,31 @@ public class PlayerController : MonoBehaviour
         {
             StopCoroutine(walkSfxCoroutine);
             walkSfxCoroutine = null;
+        }
+    }
+
+    private void CheckPushHoldAndTry()
+    {
+        if (isPushingInputHeld)
+        {
+            if (!isTryingToPush)
+            {
+                isTryingToPush = true;
+                pushTimer = 0f;
+            }
+
+            pushTimer += Time.deltaTime;
+
+            if (pushTimer >= boxPushHoldTime)
+            {
+                TryAutoPushBox();
+                isTryingToPush = false;
+            }
+        }
+        else
+        {
+            isTryingToPush = false;
+            pushTimer = 0f;
         }
     }
 }
