@@ -6,7 +6,7 @@ public class InteractHintController : MonoBehaviour
 {
     public static InteractHintController Instance { get; private set; }
 
-    public float detectRange = 1f;
+    public float detectRange = 1.5f;
     public LayerMask interactLayer;
     public GameObject hintUIPrefab;
 
