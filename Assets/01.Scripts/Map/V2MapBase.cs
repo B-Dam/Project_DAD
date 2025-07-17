@@ -5,15 +5,7 @@ using UnityEngine.Tilemaps;
 public class V2MapBase : MonoBehaviour
 {
     /// <summary>
-    /// 새로 만들 스크립트 요약 (V2)
-    /// 1. 맵 별로 좌표 영역 설정 V
-    /// 2. 지정한 좌표 안에 있으면 currentMapID를 해당 맵으로 변경 V
-    /// 2-1. 처음 시작했을 땐 001로 설정 V
-    /// 2-2. 콜라이더로 이동시키면 currentMapID를 변경 V
-    /// 2-3. 변경 방법 : 현재 맵(mapData)의 dir_map 변수에 따르기 V
-    /// 3. 맵 방향에 맞는 콜라이더 오브젝트에 맵 이동 타일 그리기 (001, 002 V)
-    /// 4. 스토리 버전과 퍼즐 버전이 있는 맵은 bool 값으로 처리해서 따로 띄우기 -
-    /// 5. 카메라 이동하기, 타일맵 영역 내에서만 움직이기 - 
+    /// 새로 만들 기능 정리
     /// </summary>
 
     // 타일맵 설정
@@ -35,9 +27,19 @@ public class V2MapBase : MonoBehaviour
         // 카메라 초기화
         cam = Camera.main;
 
-        // 타일맵들 좌표 영역 설정
+        TileMapSetting();
+    }
+
+    public void TileMapSetting()
+    {
+        // MapBase에 타일맵 영역 찾아서 등록
         foreach (Tilemap tilemap in tilemaps)
         {
+            //if (tilemap == null)
+            //{
+
+            //}
+
             tilemap.CompressBounds();  // 실제 타일이 있는 부분만 계산하는 기능
 
             string mapName = tilemap.gameObject.name;

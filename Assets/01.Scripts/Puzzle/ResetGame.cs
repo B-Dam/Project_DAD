@@ -54,16 +54,16 @@ public class ResetGame : MonoBehaviour
                 {
                     spawn105Pos = map105ParentInScene.position;
                     spawn105Rot = map105ParentInScene.rotation;
-                    Destroy(map105ParentInScene.gameObject);
+                    Destroy(map105ParentInScene.Find("Puzzle").gameObject);
                 }
                 else
                 {
                     Debug.LogWarning("[Reset] map105ParentInScene이 씬 오브젝트가 아닙니다. Destroy 생략");
                 }
-                Transform mapsParent = GameObject.Find("Maps")?.transform;
+                Transform mapsParent = map105ParentInScene;
                 // 프리팹을 새로 생성 (Hierarchy 상에서 똑같은 위치에 넣고 싶다면 위치 저장 후 복원 가능)
                 GameObject newMap = Instantiate(mapPrefab105, spawn105Pos, spawn105Rot, mapsParent);
-                newMap.name = "105";  // 이름 다시 지정해서 접근 쉽게
+                newMap.name = "Puzzle";  // 이름 다시 지정해서 접근 쉽게
                 Debug.Log("맵 105 리셋 완료");
 
                 // 만약 리셋 후 새 오브젝트 참조도 업데이트하고 싶다면:
@@ -99,9 +99,9 @@ public class ResetGame : MonoBehaviour
             {
                 spawn108Pos = map108ParentInScene.position;
                 spawn108Rot = map108ParentInScene.rotation;
-                Destroy(map108ParentInScene.gameObject);
+                Destroy(map108ParentInScene.Find("Puzzle").gameObject);
             }
-            Transform mapsParent = GameObject.Find("Maps")?.transform;
+            Transform mapsParent = map108ParentInScene;
             GameObject newMap = Instantiate(mapPrefab108, spawn108Pos, spawn108Rot, mapsParent);
             newMap.name = "108";
             map108ParentInScene = newMap.transform;
