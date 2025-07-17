@@ -25,6 +25,8 @@ public class DialogueManager : MonoBehaviour
     public TMPro.TextMeshProUGUI speakerText;
     public TMPro.TextMeshProUGUI dialogueText;
 
+  
+
     [Header("깜빡이는 이미지")]
     public UnityEngine.UI.Image uxBlinkImage;
     private Coroutine blinkCoroutine;
@@ -39,6 +41,11 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping = false;
     private string fullText = "";
     private float typingSpeed = 0.02f; // 글자당 시간 (조절 가능)
+
+    private Action onDialogueEndCallback;
+
+    public UnityEngine.UI.Image cutsceneBackgroundImage; 
+
 
     [Header("컷씬 이미지")]
     public UnityEngine.UI.Image cutsceneImage;
@@ -127,43 +134,34 @@ public class DialogueManager : MonoBehaviour
         dialogueStartTime = Time.time;
     }
 
-    private void ShowNextLine()
-    {
-        StopBlinkUX();
-        
-        // 현재 엔트리 안전하게 얻기
-        DialogueEntry entry = null;
-        if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
-            entry = currentDialogueEntries[dialogueIndex];
-
-       if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
+ private void ShowNextLine()
 {
-    entry.OnDialogueEnd();
+    StopBlinkUX();
 
-    if (dialogueIndex + 1 >= currentDialogueLines.Length)
+    DialogueEntry entry = null;
+    if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+        entry = currentDialogueEntries[dialogueIndex];
+
+    // ✅ 이벤트 먼저 실행 (Shake 등)
+    if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
     {
-        EndDialogue();
-        return;
+        entry.OnDialogueEnd();
     }
 
     dialogueIndex++;
-    isDialogueActive = false;
-    dialoguePanel.SetActive(false);
-    return;
+
+    if (dialogueIndex >= currentDialogueLines.Length)
+    {
+        EndDialogue();
+    }
+    else
+    {
+        DisplayCurrentLine();
+    }
+
+    onDialogueEndCallback?.Invoke();
 }
 
-        
-        dialogueIndex++;
-        
-        if (dialogueIndex >= currentDialogueLines.Length)
-        {
-            EndDialogue();
-        }
-        else
-        {
-            DisplayCurrentLine();
-        }
-    }
     
    public void ResumeDialogue()
 {
@@ -184,9 +182,27 @@ public class DialogueManager : MonoBehaviour
     private void DisplayCurrentLine()
     {
         // currentDialogueEntries는 StartDialogueWithEntries에서만 사용됨
-        DialogueEntry entry = currentDialogueEntries != null
-            ? currentDialogueEntries[dialogueIndex]
-            : null;
+       DialogueEntry entry = currentDialogueEntries != null
+    ? currentDialogueEntries[dialogueIndex]
+    : null;
+
+if (entry != null && entry.onStartEvents.GetPersistentEventCount() > 0)
+{
+    entry.OnDialogueStart(); // ✅ 대사 시작 시 실행
+}
+
+ if (EventTriggerZone.InstanceExists)
+    {
+        TriggerDialogueEntry[] triggerEntries = EventTriggerZone.Instance?.triggerDialogueEntries;
+        if (triggerEntries != null && dialogueIndex < triggerEntries.Length)
+        {
+            var triggerEntry = triggerEntries[dialogueIndex];
+            if (triggerEntry != null && triggerEntry.onStartEvents.GetPersistentEventCount() > 0)
+            {
+                triggerEntry.OnDialogueStart();
+            }
+        }
+    }
         
         var line = currentDialogueLines[dialogueIndex];
         speakerText.text = line.speaker;
@@ -197,26 +213,55 @@ public class DialogueManager : MonoBehaviour
             seenIDs.Add(currentDialogueIDs[dialogueIndex]);
         }
 
-        // 컷신 이미지 출력 처리
-        bool hasCutscene = !string.IsNullOrEmpty(line.spritePath);
-        if (hasCutscene)
+bool hasCutscene = !string.IsNullOrEmpty(line.spritePath);
+if (hasCutscene)
+{
+    Sprite sprite = Resources.Load<Sprite>(line.spritePath);
+    if (sprite != null)
+    {
+        cutsceneImage.sprite = sprite;
+        cutsceneImage.gameObject.SetActive(true);
+
+        // ✅ 검정 배경도 함께 활성화
+        if (cutsceneBackgroundImage != null)
+            cutsceneBackgroundImage.gameObject.SetActive(true);
+
+        // 흔들림 조건 체크
+        bool shouldShake = false;
+        if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
         {
-            Sprite sprite = Resources.Load<Sprite>(line.spritePath);
-            if (sprite != null)
+            shouldShake = currentDialogueEntries[dialogueIndex].shakeCutscene;
+        }
+        else if (EventTriggerZone.InstanceExists)
+        {
+            var triggerEntries = EventTriggerZone.Instance?.triggerDialogueEntries;
+            if (triggerEntries != null && dialogueIndex < triggerEntries.Length)
             {
-                cutsceneImage.sprite = sprite;
-                cutsceneImage.gameObject.SetActive(true);
-            }
-            else
-            {
-                Debug.LogWarning($"컷신 이미지 로드 실패: {line.spritePath}");
-                cutsceneImage.gameObject.SetActive(false);
+                shouldShake = triggerEntries[dialogueIndex].shakeCutscene;
             }
         }
-        else
+
+        if (shouldShake)
         {
-            cutsceneImage.gameObject.SetActive(false);
+            ShakeCutsceneImage(0.3f, 20f);
         }
+    }
+    else
+    {
+        Debug.LogWarning($"컷신 이미지 로드 실패: {line.spritePath}");
+        cutsceneImage.gameObject.SetActive(false);
+        if (cutsceneBackgroundImage != null)
+            cutsceneBackgroundImage.gameObject.SetActive(false);
+    }
+}
+else
+{
+    cutsceneImage.gameObject.SetActive(false);
+    if (cutsceneBackgroundImage != null)
+        cutsceneBackgroundImage.gameObject.SetActive(false);
+}
+
+
 
         // ✅ 다이얼로그 박스 배경만 투명도 조절
         if (dialogBoxBackgroundImage != null)
@@ -232,6 +277,7 @@ public class DialogueManager : MonoBehaviour
 
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         typingCoroutine = StartCoroutine(TypeText(line.text));
+        
     }
 
     private IEnumerator TypeText(string text)
@@ -315,6 +361,51 @@ public class DialogueManager : MonoBehaviour
         foreach (var id in ids)
             seenIDs.Add(id);
     }
+
+    public void RegisterOnDialogueEndCallback(Action callback)
+{
+    onDialogueEndCallback += callback;
+}
+
+    public void ClearOnDialogueEndCallback(Action callback)
+    {
+        onDialogueEndCallback -= callback;
+    }
+
+private Coroutine cutsceneShakeCoroutine;
+
+/// <summary>
+/// cutsceneImage가 보이는 경우 UI 흔들림 실행
+/// </summary>
+private void ShakeCutsceneImage(float duration = 0.3f, float magnitude = 10f)
+{
+    if (cutsceneImage == null || !cutsceneImage.gameObject.activeInHierarchy)
+        return;
+
+    if (cutsceneShakeCoroutine != null)
+        StopCoroutine(cutsceneShakeCoroutine);
+
+    cutsceneShakeCoroutine = StartCoroutine(ShakeCutsceneRoutine(duration, magnitude));
+}
+
+private IEnumerator ShakeCutsceneRoutine(float duration, float magnitude)
+{
+    RectTransform rt = cutsceneImage.rectTransform;
+    Vector2 originalPos = rt.anchoredPosition;
+    float elapsed = 0f;
+
+    while (elapsed < duration)
+    {
+        float offsetY = UnityEngine.Random.Range(-1f, 1f) * magnitude;
+        rt.anchoredPosition = originalPos + new Vector2(0f, offsetY);
+        elapsed += Time.deltaTime;
+        yield return null;
+    }
+
+    rt.anchoredPosition = originalPos;
+    cutsceneShakeCoroutine = null;
+}
+
 
     public bool IsDialogueActive => isDialogueActive;
     public bool IsOnCooldown => Time.time - lastDialogueEndTime < dialogueCooldown;
