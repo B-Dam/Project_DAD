@@ -448,6 +448,10 @@ PrefabInstance:
       propertyPath: MapBase
       value: 
       objectReference: {fileID: 576100952}
+    - target: {fileID: 6583311525861023535, guid: 8f706b6ee1728874c95ee596d91f35ea, type: 3}
+      propertyPath: currentMapID
+      value: 105
+      objectReference: {fileID: 0}
     - target: {fileID: 7014593307187655460, guid: 8f706b6ee1728874c95ee596d91f35ea, type: 3}
       propertyPath: m_Name
       value: MapManager
@@ -2291,11 +2295,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1256572786534334348, guid: 2fab71ae4ca0a4643bcd200c3daa2437, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10
+      value: 160.3
       objectReference: {fileID: 0}
     - target: {fileID: 1256572786534334348, guid: 2fab71ae4ca0a4643bcd200c3daa2437, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -140
+      value: -101.9
       objectReference: {fileID: 0}
     - target: {fileID: 1256572786534334348, guid: 2fab71ae4ca0a4643bcd200c3daa2437, type: 3}
       propertyPath: m_LocalPosition.z

@@ -54,7 +54,20 @@ public class ResetGame : MonoBehaviour
                 {
                     spawn105Pos = map105ParentInScene.position;
                     spawn105Rot = map105ParentInScene.rotation;
-                    Destroy(map105ParentInScene.Find("Puzzle").gameObject);
+                    Transform puzzle = null;
+                    foreach (Transform child in map105ParentInScene.GetComponentsInChildren<Transform>(true))
+                    {
+                        if (child.name == "Puzzle")
+                        {
+                            puzzle = child;
+                            Destroy(puzzle.gameObject);
+                            Debug.Log("Puzzle 오브젝트 제거됨");
+                        }
+                    }
+                    if (puzzle == null)
+                    {
+                        Debug.LogWarning("Puzzle 오브젝트가 존재하지 않습니다.");
+                    }
                 }
                 else
                 {
@@ -67,7 +80,7 @@ public class ResetGame : MonoBehaviour
                 Debug.Log("맵 105 리셋 완료");
 
                 // 만약 리셋 후 새 오브젝트 참조도 업데이트하고 싶다면:
-                map105ParentInScene = newMap.transform;
+                // map105ParentInScene = newMap.transform;
 
                 // 플레이어 위치도 초기화
                 PlayerController.Instance.transform.position = MapManager.Instance.mapData.player_position_down;
