@@ -120,6 +120,14 @@ public class PlayerController : MonoBehaviour
             return false;
         }
 
+        // 전투 중에 이동 차단
+        if (CombatManager.Instance != null && (CombatManager.Instance.IsInCombat))
+        {
+            MoveMentReset();
+            StopWalkingSFX();
+            return false;
+        }
+        
         return true;
     }
     public void MoveMentReset()
