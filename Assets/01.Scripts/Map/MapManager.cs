@@ -19,6 +19,12 @@ public class MapManager : MonoBehaviour
             return _instance;
         }
     }
+    public Transform currentMapTransform { get; private set; } 
+
+    public void SetCurrentMapTransform(Transform mapTransform) 
+    {
+        currentMapTransform = mapTransform;
+    }
 
     public static Action<string> OnMapDataUpdated;  // string에 이동한 맵의 ID가 들어있으니 참고할 것
 
@@ -93,6 +99,12 @@ public class MapManager : MonoBehaviour
 
     private void PuzzleActiveCheck()
     {
+        if (mapData == null)
+        {
+            Debug.LogError("[MapManager] mapData가 null입니다. currentMapID: " + currentMapID);
+            return;
+        }
+
         // 만약 현재 맵 타입이 puzzle이라면
         if (mapData.type == MapType.puzzle)
         {

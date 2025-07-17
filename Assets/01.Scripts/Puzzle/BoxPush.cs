@@ -27,15 +27,12 @@ public class BoxPush : MonoBehaviour
     private GameObject currentIndicator;// 현재 표시 중인 아이콘
     private float indicatorLifetime = 0.2f;// 아이콘 유지 시간
 
-    // OnCollisionStay2D가 너무 자주 호출되는 걸 막음
-    private float collisionProcessCooldown = 0.3f; // 최소 간격 0.3초
-    private float lastCollisionProcessTime = -999f; // 초기값은 아주 과거 시간
 
 
-    [Header("일정시간 밀어야 밀림")]
-    public float requiredHoldTime = 0.5f; // 0.5초 이상 유지 시 허용
+    //[Header("일정시간 밀어야 밀림")]
+    //public float requiredHoldTime = 0.5f; // 0.5초 이상 유지 시 허용
 
-    private Coroutine pushCoroutine; // 현재 실행 중인 코루틴
+    //private Coroutine pushCoroutine; // 현재 실행 중인 코루틴
 
     private void Start()
     {
@@ -63,80 +60,94 @@ public class BoxPush : MonoBehaviour
     }
 
 
-    // 플레이어가 박스를 밀려고 접촉 중일 때 호출됨
-    void OnCollisionStay2D(Collision2D collision)
+    //// 플레이어가 박스를 밀려고 접촉 중일 때 호출됨
+    //void OnCollisionStay2D(Collision2D collision)
+    //{
+    //    if (isMoving || !collision.gameObject.CompareTag("Player")) return;
+
+    //    PlayerController pCon = collision.gameObject.GetComponent<PlayerController>();
+    //    //if (pCon == null || Time.time - pCon.lastPushTime < pCon.boxPushCooldown) return; // 쿨타임 체크
+
+    //    if (pushCoroutine == null)
+    //    {
+    //        Vector2 input = pCon.lastMoveInput;
+    //        if (input == Vector2.zero) return; // 입력이 없으면 무시
+    //        pushCoroutine = StartCoroutine(HoldPushCoroutine(collision.gameObject, input));
+    //    }
+    //}
+    //void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (pushCoroutine != null)
+    //    {
+    //        StopCoroutine(pushCoroutine);
+    //        pushCoroutine = null;
+    //    }
+    //}
+    public void TryPush(Vector2 direction)
     {
-        if (isMoving || !collision.gameObject.CompareTag("Player")) return;
+        if (isMoving) return;
 
-        PlayerController pCon = collision.gameObject.GetComponent<PlayerController>();
-        //if (pCon == null || Time.time - pCon.lastPushTime < pCon.boxPushCooldown) return; // 쿨타임 체크
-
-        if (pushCoroutine == null)
-        {
-            Vector2 input = pCon.lastMoveInput;
-            if (input == Vector2.zero) return; // 입력이 없으면 무시
-            pushCoroutine = StartCoroutine(HoldPushCoroutine(collision.gameObject, input));
-        }
-    }
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (pushCoroutine != null)
-        {
-            StopCoroutine(pushCoroutine);
-            pushCoroutine = null;
-        }
-    }
-
-    IEnumerator HoldPushCoroutine(GameObject playerObj, Vector2 initialInput)
-    {
-        float timer = 0f;
-        PlayerController pCon2 = playerObj.GetComponent<PlayerController>();
-        if (pCon2 == null) yield break; // 플레이어 컨트롤러가 없으면 종료
-
-        while (timer < requiredHoldTime)
-        {
-            Debug.Log(timer+ "초 동안 밀기 유지 중...");
-            //한프레임 대기
-            yield return null;
-            // 방향 바뀌면 종료
-            if (pCon2.lastMoveInput != initialInput)
-            {
-                pushCoroutine = null; // 방향이 바뀌면 코루틴 종료
-                yield break;
-            }
-            // 키를 떼면 타이머 정지 (유지 안 됨)
-            if (!pCon2.isPushingInputHeld)
-            {
-                timer = 0f; // 타이머 초기화
-                continue; // 타이머 증가 안 함
-            }
-
-            timer += Time.deltaTime;
-        }
-        Vector2 pushDirection;
-        if(Mathf.Abs(initialInput.x) > Mathf.Abs(initialInput.y))
-        {
-            pushDirection = initialInput.x >0 ? Vector2.right : Vector2.left;
-        }
-        else
-        {
-            pushDirection = initialInput.y > 0 ? Vector2.up : Vector2.down;
-        }
-
-        if (IsBlocked(pushDirection))
+        if (IsBlocked(direction))
         {
             ShowBlockIndicator();
-            //pCon2.lastPushTime = Time.time; // 쿨타임 갱신
+            return;
         }
-        else
-        {
-            targetPosition = rb.position + pushDirection * moveDistance;
-            isMoving = true; // 이동 시작
-            AudioManager.Instance.PlaySFX("Puzzle_Box_drrr");
-            //pCon2.lastPushTime = Time.time; // 쿨타임 갱신
-        }
-        pushCoroutine = null; // 코루틴 종료 후 초기화
+
+        targetPosition = rb.position + direction.normalized * moveDistance;
+        isMoving = true;
+        AudioManager.Instance?.PlaySFX("Puzzle_Box_drrr");
     }
+
+    //IEnumerator HoldPushCoroutine(GameObject playerObj, Vector2 initialInput)
+    //{
+    //    float timer = 0f;
+    //    PlayerController pCon2 = playerObj.GetComponent<PlayerController>();
+    //    if (pCon2 == null) yield break; // 플레이어 컨트롤러가 없으면 종료
+
+    //    while (timer < requiredHoldTime)
+    //    {
+    //        Debug.Log(timer+ "초 동안 밀기 유지 중...");
+    //        //한프레임 대기
+    //        yield return null;
+    //        // 방향 바뀌면 종료
+    //        if (pCon2.lastMoveInput != initialInput)
+    //        {
+    //            pushCoroutine = null; // 방향이 바뀌면 코루틴 종료
+    //            yield break;
+    //        }
+    //        // 키를 떼면 타이머 정지 (유지 안 됨)
+    //        if (!pCon2.isPushingInputHeld)
+    //        {
+    //            timer = 0f; // 타이머 초기화
+    //            continue; // 타이머 증가 안 함
+    //        }
+
+    //        timer += Time.deltaTime;
+    //    }
+    //    Vector2 pushDirection;
+    //    if(Mathf.Abs(initialInput.x) > Mathf.Abs(initialInput.y))
+    //    {
+    //        pushDirection = initialInput.x >0 ? Vector2.right : Vector2.left;
+    //    }
+    //    else
+    //    {
+    //        pushDirection = initialInput.y > 0 ? Vector2.up : Vector2.down;
+    //    }
+
+    //    if (IsBlocked(pushDirection))
+    //    {
+    //        ShowBlockIndicator();
+    //        //pCon2.lastPushTime = Time.time; // 쿨타임 갱신
+    //    }
+    //    else
+    //    {
+    //        targetPosition = rb.position + pushDirection * moveDistance;
+    //        isMoving = true; // 이동 시작
+    //        AudioManager.Instance.PlaySFX("Puzzle_Box_drrr");
+    //        //pCon2.lastPushTime = Time.time; // 쿨타임 갱신
+    //    }
+    //    pushCoroutine = null; // 코루틴 종료 후 초기화
+    //}
 
    
     //주어진 방향에 OverlapBox로 충돌 체크

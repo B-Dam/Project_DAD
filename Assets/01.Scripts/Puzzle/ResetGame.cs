@@ -45,63 +45,57 @@ public class ResetGame : MonoBehaviour
         // 현재 맵이 105번일 때만 리셋
         if (currentID == "105")
         {
-            if (map105ParentInScene != null)
+            Vector3 spawn105Pos = Vector3.zero;
+            Quaternion spawn105Rot = Quaternion.identity;
+            // 씬 안의 객체일 때만 Destroy
+            if (map105ParentInScene != null && map105ParentInScene.gameObject.scene.IsValid())
             {
-                Vector3 spawn105Pos = Vector3.zero;
-                Quaternion spawn105Rot = Quaternion.identity;
-                // 씬 안의 객체일 때만 Destroy
-                if (map105ParentInScene.gameObject.scene.IsValid())
+                spawn105Pos = map105ParentInScene.position;
+                spawn105Rot = map105ParentInScene.rotation;
+                Transform puzzle = null;
+                foreach (Transform child in map105ParentInScene.GetComponentsInChildren<Transform>(true))
                 {
-                    spawn105Pos = map105ParentInScene.position;
-                    spawn105Rot = map105ParentInScene.rotation;
-                    Transform puzzle = null;
-                    foreach (Transform child in map105ParentInScene.GetComponentsInChildren<Transform>(true))
+                    if (child.name == "Puzzle")
                     {
-                        if (child.name == "Puzzle")
-                        {
-                            puzzle = child;
-                            Destroy(puzzle.gameObject);
-                            Debug.Log("Puzzle 오브젝트 제거됨");
-                        }
-                    }
-                    if (puzzle == null)
-                    {
-                        Debug.LogWarning("Puzzle 오브젝트가 존재하지 않습니다.");
+                        puzzle = child;
+                        Destroy(puzzle.gameObject);
+                        Debug.Log("Puzzle 오브젝트 제거됨");
                     }
                 }
-                else
+                if (puzzle == null)
                 {
-                    Debug.LogWarning("[Reset] map105ParentInScene이 씬 오브젝트가 아닙니다. Destroy 생략");
+                    Debug.LogWarning("Puzzle 오브젝트가 존재하지 않습니다.");
                 }
-                Transform mapsParent = map105ParentInScene;
-                // 프리팹을 새로 생성 (Hierarchy 상에서 똑같은 위치에 넣고 싶다면 위치 저장 후 복원 가능)
-                GameObject newMap = Instantiate(mapPrefab105, spawn105Pos, spawn105Rot, mapsParent);
-                newMap.name = "Puzzle";  // 이름 다시 지정해서 접근 쉽게
-                Debug.Log("맵 105 리셋 완료");
+            }
+            else
+            {
+                Debug.LogWarning("[Reset] map105ParentInScene이 씬 오브젝트가 아닙니다. Destroy 생략");
+            }
+            Transform mapsParent = map105ParentInScene;
+            // 프리팹을 새로 생성 (Hierarchy 상에서 똑같은 위치에 넣고 싶다면 위치 저장 후 복원 가능)
+            GameObject newMap = Instantiate(mapPrefab105, spawn105Pos, spawn105Rot, mapsParent);
+            newMap.name = "Puzzle";  // 이름 다시 지정해서 접근 쉽게
+            Debug.Log("맵 105 리셋 완료");
 
-                // 만약 리셋 후 새 오브젝트 참조도 업데이트하고 싶다면:
-                // map105ParentInScene = newMap.transform;
+            // 만약 리셋 후 새 오브젝트 참조도 업데이트하고 싶다면:
+            // map105ParentInScene = newMap.transform;
 
-                // 플레이어 위치도 초기화
-                PlayerController.Instance.transform.position = MapManager.Instance.mapData.player_position_down;
+            // 플레이어 위치도 초기화
+            PlayerController.Instance.transform.position = MapManager.Instance.mapData.player_position_down;
 
-                ResetTilemaps(newMap);
-                HintMode hintMode = Object.FindFirstObjectByType<HintMode>();
-                if (hintMode != null)
-                {
-                    hintMode.ForceResetHintState();
-                    Debug.Log("힌트 사용 횟수 초기화 완료");
-                }
-                else
-                {
-                    Debug.LogWarning("HintMode 오브젝트를 찾을 수 없습니다!");
-                }
-
-                Debug.Log("맵 105 리셋 완료");
-
+            ResetTilemaps(newMap);
+            HintMode hintMode = Object.FindFirstObjectByType<HintMode>();
+            if (hintMode != null)
+            {
+                hintMode.ForceResetHintState();
+                Debug.Log("힌트 사용 횟수 초기화 완료");
+            }
+            else
+            {
+                Debug.LogWarning("HintMode 오브젝트를 찾을 수 없습니다!");
             }
 
-
+            Debug.Log("맵 105 리셋 완료");
         }
         // 맵 108번 (ID: "108") 리셋
         else if (currentID == "108")
@@ -112,7 +106,20 @@ public class ResetGame : MonoBehaviour
             {
                 spawn108Pos = map108ParentInScene.position;
                 spawn108Rot = map108ParentInScene.rotation;
-                Destroy(map108ParentInScene.Find("Puzzle").gameObject);
+                Transform puzzle = null;
+                foreach (Transform child in map108ParentInScene.GetComponentsInChildren<Transform>(true))
+                {
+                    if (child.name == "Puzzle")
+                    {
+                        puzzle = child;
+                        Destroy(puzzle.gameObject);
+                        Debug.Log("Puzzle 오브젝트 제거됨");
+                    }
+                }
+                if (puzzle == null)
+                {
+                    Debug.LogWarning("Puzzle 오브젝트가 존재하지 않습니다.");
+                }
             }
             Transform mapsParent = map108ParentInScene;
             GameObject newMap = Instantiate(mapPrefab108, spawn108Pos, spawn108Rot, mapsParent);
