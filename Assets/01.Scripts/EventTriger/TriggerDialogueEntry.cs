@@ -16,6 +16,10 @@ public class TriggerDialogueEntry
     
     public bool shakeCutscene = false; 
 
+     [Header(" 캐릭터 스프라이트 (직접 할당)")]
+    public Sprite leftSprite;
+    public Sprite rightSprite;
+
 
     public void OnDialogueStart()
     {
