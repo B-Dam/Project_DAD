@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +25,7 @@ public class SettingMenuController : MonoBehaviour
     
     [Header("설정창 전체 Panel")]
     [SerializeField] private GameObject settingsPanel;
-
+    
     private void Start()
     {
         settingsPanel.SetActive(false);
@@ -39,7 +40,16 @@ public class SettingMenuController : MonoBehaviour
         {
             bool isOn = settingsPanel.activeSelf;
             settingsPanel.SetActive(!isOn);
-            if (!isOn) ShowMenu(MenuType.Sound); // 열 때 기본 탭 지정
+            if (!isOn)
+            {
+                settingsPanel.transform.SetAsLastSibling();
+                ShowMenu(MenuType.Sound); // 열 때 기본 탭 지정
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
         }
     }
 

@@ -109,7 +109,6 @@ public class CombatManager : MonoBehaviour
         // 모디파이어 갱신
         RecalculateModifiers();
         
-        //
         OnCombatStart?.Invoke();
         
         // 첫 턴 시작

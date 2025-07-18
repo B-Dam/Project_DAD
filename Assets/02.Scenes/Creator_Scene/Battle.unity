@@ -1072,9 +1072,8 @@ GameObject:
   - component: {fileID: 243522137}
   - component: {fileID: 243522139}
   - component: {fileID: 243522138}
-  - component: {fileID: 243522140}
   m_Layer: 5
-  m_Name: BattleStartButton
+  m_Name: BattleStartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1198,74 +1197,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243522136}
   m_CullTransparentMesh: 1
---- !u!114 &243522140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243522136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 243522138}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1319791125}
-        m_TargetAssemblyTypeName: BattleStartButton, Assembly-CSharp
-        m_MethodName: HideStartPanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2059591497}
-        m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
-        m_MethodName: StartCombat
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &329097327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,6 +1524,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &504890818
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6477391451448486283, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 96.83974
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -136.74664
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8904303983169235067, guid: c690fc9e587c859488357ea43810c296, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c690fc9e587c859488357ea43810c296, type: 3}
 --- !u!1 &507869503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,7 +1612,6 @@ RectTransform:
   - {fileID: 1633803002}
   - {fileID: 751196006}
   - {fileID: 1307032430}
-  - {fileID: 1262123239}
   m_Father: {fileID: 1322636539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1774,7 +1761,6 @@ RectTransform:
   - {fileID: 498596}
   - {fileID: 1491084396}
   - {fileID: 85351730}
-  - {fileID: 739079130}
   m_Father: {fileID: 1322636539}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2235,11 +2221,11 @@ Transform:
   m_GameObject: {fileID: 739079128}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.915039, y: 2.5659943, z: 0}
-  m_LocalScale: {x: 215.9691, y: 215.9691, z: 107.98455}
+  m_LocalPosition: {x: 5.4992137, y: 2.1996853, z: 90}
+  m_LocalScale: {x: 1.9997143, y: 1.9997143, z: 0.9998571}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 658588196}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &739079131
 Animator:
@@ -2387,7 +2373,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fe627fae33d3240b42fd7f2bb061c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   handContainer: {fileID: 843292561}
+  drawDeckPile: {fileID: 1933695974}
+  discardDeckPile: {fileID: 1689604632}
   cardPrefab: {fileID: 5887801255287582183, guid: 53e5b9a0e73349240876aa64a1e5f81f, type: 3}
   maxHandSize: 5
   enemyDropZone: {fileID: 658588196}
@@ -2398,6 +2387,16 @@ MonoBehaviour:
   focusScale: 1.5
   focusShift: 50
   focusLift: 200
+  drawMoveDuration: 0.5
+  drawScaleDuration: 0.1
+  drawStaggerDelay: 0.1
+  spawnYOffset: 250
+  discardMoveDuration: 0.4
+  discardStaggerDelay: 0.05
+  cardBackPrefab: {fileID: 9044798605667522798, guid: da1b4a4cd3efd824c9ba4da01aa32087, type: 3}
+  refillMoveDuration: 0.4
+  refillScaleDuration: 0.3
+  refillStaggerDelay: 0.05
   isDraggingCard: 0
   deck: []
   discard: []
@@ -2717,11 +2716,11 @@ Transform:
   m_GameObject: {fileID: 1262123237}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.915039, y: 2.5660095, z: 0}
-  m_LocalScale: {x: 161.9768, y: 161.9768, z: 0}
+  m_LocalPosition: {x: -5.4992137, y: 2.1996856, z: 90}
+  m_LocalScale: {x: 1.4997855, y: 1.4997855, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 507869504}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1262123240
 Animator:
@@ -3121,7 +3120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endTurnButton: {fileID: 1298273555}
   enemyAnimator: {fileID: 739079131}
-  enemyPreviewDuration: 1
+  delayDuration: 1
 --- !u!4 &1319791122
 Transform:
   m_ObjectHideFlags: 0
@@ -3591,7 +3590,7 @@ MonoBehaviour:
   enemyAnimator: {fileID: 739079131}
   playerCharacter: {fileID: 1262123237}
   enemyCharacter: {fileID: 739079128}
-  attackMoveDistance: 950
+  attackMoveDistance: 8.5
   attackMoveDuration: 0.2
   attackPause: 1
   gameUIGroup: {fileID: 1322636540}
@@ -4798,6 +4797,7 @@ GameObject:
   - component: {fileID: 2054641537}
   - component: {fileID: 2054641539}
   - component: {fileID: 2054641538}
+  - component: {fileID: 2054641540}
   m_Layer: 5
   m_Name: BattleStartPanel
   m_TagString: Untagged
@@ -4823,7 +4823,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 5000, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2054641538
 MonoBehaviour:
@@ -4863,6 +4863,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2054641536}
   m_CullTransparentMesh: 1
+--- !u!225 &2054641540
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054641536}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2059591496
 GameObject:
   m_ObjectHideFlags: 0
@@ -5196,6 +5208,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 739079128}
     - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
+      propertyPath: gameUIGroup
+      value: 
+      objectReference: {fileID: 1322636540}
+    - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
       propertyPath: enemyAnimator
       value: 
       objectReference: {fileID: 739079131}
@@ -5203,6 +5219,10 @@ PrefabInstance:
       propertyPath: backgroundImage
       value: 
       objectReference: {fileID: 57269109}
+    - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
+      propertyPath: battleStartGroup
+      value: 
+      objectReference: {fileID: 2054641540}
     - target: {fileID: 6440595122628697596, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5260,4 +5280,7 @@ SceneRoots:
   - {fileID: 1898337810}
   - {fileID: 155446870}
   - {fileID: 1455925683}
+  - {fileID: 1262123239}
+  - {fileID: 739079130}
   - {fileID: 2904716441138077253}
+  - {fileID: 504890818}

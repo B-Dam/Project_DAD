@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,11 +6,14 @@ using DG.Tweening;
 
 public class HandManager : MonoBehaviour
 {
-    [Header("핸드 설정")]
-    public RectTransform handContainer; // 카드들이 배치될 부모 RectTransform
-    public GameObject cardPrefab; // CardView 프리팹
-    public int maxHandSize = 5; // 최대 핸드 크기
-    public RectTransform enemyDropZone; // 에디터에서 EnemyPanel 할당
+    [Header("핸드 설정")] 
+    public Canvas canvas;                 // 메인 캔버스
+    public RectTransform handContainer;   // 카드들이 배치될 부모 RectTransform
+    public RectTransform drawDeckPile;    // 드로우 덱 위치
+    public RectTransform discardDeckPile; // 버림 덱 위치
+    public GameObject cardPrefab;         // CardView 프리팹
+    public int maxHandSize = 5;           // 최대 핸드 크기
+    public RectTransform enemyDropZone;   // 에디터에서 EnemyPanel 할당
 
     [Header("합성 설정")]
     [Tooltip("합성 시 소모할 AP")]
@@ -20,13 +24,29 @@ public class HandManager : MonoBehaviour
 
     [Header("레이아웃 설정")] 
     public float cardWidth = 200f; // 카드 너비 (px, RectTransform width)
-    public float spacing = 40f; // 카드 간 간격
+    public float spacing = 40f;    // 카드 간 간격
     public float animDuration = 0.25f;
 
     [Header("포커스 설정")] 
     public float focusScale = 1.2f;
-    public float focusShift = 50f; // 양옆으로 밀어내는 거리
-    public float focusLift  = 30f;  // 위로 띄울 거리
+    public float focusShift = 50f;  // 양옆으로 밀어내는 거리
+    public float focusLift  = 200f;  // 위로 띄울 거리
+    
+    [Header("드로우 애니메이션용")]
+    [SerializeField] private float drawMoveDuration  = 0.5f;  // 카드 이동 시간
+    [SerializeField] private float drawScaleDuration = 0.1f;  // 카드 팝업 스케일 시간
+    [SerializeField] private float drawStaggerDelay  = 0.1f;  // 카드 간 지연
+    [SerializeField] private float spawnYOffset      = 250f;   // 카드 스폰 y축 프리셋 조정용
+    
+    [Header("버림 애니메이션용")]
+    [SerializeField] private float discardMoveDuration   = 0.4f;  // 이동 시간
+    [SerializeField] private float discardStaggerDelay   = 0.05f; // 카드 간 지연
+    
+    [Header("리필 애니메이션용")]
+    [SerializeField] private GameObject cardBackPrefab;       // 카드 뒷면 프리팹
+    [SerializeField] private float refillMoveDuration  = 0.4f; // 이동 시간
+    [SerializeField] private float refillScaleDuration = 0.3f; // 축소 시간
+    [SerializeField] private float refillStaggerDelay  = 0.05f;// 카드 간 지연
 
     [HideInInspector] public bool isDraggingCard;
 
@@ -124,6 +144,39 @@ public class HandManager : MonoBehaviour
         var cv = go.GetComponent<CardView>();
 
         cv.Initialize(data, this, enemyDropZone);
+        
+        // RectTransform 가져오기
+        var rt = cv.Rect;
+        
+        // drawDeckPile의 월드 위치를 handContainer 로컬 좌표로 변환
+        Vector3 worldPos = drawDeckPile.position;
+        Vector3 localPos = handContainer.InverseTransformPoint(worldPos);
+        localPos.y -= spawnYOffset; // y 오프셋 추가: spawnYOffset만큼 아래로
+        
+        // 카드를 덱 위치에 스폰
+        rt.anchoredPosition = new Vector2(localPos.x, localPos.y);
+        rt.localScale = Vector3.zero;
+        
+        // CanvasGroup 세팅
+        var cg = cv.GetComponent<CanvasGroup>();
+        if (cg == null) cg = cv.gameObject.AddComponent<CanvasGroup>();
+        cg.alpha = 0f;
+
+        // 스태거 딜레이 계산 (예: 기존 핸드 수 * interval)
+        float delay = (handViews.Count - 1) * drawStaggerDelay;
+
+        // 페이드 인 + 스케일 팝업
+        cg.DOFade(1f, drawScaleDuration)
+          .SetDelay(delay)
+          .SetEase(Ease.Linear);
+        cv.Rect
+          .DOScale(1f, animDuration)
+          .From(0.8f)
+          .SetDelay(delay)
+          .SetEase(Ease.OutBack);
+
+        // 마지막에 전체 레이아웃
+        DOVirtual.DelayedCall(delay + animDuration, LayoutHand);
     }
 
     // 새로 생성된 CardView를 핸드에 등록하고, 레이아웃을 갱신
@@ -168,31 +221,25 @@ public class HandManager : MonoBehaviour
         // Tween 시작 전에 남아있는 트윈 모두 제거
         var rt = cv.Rect;
         rt.DOKill();
-
-        // handContainer 아래에 있으면 레이아웃/마스크에 묶이므로, 캔버스 최상위로 이동
-        rt.SetParent(handContainer.parent, true);
-
-        // 최전면 배치
-        rt.SetAsLastSibling();
-
-        isDraggingCard = false;
-
-        // 애니메이션 (로컬 anchoredPosition 기준)
-        rt.DOAnchorPos(rt.anchoredPosition + new Vector2(0, 800f), 0.5f)
-          .SetEase(Ease.InBack)
+        
+        // 버림 덱 위치 계산
+        Vector3 worldTarget = discardDeckPile.position;
+        Vector3 localTarget = ((RectTransform)rt.parent).InverseTransformPoint(worldTarget);
+        
+        // 카드 이동 + 축소 애니메이션
+        rt.DOAnchorPos(localTarget, discardMoveDuration)
+          .SetEase(Ease.InQuad);
+        rt.DOScale(0.2f, discardMoveDuration)
+          .SetEase(Ease.InQuad)
           .OnComplete(() =>
           {
+              // Hand에서 제거
               handViews.Remove(cv);
-
-              // 버려진 뒤에도 index 재설정은 유지
-              for (int i = 0; i < handViews.Count; i++)
-                  handViews[i].index = i;
-
               Destroy(cv.gameObject);
-              currentlyDiscarding = null;
               LayoutHand();
           });
 
+        isDraggingCard = false;
         return true;
     }
 
@@ -364,7 +411,41 @@ public class HandManager : MonoBehaviour
                 discard.Add(cv.data);
         }
         
-        ClearHand();
+        // 2) 애니메이션 코루틴 실행
+        StartCoroutine(DiscardHandAndEndTurn());
         TurnManager.Instance.EndPlayerTurn();
+    }
+
+    private IEnumerator DiscardHandAndEndTurn()
+    {
+        // 복사본으로 돌리기
+        var cards = handViews.ToList();
+        handViews.Clear();
+
+        for (int i = 0; i < cards.Count; i++)
+        {
+            var cv = cards[i];
+            var rt = cv.Rect;
+            rt.DOKill();
+
+            // 부모를 캔버스 루트로 이동
+            rt.SetParent(handContainer.parent, true);
+
+            // 목표 위치 계산
+            Vector3 worldTarget = discardDeckPile.position;
+            Vector3 localTarget = ((RectTransform)rt.parent)
+                .InverseTransformPoint(worldTarget);
+            // 이동 + 축소
+            rt.DOAnchorPos(localTarget, discardMoveDuration)
+              .SetEase(Ease.InQuad);
+            rt.DOScale(0.2f, discardMoveDuration)
+              .SetEase(Ease.InQuad)
+              .OnComplete(() => Destroy(cv.gameObject));
+
+            yield return new WaitForSeconds(discardStaggerDelay);
+        }
+
+        // 마지막 카드 움직임 끝나길 대기
+        yield return new WaitForSeconds(discardMoveDuration);
     }
 }
