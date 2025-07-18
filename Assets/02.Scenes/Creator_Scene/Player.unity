@@ -334,10 +334,28 @@ MonoBehaviour:
     speaker: adad
     text: "\uC774\uBCA4\uD2B8 \uD2B8\uB9AC\uAC70 \uBC1C\uB3D9"
     focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 0}
+    rightSprite: {fileID: 0}
   - id: event000_1
     speaker: adad
     text: "\uD14C\uC2A4\uD2B8\uD14C\uC2A4\uD2B8\uD14C\uC2A4\uD2B8\uD1A0\uD14C\uB860"
     focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 0}
+    rightSprite: {fileID: 0}
 --- !u!61 &746932211
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -522,6 +540,22 @@ PrefabInstance:
     - target: {fileID: 2580169632564823035, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_Name
       value: DialogueManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234970559953781355, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 423.6873
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234970559953781355, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 336.022
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234970559953781355, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000061035
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234970559953781355, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -371.99
       objectReference: {fileID: 0}
     - target: {fileID: 6524677622052416045, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1261,18 +1295,30 @@ MonoBehaviour:
     speaker: 
     text: "\uC800\uB3C4 NPC\uC785\uB2C8\uB2E4."
     focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
     onEndEvents:
       m_PersistentCalls:
         m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 0}
+    rightSprite: {fileID: 0}
   - id: npc001_9
     speaker: 
     text: "\uC778\uC2A4\uD399\uD130\uC5D0 \uD14D\uC2A4\uD2B8 \uC785\uB825\uD6C4 Tools,
       \uC6D0\uD558\uB294 NPC\uACE8\uB77C\uC11C \uC0DD\uC131\uD558\uBA74 Id\uC640
       CSV\uD30C\uC77C\uC774 \uC790\uB3D9\uC0DD\uC131\uB429\uB2C8\uB2E4."
     focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
     onEndEvents:
       m_PersistentCalls:
         m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 0}
+    rightSprite: {fileID: 0}
 --- !u!1 &8011889298889346112
 GameObject:
   m_ObjectHideFlags: 0
