@@ -1,7 +1,7 @@
 
 dialogue_id,speaker,text,cutsceneResorcePath,1열,
 5000,모노,…몸이 흔들려.,Cutscenes/cutsceen1,,
-5001,모노,익숙한 냄새… 주인의 차 안인 것 같아.,Cutscenes/cutsceen1,,
+5001,모노,"익숙한 냄새… <color=yellow>주인의 차 안인 것 같아.</color>",Cutscenes/cutsceen1,,
 5002,모노,어디로 가는 걸까. 병원? 아니면… 공원?,Cutscenes/cutsceen2,,
 5003,모노,  …눈꺼풀이 아직까지 무거워. 달콤한 냄새… 주인의 냄새… 다시 잠이 와…, ,,
 5004,모노,…주인? 어디에 있지?,,,
