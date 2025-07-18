@@ -15,7 +15,7 @@ public class V2MapBase : MonoBehaviour
     // 카메라 변수
     private Vector3 camVelocity = Vector3.zero;
     private float smoothTime = 0.05f;
-    public Camera cam;
+    //public Camera cam;
 
     private void Awake()
     {
@@ -25,7 +25,7 @@ public class V2MapBase : MonoBehaviour
     private void Start()
     {
         // 카메라 초기화
-        cam = Camera.main;
+        //cam = Camera.main;
 
         TileMapSetting();
     }
@@ -55,30 +55,30 @@ public class V2MapBase : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        // currentMapID가 null이면 바로 리턴
-        if (string.IsNullOrEmpty(MapManager.Instance.currentMapID))
-            return;
+    //private void LateUpdate()
+    //{
+    //    // currentMapID가 null이면 바로 리턴
+    //    if (string.IsNullOrEmpty(MapManager.Instance.currentMapID))
+    //        return;
 
-        if (!mapBounds.ContainsKey(MapManager.Instance.currentMapID)) return;
+    //    if (!mapBounds.ContainsKey(MapManager.Instance.currentMapID)) return;
 
-        Bounds bounds = mapBounds[MapManager.Instance.currentMapID];
-        float halfHeight = cam.orthographicSize;
-        float halfWidth = halfHeight * cam.aspect;
+    //    Bounds bounds = mapBounds[MapManager.Instance.currentMapID];
+    //    float halfHeight = cam.orthographicSize;
+    //    float halfWidth = halfHeight * cam.aspect;
 
-        float minX = bounds.min.x + halfWidth;
-        float maxX = bounds.max.x - halfWidth;
-        float minY = bounds.min.y + halfHeight;
-        float maxY = bounds.max.y - halfHeight;
+    //    float minX = bounds.min.x + halfWidth;
+    //    float maxX = bounds.max.x - halfWidth;
+    //    float minY = bounds.min.y + halfHeight;
+    //    float maxY = bounds.max.y - halfHeight;
 
-        Vector2 targetPos = PlayerController.Instance.transform.position;
-        float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
-        float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
+    //    Vector2 targetPos = PlayerController.Instance.transform.position;
+    //    float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
+    //    float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
 
-        Vector3 desiredPos = new Vector3(clampedX, clampedY, cam.transform.position.z);
-        cam.transform.position = Vector3.SmoothDamp(cam.transform.position, desiredPos, ref camVelocity, smoothTime);
-    }
+    //    Vector3 desiredPos = new Vector3(clampedX, clampedY, cam.transform.position.z);
+    //    cam.transform.position = Vector3.SmoothDamp(cam.transform.position, desiredPos, ref camVelocity, smoothTime);
+    //}
 
     // 맵 아이디를 키로 검색하면 해당 맵의 좌표값 반환
     public Bounds GetBounds(string mapID)
