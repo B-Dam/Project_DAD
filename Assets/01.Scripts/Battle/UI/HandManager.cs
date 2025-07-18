@@ -7,7 +7,6 @@ using DG.Tweening;
 public class HandManager : MonoBehaviour
 {
     [Header("핸드 설정")] 
-    public Canvas canvas;                 // 메인 캔버스
     public RectTransform handContainer;   // 카드들이 배치될 부모 RectTransform
     public RectTransform drawDeckPile;    // 드로우 덱 위치
     public RectTransform discardDeckPile; // 버림 덱 위치
@@ -18,9 +17,6 @@ public class HandManager : MonoBehaviour
     [Header("합성 설정")]
     [Tooltip("합성 시 소모할 AP")]
     public int combineAPCost = 1;
-
-    [Header("게임 참조")]
-    public int currentAP { get; private set; }
 
     [Header("레이아웃 설정")] 
     public float cardWidth = 200f; // 카드 너비 (px, RectTransform width)
@@ -49,6 +45,19 @@ public class HandManager : MonoBehaviour
     [SerializeField] private float refillStaggerDelay  = 0.05f;// 카드 간 지연
 
     [HideInInspector] public bool isDraggingCard;
+
+    // 현재 AP
+    private int _currentAP;
+
+    public int currentAP
+    {
+        get => _currentAP;
+        private set
+        {
+            _currentAP = value;
+            RefreshCardPulse();
+        }
+    }
 
     // 내부 덱 / 디스카드 / 핸드 뷰
     public List<CardData> deck = new List<CardData>();
@@ -98,6 +107,18 @@ public class HandManager : MonoBehaviour
                .ToList();
 
         Shuffle(deck);
+    }
+
+    // AP 대비 펄스 상태를 갱신하는 메서드
+    private void RefreshCardPulse()
+    {
+        foreach (var cv in handViews)
+        {
+            if (cv.data.costAP <= currentAP)
+                cv.EnablePulse();
+            else
+                cv.DisablePulse();
+        }
     }
 
     // 플레이어 턴이 시작될 때 호출
@@ -184,6 +205,12 @@ public class HandManager : MonoBehaviour
     {
         // 내부 리스트에 등록
         handViews.Add(cv);
+
+        // 카드가 추가될 때도, 현재 AP 대비 펄스 상태를 초기화
+        if (cv.data.costAP <= currentAP)
+            cv.EnablePulse();
+        else
+            cv.DisablePulse();
 
         // 모든 CardView.index 재설정
         for (int i = 0; i < handViews.Count; i++)

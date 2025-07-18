@@ -12,11 +12,14 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     [SerializeField] TextMeshProUGUI descText;
     [SerializeField] TextMeshProUGUI rankText;
     [SerializeField] TextMeshProUGUI TypeText;
+    [SerializeField] private Outline outline;
     
     [HideInInspector] public RectTransform enemyDropZone;
 
     public RectTransform Rect { get; private set; }
     public CardData data { get; private set; }
+    
+    private Tween pulseTween; // 카드 아웃라인 효과용 트윈
     
     public int index;
     
@@ -33,6 +36,47 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         canvasGroup  = GetComponent<CanvasGroup>() 
                        ?? gameObject.AddComponent<CanvasGroup>();
         canvasGroup.blocksRaycasts = true;
+        
+        outline = outline ?? GetComponent<Outline>();
+
+        // 1) 알파 0으로 초기화
+        var c = outline.effectColor;
+        c.a = 0f;
+        outline.effectColor = c;
+
+        // 2) 무한 Yoyo 트윈 생성하되, 자동 소멸하지 않도록
+        pulseTween = DOTween.To(
+                                () => outline.effectColor.a,
+                                a => {
+                                    var col = outline.effectColor;
+                                    col.a = a;
+                                    outline.effectColor = col;
+                                },
+                                0.4f,      // 피크 알파
+                                1f         // 한 사이클 길이
+                            )
+                            .SetLoops(-1, LoopType.Yoyo)
+                            .SetEase(Ease.InOutSine)
+                            .SetAutoKill(false);
+
+        // 3) 처음엔 실행
+        pulseTween.Play();
+    }
+    
+    public void EnablePulse()
+    {
+        if (!pulseTween.IsPlaying())
+            pulseTween.Play();
+    }
+
+    public void DisablePulse()
+    {
+        if (pulseTween.IsPlaying())
+            pulseTween.Pause();
+        // 즉시 감추기
+        var col = outline.effectColor;
+        col.a = 0f;
+        outline.effectColor = col;
     }
 
     public void Initialize(CardData cardData, HandManager manager, RectTransform dropZone)

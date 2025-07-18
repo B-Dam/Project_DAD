@@ -1,3 +1,4 @@
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -109,7 +110,9 @@ public class CombatSceneController : MonoBehaviour
     private void ShowGameUIWithStagger()
     {
         // GameUI 하위에 CanvasGroup이 붙은 요소들 가져오기
-        var uiElements = gameUIGroup.GetComponentsInChildren<CanvasGroup>(true);
+        var uiElements = gameUIGroup
+                         .GetComponentsInChildren<CanvasGroup>(true)
+                         .Where(cg => !cg.gameObject.CompareTag("Tooltip"));; // Tooltip 태그만 없는 친구들만 가져오기
         float delay = 0f;
 
         foreach (var cg in uiElements)
