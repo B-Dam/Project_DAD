@@ -6,15 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSceneController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSceneController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CardView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/DeckUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/DeckUIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/TooltipController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/TooltipController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/APIconHover.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/APIconHover.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/PreviewUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/PreviewUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/TooltipController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/TooltipController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/CardPrefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/CardPrefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +32,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/DeckUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/RetryButton.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/TooltipController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/TooltipHover.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/DeckIconHover.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/EndTurnHover.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/EnemyPanelHover.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueTriggerCondition.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Player/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Quest/QuestGuideUI.cs" root0="FORCE_HIGHLIGHTING" />
@@ -145,7 +142,8 @@
       <workItem from="1752107053016" duration="8061000" />
       <workItem from="1752650354686" duration="7278000" />
       <workItem from="1752711772433" duration="18262000" />
-      <workItem from="1752820431572" duration="7740000" />
+      <workItem from="1752820431572" duration="9009000" />
+      <workItem from="1753085356621" duration="5953000" />
     </task>
     <servers />
   </component>

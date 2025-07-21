@@ -10,6 +10,9 @@ public class APIconHover : MonoBehaviour,
 
     public void OnPointerEnter(PointerEventData e)
     {
+        // DrawDiscardView가 켜져있으면 리턴
+        if (DeckUIManager.Instance.isViewActive) return;
+        
         if (hoverParticle != null) hoverParticle.Play();
         apTooltip.DOFade(1f, 0.2f).SetEase(Ease.OutSine);
         apTooltip.interactable = apTooltip.blocksRaycasts = true;
