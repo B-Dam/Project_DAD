@@ -1530,6 +1530,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6206354105506243808, guid: 90572e21e936764439adafd9b36d19db, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[3].leftSprite
+      value: 
+      objectReference: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
+    - target: {fileID: 6206354105506243808, guid: 90572e21e936764439adafd9b36d19db, type: 3}
       propertyPath: triggerDialogueEntries.Array.data[4].leftSprite
       value: 
       objectReference: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
@@ -1541,6 +1545,14 @@ PrefabInstance:
       propertyPath: triggerDialogueEntries.Array.data[6].leftSprite
       value: 
       objectReference: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
+    - target: {fileID: 6206354105506243808, guid: 90572e21e936764439adafd9b36d19db, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[7].leftSprite
+      value: 
+      objectReference: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
+    - target: {fileID: 6206354105506243808, guid: 90572e21e936764439adafd9b36d19db, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[8].leftSprite
+      value: 
+      objectReference: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     - target: {fileID: 6206354105506243808, guid: 90572e21e936764439adafd9b36d19db, type: 3}
       propertyPath: triggerDialogueEntries.Array.data[0].shakeCutscene
       value: 1
