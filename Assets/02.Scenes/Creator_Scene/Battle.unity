@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 4981234}
   m_Layer: 5
   m_Name: PreviewTooltipPanel
-  m_TagString: Untagged
+  m_TagString: Tooltip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -309,6 +309,7 @@ MonoBehaviour:
   panelRoot: {fileID: 4981225}
   nameText: {fileID: 1846835290}
   descText: {fileID: 1200510994}
+  fadeDuration: 0.2
 --- !u!225 &4981230
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -317,7 +318,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4981225}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
