@@ -3549,6 +3549,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -26.2437
       objectReference: {fileID: 0}
+    - target: {fileID: 1817840139354754835, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -496
+      objectReference: {fileID: 0}
     - target: {fileID: 2580169632564823035, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_Name
       value: DialogueManager
@@ -3580,6 +3584,10 @@ PrefabInstance:
     - target: {fileID: 3126555928509086650, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 103
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309900440456980877, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 495
       objectReference: {fileID: 0}
     - target: {fileID: 3354859462667847240, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_Sprite
