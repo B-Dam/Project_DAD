@@ -632,6 +632,7 @@ GameObject:
   - component: {fileID: 4205070825444416691}
   - component: {fileID: 1119733228546271828}
   - component: {fileID: 6366478518144925671}
+  - component: {fileID: 126572178168774596}
   m_Layer: 0
   m_Name: CardPrefab
   m_TagString: Untagged
@@ -718,6 +719,7 @@ MonoBehaviour:
   descText: {fileID: 2407691620618086789}
   rankText: {fileID: 5324748790139713121}
   TypeText: {fileID: 213249770713957450}
+  outline: {fileID: 0}
   enemyDropZone: {fileID: 0}
   index: 0
 --- !u!225 &6366478518144925671
@@ -732,3 +734,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &126572178168774596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887801255287582183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 1, b: 0.30346513, a: 1}
+  m_EffectDistance: {x: 5, y: 5}
+  m_UseGraphicAlpha: 0

@@ -11,6 +11,8 @@ public class DeckUIManager : MonoBehaviour
     [SerializeField] private Transform content;    // 하나만
     [SerializeField] private GameObject cardListPrefab;
 
+    public bool isViewActive => panel.activeSelf;
+    
     void Awake()
     {
         if (Instance == null) Instance = this;

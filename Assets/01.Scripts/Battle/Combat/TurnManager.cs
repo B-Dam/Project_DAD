@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine.UI;
 
 public class TurnManager : MonoBehaviour
@@ -21,8 +22,8 @@ public class TurnManager : MonoBehaviour
     public event Action OnEnemyTurnStart;
     public event Action OnEnemyTurnEnd;
     
-    [Tooltip("Enemy 스킬 프리뷰 후 실제 적 턴 시작까지의 대기 시간(초)")]
-    public float enemyPreviewDuration = 1f;
+    [Tooltip("공격 시작 전 딜레이 시간")]
+    public float delayDuration = 1f;
 
     void Awake()
     {
@@ -31,19 +32,14 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 전투 시작을 외부에서 호출, 지금은 사용 안됨.
-    /// </summary>
-    public void StartCombat()
-    {
-        StartPlayerTurn();
-    }
-
-    /// <summary>
     /// 플레이어 턴 시작
     /// </summary>
     public void StartPlayerTurn()
     {
         currentPhase = Phase.Player;
+        
+        // 턴 종료 버튼 텍스트 변경
+        ChangeTurnEndButtonText();
         
         // 실드 초기화
         CombatManager.Instance.ResetPlayerShield();
@@ -71,7 +67,7 @@ public class TurnManager : MonoBehaviour
     
     IEnumerator DoEnemyTurnAfterDelay()
     {
-        yield return new WaitForSeconds(enemyPreviewDuration);
+        yield return new WaitForSeconds(delayDuration);
         StartEnemyTurn();
     }
 
@@ -81,6 +77,9 @@ public class TurnManager : MonoBehaviour
     public void StartEnemyTurn()
     {
         currentPhase = Phase.Enemy;
+        
+        // 턴 종료 버튼 텍스트 변경
+        ChangeTurnEndButtonText();
         
         // 실드 초기화
         CombatManager.Instance.ResetEnemyShield();
@@ -106,5 +105,12 @@ public class TurnManager : MonoBehaviour
 
         // 플레이어 턴 시작
         StartPlayerTurn();
+    }
+
+    // 턴 종료 버튼 텍스트
+    public void ChangeTurnEndButtonText()
+    {
+        var tmp = endTurnButton.GetComponentInChildren<TextMeshProUGUI>();
+        tmp.text = (currentPhase == Phase.Player) ? "턴 종료" : "상대 턴";
     }
 }

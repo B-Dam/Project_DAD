@@ -25,6 +25,11 @@ public class DialogueManager : MonoBehaviour
     public TMPro.TextMeshProUGUI speakerText;
     public TMPro.TextMeshProUGUI dialogueText;
 
+    [Header("👥 좌우 캐릭터 이미지")]
+public UnityEngine.UI.Image leftCharacterImage;
+public UnityEngine.UI.Image rightCharacterImage;
+
+
   
 
     [Header("깜빡이는 이미지")]
@@ -63,6 +68,7 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         if (uxBlinkImage != null)
             uxBlinkImage.gameObject.SetActive(false); // 처음엔 꺼두기
+              dialogueText.text = "리치 <color=red>텍스트</color> 테스트";
     }
 
     private void Update()
@@ -206,6 +212,49 @@ if (entry != null && entry.onStartEvents.GetPersistentEventCount() > 0)
         
         var line = currentDialogueLines[dialogueIndex];
         speakerText.text = line.speaker;
+
+        Sprite leftSprite = null;
+Sprite rightSprite = null;
+
+if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+{
+    leftSprite = currentDialogueEntries[dialogueIndex].leftSprite;
+    rightSprite = currentDialogueEntries[dialogueIndex].rightSprite;
+}
+else if (EventTriggerZone.InstanceExists)
+{
+    var triggerEntries = EventTriggerZone.Instance.triggerDialogueEntries;
+    if (triggerEntries != null && dialogueIndex < triggerEntries.Length)
+    {
+        leftSprite = triggerEntries[dialogueIndex].leftSprite;
+        rightSprite = triggerEntries[dialogueIndex].rightSprite;
+    }
+}
+
+// 좌측 이미지 설정
+if (leftSprite != null)
+{
+    leftCharacterImage.sprite = leftSprite;
+    leftCharacterImage.gameObject.SetActive(true);
+    PlayDropInEffect(leftCharacterImage.rectTransform);
+}
+else
+{
+    leftCharacterImage.gameObject.SetActive(false);
+}
+
+// 우측 이미지 설정
+if (rightSprite != null)
+{
+    rightCharacterImage.sprite = rightSprite;
+    rightCharacterImage.gameObject.SetActive(true);
+     PlayDropInEffect(leftCharacterImage.rectTransform);
+}
+else
+{
+    rightCharacterImage.gameObject.SetActive(false);
+}
+
         
         // 대화 본 ID만 기록 (StartDialogueByIDs 통해 설정된 ID 사용)
         if (currentDialogueIDs != null && dialogueIndex < currentDialogueIDs.Length)
@@ -280,21 +329,40 @@ else
         
     }
 
-    private IEnumerator TypeText(string text)
-    {
-        isTyping = true;
-        fullText = text;
-        dialogueText.text = "";
-        if (uxBlinkImage != null) uxBlinkImage.gameObject.SetActive(false);
+   private IEnumerator TypeText(string text)
+{
+    isTyping = true;
+    fullText = text;
+    dialogueText.text = "";
+    if (uxBlinkImage != null) uxBlinkImage.gameObject.SetActive(false);
 
-        foreach (var ch in text)
+    int i = 0;
+    while (i < text.Length)
+    {
+        // 🔍 리치 텍스트 태그 처리 시작
+        if (text[i] == '<')
         {
-            dialogueText.text += ch;
-            yield return new WaitForSeconds(typingSpeed);
+            int tagEnd = text.IndexOf('>', i);
+            if (tagEnd != -1)
+            {
+                string tag = text.Substring(i, tagEnd - i + 1);
+                dialogueText.text += tag;
+                i = tagEnd + 1;
+                continue;
+            }
         }
-        isTyping = false;
-        StartBlinkUX();
+
+        // 일반 문자 하나 출력
+        dialogueText.text += text[i];
+        i++;
+
+        yield return new WaitForSeconds(typingSpeed);
     }
+
+    isTyping = false;
+    StartBlinkUX();
+}
+
 
     private void StartBlinkUX()
     {
@@ -329,18 +397,29 @@ else
         }
     }
 
-    public void EndDialogue()
-    {
-        isDialogueActive = false;
-        dialoguePanel.SetActive(false);
-        lastDialogueEndTime = Time.time;
+   public void EndDialogue()
+{
+    isDialogueActive = false;
+    dialoguePanel.SetActive(false);
+    lastDialogueEndTime = Time.time;
 
-        StopBlinkUX();
-        
-        // 컷씬 이미지도 끄기
-        if (cutsceneImage != null)
-            cutsceneImage.gameObject.SetActive(false);
-    }
+    StopBlinkUX();
+
+    // 컷씬 이미지 비활성화
+    if (cutsceneImage != null)
+        cutsceneImage.gameObject.SetActive(false);
+
+    if (cutsceneBackgroundImage != null)
+        cutsceneBackgroundImage.gameObject.SetActive(false);
+
+    // ✅ 좌우 캐릭터 이미지 비활성화
+    if (leftCharacterImage != null)
+        leftCharacterImage.gameObject.SetActive(false);
+
+    if (rightCharacterImage != null)
+        rightCharacterImage.gameObject.SetActive(false);
+}
+
     
     /// <summary>
     /// 주어진 ID를 본 적이 있는지 반환
@@ -404,6 +483,48 @@ private IEnumerator ShakeCutsceneRoutine(float duration, float magnitude)
 
     rt.anchoredPosition = originalPos;
     cutsceneShakeCoroutine = null;
+}
+
+private void PlayDropInEffect(RectTransform target)
+{
+    if (target == null) return;
+
+    StartCoroutine(DropInAnimation(target));
+}
+
+private IEnumerator DropInAnimation(RectTransform target)
+{
+    Vector2 originalPos = target.anchoredPosition;
+    Vector2 startPos = originalPos + new Vector2(0f, -120f); // 시작점 (위쪽)
+    Vector2 overshootPos = originalPos + new Vector2(0f, 25f); // 튕김 지점
+
+    float duration1 = 0.08f;
+    float duration2 = 0.05f;
+    float elapsed = 0f;
+
+    // 1단계: 위에서 아래로 떨어짐
+    target.anchoredPosition = startPos;
+    while (elapsed < duration1)
+    {
+        float t = elapsed / duration1;
+        target.anchoredPosition = Vector2.Lerp(startPos, overshootPos, t);
+        elapsed += Time.deltaTime;
+        yield return null;
+    }
+
+    target.anchoredPosition = overshootPos;
+
+    // 2단계: 살짝 위로 되돌아감
+    elapsed = 0f;
+    while (elapsed < duration2)
+    {
+        float t = elapsed / duration2;
+        target.anchoredPosition = Vector2.Lerp(overshootPos, originalPos, t);
+        elapsed += Time.deltaTime;
+        yield return null;
+    }
+
+    target.anchoredPosition = originalPos;
 }
 
 
