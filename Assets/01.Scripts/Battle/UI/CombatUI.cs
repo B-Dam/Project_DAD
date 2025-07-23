@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -18,16 +19,21 @@ public class CombatUI : MonoBehaviour
     [SerializeField] TMP_Text enemyShieldText;
     [SerializeField] HealthBar enemyHealthBar;
     [SerializeField] GameObject enemyBarrier;
+    
+    [Header("텍스트 애니메이션용")]
+    [SerializeField] private float popScale    = 2.5f;
+    [SerializeField] private float popDuration = 0.1f;
 
-    [Header("버프/디버프 표시용")] [SerializeField]
-    private Transform playerStatusBar;
-
+    [Header("버프/디버프 표시용")] 
+    [SerializeField] private Transform playerStatusBar;
     [SerializeField] private Transform enemyStatusBar;
     [SerializeField] private GameObject statusIconPrefab; // 단일 아이콘 Prefab
     [SerializeField] private Sprite statusIconSprite; // 아이콘
     [SerializeField] private Color positiveTextColor; // 양수일 때 텍스트 색
     [SerializeField] private Color negativeTextColor; // 음수일 때 텍스트 색
 
+    private Vector3 normalScale;
+    
     public static CombatUI instance;
 
     private void Awake()
@@ -40,6 +46,9 @@ public class CombatUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        // AP 텍스트 기존 스케일 저장
+        normalScale = playerAPText.rectTransform.localScale;
     }
 
     void Start()
@@ -156,5 +165,22 @@ public class CombatUI : MonoBehaviour
                 ? positiveTextColor
                 : negativeTextColor;
         }
+    }
+    
+    /// <summary>AP 값 갱신 + 팝 애니메이션</summary>
+    public void UpdateAP(int newAP)
+    {
+        playerAPText.text = newAP.ToString();
+        AnimateAPPop();
+    }
+
+    void AnimateAPPop()
+    {
+        var rt = playerAPText.rectTransform;
+        rt.DOKill();                    // 기존 트윈 제거
+        rt.localScale = normalScale;    // 스케일 리셋
+        rt.DOScale(normalScale * popScale, popDuration)
+          .SetEase(Ease.OutBack)
+          .SetLoops(2, LoopType.Yoyo);
     }
 }

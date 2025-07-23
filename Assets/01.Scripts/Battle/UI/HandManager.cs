@@ -236,6 +236,11 @@ public class HandManager : MonoBehaviour
 
         // AP 차감, 효과 적용
         currentAP -= cv.data.costAP;
+        CombatUI.instance.UpdateAP(currentAP);
+        
+        // 필살기 게이지 증가
+        CombatManager.Instance.GainSpecialGauge(1);
+        
         CombatManager.Instance.ApplySkill(cv.data, isPlayer: true);
 
         // 기본 카드(rank==1)만 discard에 추가하고, 합성된 카드(rank>1)는 버리지 않음
@@ -288,7 +293,10 @@ public class HandManager : MonoBehaviour
 
         // AP 차감
         currentAP -= combineAPCost;
+        CombatUI.instance.UpdateAP(currentAP);
         CombatUI.instance.UpdateUI();
+        // 필살기 게이지 획득
+        CombatManager.Instance.GainSpecialGauge(2);
         
         // 두 장 제거 (트윈 끊지 않도록 바로 DOKill + Destroy)
         foreach (var cv in candidates.Take(2))

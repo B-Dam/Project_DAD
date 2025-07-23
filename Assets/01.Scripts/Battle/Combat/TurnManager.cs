@@ -62,6 +62,9 @@ public class TurnManager : MonoBehaviour
         // 턴 종료 버튼 비활성화
         endTurnButton.enabled = false;
         
+        // 턴 종료 버튼 텍스트 변경
+        ChangeTurnEndButtonText();
+        
         StartCoroutine(DoEnemyTurnAfterDelay());
     }
     
@@ -77,9 +80,6 @@ public class TurnManager : MonoBehaviour
     public void StartEnemyTurn()
     {
         currentPhase = Phase.Enemy;
-        
-        // 턴 종료 버튼 텍스트 변경
-        ChangeTurnEndButtonText();
         
         // 실드 초기화
         CombatManager.Instance.ResetEnemyShield();
