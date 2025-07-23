@@ -10,7 +10,9 @@ TagManager:
   - Door
   - Item
   - Interact
-  - Tooltip
+
+  - 'Door '
+
   layers:
   - Default
   - TransparentFX
