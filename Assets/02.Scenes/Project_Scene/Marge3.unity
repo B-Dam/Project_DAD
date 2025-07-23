@@ -437,6 +437,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleController
       objectReference: {fileID: 0}
+    - target: {fileID: 7960364117206209066, guid: 2fcff6076cf53ea4eb11e4d9dc6f1517, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8232740425385801583, guid: 2fcff6076cf53ea4eb11e4d9dc6f1517, type: 3}
       propertyPath: resetButton
       value: 
@@ -1281,6 +1285,10 @@ PrefabInstance:
     - target: {fileID: 3374254746079845139, guid: e08fa7e40e8bd6b4d91992321bdb308c, type: 3}
       propertyPath: m_Name
       value: Hint Line Renderer
+      objectReference: {fileID: 0}
+    - target: {fileID: 3374254746079845139, guid: e08fa7e40e8bd6b4d91992321bdb308c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2181,6 +2189,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2580169632564823035, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2688670833584752079, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_SizeDelta.x
       value: 130.1697
@@ -2938,8 +2950,8 @@ SceneRoots:
   - {fileID: 480320269}
   - {fileID: 892360141}
   - {fileID: 1408712323}
-  - {fileID: 856704883}
   - {fileID: 6086883407287373697}
+  - {fileID: 856704883}
   - {fileID: 2250885396415087861}
   - {fileID: 789446417}
   - {fileID: 1924784988}

@@ -63,7 +63,9 @@ public class ResetGame : MonoBehaviour
                 Transform mapsParent = GameObject.Find("Maps")?.transform;
                 // 프리팹을 새로 생성 (Hierarchy 상에서 똑같은 위치에 넣고 싶다면 위치 저장 후 복원 가능)
                 GameObject newMap = Instantiate(mapPrefab105, spawn105Pos, spawn105Rot, mapsParent);
-                newMap.name = "105";  // 이름 다시 지정해서 접근 쉽게
+                newMap.name = "Map105";  // 이름 다시 지정해서 접근 쉽게
+                MapManager.Instance.SetCurrentMapTransform(newMap.transform);
+
                 Debug.Log("맵 105 리셋 완료");
 
                 // 만약 리셋 후 새 오브젝트 참조도 업데이트하고 싶다면:
@@ -85,7 +87,6 @@ public class ResetGame : MonoBehaviour
                 }
 
                 Debug.Log("맵 105 리셋 완료");
-
             }
 
 
@@ -103,7 +104,9 @@ public class ResetGame : MonoBehaviour
             }
             Transform mapsParent = GameObject.Find("Maps")?.transform;
             GameObject newMap = Instantiate(mapPrefab108, spawn108Pos, spawn108Rot, mapsParent);
-            newMap.name = "108";
+            newMap.name = "Map108";
+            MapManager.Instance.SetCurrentMapTransform(newMap.transform);
+
             map108ParentInScene = newMap.transform;
 
             PlayerController.Instance.transform.position = MapManager.Instance.mapData.player_position_left;
