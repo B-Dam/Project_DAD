@@ -87,13 +87,28 @@ public class Switch_MultiTrigger : MonoBehaviour
 
     private void OpenTargetB()
     {
-        if (targetA != null)
-            targetA.SetActive(false);
+      
 
         if (targetB != null)
         {
-            targetB.SetActive(true);
-            AudioManager.Instance.PlaySFX("Door-metal");
+            
+           
+
+            //  카메라 연출 추가
+            CameraEventPlayer.Instance.PlayCameraSequence(
+                targetA.transform,   // 문을 중심으로 카메라 이동
+                1f,                  // 이동 시간
+                1f ,                  // 멈춰 있는 시간
+                ()=>{
+                    if (targetA != null)
+                        targetA.SetActive(false);
+
+                    if (targetB != null)
+                        targetB.SetActive(true);
+
+                    AudioManager.Instance.PlaySFX("Door-metal");
+                }   // 특별한 콜백 작업 필요 없으면 생략 가능
+            );
         }
     }
     private void CloseTargetB()
