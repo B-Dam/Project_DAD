@@ -116,14 +116,6 @@ public class PlayerController : MonoBehaviour
             return false;
         }
 
-        // 맵 이동 트랜지션 중에 이동 차단
-        if (MapManager.Instance.fadeManager.fadeCoroutine != null)
-        {
-            MoveMentReset();
-            StopWalkingSFX();
-            return false;
-        }
-
         // 전투 중에 이동 차단
         if (CombatManager.Instance != null && (CombatManager.Instance.IsInCombat))
         {
