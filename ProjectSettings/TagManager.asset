@@ -10,6 +10,9 @@ TagManager:
   - Door
   - Item
   - Interact
+
+  - 'Door '
+
   layers:
   - Default
   - TransparentFX
@@ -52,6 +55,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI Effects
+    uniqueID: 722889353
     locked: 0
   m_RenderingLayers:
   - Default

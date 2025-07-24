@@ -397,18 +397,29 @@ else
         }
     }
 
-    public void EndDialogue()
-    {
-        isDialogueActive = false;
-        dialoguePanel.SetActive(false);
-        lastDialogueEndTime = Time.time;
+   public void EndDialogue()
+{
+    isDialogueActive = false;
+    dialoguePanel.SetActive(false);
+    lastDialogueEndTime = Time.time;
 
-        StopBlinkUX();
-        
-        // 컷씬 이미지도 끄기
-        if (cutsceneImage != null)
-            cutsceneImage.gameObject.SetActive(false);
-    }
+    StopBlinkUX();
+
+    // 컷씬 이미지 비활성화
+    if (cutsceneImage != null)
+        cutsceneImage.gameObject.SetActive(false);
+
+    if (cutsceneBackgroundImage != null)
+        cutsceneBackgroundImage.gameObject.SetActive(false);
+
+    // ✅ 좌우 캐릭터 이미지 비활성화
+    if (leftCharacterImage != null)
+        leftCharacterImage.gameObject.SetActive(false);
+
+    if (rightCharacterImage != null)
+        rightCharacterImage.gameObject.SetActive(false);
+}
+
     
     /// <summary>
     /// 주어진 ID를 본 적이 있는지 반환
