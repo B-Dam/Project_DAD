@@ -57,10 +57,17 @@ public class TurnManager : MonoBehaviour
     {
         currentPhase = Phase.EnemyPreview;
         OnPlayerTurnEnd?.Invoke();
-        OnEnemySkillPreview?.Invoke();
+
+        if (CombatManager.Instance.enemyStunTurns <= 0)
+        {
+            OnEnemySkillPreview?.Invoke();
+        }
 
         // 턴 종료 버튼 비활성화
         endTurnButton.enabled = false;
+        
+        // 턴 종료 버튼 텍스트 변경
+        ChangeTurnEndButtonText();
         
         StartCoroutine(DoEnemyTurnAfterDelay());
     }
@@ -76,10 +83,19 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void StartEnemyTurn()
     {
-        currentPhase = Phase.Enemy;
+        // 기절 상태면 바로 턴 종료
+        if (CombatManager.Instance.enemyStunTurns > 0)
+        {
+            // (차후에 여기서 “기절!” 텍스트, 아이콘 연출)
+            OnEnemyTurnStart?.Invoke();
+            // 한 프레임 대기 없이 바로 끝내기
+            OnEnemyTurnEnd?.Invoke();
+            // 플레이어 턴으로
+            StartPlayerTurn();
+            return;
+        }
         
-        // 턴 종료 버튼 텍스트 변경
-        ChangeTurnEndButtonText();
+        currentPhase = Phase.Enemy;
         
         // 실드 초기화
         CombatManager.Instance.ResetEnemyShield();

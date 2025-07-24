@@ -39,28 +39,32 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         
         outline = outline ?? GetComponent<Outline>();
 
-        // 1) 알파 0으로 초기화
-        var c = outline.effectColor;
-        c.a = 0f;
-        outline.effectColor = c;
+        if (outline != null)
+        {
+            // 1) 알파 0으로 초기화
+            var c = outline.effectColor;
+            c.a = 0f;
+            outline.effectColor = c;
 
-        // 2) 무한 Yoyo 트윈 생성하되, 자동 소멸하지 않도록
-        pulseTween = DOTween.To(
-                                () => outline.effectColor.a,
-                                a => {
-                                    var col = outline.effectColor;
-                                    col.a = a;
-                                    outline.effectColor = col;
-                                },
-                                0.4f,      // 피크 알파
-                                1f         // 한 사이클 길이
-                            )
-                            .SetLoops(-1, LoopType.Yoyo)
-                            .SetEase(Ease.InOutSine)
-                            .SetAutoKill(false);
+            // 2) 무한 Yoyo 트윈 생성하되, 자동 소멸하지 않도록
+            pulseTween = DOTween.To(
+                                    () => outline.effectColor.a,
+                                    a =>
+                                    {
+                                        var col = outline.effectColor;
+                                        col.a = a;
+                                        outline.effectColor = col;
+                                    },
+                                    0.4f, // 피크 알파
+                                    1f // 한 사이클 길이
+                                )
+                                .SetLoops(-1, LoopType.Yoyo)
+                                .SetEase(Ease.InOutSine)
+                                .SetAutoKill(false);
 
-        // 3) 처음엔 실행
-        pulseTween.Play();
+            // 3) 처음엔 실행
+            pulseTween.Play();
+        }
     }
     
     public void EnablePulse()
