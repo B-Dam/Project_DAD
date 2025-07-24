@@ -92,6 +92,14 @@ public class EnemyAI : MonoBehaviour
 
     public void Act()  // 이걸 TurnManager.OnEnemyTurnStart 에 연결
     {
+        // 적이 스턴 상태라면 스턴 애니메이션만 띄우고 턴 스킵
+        if (CombatManager.Instance.enemyStunTurns > 0)
+        {
+            // 차후 스턴 애니메이션, 이펙트 트리거
+            // CombatManager.Instance.OnEnemyStunned?.Invoke();
+            return;
+        }
+        
         // 적 행동 발동
         CombatManager.Instance.ApplySkill(upcoming, isPlayer:false);
         

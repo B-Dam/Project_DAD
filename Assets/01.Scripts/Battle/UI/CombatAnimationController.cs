@@ -263,4 +263,19 @@ public class CombatAnimationController : MonoBehaviour
         CombatManager.Instance.IsInCombat = false;
         CombatDataHolder.LastTrigger?.OnBattleEnd();
     }
+
+    public void TriggerSpecialAttack()
+    {
+        
+    }
+
+    public void TriggerSpecialShield()
+    {
+        
+    }
+
+    public void TriggerSpecialStun()
+    {
+        
+    }
 }
