@@ -239,7 +239,7 @@ public class HandManager : MonoBehaviour
         CombatUI.instance.UpdateAP(currentAP);
         
         // 필살기 게이지 증가
-        CombatManager.Instance.GainSpecialGauge(1);
+        CombatManager.Instance.GainSpecialGauge(10);
         
         CombatManager.Instance.ApplySkill(cv.data, isPlayer: true);
 
@@ -295,6 +295,7 @@ public class HandManager : MonoBehaviour
         currentAP -= combineAPCost;
         CombatUI.instance.UpdateAP(currentAP);
         CombatUI.instance.UpdateUI();
+        
         // 필살기 게이지 획득
         CombatManager.Instance.GainSpecialGauge(2);
         

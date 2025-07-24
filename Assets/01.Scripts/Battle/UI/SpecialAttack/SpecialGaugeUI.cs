@@ -32,7 +32,7 @@ public class SpecialGaugeUI : MonoBehaviour
 
         // 이벤트 구독
         cm.OnSpecialGaugeChanged += UpdateGauge;
-        cm.OnSpecialReady       += OnReady;
+        cm.OnSpecialReady        += OnReady;
         
         // 버튼 클릭 시 _게이지 초기화 하지 않고_ 패널 열기만
         specialButton.onClick.AddListener(() => 
@@ -43,7 +43,7 @@ public class SpecialGaugeUI : MonoBehaviour
     void OnDestroy()
     {
         CombatManager.Instance.OnSpecialGaugeChanged -= UpdateGauge;
-        CombatManager.Instance.OnSpecialReady       -= OnReady;
+        CombatManager.Instance.OnSpecialReady        -= OnReady;
     }
 
     void UpdateGauge(int current, int max)

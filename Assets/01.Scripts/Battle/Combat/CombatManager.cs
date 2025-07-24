@@ -39,6 +39,13 @@ public class CombatManager : MonoBehaviour
     public int MaxSpecialGauge { get; private set; } = 10;
     public bool IsSpecialReady => CurrentSpecialGauge >= MaxSpecialGauge;
     
+    // 반사 버프
+    private float playerReflectPercent = 0f;
+    private int   reflectTurnsRemaining = 0;
+    
+    // 기절 디버프
+    public int enemyStunTurns = 0;
+    
     // 전투 중인지 확인용
     public bool IsInCombat { get; set; }
     
@@ -162,6 +169,17 @@ public class CombatManager : MonoBehaviour
     // 턴 종료 시 호출될 메서드: 모디파이어만 감소시키고 UI 갱신
     void OnEnemyTurnEnd()
     {
+        // 반사 버프 턴 감소
+        if (reflectTurnsRemaining > 0)
+        {
+            if (--reflectTurnsRemaining == 0)
+                playerReflectPercent = 0f;
+        }
+        
+        // 기절 턴 감소 (적 턴 넘어가기 전에)
+        if (enemyStunTurns > 0)
+            enemyStunTurns--;
+        
         UpdateModifiers(enemyAttackMods);
         RecalculateModifiers();
         OnStatsChanged?.Invoke();
@@ -220,6 +238,13 @@ public class CombatManager : MonoBehaviour
             {
                 int shielded = Mathf.Min(playerShield, rawAttack);
                 playerShield -= shielded;
+                
+                // 반사: 실제 입힌(rawAttack) 양의 50%를 돌려주기
+                if (playerReflectPercent > 0f && rawAttack > 0)
+                {
+                    int reflectDamage = Mathf.RoundToInt(rawAttack * playerReflectPercent);
+                    SpecialAttack(reflectDamage);
+                }
                 
                 // 플레이어 데미지
                 playerHp     = Mathf.Max(0, playerHp - (rawAttack - shielded));
@@ -334,17 +359,19 @@ public class CombatManager : MonoBehaviour
     // 필살기 : 물기
     public void SpecialAttack(int amount)
     {
+        // 데미지 음수 보정
         int dmg = Mathf.Max(0, amount);
-        // 실드 먼저 깎기
-        int shielded = Mathf.Min(enemyShield, dmg);
-        enemyShield -= shielded;
-        int actual = dmg - shielded;
-        enemyHp = Mathf.Max(0, enemyHp - actual);
+        
+        // 실드 무시 - 직접 피해
+        enemyHp = Mathf.Max(0, enemyHp - dmg);
 
+        // UI, 이펙트 갱신
         OnStatsChanged?.Invoke();
         OnEnemyHit?.Invoke();
 
-        if (enemyHp <= 0) OnEnemyDeath?.Invoke();
+        // 죽음 체크
+        if (enemyHp <= 0)
+            OnEnemyDeath?.Invoke();
     }
 
     // 필살기 : 웅크리기
@@ -354,15 +381,20 @@ public class CombatManager : MonoBehaviour
         OnStatsChanged?.Invoke();
     }
 
-    // 필살기 : 으르렁거리기
-    public void SpecialDebuff(int amount, int turns)
+    // 필살기 : 으르렁거리기 (기절)
+    public void SpecialStun(int turns)
     {
-        // ModifierType.AttackDebuff는 value가 음수여야 디버프이므로
-        AddAttackModifier(
-            targetIsPlayer: false,
-            type: ModifierType.AttackDebuff,
-            value: -Mathf.Abs(amount),
-            turns: turns
-        );
+        enemyStunTurns = turns;
+        OnStatsChanged?.Invoke();
+    }
+    
+    /// <summary>
+    /// 받은 피해의 일정 비율을 반사하는 버프를 건다.
+    /// </summary>
+    public void AddReflectBuff(float percent, int turns)
+    {
+        playerReflectPercent = percent;
+        reflectTurnsRemaining = turns;
+        OnStatsChanged?.Invoke();
     }
 }
