@@ -7379,7 +7379,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     shakeCutscene: 0
-    leftSprite: {fileID: 0}
+    leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     rightSprite: {fileID: 0}
   - id: 5064
     speaker: 
@@ -7392,7 +7392,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     shakeCutscene: 0
-    leftSprite: {fileID: 0}
+    leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     rightSprite: {fileID: 0}
   - id: 5065
     speaker: 
@@ -7418,7 +7418,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     shakeCutscene: 0
-    leftSprite: {fileID: 0}
+    leftSprite: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     rightSprite: {fileID: 0}
   - id: 5067
     speaker: 
@@ -7431,7 +7431,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     shakeCutscene: 0
-    leftSprite: {fileID: 0}
+    leftSprite: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     rightSprite: {fileID: 0}
 --- !u!61 &4889113197268015943
 BoxCollider2D:
@@ -9008,7 +9008,7 @@ MonoBehaviour:
         m_Calls: []
     shakeCutscene: 0
     leftSprite: {fileID: 0}
-    rightSprite: {fileID: 6970758700920361785, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
+    rightSprite: {fileID: 0}
   - id: 5024
     speaker: 
     text: 
@@ -9402,7 +9402,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     shakeCutscene: 0
-    leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
+    leftSprite: {fileID: 0}
     rightSprite: {fileID: 0}
   - id: 5112
     speaker: 
@@ -11627,7 +11627,7 @@ MonoBehaviour:
         m_Calls: []
     shakeCutscene: 0
     leftSprite: {fileID: 0}
-    rightSprite: {fileID: 4283885741722631982, guid: 7749fbf5e6287734e81b2f53d65832b8, type: 3}
+    rightSprite: {fileID: 0}
   - id: 5057
     speaker: 
     text: 
