@@ -1751,7 +1751,7 @@ GameObject:
   - component: {fileID: 8784948050566952110}
   - component: {fileID: 8897088046114462999}
   m_Layer: 8
-  m_Name: MapTrigger14
+  m_Name: MapTrigger15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2200,6 +2200,170 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!1 &1676638628124697178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4444738033544339170}
+  - component: {fileID: 724163921386888406}
+  - component: {fileID: 2810962652824101551}
+  - component: {fileID: 5864468574547520526}
+  m_Layer: 8
+  m_Name: MapTrigger7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4444738033544339170
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676638628124697178}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 44.24, y: -1.6399994, z: 0}
+  m_LocalScale: {x: 2, y: 8, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1981922178598717797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &724163921386888406
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676638628124697178}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!61 &2810962652824101551
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676638628124697178}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &5864468574547520526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676638628124697178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6576e99cf66e974491eb75d4ac2e231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerOnce: 0
+  requireCondition: 1
+  triggerId: 5061
+  triggerDialogueEntries:
+  - id: 5118
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
+    rightSprite: {fileID: 0}
 --- !u!1 &1837730327971876804
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,6 +2662,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4444738033544339170}
   - {fileID: 2089482534297380048}
   m_Father: {fileID: 1805223877314614091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2601,7 +2766,7 @@ GameObject:
   - component: {fileID: 3566773747754965224}
   - component: {fileID: 2224835088350021298}
   m_Layer: 8
-  m_Name: MapTrigger8
+  m_Name: MapTrigger9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2852,7 +3017,7 @@ GameObject:
   - component: {fileID: 1320495116129183662}
   - component: {fileID: 6514450036065490434}
   m_Layer: 8
-  m_Name: MapTrigger11
+  m_Name: MapTrigger12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5367,7 +5532,7 @@ GameObject:
   - component: {fileID: 6897681621401997794}
   - component: {fileID: 3603404693846165250}
   m_Layer: 8
-  m_Name: MapTrigger7
+  m_Name: MapTrigger8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5916,7 +6081,7 @@ GameObject:
   - component: {fileID: 8330268447053409858}
   - component: {fileID: 1890766120091061731}
   m_Layer: 8
-  m_Name: MapTrigger10
+  m_Name: MapTrigger11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6446,7 +6611,7 @@ GameObject:
   - component: {fileID: 5720492332688583708}
   - component: {fileID: 8305147453470243594}
   m_Layer: 8
-  m_Name: MapTrigger15
+  m_Name: MapTrigger16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8619,7 +8784,7 @@ GameObject:
   - component: {fileID: 2566982424208927597}
   - component: {fileID: 5910842406110652760}
   m_Layer: 8
-  m_Name: MapTrigger13
+  m_Name: MapTrigger14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9990,7 +10155,7 @@ GameObject:
   - component: {fileID: 6154107380316482235}
   - component: {fileID: 5676090283596293969}
   m_Layer: 8
-  m_Name: MapTrigger9
+  m_Name: MapTrigger10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10984,7 +11149,7 @@ GameObject:
   - component: {fileID: 7905111892053958784}
   - component: {fileID: 6762606396855437538}
   m_Layer: 8
-  m_Name: MapTrigger17
+  m_Name: MapTrigger18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11360,7 +11525,7 @@ GameObject:
   - component: {fileID: 7869167142428121622}
   - component: {fileID: 817462854300639789}
   m_Layer: 8
-  m_Name: MapTrigger12
+  m_Name: MapTrigger13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
