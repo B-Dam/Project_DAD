@@ -226,31 +226,33 @@ public UnityEngine.UI.Image rightCharacterImage;
         }
     }
 
-    // === 좌측 캐릭터 스프라이트 처리 ===
-    if (leftSprite != null)
-    {
-        leftCharacterImage.sprite = leftSprite;
-        leftCharacterImage.gameObject.SetActive(true);
-        PlayDropInEffect(leftCharacterImage.rectTransform);
-    }
-    else
-    {
-        leftCharacterImage.sprite = null; // [PATCH] 스프라이트 초기화 추가
-        leftCharacterImage.gameObject.SetActive(false);
-    }
+   // === 좌측 캐릭터 스프라이트 처리 ===
+if (leftSprite != null)
+{
+    leftCharacterImage.sprite = leftSprite;
+    leftCharacterImage.gameObject.SetActive(true);
+    PlayDropInEffect(leftCharacterImage.rectTransform);
+}
+else
+{
+    // null일 땐 무조건 초기화 후 비활성화
+    leftCharacterImage.sprite = null; 
+    leftCharacterImage.gameObject.SetActive(false);
+}
 
-    // === 우측 캐릭터 스프라이트 처리 ===
-    if (rightSprite != null)
-    {
-        rightCharacterImage.sprite = rightSprite;
-        rightCharacterImage.gameObject.SetActive(true);
-        PlayDropInEffect(rightCharacterImage.rectTransform); // [PATCH] 잘못된 참조 수정
-    }
-    else
-    {
-        rightCharacterImage.sprite = null; // [PATCH] 스프라이트 초기화 추가
-        rightCharacterImage.gameObject.SetActive(false);
-    }
+// === 우측 캐릭터 스프라이트 처리 ===
+if (rightSprite != null)
+{
+    rightCharacterImage.sprite = rightSprite;
+    rightCharacterImage.gameObject.SetActive(true);
+    PlayDropInEffect(rightCharacterImage.rectTransform);
+}
+else
+{
+    rightCharacterImage.sprite = null;
+    rightCharacterImage.gameObject.SetActive(false);
+}
+
 
     // 대화 ID 기록
     if (currentDialogueIDs != null && dialogueIndex < currentDialogueIDs.Length)
