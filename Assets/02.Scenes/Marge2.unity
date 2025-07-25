@@ -637,6 +637,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &856309371 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 2393774578336623842, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+  m_PrefabInstance: {fileID: 1201931559362453949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &856704883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -730,7 +735,8 @@ PrefabInstance:
       value: SettingCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6287513801559332548, guid: 6baee7dea17ae27458a5b5a4afc7a3c9, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6baee7dea17ae27458a5b5a4afc7a3c9, type: 3}
@@ -3169,6 +3175,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8625130669614234611, guid: 3949fe026fc401243bca5fe3b39a1ad3, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 856309371}
+    - target: {fileID: 8625130669614234611, guid: 3949fe026fc401243bca5fe3b39a1ad3, type: 3}
       propertyPath: destinationPoint
       value: 
       objectReference: {fileID: 630997929}
@@ -3177,6 +3187,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3949fe026fc401243bca5fe3b39a1ad3, type: 3}
+--- !u!1001 &1201931559362453949
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 146.11113
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -160.49368
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853925099699856405, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8900665006545477194, guid: db881066a31bdce478c5a834d83c8596, type: 3}
+      propertyPath: m_Name
+      value: FadeUI
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db881066a31bdce478c5a834d83c8596, type: 3}
 --- !u!1001 &1478761670661001970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3324,6 +3391,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3075156044877572522, guid: 6ef1c413ecc7ff34f9a3de10868bbfbc, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 856309371}
     - target: {fileID: 3075156044877572522, guid: 6ef1c413ecc7ff34f9a3de10868bbfbc, type: 3}
       propertyPath: destinationPoint
       value: 
@@ -4731,3 +4802,4 @@ SceneRoots:
   - {fileID: 104697129}
   - {fileID: 157387141}
   - {fileID: 606145941}
+  - {fileID: 1201931559362453949}
