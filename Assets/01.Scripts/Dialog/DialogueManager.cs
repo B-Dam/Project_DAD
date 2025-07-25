@@ -185,149 +185,134 @@ public UnityEngine.UI.Image rightCharacterImage;
 }
 
 
-    private void DisplayCurrentLine()
-    {
-        // currentDialogueEntries는 StartDialogueWithEntries에서만 사용됨
-       DialogueEntry entry = currentDialogueEntries != null
-    ? currentDialogueEntries[dialogueIndex]
-    : null;
-
-if (entry != null && entry.onStartEvents.GetPersistentEventCount() > 0)
+  private void DisplayCurrentLine()
 {
-    entry.OnDialogueStart(); // ✅ 대사 시작 시 실행
-}
+    DialogueEntry entry = currentDialogueEntries != null
+        ? currentDialogueEntries[dialogueIndex]
+        : null;
 
- if (EventTriggerZone.InstanceExists)
+    if (entry != null && entry.onStartEvents.GetPersistentEventCount() > 0)
+        entry.OnDialogueStart();
+
+    if (EventTriggerZone.InstanceExists)
     {
         TriggerDialogueEntry[] triggerEntries = EventTriggerZone.Instance?.triggerDialogueEntries;
         if (triggerEntries != null && dialogueIndex < triggerEntries.Length)
         {
             var triggerEntry = triggerEntries[dialogueIndex];
             if (triggerEntry != null && triggerEntry.onStartEvents.GetPersistentEventCount() > 0)
-            {
                 triggerEntry.OnDialogueStart();
-            }
         }
     }
-        
-        var line = currentDialogueLines[dialogueIndex];
-        speakerText.text = line.speaker;
 
-        Sprite leftSprite = null;
-Sprite rightSprite = null;
+    var line = currentDialogueLines[dialogueIndex];
+    speakerText.text = line.speaker;
 
-if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
-{
-    leftSprite = currentDialogueEntries[dialogueIndex].leftSprite;
-    rightSprite = currentDialogueEntries[dialogueIndex].rightSprite;
-}
-else if (EventTriggerZone.InstanceExists)
-{
-    var triggerEntries = EventTriggerZone.Instance.triggerDialogueEntries;
-    if (triggerEntries != null && dialogueIndex < triggerEntries.Length)
+    Sprite leftSprite = null;
+    Sprite rightSprite = null;
+
+    if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
     {
-        leftSprite = triggerEntries[dialogueIndex].leftSprite;
-        rightSprite = triggerEntries[dialogueIndex].rightSprite;
+        leftSprite = currentDialogueEntries[dialogueIndex].leftSprite;
+        rightSprite = currentDialogueEntries[dialogueIndex].rightSprite;
     }
-}
-
-// 좌측 이미지 설정
-if (leftSprite != null)
-{
-    leftCharacterImage.sprite = leftSprite;
-    leftCharacterImage.gameObject.SetActive(true);
-    PlayDropInEffect(leftCharacterImage.rectTransform);
-}
-else
-{
-    leftCharacterImage.gameObject.SetActive(false);
-}
-
-// 우측 이미지 설정
-if (rightSprite != null)
-{
-    rightCharacterImage.sprite = rightSprite;
-    rightCharacterImage.gameObject.SetActive(true);
-     PlayDropInEffect(leftCharacterImage.rectTransform);
-}
-else
-{
-    rightCharacterImage.gameObject.SetActive(false);
-}
-
-        
-        // 대화 본 ID만 기록 (StartDialogueByIDs 통해 설정된 ID 사용)
-        if (currentDialogueIDs != null && dialogueIndex < currentDialogueIDs.Length)
-        {
-            seenIDs.Add(currentDialogueIDs[dialogueIndex]);
-        }
-
-bool hasCutscene = !string.IsNullOrEmpty(line.spritePath);
-if (hasCutscene)
-{
-    Sprite sprite = Resources.Load<Sprite>(line.spritePath);
-    if (sprite != null)
+    else if (EventTriggerZone.InstanceExists)
     {
-        cutsceneImage.sprite = sprite;
-        cutsceneImage.gameObject.SetActive(true);
-
-        // ✅ 검정 배경도 함께 활성화
-        if (cutsceneBackgroundImage != null)
-            cutsceneBackgroundImage.gameObject.SetActive(true);
-
-        // 흔들림 조건 체크
-        bool shouldShake = false;
-        if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+        var triggerEntries = EventTriggerZone.Instance.triggerDialogueEntries;
+        if (triggerEntries != null && dialogueIndex < triggerEntries.Length)
         {
-            shouldShake = currentDialogueEntries[dialogueIndex].shakeCutscene;
+            leftSprite = triggerEntries[dialogueIndex].leftSprite;
+            rightSprite = triggerEntries[dialogueIndex].rightSprite;
         }
-        else if (EventTriggerZone.InstanceExists)
+    }
+
+    // === 좌측 캐릭터 스프라이트 처리 ===
+    if (leftSprite != null)
+    {
+        leftCharacterImage.sprite = leftSprite;
+        leftCharacterImage.gameObject.SetActive(true);
+        PlayDropInEffect(leftCharacterImage.rectTransform);
+    }
+    else
+    {
+        leftCharacterImage.sprite = null; // [PATCH] 스프라이트 초기화 추가
+        leftCharacterImage.gameObject.SetActive(false);
+    }
+
+    // === 우측 캐릭터 스프라이트 처리 ===
+    if (rightSprite != null)
+    {
+        rightCharacterImage.sprite = rightSprite;
+        rightCharacterImage.gameObject.SetActive(true);
+        PlayDropInEffect(rightCharacterImage.rectTransform); // [PATCH] 잘못된 참조 수정
+    }
+    else
+    {
+        rightCharacterImage.sprite = null; // [PATCH] 스프라이트 초기화 추가
+        rightCharacterImage.gameObject.SetActive(false);
+    }
+
+    // 대화 ID 기록
+    if (currentDialogueIDs != null && dialogueIndex < currentDialogueIDs.Length)
+        seenIDs.Add(currentDialogueIDs[dialogueIndex]);
+
+    // 컷신 이미지 처리 (기존 로직 유지)
+    bool hasCutscene = !string.IsNullOrEmpty(line.spritePath);
+    if (hasCutscene)
+    {
+        Sprite sprite = Resources.Load<Sprite>(line.spritePath);
+        if (sprite != null)
         {
-            var triggerEntries = EventTriggerZone.Instance?.triggerDialogueEntries;
-            if (triggerEntries != null && dialogueIndex < triggerEntries.Length)
+            cutsceneImage.sprite = sprite;
+            cutsceneImage.gameObject.SetActive(true);
+
+            if (cutsceneBackgroundImage != null)
+                cutsceneBackgroundImage.gameObject.SetActive(true);
+
+            bool shouldShake = false;
+            if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
             {
-                shouldShake = triggerEntries[dialogueIndex].shakeCutscene;
+                shouldShake = currentDialogueEntries[dialogueIndex].shakeCutscene;
             }
-        }
+            else if (EventTriggerZone.InstanceExists)
+            {
+                var triggerEntries = EventTriggerZone.Instance?.triggerDialogueEntries;
+                if (triggerEntries != null && dialogueIndex < triggerEntries.Length)
+                    shouldShake = triggerEntries[dialogueIndex].shakeCutscene;
+            }
 
-        if (shouldShake)
+            if (shouldShake)
+                ShakeCutsceneImage(0.3f, 20f);
+        }
+        else
         {
-            ShakeCutsceneImage(0.3f, 20f);
+            Debug.LogWarning($"컷신 이미지 로드 실패: {line.spritePath}");
+            cutsceneImage.gameObject.SetActive(false);
+            if (cutsceneBackgroundImage != null)
+                cutsceneBackgroundImage.gameObject.SetActive(false);
         }
     }
     else
     {
-        Debug.LogWarning($"컷신 이미지 로드 실패: {line.spritePath}");
         cutsceneImage.gameObject.SetActive(false);
         if (cutsceneBackgroundImage != null)
             cutsceneBackgroundImage.gameObject.SetActive(false);
     }
-}
-else
-{
-    cutsceneImage.gameObject.SetActive(false);
-    if (cutsceneBackgroundImage != null)
-        cutsceneBackgroundImage.gameObject.SetActive(false);
-}
 
-
-
-        // ✅ 다이얼로그 박스 배경만 투명도 조절
-        if (dialogBoxBackgroundImage != null)
-        {
-            Color color = dialogBoxBackgroundImage.color;
-            color.a = hasCutscene ? 0f : 1f;
-            dialogBoxBackgroundImage.color = color;
-        }
-
-        // 대사 출력 (타이핑)
-        if (typingCoroutine != null)
-            StopCoroutine(typingCoroutine);
-
-        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
-        typingCoroutine = StartCoroutine(TypeText(line.text));
-        
+    // 다이얼로그 박스 투명도
+    if (dialogBoxBackgroundImage != null)
+    {
+        Color color = dialogBoxBackgroundImage.color;
+        color.a = hasCutscene ? 0f : 1f;
+        dialogBoxBackgroundImage.color = color;
     }
+
+    // 타이핑 효과
+    if (typingCoroutine != null)
+        StopCoroutine(typingCoroutine);
+    typingCoroutine = StartCoroutine(TypeText(line.text));
+}
+
 
    private IEnumerator TypeText(string text)
 {
@@ -405,20 +390,27 @@ else
 
     StopBlinkUX();
 
-    // 컷씬 이미지 비활성화
+    // 컷신 이미지 비활성화
     if (cutsceneImage != null)
         cutsceneImage.gameObject.SetActive(false);
 
     if (cutsceneBackgroundImage != null)
         cutsceneBackgroundImage.gameObject.SetActive(false);
 
-    // ✅ 좌우 캐릭터 이미지 비활성화
+    // [PATCH] 좌우 스프라이트도 null 처리
     if (leftCharacterImage != null)
+    {
+        leftCharacterImage.sprite = null;
         leftCharacterImage.gameObject.SetActive(false);
+    }
 
     if (rightCharacterImage != null)
+    {
+        rightCharacterImage.sprite = null;
         rightCharacterImage.gameObject.SetActive(false);
+    }
 }
+
 
     
     /// <summary>
