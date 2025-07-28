@@ -51,34 +51,30 @@ public class MapTransition : MonoBehaviour
             isBlockedExternally = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!isBlockedExternally)
-            {
-                StartCoroutine(Transition());
-            }
-            else
-            {
-                string failedQuestId = !string.IsNullOrEmpty(requiredComplteQuestId)
-                    ? requiredComplteQuestId
-                    : requiredinprogressQuestId;
-
-                Debug.Log($"❌ 이동 차단됨: 퀘스트 '{failedQuestId}' 조건 불충족");
-                StartInteractionCooldown(); // 쿨타임 적용
-            }
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            if (currentInteraction == null)
-                currentInteraction = this;
+{
+    if (!other.CompareTag("Player")) return;
+     if (!canInteract) return; 
 
-            isPlayerInRange = true;
+    // 조건 검사
+        if (!isBlockedExternally)
+        {
+            // 즉시 이동 시작
+            StartCoroutine(Transition());
         }
-    }
+        else
+        {
+            string failedQuestId = !string.IsNullOrEmpty(requiredComplteQuestId)
+                ? requiredComplteQuestId
+                : requiredinprogressQuestId;
+
+            Debug.Log($"❌ 이동 차단됨: 퀘스트 '{failedQuestId}' 조건 불충족");
+            StartInteractionCooldown(); // 쿨타임 적용
+        }
+}
+
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -140,6 +136,7 @@ public class MapTransition : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         isTransitioning = false;
+        StartInteractionCooldown();
     }
 
     private IEnumerator ZoomCamera(float fromSize, float toSize, float duration)

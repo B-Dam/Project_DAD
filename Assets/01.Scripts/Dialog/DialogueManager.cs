@@ -171,9 +171,15 @@ public UnityEngine.UI.Image rightCharacterImage;
     
    public void ResumeDialogue()
 {
+    // 라인 데이터가 없으면 종료
+    if (currentDialogueLines == null || currentDialogueLines.Length == 0)
+    {
+        EndDialogue(); // 완전 초기화
+        return;
+    }
+
     if (dialogueIndex >= currentDialogueLines.Length)
     {
-        Debug.LogWarning("❗ 대사 인덱스 초과로 Resume 실패");
         EndDialogue();
         return;
     }
@@ -183,6 +189,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     DisplayCurrentLine();
     dialogueStartTime = Time.time;
 }
+
 
 
   private void DisplayCurrentLine()
@@ -226,31 +233,33 @@ public UnityEngine.UI.Image rightCharacterImage;
         }
     }
 
-    // === 좌측 캐릭터 스프라이트 처리 ===
-    if (leftSprite != null)
-    {
-        leftCharacterImage.sprite = leftSprite;
-        leftCharacterImage.gameObject.SetActive(true);
-        PlayDropInEffect(leftCharacterImage.rectTransform);
-    }
-    else
-    {
-        leftCharacterImage.sprite = null; // [PATCH] 스프라이트 초기화 추가
-        leftCharacterImage.gameObject.SetActive(false);
-    }
+   // === 좌측 캐릭터 스프라이트 처리 ===
+if (leftSprite != null)
+{
+    leftCharacterImage.sprite = leftSprite;
+    leftCharacterImage.gameObject.SetActive(true);
+    PlayDropInEffect(leftCharacterImage.rectTransform);
+}
+else
+{
+    // null일 땐 무조건 초기화 후 비활성화
+    leftCharacterImage.sprite = null; 
+    leftCharacterImage.gameObject.SetActive(false);
+}
 
-    // === 우측 캐릭터 스프라이트 처리 ===
-    if (rightSprite != null)
-    {
-        rightCharacterImage.sprite = rightSprite;
-        rightCharacterImage.gameObject.SetActive(true);
-        PlayDropInEffect(rightCharacterImage.rectTransform); // [PATCH] 잘못된 참조 수정
-    }
-    else
-    {
-        rightCharacterImage.sprite = null; // [PATCH] 스프라이트 초기화 추가
-        rightCharacterImage.gameObject.SetActive(false);
-    }
+// === 우측 캐릭터 스프라이트 처리 ===
+if (rightSprite != null)
+{
+    rightCharacterImage.sprite = rightSprite;
+    rightCharacterImage.gameObject.SetActive(true);
+    PlayDropInEffect(rightCharacterImage.rectTransform);
+}
+else
+{
+    rightCharacterImage.sprite = null;
+    rightCharacterImage.gameObject.SetActive(false);
+}
+
 
     // 대화 ID 기록
     if (currentDialogueIDs != null && dialogueIndex < currentDialogueIDs.Length)
@@ -382,7 +391,7 @@ public UnityEngine.UI.Image rightCharacterImage;
         }
     }
 
-   public void EndDialogue()
+    public void EndDialogue(bool clearState = true)
 {
     isDialogueActive = false;
     dialoguePanel.SetActive(false);
@@ -397,7 +406,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     if (cutsceneBackgroundImage != null)
         cutsceneBackgroundImage.gameObject.SetActive(false);
 
-    // [PATCH] 좌우 스프라이트도 null 처리
+    // 스프라이트 초기화
     if (leftCharacterImage != null)
     {
         leftCharacterImage.sprite = null;
@@ -409,7 +418,17 @@ public UnityEngine.UI.Image rightCharacterImage;
         rightCharacterImage.sprite = null;
         rightCharacterImage.gameObject.SetActive(false);
     }
+
+    // **Combat 전환 시점에서는 clearState = false로 호출하여 데이터 유지**
+    if (clearState)
+    {
+        currentDialogueEntries = null;
+        currentDialogueLines = null;
+        currentDialogueIDs = null;
+        dialogueIndex = 0;
+    }
 }
+
 
 
     
@@ -519,6 +538,20 @@ private IEnumerator DropInAnimation(RectTransform target)
     target.anchoredPosition = originalPos;
 }
 
+public void HideDialogueSprites()
+{
+    if (leftCharacterImage != null)
+    {
+        leftCharacterImage.sprite = null;
+        leftCharacterImage.gameObject.SetActive(false);
+    }
+
+    if (rightCharacterImage != null)
+    {
+        rightCharacterImage.sprite = null;
+        rightCharacterImage.gameObject.SetActive(false);
+    }
+}
 
     public bool IsDialogueActive => isDialogueActive;
     public bool IsOnCooldown => Time.time - lastDialogueEndTime < dialogueCooldown;
