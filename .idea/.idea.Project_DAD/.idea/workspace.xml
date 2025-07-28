@@ -5,16 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/skill1-A_0 1.controller" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/skill1-A_0 1.controller.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/EnemyAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/EnemyAI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/TurnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/TurnManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/SpecialAttack/SpecialAbilityPanel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/SpecialAttack/SpecialAbilityPanel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/SpecialAttack/SpecialAbiltyUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/SpecialAttack/SpecialAbiltyUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/SpecialAttack/SpecialGaugeUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/SpecialAttack/SpecialGaugeUI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Battle_Awake.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Battle_Awake.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Battle_Awake_.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Battle_Awake_.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Skill1_1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Skill1_1.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Skill2_Awake.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Skill2_Awake.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Skill3_Awake.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Skill3_Awake.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/Special bar.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/Special bar.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +39,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/DeckUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/RetryButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/SpecialAttack/SpecialCardHover.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/SpecialAttack/SpecialCardIdle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/DeckIconHover.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/EndTurnHover.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/EnemyPanelHover.cs" root0="FORCE_HIGHLIGHTING" />
@@ -44,6 +49,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Quest/QuestGuideUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@57cef44123c7/Editor/TMP/TMP_BaseEditorPanel.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -151,12 +157,16 @@
       <workItem from="1753147857464" duration="8907000" />
       <workItem from="1753247648925" duration="12383000" />
       <workItem from="1753316411211" duration="7402000" />
+      <workItem from="1753416176393" duration="912000" />
+      <workItem from="1753444971368" duration="1053000" />
+      <workItem from="1753677878830" duration="20204000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />
