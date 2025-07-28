@@ -520,6 +520,24 @@ private IEnumerator DropInAnimation(RectTransform target)
 
     target.anchoredPosition = originalPos;
 }
+public void ResetDialogueState()
+{
+    currentDialogueEntries = null;
+    currentDialogueIDs = null;
+    currentDialogueLines = null;
+    dialogueIndex = 0;
+
+    if (leftCharacterImage != null)
+    {
+        leftCharacterImage.sprite = null;
+        leftCharacterImage.gameObject.SetActive(false);
+    }
+    if (rightCharacterImage != null)
+    {
+        rightCharacterImage.sprite = null;
+        rightCharacterImage.gameObject.SetActive(false);
+    }
+}
 
 
     public bool IsDialogueActive => isDialogueActive;

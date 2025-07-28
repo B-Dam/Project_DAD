@@ -80,9 +80,12 @@ public class CombatTriggerEvent : MonoBehaviour
         // 메인 UI 재활성화
         if (mainUI != null) mainUI.SetActive(true);
 
-        // 대화 재개 (안전하게 호출)
-        DialogueManager.Instance?.ResumeDialogue();
-
+    // 대화 상태 초기화 후 재개 (안전하게 호출)
+if (DialogueManager.Instance != null)
+{
+    DialogueManager.Instance.ResetDialogueState();
+    DialogueManager.Instance.ResumeDialogue();
+}
         // 모든 작업이 끝난 후 데이터 정리
         CombatDataHolder.Clear();
 
