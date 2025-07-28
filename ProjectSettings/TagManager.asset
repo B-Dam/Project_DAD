@@ -14,9 +14,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - NPC
+  - 
   - Water
   - UI
+  - NPC
+  - Player
   - Interact
   - 
   - 
@@ -29,12 +31,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Box
+  - Obstacle
+  - HintParticle
+  - PlayerBlocker
   - 
   - 
   - 
@@ -44,6 +44,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 648535975
+    locked: 0
+  - name: Entity
+    uniqueID: 3109121243
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
