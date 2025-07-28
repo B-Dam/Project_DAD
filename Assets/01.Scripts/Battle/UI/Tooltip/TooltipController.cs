@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 
@@ -10,14 +11,28 @@ public class TooltipController : MonoBehaviour
     [SerializeField] private GameObject panelRoot;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descText;
-
+    
+    [Header("페이드 시간")]
+    [SerializeField] private float fadeDuration = 0.2f;
+    
+    // panelRoot에 붙어 있을 CanvasGroup
+    private CanvasGroup cg;
+    
     void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        // 초기 숨김
-        panelRoot.SetActive(false);
+        // panelRoot에서 CanvasGroup을 가져오거나 없으면 추가
+        cg = panelRoot.GetComponent<CanvasGroup>();
+        if (cg == null) cg = panelRoot.AddComponent<CanvasGroup>();
+
+        // panelRoot는 항상 Active 상태로 두고, 
+        // 투명하게, 인터랙트/레이캐스트 차단 상태로 초기화
+        panelRoot.SetActive(true);
+        cg.alpha           = 0f;
+        cg.interactable    = false;
+        cg.blocksRaycasts  = false;
     }
 
     /// <summary>
@@ -45,11 +60,24 @@ public class TooltipController : MonoBehaviour
         );
         descText.text = formatted;
 
-        panelRoot.SetActive(true);
+        // 기존 트윈 중단
+        cg.DOKill();
+        // 인터랙트/레이캐스트 허용
+        cg.interactable   = true;
+        cg.blocksRaycasts = true;
+        // 알파 페이드인
+        cg.DOFade(1f, fadeDuration).SetEase(Ease.OutSine);
     }
 
     public void Hide()
     {
-        panelRoot.SetActive(false);
+        cg.DOKill();
+        cg.DOFade(0f, fadeDuration)
+          .SetEase(Ease.OutSine)
+          .OnComplete(() =>
+          {
+              cg.interactable   = false;
+              cg.blocksRaycasts = false;
+          });
     }
 }
