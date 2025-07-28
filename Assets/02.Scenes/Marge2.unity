@@ -3533,6 +3533,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1609692359625531809, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1620.0651
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609692359625531809, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 269.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609692359625531809, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -89.96046
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609692359625531809, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -26.2437
+      objectReference: {fileID: 0}
     - target: {fileID: 2580169632564823035, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_Name
       value: DialogueManager
@@ -3559,16 +3575,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3126555928509086650, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -264
+      value: -671
       objectReference: {fileID: 0}
     - target: {fileID: 3126555928509086650, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 84.195
+      value: 103
       objectReference: {fileID: 0}
     - target: {fileID: 3354859462667847240, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 3656849443288744708, guid: 84c45595c8b90cc4f8641ce3fb4dcc57, type: 3}
+      objectReference: {fileID: -5029442659480440913, guid: 4d8b7c309af422047a5d7ffdcddfb9a1, type: 3}
+    - target: {fileID: 3354859462667847240, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3670506951284655030, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_margin.x
       value: 427.63757
