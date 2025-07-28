@@ -2668,7 +2668,39 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 331021718651975162, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
     - target: {fileID: 647650642575536399, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 1552472758416143729, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 2141645326577698202, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 2243908729338786230, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 3602199462757374711, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 3722450660561815223, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 3938713611237714752, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 4319127828889444185, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 
       objectReference: {fileID: 1513215077}
@@ -2676,6 +2708,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Maps
       objectReference: {fileID: 0}
+    - target: {fileID: 5284267975683913862, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
     - target: {fileID: 6419051876124421261, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2716,7 +2752,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7700543047543250414, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 8044757984384480708, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 8719238154199637098, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 8989669917966667024, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
     - target: {fileID: 9182845072538552402, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: fadeCanvas
+      value: 
+      objectReference: {fileID: 1513215077}
+    - target: {fileID: 9213399856298834556, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 
       objectReference: {fileID: 1513215077}
