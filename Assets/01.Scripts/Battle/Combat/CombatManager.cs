@@ -34,6 +34,18 @@ public class CombatManager : MonoBehaviour
     public int playerAtkMod { get; private set; }
     public int enemyAtkMod  { get; private set; }
     
+    [Header("필살기 게이지")]
+    public int CurrentSpecialGauge { get; private set; }
+    public int MaxSpecialGauge { get; private set; } = 10;
+    public bool IsSpecialReady => CurrentSpecialGauge >= MaxSpecialGauge;
+    
+    // 반사 버프
+    private float playerReflectPercent = 0f;
+    private int   reflectTurnsRemaining = 0;
+    
+    // 기절 디버프
+    public int enemyStunTurns = 0;
+    
     // 전투 중인지 확인용
     public bool IsInCombat { get; set; }
     
@@ -46,6 +58,10 @@ public class CombatManager : MonoBehaviour
     public event Action OnEnemyHit;
     public event Action OnPlayerDeath;
     public event Action OnEnemyDeath;
+    
+    // 필살기 게이지 변화 이벤트
+    public event Action<int, int> OnSpecialGaugeChanged;
+    public event Action OnSpecialReady;
     
     // 캐릭터 공격력, 방어력 가져오기
     public int PlayerBaseAtk => DataManager.Instance.playerData.atk;
@@ -64,6 +80,9 @@ public class CombatManager : MonoBehaviour
             Instance = this;
         }
         else Destroy(gameObject);
+        
+        // 필살기 게이지 초기화
+        CurrentSpecialGauge = 0;
     }
 
     void Start()
@@ -150,6 +169,17 @@ public class CombatManager : MonoBehaviour
     // 턴 종료 시 호출될 메서드: 모디파이어만 감소시키고 UI 갱신
     void OnEnemyTurnEnd()
     {
+        // 반사 버프 턴 감소
+        if (reflectTurnsRemaining > 0)
+        {
+            if (--reflectTurnsRemaining == 0)
+                playerReflectPercent = 0f;
+        }
+        
+        // 기절 턴 감소 (적 턴 넘어가기 전에)
+        if (enemyStunTurns > 0)
+            enemyStunTurns--;
+        
         UpdateModifiers(enemyAttackMods);
         RecalculateModifiers();
         OnStatsChanged?.Invoke();
@@ -208,6 +238,13 @@ public class CombatManager : MonoBehaviour
             {
                 int shielded = Mathf.Min(playerShield, rawAttack);
                 playerShield -= shielded;
+                
+                // 반사: 실제 입힌(rawAttack) 양의 50%를 돌려주기
+                if (playerReflectPercent > 0f && rawAttack > 0)
+                {
+                    int reflectDamage = Mathf.RoundToInt(rawAttack * playerReflectPercent);
+                    SpecialAttack(reflectDamage);
+                }
                 
                 // 플레이어 데미지
                 playerHp     = Mathf.Max(0, playerHp - (rawAttack - shielded));
@@ -294,5 +331,70 @@ public class CombatManager : MonoBehaviour
         {
             Debug.Log("Defeat...");
         }
+    }
+    
+    // 필살기 게이지 획득 (합성, 카드 사용 시 호출)
+    public void GainSpecialGauge(int amount = 1)
+    {
+        // 최대치일때 return
+        if (CurrentSpecialGauge >= MaxSpecialGauge) return;
+
+        // 현재 게이지에 amount 추가, 최대치를 넘으면 최대치로 수치 고정
+        CurrentSpecialGauge = Mathf.Min(CurrentSpecialGauge + amount, MaxSpecialGauge);
+        OnSpecialGaugeChanged?.Invoke(CurrentSpecialGauge, MaxSpecialGauge);
+
+        // 게이지가 최대치라면
+        if (IsSpecialReady)
+            OnSpecialReady?.Invoke();
+    }
+
+    // 필살기 발동 직후 호출 : 게이지 초기화
+    public void ConsumeSpecialGauge()
+    {
+        // 게이지 초기화
+        CurrentSpecialGauge = 0;
+        OnSpecialGaugeChanged?.Invoke(CurrentSpecialGauge, MaxSpecialGauge);
+    }
+    
+    // 필살기 : 물기
+    public void SpecialAttack(int amount)
+    {
+        // 데미지 음수 보정
+        int dmg = Mathf.Max(0, amount);
+        
+        // 실드 무시 - 직접 피해
+        enemyHp = Mathf.Max(0, enemyHp - dmg);
+
+        // UI, 이펙트 갱신
+        OnStatsChanged?.Invoke();
+        OnEnemyHit?.Invoke();
+
+        // 죽음 체크
+        if (enemyHp <= 0)
+            OnEnemyDeath?.Invoke();
+    }
+
+    // 필살기 : 웅크리기
+    public void SpecialShield(int amount)
+    {
+        playerShield += amount;
+        OnStatsChanged?.Invoke();
+    }
+
+    // 필살기 : 으르렁거리기 (기절)
+    public void SpecialStun(int turns)
+    {
+        enemyStunTurns = turns;
+        OnStatsChanged?.Invoke();
+    }
+    
+    /// <summary>
+    /// 받은 피해의 일정 비율을 반사하는 버프를 건다.
+    /// </summary>
+    public void AddReflectBuff(float percent, int turns)
+    {
+        playerReflectPercent = percent;
+        reflectTurnsRemaining = turns;
+        OnStatsChanged?.Invoke();
     }
 }

@@ -54,10 +54,10 @@ public class OffscreenWatcher : MonoBehaviour
     {
         if (targets.Count == 0)
         {
-            callback?.Invoke();
+            callback?.Invoke();//  감시할 대상이 이미 없으면 바로 실행
             return;
         }
 
-        onAllRemovedCallback = callback;
+        onAllRemovedCallback = callback;//  아직 감시할 대상이 남아있으면 저장해둠
     }
 }
