@@ -34,9 +34,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.6334, y: -52.8755}
+  m_AnchoredPosition: {x: 30, y: -9}
   m_SizeDelta: {x: 1673.1189, y: 322.867}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.587893, y: 0.6095431}
 --- !u!222 &5610033011869582844
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -171,7 +171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 757, y: -92}
+  m_AnchoredPosition: {x: 679, y: -72.752}
   m_SizeDelta: {x: 180.3661, y: 145.5034}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6922521063173240380
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4000199320789645370, guid: 41d0e4ef43eddf441b976c07bb6a192a, type: 3}
+  m_Sprite: {fileID: 8713063509748580771, guid: 3d04e56e870623747ae3d0b8c494243c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -380,8 +380,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -18.4684, y: -352.44}
+  m_SizeDelta: {x: 1659.1652, y: 316.43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3638830125440712916
 CanvasRenderer:
@@ -404,14 +404,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -5029442659480440913, guid: 4d8b7c309af422047a5d7ffdcddfb9a1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -467,7 +467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -328.4812, y: 119}
+  m_AnchoredPosition: {x: -585, y: 92.703}
   m_SizeDelta: {x: 351.4097, y: 48.725}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9060536918408040114
