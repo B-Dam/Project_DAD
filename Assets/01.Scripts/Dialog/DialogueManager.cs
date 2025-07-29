@@ -171,9 +171,15 @@ public UnityEngine.UI.Image rightCharacterImage;
     
    public void ResumeDialogue()
 {
+    // 라인 데이터가 없으면 종료
+    if (currentDialogueLines == null || currentDialogueLines.Length == 0)
+    {
+        EndDialogue(); // 완전 초기화
+        return;
+    }
+
     if (dialogueIndex >= currentDialogueLines.Length)
     {
-        Debug.LogWarning("❗ 대사 인덱스 초과로 Resume 실패");
         EndDialogue();
         return;
     }
@@ -183,6 +189,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     DisplayCurrentLine();
     dialogueStartTime = Time.time;
 }
+
 
 
   private void DisplayCurrentLine()
@@ -384,7 +391,7 @@ else
         }
     }
 
-   public void EndDialogue()
+    public void EndDialogue(bool clearState = true)
 {
     isDialogueActive = false;
     dialoguePanel.SetActive(false);
@@ -399,7 +406,7 @@ else
     if (cutsceneBackgroundImage != null)
         cutsceneBackgroundImage.gameObject.SetActive(false);
 
-    // [PATCH] 좌우 스프라이트도 null 처리
+    // 스프라이트 초기화
     if (leftCharacterImage != null)
     {
         leftCharacterImage.sprite = null;
@@ -411,7 +418,17 @@ else
         rightCharacterImage.sprite = null;
         rightCharacterImage.gameObject.SetActive(false);
     }
+
+    // **Combat 전환 시점에서는 clearState = false로 호출하여 데이터 유지**
+    if (clearState)
+    {
+        currentDialogueEntries = null;
+        currentDialogueLines = null;
+        currentDialogueIDs = null;
+        dialogueIndex = 0;
+    }
 }
+
 
 
     
@@ -521,6 +538,20 @@ private IEnumerator DropInAnimation(RectTransform target)
     target.anchoredPosition = originalPos;
 }
 
+public void HideDialogueSprites()
+{
+    if (leftCharacterImage != null)
+    {
+        leftCharacterImage.sprite = null;
+        leftCharacterImage.gameObject.SetActive(false);
+    }
+
+    if (rightCharacterImage != null)
+    {
+        rightCharacterImage.sprite = null;
+        rightCharacterImage.gameObject.SetActive(false);
+    }
+}
 
     public bool IsDialogueActive => isDialogueActive;
     public bool IsOnCooldown => Time.time - lastDialogueEndTime < dialogueCooldown;
