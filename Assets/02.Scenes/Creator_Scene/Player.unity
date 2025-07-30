@@ -1293,12 +1293,20 @@ PrefabInstance:
       value: battleeffect_skill2_0
       objectReference: {fileID: 0}
     - target: {fileID: 5483004630500896999, guid: ff4bcd129ec383243bcb0d6fb44c7abb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.408
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483004630500896999, guid: ff4bcd129ec383243bcb0d6fb44c7abb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.6468
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483004630500896999, guid: ff4bcd129ec383243bcb0d6fb44c7abb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.4150253
+      value: -1.31
       objectReference: {fileID: 0}
     - target: {fileID: 5483004630500896999, guid: ff4bcd129ec383243bcb0d6fb44c7abb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.0749364
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5483004630500896999, guid: ff4bcd129ec383243bcb0d6fb44c7abb, type: 3}
       propertyPath: m_LocalPosition.z
