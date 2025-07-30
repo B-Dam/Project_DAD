@@ -24,9 +24,13 @@ public class CombatTriggerEvent : MonoBehaviour
     {
         if (hasTriggered) return;  // 이미 실행됐으면 무시
         hasTriggered = true;
-        // 대화 컷씬 숨기기
-        if (DialogueManager.Instance != null)
-            DialogueManager.Instance.EndDialogue();
+    // 대화 UI 숨기되 데이터는 유지하되 스프라이트는 꺼버림
+    if (DialogueManager.Instance != null)
+    {
+        DialogueManager.Instance.HideDialogueSprites(); // 새 메서드 추가
+        DialogueManager.Instance.EndDialogue(clearState: false);
+    }
+
 
         // UI 숨기기
         if (mainUI != null) mainUI.SetActive(false);

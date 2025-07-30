@@ -11,37 +11,37 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/001.unity
     guid: 09c03d8da0d955841b08735659585ce8
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/002.unity
     guid: 6da7eac5bd92b354d82669b88f5d3249
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/101.unity
     guid: 65c31b760bdb8614a889ffc4e7f4b90d
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/102.unity
     guid: 32215c8a31fc55b42a82b2de972643f1
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/103.unity
     guid: 7da61af8c5b23e745b2365e1cc75b3df
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/104.unity
     guid: 5ee5c510c23529b4ab6504a28914b84f
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/105.unity
     guid: 912df23d1f681324d8503f46405b1bd3
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/106.unity
     guid: 5dd7e38758c8d054ea8c127985539750
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/107.unity
     guid: b960fbc916997554eacc1668d0a75c88
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/108.unity
     guid: 69696d3bc6f12c343970ac6f5504e290
-  - enabled: 1
+  - enabled: 0
     path: Assets/02.Scenes/Maps/109.unity
     guid: fe371d4fe01973d43bc1db9ed60a5869
   - enabled: 1
