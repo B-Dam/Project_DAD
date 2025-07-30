@@ -1,0 +1,317 @@
+fileFormatVersion: 2
+guid: 8a321570dbddc034baaf2d531c4e3817
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1366944193959670983
+    second: catclow_effect_0
+  - first:
+      213: 7715849478937171574
+    second: catclow_effect_1
+  - first:
+      213: 161141999509403004
+    second: catclow_effect_2
+  - first:
+      213: 2559505066439884073
+    second: catclow_effect_3
+  - first:
+      213: -6985715966972124697
+    second: catclow_effect_4
+  - first:
+      213: 3752500036204275627
+    second: catclow_effect_5
+  - first:
+      213: -741390314756384416
+    second: catclow_effect_6
+  - first:
+      213: -5723125967227785770
+    second: catclow_effect_7
+  - first:
+      213: 3915938447825090034
+    second: catclow_effect_8
+  - first:
+      213: 1761554135621788118
+    second: catclow_effect_9
+  - first:
+      213: -2210993756806094503
+    second: catclow_effect_10
+  - first:
+      213: 1163686920911994158
+    second: catclow_effect_11
+  - first:
+      213: -405547398300403205
+    second: catclow_effect_12
+  - first:
+      213: 5881726741328612763
+    second: catclow_effect_13
+  - first:
+      213: -2489598591185696466
+    second: catclow_effect_14
+  - first:
+      213: -62863730051160580
+    second: catclow_effect_15
+  - first:
+      213: -4063159952898888739
+    second: catclow_effect_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: catclow_effect_0
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 36
+        width: 64
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c4bfb4808c58f210800000000000000
+      internalID: 1366944193959670983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: catclow_effect_1
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 36
+        width: 62
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 676de648834341b60800000000000000
+      internalID: 7715849478937171574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: catclow_effect_2
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 37
+        width: 59
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7577277bcd7c3200800000000000000
+      internalID: 161141999509403004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: catclow_effect_3
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 37
+        width: 50
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92d36fd0c40358320800000000000000
+      internalID: 2559505066439884073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: catclow_effect_4
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 35
+        width: 59
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e12ad60750cd0f90800000000000000
+      internalID: -6985715966972124697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: catclow_effect_5
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 34
+        width: 63
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba7a89db6ee831430800000000000000
+      internalID: 3752500036204275627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 62a76419e9b780c46b71183c984dbcaa
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      catclow_effect_0: 1366944193959670983
+      catclow_effect_1: 7715849478937171574
+      catclow_effect_10: -2210993756806094503
+      catclow_effect_11: 1163686920911994158
+      catclow_effect_12: -405547398300403205
+      catclow_effect_13: 5881726741328612763
+      catclow_effect_14: -2489598591185696466
+      catclow_effect_15: -62863730051160580
+      catclow_effect_16: -4063159952898888739
+      catclow_effect_2: 161141999509403004
+      catclow_effect_3: 2559505066439884073
+      catclow_effect_4: -6985715966972124697
+      catclow_effect_5: 3752500036204275627
+      catclow_effect_6: -741390314756384416
+      catclow_effect_7: -5723125967227785770
+      catclow_effect_8: 3915938447825090034
+      catclow_effect_9: 1761554135621788118
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
