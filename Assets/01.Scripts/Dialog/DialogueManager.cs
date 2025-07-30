@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,6 +55,9 @@ public UnityEngine.UI.Image rightCharacterImage;
     [Header("컷씬 이미지")]
     public UnityEngine.UI.Image cutsceneImage;
 
+
+
+    public string CurrentDialogueID { get; private set; }
     private void Awake()
     {
         if (Instance == null)
@@ -165,7 +168,7 @@ public UnityEngine.UI.Image rightCharacterImage;
         DisplayCurrentLine();
     }
 
-    onDialogueEndCallback?.Invoke();
+    //onDialogueEndCallback?.Invoke();
 }
 
     
@@ -263,7 +266,10 @@ else
 
     // 대화 ID 기록
     if (currentDialogueIDs != null && dialogueIndex < currentDialogueIDs.Length)
-        seenIDs.Add(currentDialogueIDs[dialogueIndex]);
+        {
+            CurrentDialogueID = currentDialogueIDs[dialogueIndex];
+            seenIDs.Add(currentDialogueIDs[dialogueIndex]);
+        }
 
     // 컷신 이미지 처리 (기존 로직 유지)
     bool hasCutscene = !string.IsNullOrEmpty(line.spritePath);
@@ -418,9 +424,18 @@ else
         rightCharacterImage.sprite = null;
         rightCharacterImage.gameObject.SetActive(false);
     }
+        //  현재 종료된 마지막 대사 ID 저장
+        if (currentDialogueIDs != null && currentDialogueIDs.Length > 0)
+        {
+            CurrentDialogueID = currentDialogueIDs[currentDialogueIDs.Length - 1];
+        }
 
-    // **Combat 전환 시점에서는 clearState = false로 호출하여 데이터 유지**
-    if (clearState)
+        // 콜백 실행
+        onDialogueEndCallback?.Invoke();
+        onDialogueEndCallback = null;
+
+        // **Combat 전환 시점에서는 clearState = false로 호출하여 데이터 유지**
+        if (clearState)
     {
         currentDialogueEntries = null;
         currentDialogueLines = null;
