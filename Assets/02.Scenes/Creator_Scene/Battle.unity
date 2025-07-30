@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -175.99998}
+  m_AnchoredPosition: {x: 0, y: -148}
   m_SizeDelta: {x: 310, y: 41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &498597
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4240579064829935649, guid: 47ba4a5c0bde6a044b8e5dd42dcd9c98, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47ba4a5c0bde6a044b8e5dd42dcd9c98, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -578,7 +578,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -175, y: -200}
+  m_AnchoredPosition: {x: -160, y: -175}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &85351731
@@ -3563,8 +3563,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1185846053
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayer: -1
+  m_SortingOrder: 11
   m_Sprite: {fileID: -8857846866928009903, guid: 8005052be78be4a4894a07045dedece0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3586,7 +3586,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.4992137, y: 2.1996853, z: 90}
-  m_LocalScale: {x: 1.9997143, y: 1.9997143, z: 0.9998571}
+  m_LocalScale: {x: 1.9997144, y: 1.9997144, z: 0.9998572}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4091,7 +4091,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -587.00006, y: 22.700012}
+  m_AnchoredPosition: {x: -587.00006, y: 53}
   m_SizeDelta: {x: 310, y: 31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &854401928
@@ -5598,8 +5598,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1185846053
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayer: -1
+  m_SortingOrder: 11
   m_Sprite: {fileID: -1263595926981062573, guid: 41d0e4ef43eddf441b976c07bb6a192a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -5994,7 +5994,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -175, y: -200}
+  m_AnchoredPosition: {x: -160, y: -200}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1307032431
@@ -6233,6 +6233,7 @@ RectTransform:
   - {fileID: 1298273554}
   - {fileID: 507869504}
   - {fileID: 658588196}
+  - {fileID: 321909478}
   - {fileID: 240306910}
   - {fileID: 1933695974}
   - {fileID: 1689604632}
@@ -6243,7 +6244,6 @@ RectTransform:
   - {fileID: 1783987708}
   - {fileID: 1529885309}
   - {fileID: 1004380695}
-  - {fileID: 321909478}
   - {fileID: 601641788}
   m_Father: {fileID: 155446870}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7051,7 +7051,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4240579064829935649, guid: 47ba4a5c0bde6a044b8e5dd42dcd9c98, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47ba4a5c0bde6a044b8e5dd42dcd9c98, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7214,6 +7214,17 @@ MonoBehaviour:
   attackPause: 1
   gameUIGroup: {fileID: 1322636540}
   retryPanel: {fileID: 1887470779}
+  biteEffect: {fileID: 4215940039646727704, guid: a78412fe619578643b4e04a4e2e1d890, type: 3}
+  barkEffect: {fileID: 2369284593398593820, guid: 956476abbcd0a8e4a9f9dbd3ebcd84a6, type: 3}
+  defEffect: {fileID: 526539250856274839, guid: ff4bcd129ec383243bcb0d6fb44c7abb, type: 3}
+  scratchEffect: {fileID: 0}
+  specialEffects:
+  - {fileID: 4917976818731861561, guid: 51f2873540abea74e81784cf61602717, type: 3}
+  - {fileID: 2546711292927318450, guid: b86a1f777c80b824994875090ac85eb6, type: 3}
+  - {fileID: 5355259168987273071, guid: 97929137c188eb140b6f2e5024ca3a89, type: 3}
+  buffEffect: {fileID: 0}
+  debuffEffect: {fileID: 0}
+  effectOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1518620790
 GameObject:
   m_ObjectHideFlags: 0
@@ -7613,7 +7624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -176}
+  m_AnchoredPosition: {x: 0, y: -148}
   m_SizeDelta: {x: 310, y: 41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1633803003
@@ -14145,7 +14156,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 648535975
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &1933695973
@@ -15002,7 +15013,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4240579064829935649, guid: 47ba4a5c0bde6a044b8e5dd42dcd9c98, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47ba4a5c0bde6a044b8e5dd42dcd9c98, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15997,9 +16008,9 @@ SceneRoots:
   - {fileID: 1498984451}
   - {fileID: 439628890}
   - {fileID: 1898337810}
-  - {fileID: 155446870}
-  - {fileID: 1455925683}
   - {fileID: 1262123239}
   - {fileID: 739079130}
+  - {fileID: 155446870}
+  - {fileID: 1455925683}
   - {fileID: 2904716441138077253}
   - {fileID: 504890818}

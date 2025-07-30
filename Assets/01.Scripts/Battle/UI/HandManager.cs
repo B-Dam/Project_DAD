@@ -52,7 +52,7 @@ public class HandManager : MonoBehaviour
     public int currentAP
     {
         get => _currentAP;
-        private set
+        set
         {
             _currentAP = value;
             RefreshCardPulse();
@@ -236,7 +236,7 @@ public class HandManager : MonoBehaviour
 
         // AP 차감, 효과 적용
         currentAP -= cv.data.costAP;
-        CombatUI.instance.UpdateAP(currentAP);
+        CombatUI.Instance.UpdateAP(currentAP);
         
         // 필살기 게이지 증가
         CombatManager.Instance.GainSpecialGauge(10);
@@ -293,8 +293,8 @@ public class HandManager : MonoBehaviour
 
         // AP 차감
         currentAP -= combineAPCost;
-        CombatUI.instance.UpdateAP(currentAP);
-        CombatUI.instance.UpdateUI();
+        CombatUI.Instance.UpdateAP(currentAP);
+        CombatUI.Instance.UpdateUI();
         
         // 필살기 게이지 획득
         CombatManager.Instance.GainSpecialGauge(2);

@@ -7,10 +7,23 @@
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSceneController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSceneController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSetupData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSetupData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Barrier/Barrier_Idle.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Battle/Barrier/Barrier_Idle.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill1_0.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill1_0.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill1_11.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill1_11.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill2_0.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill2_0.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill2_6.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill2_6.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill3_0.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill3_0.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill3_1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill3_1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef1.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef1_Awake.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef1_Awake.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef2_Awake.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef2_Awake.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef3.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef3.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef3_Awake.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef3_Awake.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/mono_battle_ef2.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/mono_battle_ef2.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/Card Back.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/Card Back.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

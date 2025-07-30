@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
 
 public enum ModifierType
 {
@@ -66,6 +64,10 @@ public class CombatManager : MonoBehaviour
     public event Action OnEnemyHit;
     public event Action OnPlayerDeath;
     public event Action OnEnemyDeath;
+    // 버프/디버프 발생 이벤트
+    public event Action<bool /*isPlayer*/, bool /*isBuff*/> OnStatusEffectApplied;
+    // 필살기 발생 이벤트 (0:Attack,1:Shield,2:Stun)
+    public event Action<int /*specialIdx*/> OnSpecialUsed;
     
     // 필살기 게이지 변화 이벤트
     public event Action<int, int> OnSpecialGaugeChanged;
@@ -193,6 +195,23 @@ public class CombatManager : MonoBehaviour
 
     void OnPlayerTurnStart()
     {
+        // 1) 환경 보너스 포함해서 actionPoints 재설정
+        int bonusAP = ShouldApplyEnvEffect() ? currentEnvironment.apBonus : 0;
+        actionPoints = baseActionPoints + bonusAP;
+
+        // 2) HandManager.currentAP 에 반영
+        if (HandManager.Instance != null)
+        {
+            HandManager.Instance.currentAP = actionPoints;
+        }
+
+        // 3) CombatUI 에서 텍스트 갱신
+        var ui = CombatUI.Instance;
+        if (ui != null)
+        {
+            ui.UpdateUI();
+        }
+        
         // UI 갱신
         OnStatsChanged?.Invoke();
     }
@@ -319,12 +338,15 @@ public class CombatManager : MonoBehaviour
 
         // 공격력 버프
         if (data.effectAttackIncreaseValue != 0 && data.effectTurnValue > 0)
+        {
             AddAttackModifier(
                 isPlayer,
                 ModifierType.AttackBuff,
                 data.effectAttackIncreaseValue,
                 data.effectTurnValue
             );
+            OnStatusEffectApplied?.Invoke(isPlayer, true); // 강화 이펙트
+        }
 
         // 공격력 디버프
         if (data.effectAttackDebuffValue != 0 && data.effectTurnValue > 0)
@@ -343,6 +365,8 @@ public class CombatManager : MonoBehaviour
                 -debuffValue,
                 data.effectTurnValue
             );
+            
+            OnStatusEffectApplied?.Invoke(!isPlayer, false); // 약화 이펙트
         }
 
         RecalculateModifiers();
@@ -429,7 +453,9 @@ public class CombatManager : MonoBehaviour
         // UI, 이펙트 갱신
         OnStatsChanged?.Invoke();
         OnEnemyHit?.Invoke();
-
+        
+        OnSpecialUsed?.Invoke(0);
+        
         // 죽음 체크
         if (enemyHp <= 0)
             OnEnemyDeath?.Invoke();
@@ -440,6 +466,7 @@ public class CombatManager : MonoBehaviour
     {
         playerShield += amount;
         OnStatsChanged?.Invoke();
+        OnSpecialUsed?.Invoke(1);
     }
 
     // 필살기 : 으르렁거리기 (기절)
@@ -447,6 +474,7 @@ public class CombatManager : MonoBehaviour
     {
         enemyStunTurns = turns;
         OnStatsChanged?.Invoke();
+        OnSpecialUsed?.Invoke(2);
     }
     
     /// <summary>
