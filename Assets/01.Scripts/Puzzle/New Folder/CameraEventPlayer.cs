@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class CameraEventPlayer : MonoBehaviour
 {
     public static CameraEventPlayer Instance;
 
-    private Transform cam;
+    [Header("시네머신 가상 카메라")]
+    public CinemachineCamera virtualCam;
+
+    [Header("기본 따라갈 대상 (보통 플레이어)")]
+    public Transform defaultFollowTarget;
+
     private Coroutine currentRoutine;
 
     private void Awake()
     {
         Instance = this;
-        cam = Camera.main.transform;
     }
 
     /// <summary>
     /// 카메라를 목표 위치로 부드럽게 이동한 후 작업을 수행하고, 원래대로 돌아옴
     /// </summary>
-    /// <param name="target">카메라가 이동할 대상 위치</param>
-    /// <param name="duration">이동 소요 시간</param>
-    /// <param name="holdTime">머무는 시간</param>
-    /// <param name="onReachedTarget">카메라 도착 후 실행할 작업 (예: 문 열기)</param>
     public void PlayCameraSequence(Transform target, float duration, float holdTime, Action onReachedTarget = null)
     {
         if (currentRoutine != null)
@@ -32,31 +33,44 @@ public class CameraEventPlayer : MonoBehaviour
 
     private IEnumerator CameraSequence(Transform target, float duration, float holdTime, Action onReachedTarget)
     {
-        Vector3 originalPos = cam.position;
-        Vector3 targetPos = new Vector3(target.position.x, target.position.y, originalPos.z);
+        if (virtualCam == null || defaultFollowTarget == null)
+        {
+            Debug.LogError("❌ virtualCam 또는 defaultFollowTarget이 할당되지 않았습니다!");
+            yield break;
+        }
 
         // 입력 잠금
-        if (TestPlayerController.Instance != null)
+        if (PlayerController.Instance != null)
         {
-            TestPlayerController.Instance.SetVelocity(Vector2.zero); //  이동 정지
-            TestPlayerController.Instance.enabled = false;            //  입력 차단
+            PlayerController.Instance.SetVelocity(Vector2.zero);
+            PlayerController.Instance.enabled = false;
         }
-        // 카메라 이동
-        yield return StartCoroutine(MoveSmooth(cam, originalPos, targetPos, duration));
 
-        // 도착 후 콜백 실행
+        // 1. Follow 타겟을 일시적으로 이벤트 위치로 전환
+        GameObject tempTarget = new GameObject("TempCameraTarget");
+        tempTarget.transform.position = virtualCam.transform.position; // 현재 위치에서 시작
+        virtualCam.Follow = tempTarget.transform;
+
+        // 2. 부드럽게 이동
+        yield return StartCoroutine(MoveSmooth(tempTarget.transform, tempTarget.transform.position, target.position, duration));
+
+        // 3. 도착 후 콜백
         onReachedTarget?.Invoke();
 
         yield return new WaitForSeconds(holdTime);
 
-        // 카메라 원래 위치로 복귀
-        yield return StartCoroutine(MoveSmooth(cam, targetPos, originalPos, duration));
+        // 4. 원래 위치로 되돌아오기
+        yield return StartCoroutine(MoveSmooth(tempTarget.transform, tempTarget.transform.position, defaultFollowTarget.position, duration));
+
+        // 5. Follow 다시 플레이어로
+        virtualCam.Follow = defaultFollowTarget;
+        Destroy(tempTarget);
 
         // 입력 해제
-        if (TestPlayerController.Instance != null)
+        if (PlayerController.Instance != null)
         {
-            TestPlayerController.Instance.SetVelocity(Vector2.zero); //  멈춰있는 상태 유지
-            TestPlayerController.Instance.enabled = true;
+            PlayerController.Instance.SetVelocity(Vector2.zero);
+            PlayerController.Instance.enabled = true;
         }
     }
 

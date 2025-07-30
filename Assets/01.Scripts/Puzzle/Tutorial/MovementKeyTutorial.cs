@@ -1,25 +1,30 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class MovementKeyTutorial : MonoBehaviour
 {
+    [Header("튜토리얼 UI 관련")]
     public GameObject tutorialPanel; // 전체 키 튜토리얼 UI
     public Image wKey, aKey, sKey, dKey, spaceKey; // 각 키 이미지
     public Color defaultColor = Color.white;
     public Color pressedColor = Color.red;
 
     public string targetMapID = "001"; // 특정 맵 ID
+
+
     private bool isTutorialActive = false;
 
     void Start()
     {
-        tutorialPanel.SetActive(false); // 기본은 비활성화
-        CheckTutorialCondition();
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false); // 기본은 비활성화
+        //CheckTutorialCondition();
     }
 
     void Update()
     {
-        CheckTutorialCondition();
+        //CheckTutorialCondition();
 
         if (!isTutorialActive) return;
 
@@ -44,24 +49,35 @@ public class MovementKeyTutorial : MonoBehaviour
         else
             img.color = defaultColor;
     }
-
-    void CheckTutorialCondition()
+    public void ShowTutorial()
     {
-        if (MapManager.Instance == null) return;
-
-        string currentMap = MapManager.Instance.currentMapID;
-
-        // 조건 만족 → 켜기
-        if (currentMap == targetMapID && !isTutorialActive)
-        {
-            tutorialPanel.SetActive(true);
-            isTutorialActive = true;
-        }
-        // 조건 불만족 → 끄기
-        else if (currentMap != targetMapID && isTutorialActive)
-        {
-            tutorialPanel.SetActive(false);
-            isTutorialActive = false;
-        }
+        tutorialPanel.SetActive(true);
+        isTutorialActive = true;
+    }
+    public void HideTutorial()
+    {
+        tutorialPanel.SetActive(false);
+        isTutorialActive = false;
     }
 }
+    //mapID로 판단하여 끄고 키기
+    //void CheckTutorialCondition()
+    //{
+    //    if (MapManager.Instance == null) return;
+
+    //    string currentMap = MapManager.Instance.currentMapID;
+
+    //    // 조건 만족 → 켜기
+    //    if (currentMap == targetMapID && !isTutorialActive)
+    //    {
+    //        tutorialPanel.SetActive(true);
+    //        isTutorialActive = true;
+    //    }
+    //    // 조건 불만족 → 끄기
+    //    else if (currentMap != targetMapID && isTutorialActive)
+    //    {
+    //        tutorialPanel.SetActive(false);
+    //        isTutorialActive = false;
+    //    }
+    //}
+//}
