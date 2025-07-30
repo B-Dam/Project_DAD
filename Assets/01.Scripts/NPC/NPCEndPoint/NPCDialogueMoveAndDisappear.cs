@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueEventTrigger : MonoBehaviour
+/// <summary>
+/// NPC가 대사(Dialogue)를 마친 후,
+/// 지정된 경로로 이동(Move)한 뒤,
+/// 자동으로 사라짐(Disappear).
+/// </summary>
+public class NPCDialogueMoveAndDisappear : MonoBehaviour
 {
     public OffscreenWatcher offscreenWatcher;
     public InteractHintController hintController;
@@ -29,31 +34,19 @@ public class DialogueEventTrigger : MonoBehaviour
     */
     void Update()
     {
-        if (hasTriggered || DialogueManager.Instance == null)
+        if (hasTriggered || DialogueManager.Instance == null) return;
+
+        if (DialogueManager.Instance.IsDialogueActive)
         {
-            return;
-        }
-        if (!DialogueManager.Instance.IsDialogueActive)
-        {
-            //플레이어가 지금까지 본 대사들의 ID 목록을 저장한 배열
-            //DialogueManager에서 출력한 대사를 넣음
-            string[] seenIDs = DialogueManager.Instance.GetAllSeenIDs();
-
-            if (seenIDs.Length == 0) return;
-
-            //마지막으로 본 대사 ID, 즉 방금 출력된 가장 최신 대사 ID
-            string lastSeenID = seenIDs[seenIDs.Length - 1];
-
-            if (triggerIDs.Contains(lastSeenID))
+            string currentID = DialogueManager.Instance.CurrentDialogueID;
+            if (triggerIDs.Contains(currentID))
             {
-                //  즉시 이동시키지 않고 콜백 등록
-                DialogueManager.Instance.RegisterOnDialogueEndCallback(OnDialogueEnded);
                 hasTriggered = true;
-                Debug.Log($" 대사 '{lastSeenID}' 종료 콜백 등록 완료");
-
+                DialogueManager.Instance.RegisterOnDialogueEndCallback(OnDialogueEnded);
+                Debug.Log($"▶ 대사 '{currentID}' 종료 콜백 등록");
             }
-
         }
+
     }
     private void OnDialogueEnded()
     {
