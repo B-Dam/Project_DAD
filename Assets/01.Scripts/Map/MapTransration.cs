@@ -1,6 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.Cinemachine;
 
 public class MapTransition : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class MapTransition : MonoBehaviour
     public static MapTransition currentInteraction;
     public bool canInteract = true;
 
+    [Header("이동할 맵 ID")]
+    public string destinationMapID;
+
+    [Header("시네마신 카메라")]
+    public CinemachineCamera virtualCam;
     private void Awake()
     {
         // 퀘스트 조건이 모두 비어 있다면 이동 허용
@@ -102,7 +108,10 @@ public class MapTransition : MonoBehaviour
                 playerController.enabled = false;
             }
         }
-
+        if (!string.IsNullOrEmpty(destinationMapID))
+        {
+            MapManager.Instance.UpdateMapData(destinationMapID);
+        }
         // ✅ 1. 페이드 아웃
         yield return Fade(1f, true);
 
@@ -127,6 +136,18 @@ public class MapTransition : MonoBehaviour
         // ✅ 5. 페이드 인
         yield return Fade(1f, false);
 
+        //  퍼즐 UI 직접 호출
+        PuzzleUIController puzzleUI = FindAnyObjectByType<PuzzleUIController>();
+
+        if (puzzleUI != null)
+        {
+            puzzleUI.HandleFadeComplete();
+        }
+        else
+        {
+            Debug.LogWarning(" PuzzleUIController를 찾지 못했습니다.");
+        }
+
         if (playerController != null)
         {
             playerController.enabled = true;
@@ -137,25 +158,42 @@ public class MapTransition : MonoBehaviour
 
         isTransitioning = false;
         StartInteractionCooldown();
+
+       
     }
 
     private IEnumerator ZoomCamera(float fromSize, float toSize, float duration)
     {
-        Camera cam = Camera.main;
+        //Camera cam = Camera.main;
+        //float elapsed = 0f;
+
+        //while (elapsed < duration)
+        //{
+        //    elapsed += Time.deltaTime;
+        //    cam.orthographicSize = Mathf.Lerp(fromSize, toSize, elapsed / duration);
+        //    yield return null;
+        //}
+
+        //cam.orthographicSize = toSize;
         float elapsed = 0f;
+
+        if (virtualCam == null)
+            yield break;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            cam.orthographicSize = Mathf.Lerp(fromSize, toSize, elapsed / duration);
+            float newSize = Mathf.Lerp(fromSize, toSize, elapsed / duration);
+            virtualCam.Lens.OrthographicSize = newSize;
             yield return null;
         }
 
-        cam.orthographicSize = toSize;
+        virtualCam.Lens.OrthographicSize = toSize;
     }
 
     private IEnumerator Fade(float duration, bool fadeIn)
     {
+        fadeCanvas.alpha = 1f;
         if (fadeCanvas == null) yield break;
 
         float startAlpha = fadeCanvas.alpha;
