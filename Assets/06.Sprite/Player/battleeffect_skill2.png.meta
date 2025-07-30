@@ -226,7 +226,7 @@ TextureImporter:
         serializedVersion: 2
         x: 484
         y: 170
-        width: 96
+        width: 94
         height: 70
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -352,6 +352,94 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: battleeffect_skill2_5
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 167
+        width: 94
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e84e685517fbe4a4d861ccc17e18de62
+      internalID: -2734524245281223118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: battleeffect_skill2_11
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 164
+        width: 94
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c77993f4d18b3d64bbafc16ab5e538b8
+      internalID: 5554631073302173639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: battleeffect_skill2_12
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 35
+        width: 94
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f30ae338581754b469172344a962f5e7
+      internalID: 108768914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: battleeffect_skill2_13
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 34
+        width: 96
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbc5828c90e15304aa36b9934e79f4e1
+      internalID: -2068135029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -370,6 +458,8 @@ TextureImporter:
       battleeffect_skill2_1: 2742889859696307795
       battleeffect_skill2_10: -2844570003807925484
       battleeffect_skill2_11: 5554631073302173639
+      battleeffect_skill2_12: 108768914
+      battleeffect_skill2_13: -2068135029
       battleeffect_skill2_2: -3767880150218355850
       battleeffect_skill2_3: 1554927719485052040
       battleeffect_skill2_4: -3714377986659249519
