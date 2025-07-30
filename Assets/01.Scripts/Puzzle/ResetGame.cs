@@ -81,22 +81,22 @@ public class ResetGame : MonoBehaviour
         GameObject newMap = Instantiate(mapPrefab, spawnPos, spawnRot, mapParent);
         newMap.name = newMapName;
 
-        // DP 위치 찾기
+        // Teleport 위치 찾기
         string previousID = MapManager.Instance.prevMapID;
         string expectedParentName = $"Map{mapID}ToMap{previousID}";
-        Transform dpParent = newMap.transform.Find(expectedParentName);
+        Transform tpParent = newMap.transform.Find(expectedParentName);
 
-        if (dpParent != null)
+        if (tpParent != null)
         {
-            Transform dp = dpParent.Find("DP");
-            if (dp != null)
+            Transform tp = tpParent.Find("Teleport");
+            if (tp != null)
             {
-                PlayerController.Instance.transform.position = dp.position;
-                Debug.Log($"플레이어 위치를 DP로 이동: {dp.position}");
+                PlayerController.Instance.transform.position = tp.position;
+                Debug.Log($"플레이어 위치를 Teleport로 이동: {tp.position}");
             }
             else
             {
-                Debug.LogWarning("DP 오브젝트를 찾을 수 없습니다!");
+                Debug.LogWarning("Teleport 오브젝트를 찾을 수 없습니다!");
             }
         }
         else
