@@ -95,7 +95,7 @@ public class BoxPush : MonoBehaviour
 
         targetPosition = rb.position + direction.normalized * moveDistance;
         isMoving = true;
-        AudioManager.Instance?.PlaySFX("Puzzle_Box_drrr");
+        AudioManager.Instance?.PlaySFX("Puzzle/Puzzle_Box_drrr");
     }
 
     //IEnumerator HoldPushCoroutine(GameObject playerObj, Vector2 initialInput)
