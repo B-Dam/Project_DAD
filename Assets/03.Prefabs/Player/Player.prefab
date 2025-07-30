@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1256572786534334348}
   - component: {fileID: 3240001658833755525}
-  - component: {fileID: 4243698097375665504}
   - component: {fileID: 7394121969838313954}
   - component: {fileID: 7008657728228423815}
   - component: {fileID: 927118199144417711}
   - component: {fileID: 8320842818812170589}
+  - component: {fileID: 5408863232978683062}
+  - component: {fileID: 9207334957956162235}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -32,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -10, y: -140, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -92,52 +93,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4243698097375665504
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8849361047628575310}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28125, y: 1.171875}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.28125, y: 1.171875}
-  m_EdgeRadius: 0
 --- !u!50 &7394121969838313954
 Rigidbody2D:
   serializedVersion: 5
@@ -177,15 +132,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a408f41513a4a3b409c41e2b81d87353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 10
   dustEffectPrefab: {fileID: 0}
   dustSpawnInterval: 0.3
   interactRange: 1.5
   interactLayer:
     serializedVersion: 2
-    m_Bits: 64
-  boxPushCooldown: 0.3
-  lastPushTime: -10
+    m_Bits: 0
   blockIndicatorPrefab: {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
@@ -193,6 +146,7 @@ MonoBehaviour:
   playerBlockerLayer:
     serializedVersion: 2
     m_Bits: 0
+  boxPushHoldTime: 0.5
 --- !u!95 &927118199144417711
 Animator:
   serializedVersion: 7
@@ -230,5 +184,57 @@ MonoBehaviour:
   detectRange: 1.5
   interactLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   hintUIPrefab: {fileID: 0}
+--- !u!58 &5408863232978683062
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849361047628575310}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.49
+--- !u!114 &9207334957956162235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849361047628575310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dabf0b0a002cabe4badf6bcdfee3356c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minY: -240
+  maxY: 52
+  minOrder: 6
+  maxOrder: 300

@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetButton: {fileID: 0}
-  mapPrefab105: {fileID: 0}
+  mapPrefab105: {fileID: 3401933246207372884, guid: 927ae62078286c448a75d1ec3d830d92, type: 3}
   map105ParentInScene: {fileID: 0}
-  mapPrefab108: {fileID: 0}
+  mapPrefab108: {fileID: 8982216310422389176, guid: 09eb9c03989d13b4d96565cae3034b58, type: 3}
   map108ParentInScene: {fileID: 0}
 --- !u!114 &7575569492832515779
 MonoBehaviour:
