@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using static DialogueDatabase;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -77,6 +78,8 @@ public UnityEngine.UI.Image rightCharacterImage;
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time - dialogueStartTime > dialogueInputDelay)
         {
+            if (CutsceneController.Instance.IsVideoPlaying) return;
+
             if (isTyping)
             {
                 if (typingCoroutine != null)
@@ -167,7 +170,6 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     onDialogueEndCallback?.Invoke();
 }
-
     
    public void ResumeDialogue()
 {
@@ -190,9 +192,13 @@ public UnityEngine.UI.Image rightCharacterImage;
     dialogueStartTime = Time.time;
 }
 
+    private void EndVideo()
+    {
+        dialoguePanel.SetActive(true);
+        ShowNextLine();
+    }
 
-
-  private void DisplayCurrentLine()
+    private void DisplayCurrentLine()
 {
     DialogueEntry entry = currentDialogueEntries != null
         ? currentDialogueEntries[dialogueIndex]
@@ -231,6 +237,18 @@ public UnityEngine.UI.Image rightCharacterImage;
             leftSprite = triggerEntries[dialogueIndex].leftSprite;
             rightSprite = triggerEntries[dialogueIndex].rightSprite;
         }
+    }
+    
+    if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
+    {
+            cutsceneBackgroundImage.gameObject.SetActive(false);
+            cutsceneImage.gameObject.SetActive(false);
+
+            CutsceneController.Instance.PlayVideo(line.spritePath, EndVideo);
+
+            dialoguePanel.SetActive(false);
+            StopBlinkUX();
+            return;
     }
 
    // === 좌측 캐릭터 스프라이트 처리 ===
