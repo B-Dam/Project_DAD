@@ -47,6 +47,15 @@ public class SpecialAbilityUI : MonoBehaviour
                .SetEase(Ease.OutSine);
     }
 
+    // 비활성화 하지 않고 페이드 아웃만
+    public void JustHideSpecialPanel()
+    {
+        panelCg.DOKill();
+        panelCg.blocksRaycasts = false;
+        panelCg.DOFade(0f, fadeDuration)
+               .SetEase(Ease.OutSine);
+    }
+
     public void HideSpecialPanel()
     {
         // 페이드아웃, 끝나면 비활성화
