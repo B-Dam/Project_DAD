@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class CombatAnimationController : MonoBehaviour
@@ -20,6 +22,22 @@ public class CombatAnimationController : MonoBehaviour
     [SerializeField] private CanvasGroup gameUIGroup;
     [SerializeField] private GameObject retryPanel;
     
+    [Header("스킬 이펙트(prefab)")]
+    [SerializeField] private GameObject biteEffect;    // 물기
+    [SerializeField] private GameObject barkEffect;    // 으르렁거리기
+    [SerializeField] private GameObject defEffect;     // 웅크리기
+    [SerializeField] private GameObject scratchEffect; // 할퀴기
+
+    [Header("필살기 이펙트(prefab)")]
+    [SerializeField] private GameObject[] specialEffects; // [0] : 물기강화, [1] : 방패강화, [2] : 기절강화
+
+    [Header("버프/디버프 이펙트(prefab)")]
+    [SerializeField] private GameObject buffEffect;
+    [SerializeField] private GameObject debuffEffect;
+    
+    [Header("이펙트 소환 위치 조율용 오프셋")]
+    [SerializeField] private Vector3 effectOffset = new Vector3(0f, 0f, 0f);
+    
     private bool isEnemyMoving;
     private bool isPlayerMoving;
     
@@ -32,13 +50,15 @@ public class CombatAnimationController : MonoBehaviour
         if (cm == null) Debug.LogError("CombatAnimationController: CombatManager.Instance is null");
         else
         {
-            cm.OnPlayerSkillUsed += HandlePlayerSkill;
-            cm.OnEnemySkillUsed  += HandleEnemySkill;
-            cm.OnPlayerHit       += HandlePlayerHit;
-            cm.OnEnemyHit        += HandleEnemyHit;
-            cm.OnPlayerDeath     += HandlePlayerDeath;
-            cm.OnEnemyDeath      += HandleEnemyDeath;
-            cm.OnCombatStart     += HandleCombatStart;
+            cm.OnPlayerSkillUsed     += HandlePlayerSkill;
+            cm.OnEnemySkillUsed      += HandleEnemySkill;
+            cm.OnPlayerHit           += HandlePlayerHit;
+            cm.OnEnemyHit            += HandleEnemyHit;
+            cm.OnPlayerDeath         += HandlePlayerDeath;
+            cm.OnEnemyDeath          += HandleEnemyDeath;
+            cm.OnCombatStart         += HandleCombatStart;
+            cm.OnStatusEffectApplied += HandleStatusEffect;
+            cm.OnSpecialUsed         += HandleSpecialEffect;
         }
     }
 
@@ -47,13 +67,15 @@ public class CombatAnimationController : MonoBehaviour
         var cm = CombatManager.Instance;
         if (cm != null)
         {
-            cm.OnPlayerSkillUsed -= HandlePlayerSkill;
-            cm.OnEnemySkillUsed  -= HandleEnemySkill;
-            cm.OnPlayerHit       -= HandlePlayerHit;
-            cm.OnEnemyHit        -= HandleEnemyHit;
-            cm.OnPlayerDeath     -= HandlePlayerDeath;
-            cm.OnEnemyDeath      -= HandleEnemyDeath;
-            cm.OnCombatStart     -= HandleCombatStart;
+            cm.OnPlayerSkillUsed     -= HandlePlayerSkill;
+            cm.OnEnemySkillUsed      -= HandleEnemySkill;
+            cm.OnPlayerHit           -= HandlePlayerHit;
+            cm.OnEnemyHit            -= HandleEnemyHit;
+            cm.OnPlayerDeath         -= HandlePlayerDeath;
+            cm.OnEnemyDeath          -= HandleEnemyDeath;
+            cm.OnCombatStart         -= HandleCombatStart;
+            cm.OnStatusEffectApplied -= HandleStatusEffect;
+            cm.OnSpecialUsed         -= HandleSpecialEffect;
         }
     }
 
@@ -64,16 +86,20 @@ public class CombatAnimationController : MonoBehaviour
         {
             case "물기":
                 playerAnimator.SetTrigger("Attack");
-                StartCoroutine(HandlePlayerAttack(data));
+                StartCoroutine(HandlePlayerAttack());
+                SpawnEffect(biteEffect, enemyCharacter.transform.position + Vector3.left * 1.4f);;
                 AudioManager.Instance.PlaySFX("Cat_Scratch");
                 break;
+            
             case "으르렁거리기":
                 playerAnimator.SetTrigger("Bark");
+                SpawnEffect(barkEffect, playerCharacter.transform.position + Vector3.right * 0.275f + Vector3.up * 1.3f );
                 AudioManager.Instance.PlaySFX("Dog_Growl");
 
                 break;
             case "웅크리기":
                 playerAnimator.SetTrigger("Def");
+                SpawnEffect(defEffect, playerCharacter.transform.position + Vector3.right * 0.1f + Vector3.up * 0.25f);;
                 AudioManager.Instance.PlaySFX("Dog_barrier");
                 break;
             default:
@@ -128,6 +154,7 @@ public class CombatAnimationController : MonoBehaviour
                 {
                     case "할퀴기":
                         enemyAnimator.SetTrigger("Attack");
+                        SpawnEffect(scratchEffect, playerCharacter.transform.position);
                         AudioManager.Instance.PlaySFX("Cat_Scratch");
                         if (!isEnemyMoving)
                             enemyMoveCoroutine = StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
@@ -233,7 +260,7 @@ public class CombatAnimationController : MonoBehaviour
     }
     
     // 플레이어 연속 공격시 이동 멈춤 방지용 로직
-    private IEnumerator HandlePlayerAttack(CardData data)
+    private IEnumerator HandlePlayerAttack()
     {
         if (isPlayerMoving)
         {
@@ -266,16 +293,86 @@ public class CombatAnimationController : MonoBehaviour
 
     public void TriggerSpecialAttack()
     {
-        
+        playerAnimator.SetTrigger("Attack");
+        StartCoroutine(HandlePlayerAttack());
+        AudioManager.Instance.PlaySFX("Cat_Scratch");
     }
 
     public void TriggerSpecialShield()
     {
-        
+        playerAnimator.SetTrigger("Def");
+        AudioManager.Instance.PlaySFX("Dog_barrier");
     }
 
     public void TriggerSpecialStun()
     {
+        playerAnimator.SetTrigger("Bark");
+        AudioManager.Instance.PlaySFX("Dog_Growl");
+    }
+    
+    // 상태이펙트(버프/디버프) 발생 시
+    private void HandleStatusEffect(bool isPlayer, bool isBuff)
+    {
+        var target = isPlayer ? playerCharacter.transform : enemyCharacter.transform;
+        var prefab = isBuff ? buffEffect : debuffEffect;
+        SpawnEffect(prefab, target.position);
+    }
+
+    // 필살기 이펙트
+    private void HandleSpecialEffect(int idx)
+    {
+        if (idx >= 0 && idx < specialEffects.Length)
+        {
+            switch (idx)
+            {
+                case 0 : SpawnEffect(specialEffects[idx], enemyCharacter.transform.position + Vector3.left * 1.4f); break; 
+                case 1 : SpawnEffect(specialEffects[idx], playerCharacter.transform.position + Vector3.right * 0.1f + Vector3.up * 0.25f); break;
+                case 2 : SpawnEffect(specialEffects[idx], playerCharacter.transform.position + Vector3.right * 0.275f + Vector3.up * 1.3f); break;
+            }
+        }
+    }
+    
+    private void SpawnEffect(GameObject prefab, Vector3 worldPos)
+    {
+        if (prefab == null) return;
+        var go = Instantiate(prefab, worldPos, Quaternion.identity);
         
+        // Animator 에서 재생 시간 가져오기
+        float lifeTime = 0.5f; // 기본값
+        var animator = go.GetComponent<Animator>();
+        if (animator != null && animator.runtimeAnimatorController != null)
+        {
+            var clips = animator.runtimeAnimatorController.animationClips;
+            if (clips.Length > 0)
+                lifeTime = clips.Max(c => c.length);
+        }
+
+        // 트윈을 이용해 이펙트가 자연스럽게 사라지도록 연출
+        if (go.TryGetComponent(out CanvasGroup cg))
+        {
+            cg.alpha = 1f;
+            cg.DOFade(0f, 0.3f)
+              .SetDelay(lifeTime - 0.3f)
+              .SetEase(Ease.Linear);
+        }
+        else if (go.TryGetComponent(out SpriteRenderer sr))
+        {
+            var col = sr.color;
+            DOVirtual.Float(1f, 0f, 0.3f, v =>
+            {
+                sr.color = new Color(col.r, col.g, col.b, v);
+            }).SetDelay(lifeTime - 0.3f);
+        }
+        else
+        {
+            // 아무것도 없으면 Scale 트윈으로 사라지게
+            go.transform.localScale = Vector3.one;
+            go.transform.DOScale(0f, 0.3f)
+              .SetDelay(lifeTime - 0.3f)
+              .SetEase(Ease.InBack);
+        }
+
+        // 정확한 타이밍에 파괴
+        Destroy(go, lifeTime);
     }
 }

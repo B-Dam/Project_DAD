@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
 
 public enum ModifierType
 {
@@ -44,7 +42,15 @@ public class CombatManager : MonoBehaviour
     private int   reflectTurnsRemaining = 0;
     
     // 기절 디버프
-    public int enemyStunTurns = 0;
+    [HideInInspector] public int enemyStunTurns = 0;
+    
+    // 전장 환경 효과
+    private EnvironmentEffect currentEnvironment;
+
+    // 기본 행동력 설정
+    [Header("행동력 설정")]
+    [SerializeField] private int baseActionPoints = 3;
+    private int actionPoints;
     
     // 전투 중인지 확인용
     public bool IsInCombat { get; set; }
@@ -58,6 +64,10 @@ public class CombatManager : MonoBehaviour
     public event Action OnEnemyHit;
     public event Action OnPlayerDeath;
     public event Action OnEnemyDeath;
+    // 버프/디버프 발생 이벤트
+    public event Action<bool /*isPlayer*/, bool /*isBuff*/> OnStatusEffectApplied;
+    // 필살기 발생 이벤트 (0:Attack,1:Shield,2:Stun)
+    public event Action<int /*specialIdx*/> OnSpecialUsed;
     
     // 필살기 게이지 변화 이벤트
     public event Action<int, int> OnSpecialGaugeChanged;
@@ -106,6 +116,31 @@ public class CombatManager : MonoBehaviour
             TurnManager.Instance.OnPlayerTurnEnd  -= OnPlayerTurnEnd;
         }
     }
+    
+    /// <summary>
+    /// 전장 환경 SO를 받아와 내부에 저장
+    /// </summary>
+    public void SetEnvironmentEffect(EnvironmentEffect env)
+    {
+        currentEnvironment = env;
+        Debug.Log($"현재 환경: {env.title} (AP+{env.apBonus}, ATK*{env.attackMultiplier}, Shield*{env.shieldMultiplier})");
+    }
+    
+    /// <summary>
+    /// 환경 효과 발동 여부를 결정 (안개는 10% 확률, 나머지는 항상)
+    /// </summary>
+    private bool ShouldApplyEnvEffect()
+    {
+        // 환경이 없으면 false
+        if (currentEnvironment == null) 
+            return false;
+
+        // effectId가 fog면 40%확률로 발동
+        if (currentEnvironment.effectId == "fog")
+            return UnityEngine.Random.value <= 0.4f;  // 40% 확률
+
+        return true;  // wind, rain 등은 항상 적용
+    }
 
     /// <summary>전투 개시</summary>
     public void StartCombat()
@@ -127,6 +162,11 @@ public class CombatManager : MonoBehaviour
         
         // 모디파이어 갱신
         RecalculateModifiers();
+        
+        // 환경 행동력 보너스 확률 적용
+        int bonusAP = (ShouldApplyEnvEffect() ? currentEnvironment.apBonus : 0);
+        actionPoints = baseActionPoints + bonusAP;
+        /*UIManager.Instance.UpdateActionPoints(actionPoints);*/
         
         OnCombatStart?.Invoke();
         
@@ -155,6 +195,23 @@ public class CombatManager : MonoBehaviour
 
     void OnPlayerTurnStart()
     {
+        // 1) 환경 보너스 포함해서 actionPoints 재설정
+        int bonusAP = ShouldApplyEnvEffect() ? currentEnvironment.apBonus : 0;
+        actionPoints = baseActionPoints + bonusAP;
+
+        // 2) HandManager.currentAP 에 반영
+        if (HandManager.Instance != null)
+        {
+            HandManager.Instance.currentAP = actionPoints;
+        }
+
+        // 3) CombatUI 에서 텍스트 갱신
+        var ui = CombatUI.Instance;
+        if (ui != null)
+        {
+            ui.UpdateUI();
+        }
+        
         // UI 갱신
         OnStatsChanged?.Invoke();
     }
@@ -208,6 +265,9 @@ public class CombatManager : MonoBehaviour
         if (isPlayer) OnPlayerSkillUsed?.Invoke(data);
         else          OnEnemySkillUsed?.Invoke(data);
         
+        // 환경 효과 적용 여부 결정 (안개는 10% 확률, 나머지는 항상)
+        bool applyEnv = ShouldApplyEnvEffect();
+        
         // 기본 공격력 + 공격 모디파이어
         int baseAtk   = isPlayer ? PlayerBaseAtk : EnemyBaseAtk;
         int modAtk    = isPlayer ? playerAtkMod : enemyAtkMod;
@@ -215,8 +275,11 @@ public class CombatManager : MonoBehaviour
         
         // 방어력
         int def = isPlayer ? DataManager.Instance.playerData.def : DataManager.Instance.enemyData.def;
-        
         rawAttack = Mathf.Max(0, rawAttack - def);
+        
+        // 환경 배율 곱하기
+        float atkMult    = applyEnv ? currentEnvironment.attackMultiplier  : 1f;
+        rawAttack        = Mathf.FloorToInt(rawAttack * atkMult);
         
         // 공격 계수가 0보다 클 때만 데미지 계산
         if (rawAttack > 0)
@@ -228,6 +291,7 @@ public class CombatManager : MonoBehaviour
                 
                 // 적 데미지
                 enemyHp     = Mathf.Max(0, enemyHp - (rawAttack - shielded));
+                
                 // 적 피격 이벤트
                 OnEnemyHit?.Invoke();
                 
@@ -239,7 +303,7 @@ public class CombatManager : MonoBehaviour
                 int shielded = Mathf.Min(playerShield, rawAttack);
                 playerShield -= shielded;
                 
-                // 반사: 실제 입힌(rawAttack) 양의 50%를 돌려주기
+                // 반사 : 실제 입힌(rawAttack)양의 50%를 돌려주기
                 if (playerReflectPercent > 0f && rawAttack > 0)
                 {
                     int reflectDamage = Mathf.RoundToInt(rawAttack * playerReflectPercent);
@@ -259,29 +323,50 @@ public class CombatManager : MonoBehaviour
         // 보호막 효과
         if (data.effectShieldValue > 0)
         {
-            if (isPlayer) playerShield += data.effectShieldValue;
-            else          enemyShield  += data.effectShieldValue;
+            // 기본 획득 보호막
+            int shieldGain = data.effectShieldValue;
+            
+            // 환경 효과가 적용되면 multiplier 곱하기
+            if (applyEnv && currentEnvironment != null)
+                shieldGain = Mathf.FloorToInt(shieldGain * currentEnvironment.shieldMultiplier);
+            
+            if (isPlayer)
+                playerShield += shieldGain;
+            else
+                enemyShield  += shieldGain;
         }
 
         // 공격력 버프
         if (data.effectAttackIncreaseValue != 0 && data.effectTurnValue > 0)
+        {
             AddAttackModifier(
                 isPlayer,
                 ModifierType.AttackBuff,
                 data.effectAttackIncreaseValue,
                 data.effectTurnValue
             );
+            OnStatusEffectApplied?.Invoke(isPlayer, true); // 강화 이펙트
+        }
 
         // 공격력 디버프
         if (data.effectAttackDebuffValue != 0 && data.effectTurnValue > 0)
         {
-            int debuffAmount = Mathf.Abs(data.effectAttackDebuffValue);
+            // 원래 디버프 값
+            int rawDebuff = Mathf.Abs(data.effectAttackDebuffValue);
+            
+            // 환경이 발동되면 multiplier 곱하기
+            int debuffValue = applyEnv
+                ? Mathf.FloorToInt(rawDebuff * currentEnvironment.debuffMultiplier)
+                : rawDebuff;
+            
             AddAttackModifier(
                 !isPlayer,
                 ModifierType.AttackDebuff,
-                -debuffAmount,
+                -debuffValue,
                 data.effectTurnValue
             );
+            
+            OnStatusEffectApplied?.Invoke(!isPlayer, false); // 약화 이펙트
         }
 
         RecalculateModifiers();
@@ -368,7 +453,9 @@ public class CombatManager : MonoBehaviour
         // UI, 이펙트 갱신
         OnStatsChanged?.Invoke();
         OnEnemyHit?.Invoke();
-
+        
+        OnSpecialUsed?.Invoke(0);
+        
         // 죽음 체크
         if (enemyHp <= 0)
             OnEnemyDeath?.Invoke();
@@ -379,6 +466,7 @@ public class CombatManager : MonoBehaviour
     {
         playerShield += amount;
         OnStatsChanged?.Invoke();
+        OnSpecialUsed?.Invoke(1);
     }
 
     // 필살기 : 으르렁거리기 (기절)
@@ -386,6 +474,7 @@ public class CombatManager : MonoBehaviour
     {
         enemyStunTurns = turns;
         OnStatsChanged?.Invoke();
+        OnSpecialUsed?.Invoke(2);
     }
     
     /// <summary>

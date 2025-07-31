@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6ad3d2229d22b43a471b6bf3690420, type: 3}
+  m_Name: Fog
+  m_EditorClassIdentifier: 
+  effectId: fog
+  title: "\uC9D9\uC740 \uC548\uAC1C"
+  description: "\uBAA8\uB4E0 \uACF5\uACA9 \uACC4\uC5F4 \uCE74\uB4DC\uC758 \uD53C\uD574\uB7C9\uC774
+    40% \uD655\uB960\uB85C \uC808\uBC18\uC774 \uB429\uB2C8\uB2E4."
+  apBonus: 0
+  attackMultiplier: 0.5
+  shieldMultiplier: 1
+  debuffMultiplier: 1
+  icon: {fileID: -8627661438995250640, guid: 941f731075f4c564d838758b6d731b13, type: 3}
+  applicableBossIds:
+  - "\uC1A1\uACF3\uB2C8"

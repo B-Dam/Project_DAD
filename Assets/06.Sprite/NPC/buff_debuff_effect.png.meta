@@ -1,0 +1,389 @@
+fileFormatVersion: 2
+guid: 8f6ed33ec07ecbc48aa8286882ede0c7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7358580939116345833
+    second: buff_debuff_effect_0
+  - first:
+      213: -8344486371202577304
+    second: buff_debuff_effect_1
+  - first:
+      213: -3443246465696260321
+    second: buff_debuff_effect_2
+  - first:
+      213: 5912744817173719477
+    second: buff_debuff_effect_3
+  - first:
+      213: 2700460368437670548
+    second: buff_debuff_effect_4
+  - first:
+      213: -2080922694702704894
+    second: buff_debuff_effect_5
+  - first:
+      213: 2582170502113731097
+    second: buff_debuff_effect_6
+  - first:
+      213: 8904512656318378985
+    second: buff_debuff_effect_7
+  - first:
+      213: 5006695148500613606
+    second: buff_debuff_effect_8
+  - first:
+      213: -1445817394572857023
+    second: buff_debuff_effect_9
+  - first:
+      213: -5325519133438275653
+    second: buff_debuff_effect_10
+  - first:
+      213: -335521320973045403
+    second: buff_debuff_effect_11
+  - first:
+      213: 3621326514843473442
+    second: buff_debuff_effect_12
+  - first:
+      213: -8370664096905046963
+    second: buff_debuff_effect_13
+  - first:
+      213: -4446805012358761560
+    second: buff_debuff_effect_14
+  - first:
+      213: 7779872506219326298
+    second: buff_debuff_effect_15
+  - first:
+      213: 2339725638117447165
+    second: buff_debuff_effect_16
+  - first:
+      213: -384500208691439365
+    second: buff_debuff_effect_17
+  - first:
+      213: -153106948940418453
+    second: buff_debuff_effect_18
+  - first:
+      213: 9135154381117418397
+    second: buff_debuff_effect_19
+  - first:
+      213: -4110609005220796
+    second: buff_debuff_effect_20
+  - first:
+      213: -3137050208314864602
+    second: buff_debuff_effect_21
+  - first:
+      213: 7849763688815085346
+    second: buff_debuff_effect_22
+  - first:
+      213: -8549106881530989812
+    second: buff_debuff_effect_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: buff_debuff_effect_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 144
+        width: 60
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71682019f9111e990800000000000000
+      internalID: -7358580939116345833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buff_debuff_effect_1
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 144
+        width: 60
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86cc16b3bdd623c80800000000000000
+      internalID: -8344486371202577304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buff_debuff_effect_2
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 143
+        width: 60
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1f1e0225912730d0800000000000000
+      internalID: -3443246465696260321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buff_debuff_effect_3
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 143
+        width: 60
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b9eb2b851a4e0250800000000000000
+      internalID: 5912744817173719477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buff_debuff_effect_4
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 49
+        width: 60
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4927fbeb566f97520800000000000000
+      internalID: 2700460368437670548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buff_debuff_effect_5
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 49
+        width: 60
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8742edf182fe9e4c9f54159091cc1f2
+      internalID: -2080922694702704894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buff_debuff_effect_6
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 49
+        width: 60
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3413bbe2d783d7444a25c360a4a9f7a6
+      internalID: 2582170502113731097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: buff_debuff_effect_7
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 49
+        width: 60
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d6d272ba3a0c3a4d87a43436989a060
+      internalID: 8904512656318378985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: e2f98ad82497cd84c94d9fe2e40245d2
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      buff_debuff_effect_0: -7358580939116345833
+      buff_debuff_effect_1: -8344486371202577304
+      buff_debuff_effect_10: -5325519133438275653
+      buff_debuff_effect_11: -335521320973045403
+      buff_debuff_effect_12: 3621326514843473442
+      buff_debuff_effect_13: -8370664096905046963
+      buff_debuff_effect_14: -4446805012358761560
+      buff_debuff_effect_15: 7779872506219326298
+      buff_debuff_effect_16: 2339725638117447165
+      buff_debuff_effect_17: -384500208691439365
+      buff_debuff_effect_18: -153106948940418453
+      buff_debuff_effect_19: 9135154381117418397
+      buff_debuff_effect_2: -3443246465696260321
+      buff_debuff_effect_20: -4110609005220796
+      buff_debuff_effect_21: -3137050208314864602
+      buff_debuff_effect_22: 7849763688815085346
+      buff_debuff_effect_23: -8549106881530989812
+      buff_debuff_effect_3: 5912744817173719477
+      buff_debuff_effect_4: 2700460368437670548
+      buff_debuff_effect_5: -2080922694702704894
+      buff_debuff_effect_6: 2582170502113731097
+      buff_debuff_effect_7: 8904512656318378985
+      buff_debuff_effect_8: 5006695148500613606
+      buff_debuff_effect_9: -1445817394572857023
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
