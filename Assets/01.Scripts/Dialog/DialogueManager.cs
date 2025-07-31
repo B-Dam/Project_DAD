@@ -39,8 +39,8 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     [Header("쿨타임 관련")]
     private float lastDialogueEndTime = -999f;
-    public float dialogueCooldown = 0.5f;
-    private float dialogueInputDelay = 0.1f;
+    public float dialogueCooldown = 3f;
+    private float dialogueInputDelay = 1f;
     private float dialogueStartTime;
 
     private Coroutine typingCoroutine;
@@ -55,6 +55,8 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     [Header("컷씬 이미지")]
     public UnityEngine.UI.Image cutsceneImage;
+
+    private bool isWaitingForCutscene = false;
 
     private void Awake()
     {
@@ -76,10 +78,12 @@ public UnityEngine.UI.Image rightCharacterImage;
     {
         if (!isDialogueActive) return;
 
+        if (isWaitingForCutscene) return;
+
+        if (CutsceneController.Instance.IsVideoPlaying) return;
+
         if (Input.GetKeyDown(KeyCode.Space) && Time.time - dialogueStartTime > dialogueInputDelay)
         {
-            if (CutsceneController.Instance.IsVideoPlaying) return;
-
             if (isTyping)
             {
                 if (typingCoroutine != null)
@@ -196,6 +200,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     {
         dialoguePanel.SetActive(true);
         ShowNextLine();
+        isWaitingForCutscene = false;
     }
 
     private void DisplayCurrentLine()
@@ -243,6 +248,8 @@ public UnityEngine.UI.Image rightCharacterImage;
     {
             cutsceneBackgroundImage.gameObject.SetActive(false);
             cutsceneImage.gameObject.SetActive(false);
+
+            isWaitingForCutscene = true;
 
             CutsceneController.Instance.PlayVideo(line.spritePath, EndVideo);
 
@@ -376,7 +383,7 @@ else
 }
 
 
-    private void StartBlinkUX()
+    public void StartBlinkUX()
     {
         if (uxBlinkImage == null) return;
 
