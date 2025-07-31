@@ -104,7 +104,6 @@ public class CutsceneController : MonoBehaviour
     {
         videoPlayer.loopPointReached -= OnVideoEnd;
         videoPlayer.Pause();
-        DialogueManager.Instance.StartBlinkUX();
         waitingForInput = true;
     }
 
