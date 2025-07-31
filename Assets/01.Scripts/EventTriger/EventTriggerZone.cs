@@ -55,17 +55,38 @@ public static bool InstanceExists => Instance != null;
     if (triggerDialogueEntries == null || triggerDialogueEntries.Length == 0) return;
 
     dialogueIndex = 0;
-    string[] ids = new string[triggerDialogueEntries.Length];
-    for (int i = 0; i < triggerDialogueEntries.Length; i++)
-    {
-        ids[i] = triggerDialogueEntries[i].id;
-    }
 
-    DialogueManager.Instance.StartDialogueByIDs(ids);
+    // === [PATCH] DialogueManager에 triggerDialogueEntries 직접 전달 ===
+    DialogueManager.Instance.StartDialogueWithEntries(ConvertTriggerEntriesToDialogueEntries(triggerDialogueEntries));
+
     DialogueManager.Instance.RegisterOnDialogueEndCallback(HandleDialogueEntryEnd);
 
     // ✅ 최초 대사 시작 이벤트 실행
     HandleDialogueEntryStart();
+}
+
+// [PATCH] TriggerDialogueEntry[] → DialogueEntry[] 변환 메서드 추가
+private DialogueEntry[] ConvertTriggerEntriesToDialogueEntries(TriggerDialogueEntry[] triggerEntries)
+{
+    DialogueEntry[] entries = new DialogueEntry[triggerEntries.Length];
+    for (int i = 0; i < triggerEntries.Length; i++)
+    {
+        TriggerDialogueEntry triggerEntry = triggerEntries[i];
+        DialogueEntry entry = new DialogueEntry
+        {
+            id = triggerEntry.id,
+            speaker = triggerEntry.speaker,
+            text = triggerEntry.text,
+            focusTarget = triggerEntry.focusTarget,
+            shakeCutscene = triggerEntry.shakeCutscene,
+            leftSprite = triggerEntry.leftSprite,
+            rightSprite = triggerEntry.rightSprite,
+            onStartEvents = triggerEntry.onStartEvents,
+            onEndEvents = triggerEntry.onEndEvents
+        };
+        entries[i] = entry;
+    }
+    return entries;
 }
 
 private void HandleDialogueEntryStart()
