@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+
 
 public class EventTriggerZone : MonoBehaviour
 {
@@ -98,18 +100,62 @@ private void HandleDialogueEntryStart()
 }
 
 
-private void HandleDialogueEntryEnd()
+   private void HandleDialogueEntryEnd()
 {
+    // 현재 대사 종료 이벤트 실행
+    if (dialogueIndex < triggerDialogueEntries.Length)
+    {
+        var entry = triggerDialogueEntries[dialogueIndex];
+        entry.OnDialogueEnd();
+    }
+
+    // 인덱스 증가
+    dialogueIndex++;
+
+    // 모든 대사를 다 본 경우
     if (dialogueIndex >= triggerDialogueEntries.Length)
     {
         DialogueManager.Instance.ClearOnDialogueEndCallback(HandleDialogueEntryEnd);
-        return;
+
+        // 마지막 대화가 끝난 시점 → 플레이어 뒤로 물러나기
+        StartCoroutine(MovePlayerBackward(1.5f, 0.5f));
+    }
+}
+
+
+/// <summary>
+/// 플레이어를 트리거 기준 뒤로 이동
+/// </summary>
+private IEnumerator MovePlayerBackward(float distance, float duration)
+{
+    if (PlayerController.Instance == null) yield break;
+
+    PlayerController.Instance.enabled = false;
+
+    Vector3 triggerPos = transform.position;
+    Vector3 playerPos = PlayerController.Instance.transform.position;
+
+    // 트리거에서 플레이어 방향으로 계산 → 뒤로 이동
+    Vector3 backwardDir = (playerPos - triggerPos).normalized;
+
+    Vector3 startPos = playerPos;
+    Vector3 targetPos = startPos + backwardDir * distance;
+
+    float elapsed = 0f;
+    while (elapsed < duration)
+    {
+        elapsed += Time.deltaTime;
+        float t = elapsed / duration;
+        PlayerController.Instance.transform.position = Vector3.Lerp(startPos, targetPos, t);
+        yield return null;
     }
 
-    var entry = triggerDialogueEntries[dialogueIndex];
-    entry.OnDialogueEnd(); // ✅ UnityEvent 실행
-    dialogueIndex++;
+    PlayerController.Instance.transform.position = targetPos;
+    PlayerController.Instance.enabled = true;
 }
+
+
+
     private bool CheckCondition()
     {
         return true;
