@@ -13,8 +13,8 @@ public class PuzzleUIController : MonoBehaviour
     // ⬇ 외부에서 직접 호출되는 메서드
     public void HandleFadeComplete()
     {
-        string mapID = MapManager.Instance.currentMapID;
-        bool shouldShow = mapID == "005" || mapID == "008" || mapID == "002";
+        string currentMapID = MapManager.Instance.currentMapID;
+        bool shouldShow = currentMapID == "002" || currentMapID == "004" || currentMapID == "006" || currentMapID == "008";
 
         Debug.Log(" 퍼즐 UI 표시 여부: " + shouldShow);
         puzzleUICanvas.SetActive(shouldShow);

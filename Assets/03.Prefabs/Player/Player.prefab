@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8320842818812170589}
   - component: {fileID: 5408863232978683062}
   - component: {fileID: 9207334957956162235}
+  - component: {fileID: 6727355874492043966}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -138,14 +139,13 @@ MonoBehaviour:
   interactRange: 1.5
   interactLayer:
     serializedVersion: 2
-    m_Bits: 0
-  blockIndicatorPrefab: {fileID: 0}
+    m_Bits: 64
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2097152
   playerBlockerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8388608
   boxPushHoldTime: 0.5
 --- !u!95 &927118199144417711
 Animator:
@@ -184,8 +184,8 @@ MonoBehaviour:
   detectRange: 1.5
   interactLayer:
     serializedVersion: 2
-    m_Bits: 0
-  hintUIPrefab: {fileID: 0}
+    m_Bits: 64
+  hintUIPrefab: {fileID: 3075258767178342065, guid: 622d3f7fc400ae648aef2fa2e8ced726, type: 3}
 --- !u!58 &5408863232978683062
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -238,3 +238,15 @@ MonoBehaviour:
   maxY: 52
   minOrder: 6
   maxOrder: 300
+--- !u!114 &6727355874492043966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849361047628575310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a797ac4afea0b43bd0efe6d4e16666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
