@@ -21,16 +21,10 @@ public class MapManager : MonoBehaviour
         }
     }
     public Transform currentMapTransform { get; private set; }
-
-    //public void SetCurrentMapTransform(Transform mapTransform) 
-    //{
-    //    currentMapTransform = mapTransform;
-    //}
-
-    //public V2MapBase MapBase;
-    //public MapData mapData;
-    //public FadeManager fadeManager;
-
+    public void SetCurrentMapTransform(Transform mapTransform)
+    {
+        currentMapTransform = mapTransform;
+    }
     public string prevMapID;
     public string currentMapID = "001";  // 첫 시작 시 001로 설정
 
@@ -51,7 +45,6 @@ public class MapManager : MonoBehaviour
   
     private void Start()
     {
-
         // 씬에 이미 존재하는 맵 오브젝트를 찾아 세팅
         Transform mapTransform = GameObject.Find($"{currentMapID}")?.transform;
         if (mapTransform != null)
@@ -67,21 +60,6 @@ public class MapManager : MonoBehaviour
         // ✅ 기본 BGM 설정 (처음 시작 시 필수)
         AudioManager.Instance.PlayBGM("LostSouls");
 
-        //if (currentMapID == null || currentMapID == "")
-        //{
-        //    currentMapID = "001";
-        //}
-        //mapData = Database.Instance.Map.GetMapData(currentMapID);
-        //fadeManager = FindAnyObjectByType<FadeManager>();
-        //AudioManager.Instance.PlayBGM("LostSouls"); // 기본 BGM 설정
-    }
-    /// <summary>
-    /// 퍼즐이 아닌, 씬에 존재하는 맵으로 이동할 때 사용
-    /// </summary>
-   
-    public void SetCurrentMapTransform(Transform mapTransform)
-    {
-        currentMapTransform = mapTransform;
     }
 
     public void UpdateMapData(string newMapID)
@@ -91,19 +69,28 @@ public class MapManager : MonoBehaviour
 
         Debug.Log($"맵 데이터가 업데이트되었습니다: {currentMapID}");
 
-        var updater = FindAnyObjectByType<CameraConfinerUpdater>();
-        Debug.Log("현재 currentMapTransform 값: " + currentMapTransform);
-
-        if (updater != null && currentMapTransform != null)
+        // currentMapTransform 설정
+        Transform mapTransform = GameObject.Find(newMapID)?.transform;
+        if (mapTransform != null)
         {
-            Debug.Log("📷 Confiner 갱신 시도");
-            updater.SetConfinerToNewMap(currentMapTransform.gameObject);
+            SetCurrentMapTransform(mapTransform);
         }
         else
         {
-            Debug.LogWarning("❌ Confiner 갱신 실패 - updater 또는 currentMapTransform이 null");
+            Debug.LogError($"❌ {newMapID} 이름의 맵 Transform을 찾을 수 없습니다!");
+            return;
         }
 
+        //  Confiner 갱신 위임
+        var confinerUpdater = FindAnyObjectByType<CameraConfinerUpdater>();
+        if (confinerUpdater != null)
+        {
+            confinerUpdater.UpdateConfinerFor(currentMapTransform);
+        }
+        else
+        {
+            Debug.LogWarning("❗ CameraConfinerUpdater를 찾을 수 없습니다.");
+        }
         // 🎵 BGM 설정
         string targetBGM = (currentMapID == "005" || currentMapID == "008") ? "Puzzle_Sound" : "LostSouls";
         if (AudioManager.Instance != null && AudioManager.Instance.currentBGMName != targetBGM)

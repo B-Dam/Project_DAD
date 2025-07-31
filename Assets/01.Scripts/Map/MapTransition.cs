@@ -29,6 +29,9 @@ public class MapTransition : MonoBehaviour
 
     [Header("시네마신 카메라")]
     public CinemachineCamera virtualCam;
+
+    [Header("플레이어 위치 저장 여부")]
+    public bool shouldSavePosition = false;
     private void Awake()
     {
         // 퀘스트 조건이 모두 비어 있다면 이동 허용
@@ -42,6 +45,7 @@ public class MapTransition : MonoBehaviour
     private void Start()
     {
         if (fadeCanvas != null) fadeCanvas.alpha = 0f;
+        fadeCanvas.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -107,10 +111,23 @@ public class MapTransition : MonoBehaviour
                 playerController.SetVelocity(Vector2.zero);
                 playerController.enabled = false;
             }
+
         }
         if (!string.IsNullOrEmpty(destinationMapID))
         {
             MapManager.Instance.UpdateMapData(destinationMapID);
+        }
+
+        //  퍼즐 UI 직접 호출
+        PuzzleUIController puzzleUI = FindAnyObjectByType<PuzzleUIController>();
+
+        if (puzzleUI != null)
+        {
+            puzzleUI.HandleFadeComplete();
+        }
+        else
+        {
+            Debug.LogWarning(" PuzzleUIController를 찾지 못했습니다.");
         }
         // ✅ 1. 페이드 아웃
         yield return Fade(1f, true);
@@ -126,6 +143,17 @@ public class MapTransition : MonoBehaviour
             player.transform.position = destinationPoint.position;
             cam.transform.position = new Vector3(destinationPoint.position.x, destinationPoint.position.y, cam.transform.position.z);
             Debug.Log($"➡ {player.name} 이동 완료: {destinationPoint.position}");
+
+            // 체크된 경우에만 위치 저장
+            if (shouldSavePosition)
+            {
+                PuzzlePlayerResettable resettable = player.GetComponent<PuzzlePlayerResettable>();
+                if (resettable != null)
+                {
+                    resettable.SaveResetPoint();
+                    Debug.Log(" 플레이어 위치 저장됨");
+                }
+            }
         }
 
         yield return new WaitForSeconds(0.3f);
@@ -136,17 +164,7 @@ public class MapTransition : MonoBehaviour
         // ✅ 5. 페이드 인
         yield return Fade(1f, false);
 
-        //  퍼즐 UI 직접 호출
-        PuzzleUIController puzzleUI = FindAnyObjectByType<PuzzleUIController>();
-
-        if (puzzleUI != null)
-        {
-            puzzleUI.HandleFadeComplete();
-        }
-        else
-        {
-            Debug.LogWarning(" PuzzleUIController를 찾지 못했습니다.");
-        }
+       
 
         if (playerController != null)
         {
@@ -193,6 +211,7 @@ public class MapTransition : MonoBehaviour
 
     private IEnumerator Fade(float duration, bool fadeIn)
     {
+        fadeCanvas.gameObject.SetActive(true);
         fadeCanvas.alpha = 1f;
         if (fadeCanvas == null) yield break;
 
