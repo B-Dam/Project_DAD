@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6187139159557794361}
   - component: {fileID: 1408919700121137899}
   - component: {fileID: 2213109757027590740}
+  - component: {fileID: -2929893815229830734}
   m_Layer: 20
   m_Name: Box_White
   m_TagString: Box
@@ -200,4 +201,15 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 2097152
-  blockIndicatorPrefab: {fileID: 6173811841931134668, guid: efbdda0008253ff4a9491acd85f62c3d, type: 3}
+--- !u!114 &-2929893815229830734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6038325063387263021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaedaf080ce55ac4da4fa27cf025d63c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

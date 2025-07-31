@@ -2,19 +2,21 @@
 
 public class PuzzleUIController : MonoBehaviour
 {
-    public GameObject specialUICanvas;
+    public GameObject puzzleUICanvas;
 
-    void Update()
+    private void Awake()
     {
-        if (MapManager.Instance != null && specialUICanvas != null)
-        {
-            // currentMapID가 "105" 또는 "108"일 때만 UI 활성화
-            bool shouldShow = MapManager.Instance.currentMapID == "105" ||
-                              MapManager.Instance.currentMapID == "108";
-            if (specialUICanvas.activeSelf != shouldShow)
-            {
-                specialUICanvas.SetActive(shouldShow);
-            }
-        }
+        if (puzzleUICanvas != null)
+            puzzleUICanvas.SetActive(false);
+    }
+
+    // ⬇ 외부에서 직접 호출되는 메서드
+    public void HandleFadeComplete()
+    {
+        string currentMapID = MapManager.Instance.currentMapID;
+        bool shouldShow = currentMapID == "002" || currentMapID == "004" || currentMapID == "006" || currentMapID == "008";
+
+        Debug.Log(" 퍼즐 UI 표시 여부: " + shouldShow);
+        puzzleUICanvas.SetActive(shouldShow);
     }
 }

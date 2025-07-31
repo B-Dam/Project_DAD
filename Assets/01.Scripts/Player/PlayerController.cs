@@ -26,10 +26,9 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("막힘 알림")]
-    public GameObject blockIndicatorPrefab;
     public LayerMask obstacleLayer;
     public LayerMask playerBlockerLayer;
-    private Canvas canvas;
+    private float lastIndicatorTime = -10f;
 
     private Coroutine walkSfxCoroutine;
 
@@ -37,7 +36,6 @@ public class PlayerController : MonoBehaviour
     public float boxPushHoldTime = 0.5f;
     private float pushTimer = 0f;
     private bool isTryingToPush = false;
-
     private void Awake()
     {
         if (Instance == null)
@@ -63,6 +61,7 @@ public class PlayerController : MonoBehaviour
     {
         //게임 멈췄을 땐 아무것도 하지 않음
         if (Time.timeScale == 0f) return;
+        if (!enabled) return;
 
         HandleMovementInput();
         UpdateAnimation(moveInput);
@@ -134,6 +133,7 @@ public class PlayerController : MonoBehaviour
     }
     private void TryShowObstacleIndicator()//P
     {
+        if (Time.time - lastIndicatorTime < boxPushHoldTime) return;
 
         // 조건 1: 방향 입력 중일 때만
         if (moveInput == Vector2.zero) return;
@@ -154,8 +154,8 @@ public class PlayerController : MonoBehaviour
             // 박스를 만났다면 BoxPush가 판단
             if (hitObj.CompareTag("Box") && hitObj.GetComponent<BoxPush>() != null) return;
 
-            // 장애물이거나, BoxPush 없는 오브젝트일 경우 → UI 띄움
-            ShowBlockIndicator(transform.position + new Vector3(0f, 1.2f, 0f));
+            BlockIndicatorManager.Instance?.ShowIndicator(transform.position + new Vector3(0f, 1.2f, 0f));
+            lastIndicatorTime = Time.time; // 마지막 표시 시간 갱신
         }
     }
     private void TryAutoPushBox()
@@ -164,39 +164,30 @@ public class PlayerController : MonoBehaviour
 
         Vector2 origin = transform.position;
         Vector2 dir = moveInput.normalized;
+
+
+        // 수평 또는 수직으로 정제
+        Vector2 fixedDir = GetCardinalDirection(dir);
+
         float distance = 0.6f;
 
-        RaycastHit2D hit = Physics2D.Raycast(origin, dir, distance, LayerMask.GetMask("Box"));
+        RaycastHit2D hit = Physics2D.Raycast(origin, fixedDir, distance, LayerMask.GetMask("Box"));
         if (hit.collider != null)
         {
             GameObject hitBox = hit.collider.gameObject;
             BoxPush box = hitBox.GetComponent<BoxPush>();
             if (box != null)
             {
-                box.TryPush(dir);
+                box.TryPush(fixedDir);
             }
         }
     }
-    private void ShowBlockIndicator(Vector3 worldPos)//P
+    private Vector2 GetCardinalDirection(Vector2 input)//대각 방향을 수평/수직으로 정제하는 함수
     {
-        // 캔버스 찾기
-        if (canvas == null)
-        {
-            canvas = GameObject.Find("UICanvas")?.GetComponent<Canvas>();
-            if (canvas == null)
-            {
-                Debug.LogError("[PlayerController] Canvas를 찾을 수 없습니다!");
-                return;
-            }
-        }
-
-        if (canvas == null) return;
-        if (Camera.main == null) return;
-
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
-        GameObject icon = Instantiate(blockIndicatorPrefab, canvas.transform);
-        icon.GetComponent<RectTransform>().position = screenPos;
-        Destroy(icon, 0.2f);
+        if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
+            return input.x > 0 ? Vector2.right : Vector2.left;
+        else
+            return input.y > 0 ? Vector2.up : Vector2.down;
     }
 
     private void HandleMovementInput()

@@ -18,8 +18,8 @@ public class HintMode : MonoBehaviour
     // 맵 ID별 힌트 남은 횟수 저장 (각 맵마다 별도 관리)
     private Dictionary<string, int> hintCountsByMap = new Dictionary<string, int>()
     {
-        { "105", maxHintCount },
-        { "108", maxHintCount }
+        { "002", maxHintCount },
+        { "008", maxHintCount }
     };
 
     private float hintDuration = 10f; // 힌트 지속 시간 
@@ -69,7 +69,7 @@ public class HintMode : MonoBehaviour
             lastMapID = currentID;
 
             // 힌트 사용 가능한 맵일 경우 UI 강제 갱신
-            if (currentID == "105" || currentID == "108")
+            if (currentID == "002" || currentID == "008")
             {
                 UpdateHintIcon();
                 UpdateHintUI();
@@ -77,7 +77,7 @@ public class HintMode : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && (currentID == "105" || currentID == "108"))
+        if (Input.GetKeyDown(KeyCode.E) && (currentID == "002" || currentID == "008"))
         {
             TryUseHint();
         }
@@ -87,7 +87,7 @@ public class HintMode : MonoBehaviour
         UpdateHintUI();
         UpdateHintTimeBar();
 
-        if (!(currentID == "105" || currentID == "108"))
+        if (!(currentID == "002" || currentID == "008"))
         {
             ForceResetHintState();
         }
@@ -144,6 +144,7 @@ public class HintMode : MonoBehaviour
             {
                 float ratio = Mathf.Clamp01((hintDuration - hintDurationTimer) / hintDuration);
                 hintDurationTimeBar.fillAmount = ratio; // 지속 시간 바 업데이트
+
             }
             else
             {
@@ -271,8 +272,8 @@ public class HintMode : MonoBehaviour
 
     void ResetAllHintCounts() //  맵별 힌트 전부 초기화
     {
-        hintCountsByMap["105"] = maxHintCount;
-        hintCountsByMap["108"] = maxHintCount;
+        hintCountsByMap["002"] = maxHintCount;
+        hintCountsByMap["008"] = maxHintCount;
     }
 
     //public void ForceResetHintState()
@@ -307,8 +308,8 @@ public class HintMode : MonoBehaviour
         if (colorAdjustments != null)
             colorAdjustments.saturation.value = 0f;
 
-        foreach (var connector in hintLineRenderer)
-            connector.SetActive(false);
+        //foreach (var connector in hintLineRenderer)
+        //    connector.SetActive(false);
 
         //ResetAllHintCounts(); //  힌트 전체 초기화
 

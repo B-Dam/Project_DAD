@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using static DialogueDatabase;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -39,8 +38,8 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     [Header("쿨타임 관련")]
     private float lastDialogueEndTime = -999f;
-    public float dialogueCooldown = 3f;
-    private float dialogueInputDelay = 1f;
+    public float dialogueCooldown = 0.5f;
+    private float dialogueInputDelay = 0.1f;
     private float dialogueStartTime;
 
     private Coroutine typingCoroutine;
@@ -56,8 +55,9 @@ public UnityEngine.UI.Image rightCharacterImage;
     [Header("컷씬 이미지")]
     public UnityEngine.UI.Image cutsceneImage;
 
-    private bool isWaitingForCutscene = false;
 
+
+    public string CurrentDialogueID { get; private set; }
     private void Awake()
     {
         if (Instance == null)
@@ -77,10 +77,6 @@ public UnityEngine.UI.Image rightCharacterImage;
     private void Update()
     {
         if (!isDialogueActive) return;
-
-        if (isWaitingForCutscene) return;
-
-        if (CutsceneController.Instance.IsVideoPlaying) return;
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time - dialogueStartTime > dialogueInputDelay)
         {
@@ -172,12 +168,12 @@ public UnityEngine.UI.Image rightCharacterImage;
         DisplayCurrentLine();
     }
 
-    onDialogueEndCallback?.Invoke();
+    //onDialogueEndCallback?.Invoke();
 }
+
     
-   public void ResumeDialogue()
+  public void ResumeDialogue()
 {
-    // 라인 데이터가 없으면 종료
     if (currentDialogueLines == null || currentDialogueLines.Length == 0)
     {
         EndDialogue(); // 완전 초기화
@@ -192,18 +188,38 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     isDialogueActive = true;
     dialoguePanel.SetActive(true);
+
+    // === [PATCH] 전투 복귀 시 스프라이트 복원 ===
+    if (leftCharacterImage != null)
+    {
+        leftCharacterImage.sprite = (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+            ? currentDialogueEntries[dialogueIndex].leftSprite
+            : (EventTriggerZone.InstanceExists && EventTriggerZone.Instance.triggerDialogueEntries.Length > dialogueIndex
+                ? EventTriggerZone.Instance.triggerDialogueEntries[dialogueIndex].leftSprite
+                : null);
+
+        leftCharacterImage.gameObject.SetActive(leftCharacterImage.sprite != null);
+    }
+
+    if (rightCharacterImage != null)
+    {
+        rightCharacterImage.sprite = (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+            ? currentDialogueEntries[dialogueIndex].rightSprite
+            : (EventTriggerZone.InstanceExists && EventTriggerZone.Instance.triggerDialogueEntries.Length > dialogueIndex
+                ? EventTriggerZone.Instance.triggerDialogueEntries[dialogueIndex].rightSprite
+                : null);
+
+        rightCharacterImage.gameObject.SetActive(rightCharacterImage.sprite != null);
+    }
+
     DisplayCurrentLine();
     dialogueStartTime = Time.time;
 }
 
-    private void EndVideo()
-    {
-        dialoguePanel.SetActive(true);
-        ShowNextLine();
-        isWaitingForCutscene = false;
-    }
 
-    private void DisplayCurrentLine()
+
+
+  private void DisplayCurrentLine()
 {
     DialogueEntry entry = currentDialogueEntries != null
         ? currentDialogueEntries[dialogueIndex]
@@ -243,20 +259,6 @@ public UnityEngine.UI.Image rightCharacterImage;
             rightSprite = triggerEntries[dialogueIndex].rightSprite;
         }
     }
-    
-    if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
-    {
-            cutsceneBackgroundImage.gameObject.SetActive(false);
-            cutsceneImage.gameObject.SetActive(false);
-
-            isWaitingForCutscene = true;
-
-            CutsceneController.Instance.PlayVideo(line.spritePath, EndVideo);
-
-            dialoguePanel.SetActive(false);
-            StopBlinkUX();
-            return;
-    }
 
    // === 좌측 캐릭터 스프라이트 처리 ===
 if (leftSprite != null)
@@ -288,7 +290,10 @@ else
 
     // 대화 ID 기록
     if (currentDialogueIDs != null && dialogueIndex < currentDialogueIDs.Length)
-        seenIDs.Add(currentDialogueIDs[dialogueIndex]);
+        {
+            CurrentDialogueID = currentDialogueIDs[dialogueIndex];
+            seenIDs.Add(currentDialogueIDs[dialogueIndex]);
+        }
 
     // 컷신 이미지 처리 (기존 로직 유지)
     bool hasCutscene = !string.IsNullOrEmpty(line.spritePath);
@@ -383,7 +388,7 @@ else
 }
 
 
-    public void StartBlinkUX()
+    private void StartBlinkUX()
     {
         if (uxBlinkImage == null) return;
 
@@ -443,9 +448,18 @@ else
         rightCharacterImage.sprite = null;
         rightCharacterImage.gameObject.SetActive(false);
     }
+        //  현재 종료된 마지막 대사 ID 저장
+        if (currentDialogueIDs != null && currentDialogueIDs.Length > 0)
+        {
+            CurrentDialogueID = currentDialogueIDs[currentDialogueIDs.Length - 1];
+        }
 
-    // **Combat 전환 시점에서는 clearState = false로 호출하여 데이터 유지**
-    if (clearState)
+        // 콜백 실행
+        onDialogueEndCallback?.Invoke();
+        onDialogueEndCallback = null;
+
+        // **Combat 전환 시점에서는 clearState = false로 호출하여 데이터 유지**
+        if (clearState)
     {
         currentDialogueEntries = null;
         currentDialogueLines = null;
