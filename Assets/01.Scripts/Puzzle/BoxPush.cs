@@ -20,12 +20,12 @@ public class BoxPush : MonoBehaviour
     private bool isMoving = false; // 이동 중 여부
     private Vector2 targetPosition;  // 이동 목표 위치
 
-    // 이동 불가 시 표시할 인디케이터
-    [Header("막힘 알림 설정")]
-    public GameObject blockIndicatorPrefab;
-    private Canvas canvas;
-    private GameObject currentIndicator;// 현재 표시 중인 아이콘
-    private float indicatorLifetime = 0.2f;// 아이콘 유지 시간
+    //// 이동 불가 시 표시할 인디케이터
+    //[Header("막힘 알림 설정")]
+    //public GameObject blockIndicatorPrefab;
+    //private Canvas canvas;
+    //private GameObject currentIndicator;// 현재 표시 중인 아이콘
+    //private float indicatorLifetime = 0.2f;// 아이콘 유지 시간
 
 
 
@@ -60,36 +60,19 @@ public class BoxPush : MonoBehaviour
     }
 
 
-    //// 플레이어가 박스를 밀려고 접촉 중일 때 호출됨
-    //void OnCollisionStay2D(Collision2D collision)
-    //{
-    //    if (isMoving || !collision.gameObject.CompareTag("Player")) return;
-
-    //    PlayerController pCon = collision.gameObject.GetComponent<PlayerController>();
-    //    //if (pCon == null || Time.time - pCon.lastPushTime < pCon.boxPushCooldown) return; // 쿨타임 체크
-
-    //    if (pushCoroutine == null)
-    //    {
-    //        Vector2 input = pCon.lastMoveInput;
-    //        if (input == Vector2.zero) return; // 입력이 없으면 무시
-    //        pushCoroutine = StartCoroutine(HoldPushCoroutine(collision.gameObject, input));
-    //    }
-    //}
-    //void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    if (pushCoroutine != null)
-    //    {
-    //        StopCoroutine(pushCoroutine);
-    //        pushCoroutine = null;
-    //    }
-    //}
     public void TryPush(Vector2 direction)
     {
         if (isMoving) return;
 
         if (IsBlocked(direction))
         {
-            ShowBlockIndicator();
+            // 막힘 알림은 BlockIndicatorManager를 통해 출력
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                Vector3 indicatorPos = player.transform.position + new Vector3(0f, 1.2f, 0f);
+                BlockIndicatorManager.Instance?.ShowIndicator(indicatorPos);
+            }
             return;
         }
 
@@ -97,57 +80,6 @@ public class BoxPush : MonoBehaviour
         isMoving = true;
         AudioManager.Instance?.PlaySFX("Puzzle/Puzzle_Box_drrr");
     }
-
-    //IEnumerator HoldPushCoroutine(GameObject playerObj, Vector2 initialInput)
-    //{
-    //    float timer = 0f;
-    //    PlayerController pCon2 = playerObj.GetComponent<PlayerController>();
-    //    if (pCon2 == null) yield break; // 플레이어 컨트롤러가 없으면 종료
-
-    //    while (timer < requiredHoldTime)
-    //    {
-    //        Debug.Log(timer+ "초 동안 밀기 유지 중...");
-    //        //한프레임 대기
-    //        yield return null;
-    //        // 방향 바뀌면 종료
-    //        if (pCon2.lastMoveInput != initialInput)
-    //        {
-    //            pushCoroutine = null; // 방향이 바뀌면 코루틴 종료
-    //            yield break;
-    //        }
-    //        // 키를 떼면 타이머 정지 (유지 안 됨)
-    //        if (!pCon2.isPushingInputHeld)
-    //        {
-    //            timer = 0f; // 타이머 초기화
-    //            continue; // 타이머 증가 안 함
-    //        }
-
-    //        timer += Time.deltaTime;
-    //    }
-    //    Vector2 pushDirection;
-    //    if(Mathf.Abs(initialInput.x) > Mathf.Abs(initialInput.y))
-    //    {
-    //        pushDirection = initialInput.x >0 ? Vector2.right : Vector2.left;
-    //    }
-    //    else
-    //    {
-    //        pushDirection = initialInput.y > 0 ? Vector2.up : Vector2.down;
-    //    }
-
-    //    if (IsBlocked(pushDirection))
-    //    {
-    //        ShowBlockIndicator();
-    //        //pCon2.lastPushTime = Time.time; // 쿨타임 갱신
-    //    }
-    //    else
-    //    {
-    //        targetPosition = rb.position + pushDirection * moveDistance;
-    //        isMoving = true; // 이동 시작
-    //        AudioManager.Instance.PlaySFX("Puzzle_Box_drrr");
-    //        //pCon2.lastPushTime = Time.time; // 쿨타임 갱신
-    //    }
-    //    pushCoroutine = null; // 코루틴 종료 후 초기화
-    //}
 
    
     //주어진 방향에 OverlapBox로 충돌 체크
@@ -178,62 +110,67 @@ public class BoxPush : MonoBehaviour
     }
 
 
-    //실패 알림 아이콘 생성
-    void ShowBlockIndicator()
+    ////실패 알림 아이콘 생성
+    //void ShowBlockIndicator()
+    //{
+    //    // Canvas가 없으면 찾아오기 (이름이 "UICanvas"인 객체에서 가져옴)
+    //    if (canvas == null)
+    //    {
+    //        //canvas = FindFirstObjectByType<Canvas>();
+    //        canvas = GameObject.Find("UICanvas")?.GetComponent<Canvas>();
+    //        if (canvas == null)
+    //        {
+    //            Debug.LogError("[BoxPush] Canvas를 찾을 수 없습니다!");
+    //            return;
+    //        }
+    //    }
+
+    //    // 프리팹 또는 캔버스가 없거나, 이미 표시 중이면 중단
+    //    if (blockIndicatorPrefab == null || canvas == null || currentIndicator != null) return;
+
+    //    // 플레이어 객체 찾기
+    //    GameObject player = GameObject.FindGameObjectWithTag("Player");
+    //    if (player == null) return;
+
+
+
+    //    // 카메라 찾기 (UI 위치 계산용)
+    //    Camera cam = Camera.main;
+    //    //canvas.worldCamera ?? Camera.main;
+    //    if (cam == null)
+    //    {
+    //        Debug.LogWarning("[BlockUI] 카메라 없음");
+    //        return;
+    //    }
+
+    //    //플레이어 위치를 기반으로 "UI를 띄울 월드 좌표"를 구함
+    //    Vector3 worldPos = GetIndicatorWorldPosition(player.transform.position);
+
+    //    //위에서 구한 월드 위치를 카메라 기준의 스크린 좌표로 변환
+    //    Vector2 screenPos = cam.WorldToScreenPoint(worldPos);
+
+    //    //blockIndicatorPrefab을 Canvas 안에 복제해서 생성
+    //    currentIndicator = Instantiate(blockIndicatorPrefab, canvas.transform);
+
+    //    //생성된 UI 이미지의 스크린 상 위치를 설정
+    //    currentIndicator.GetComponent<RectTransform>().position = screenPos;
+
+    //    //일정 시간 후(indicatorLifetime, 기본값은 0.2초)에
+    //    //UI 이미지를 자동으로 제거해서 화면에서 사라지게 함
+    //    Destroy(currentIndicator, indicatorLifetime);
+    //}
+
+    ////아이콘 위치 계산 (플레이어 머리 위)
+    //Vector3 GetIndicatorWorldPosition(Vector3 playerPos)
+    //{
+    //    return playerPos + new Vector3(0f, 1.2f, 0f);//단순 머리위 고정
+    //}
+    public void ForceStop()
     {
-        // Canvas가 없으면 찾아오기 (이름이 "UICanvas"인 객체에서 가져옴)
-        if (canvas == null)
-        {
-            //canvas = FindFirstObjectByType<Canvas>();
-            canvas = GameObject.Find("UICanvas")?.GetComponent<Canvas>();
-            if (canvas == null)
-            {
-                Debug.LogError("[BoxPush] Canvas를 찾을 수 없습니다!");
-                return;
-            }
-        }
-
-        // 프리팹 또는 캔버스가 없거나, 이미 표시 중이면 중단
-        if (blockIndicatorPrefab == null || canvas == null || currentIndicator != null) return;
-
-        // 플레이어 객체 찾기
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
-
-
-
-        // 카메라 찾기 (UI 위치 계산용)
-        Camera cam = Camera.main;
-        //canvas.worldCamera ?? Camera.main;
-        if (cam == null)
-        {
-            Debug.LogWarning("[BlockUI] 카메라 없음");
-            return;
-        }
-
-        //플레이어 위치를 기반으로 "UI를 띄울 월드 좌표"를 구함
-        Vector3 worldPos = GetIndicatorWorldPosition(player.transform.position);
-
-        //위에서 구한 월드 위치를 카메라 기준의 스크린 좌표로 변환
-        Vector2 screenPos = cam.WorldToScreenPoint(worldPos);
-
-        //blockIndicatorPrefab을 Canvas 안에 복제해서 생성
-        currentIndicator = Instantiate(blockIndicatorPrefab, canvas.transform);
-
-        //생성된 UI 이미지의 스크린 상 위치를 설정
-        currentIndicator.GetComponent<RectTransform>().position = screenPos;
-
-        //일정 시간 후(indicatorLifetime, 기본값은 0.2초)에
-        //UI 이미지를 자동으로 제거해서 화면에서 사라지게 함
-        Destroy(currentIndicator, indicatorLifetime);
+        isMoving = false;
+        rb.linearVelocity = Vector2.zero;
+        rb.MovePosition(rb.position); // 혹시 모를 보간 중단
     }
-
-    //아이콘 위치 계산 (플레이어 머리 위)
-    Vector3 GetIndicatorWorldPosition(Vector3 playerPos)
-    {
-        return playerPos + new Vector3(0f, 1.2f, 0f);//단순 머리위 고정
-    }
-
     private void OnDrawGizmos()
     {
 #if UNITY_EDITOR
