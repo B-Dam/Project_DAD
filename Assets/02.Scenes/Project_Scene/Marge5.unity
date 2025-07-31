@@ -1858,6 +1858,10 @@ PrefabInstance:
       propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 35579876}
+    - target: {fileID: 4665822027214822317, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[0].shakeCutscene
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6313564203316309660, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[3].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

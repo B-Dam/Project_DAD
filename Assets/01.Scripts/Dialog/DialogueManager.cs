@@ -172,9 +172,8 @@ public UnityEngine.UI.Image rightCharacterImage;
 }
 
     
-   public void ResumeDialogue()
+  public void ResumeDialogue()
 {
-    // 라인 데이터가 없으면 종료
     if (currentDialogueLines == null || currentDialogueLines.Length == 0)
     {
         EndDialogue(); // 완전 초기화
@@ -189,9 +188,34 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     isDialogueActive = true;
     dialoguePanel.SetActive(true);
+
+    // === [PATCH] 전투 복귀 시 스프라이트 복원 ===
+    if (leftCharacterImage != null)
+    {
+        leftCharacterImage.sprite = (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+            ? currentDialogueEntries[dialogueIndex].leftSprite
+            : (EventTriggerZone.InstanceExists && EventTriggerZone.Instance.triggerDialogueEntries.Length > dialogueIndex
+                ? EventTriggerZone.Instance.triggerDialogueEntries[dialogueIndex].leftSprite
+                : null);
+
+        leftCharacterImage.gameObject.SetActive(leftCharacterImage.sprite != null);
+    }
+
+    if (rightCharacterImage != null)
+    {
+        rightCharacterImage.sprite = (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+            ? currentDialogueEntries[dialogueIndex].rightSprite
+            : (EventTriggerZone.InstanceExists && EventTriggerZone.Instance.triggerDialogueEntries.Length > dialogueIndex
+                ? EventTriggerZone.Instance.triggerDialogueEntries[dialogueIndex].rightSprite
+                : null);
+
+        rightCharacterImage.gameObject.SetActive(rightCharacterImage.sprite != null);
+    }
+
     DisplayCurrentLine();
     dialogueStartTime = Time.time;
 }
+
 
 
 

@@ -34,13 +34,13 @@ public class CombatUI : MonoBehaviour
 
     private Vector3 normalScale;
     
-    public static CombatUI instance;
+    public static CombatUI Instance;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
