@@ -84,6 +84,7 @@ public UnityEngine.UI.Image rightCharacterImage;
 
         if (isWaitingForCutscene && CutsceneController.Instance.IsWaitingForInput)
         {
+            Debug.Log("Space 누를 수 있는 상태1");
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 isWaitingForCutscene = false;
@@ -96,6 +97,7 @@ public UnityEngine.UI.Image rightCharacterImage;
         // 2. 검은 패널 대사 출력 중 - 다음 줄 또는 종료 대기
         if (isDisplayingBlackPanelDialogue && Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log("Space 누를 수 있는 상태2");
             bool shown = ShowBlackPanelDialogue();
             if (!shown)
             {
@@ -254,14 +256,11 @@ public UnityEngine.UI.Image rightCharacterImage;
             return false;
 
         int nextIndex = dialogueIndex + 1;
-
         var line = currentDialogueLines[nextIndex];
         string id = currentDialogueIDs[nextIndex];
 
-        Debug.Log($"[DialogueManager] (검사 대상) 다음 대사 ID: {id}");
-
         bool isBlackPanel = cutsceneDialogue != null && cutsceneDialogue.blackPanelDialogueID.Contains(id);
-        Debug.Log($"[DialogueManager] isBlackPanel (next): {isBlackPanel}");
+        Debug.Log($"[DialogueManager] 다음 대사 ID: {id}, isBlackPanel: {isBlackPanel}");
 
         if (isBlackPanel)
         {
@@ -276,9 +275,15 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     private void EndVideo()
     {
-        dialoguePanel.SetActive(true);
-        ShowNextLine();
         isWaitingForCutscene = false;
+        isDisplayingBlackPanelDialogue = true;
+
+        bool shown = ShowBlackPanelDialogue();
+
+        if (!shown)
+        {
+            StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false));
+        }
     }
 
 
@@ -323,6 +328,7 @@ public UnityEngine.UI.Image rightCharacterImage;
         }
     }
 
+
         if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
         {
             if (!hasJustPlayedCutscene)
@@ -342,6 +348,8 @@ public UnityEngine.UI.Image rightCharacterImage;
                 return;
             }
         }
+
+
 
         // === 좌측 캐릭터 스프라이트 처리 ===
         if (leftSprite != null)

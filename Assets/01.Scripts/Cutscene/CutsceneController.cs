@@ -58,9 +58,12 @@ public class CutsceneController : MonoBehaviour
         waitingForInput = false;
         isVideoPreparing = true;
 
+        Debug.Log($"[CutsceneController] 영상 재생 시도: {path}");
+
         VideoClip clip = Resources.Load<VideoClip>(path);
         if (clip == null)
         {
+            Debug.LogWarning($"[CutsceneController] 영상 로드 실패: {path}");
             onEnd?.Invoke();
             return;
         }
