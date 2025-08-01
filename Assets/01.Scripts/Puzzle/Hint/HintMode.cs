@@ -42,12 +42,14 @@ public class HintMode : MonoBehaviour
 
     private void Awake()
     {
-        InitializeHintCounts();
+        //InitializeHintCounts();
     }
     private void Start()
     {
         if (hintVolume == null)
             hintVolume = Object.FindFirstObjectByType<Volume>();
+
+        InitializeHintCounts();
 
         //Volume에서 Coloradjustments 컴포넌트를 가져옴
         hintVolume.profile.TryGet(out colorAdjustments);
@@ -104,7 +106,11 @@ public class HintMode : MonoBehaviour
     private void InitializeHintCounts()
     {
         hintCountsByMap.Clear();
-
+        if (PuzzleManager.Instance == null)
+        {
+            Debug.LogWarning("PuzzleManager가 아직 초기화되지 않았습니다.");
+            return;
+        }
         var puzzleIDs = PuzzleManager.Instance.GetAllPuzzleMapIDs();
         foreach (string id in puzzleIDs)
         {
