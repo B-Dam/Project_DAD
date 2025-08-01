@@ -93,7 +93,7 @@ public class MapManager : MonoBehaviour
             Debug.LogWarning("❗ CameraConfinerUpdater를 찾을 수 없습니다.");
         }
         // 🎵 BGM 설정
-        string targetBGM = (currentMapID == "002" || currentMapID == "004" || currentMapID == "006" || currentMapID == "008") ? "Puzzle_Sound" : "LostSouls";
+        string targetBGM = PuzzleManager.Instance.IsPuzzleMap(currentMapID) ? "Puzzle_Sound" : "LostSouls";
         if (AudioManager.Instance != null && AudioManager.Instance.currentBGMName != targetBGM)
         {
             AudioManager.Instance.PlayBGM(targetBGM);

@@ -16,11 +16,7 @@ public class HintMode : MonoBehaviour
     private const int maxHintCount = 3;// 힌트 최대 사용 가능 횟수 (변경되지 않으므로 const로 선언)
 
     // 맵 ID별 힌트 남은 횟수 저장 (각 맵마다 별도 관리)
-    private Dictionary<string, int> hintCountsByMap = new Dictionary<string, int>()
-    {
-        { "002", maxHintCount },
-        { "008", maxHintCount }
-    };
+    private Dictionary<string, int> hintCountsByMap = new Dictionary<string, int>();
 
     private float hintDuration = 10f; // 힌트 지속 시간 
     private float hintDurationTimer = 0f;//지속시간 체크
@@ -43,6 +39,11 @@ public class HintMode : MonoBehaviour
     public HintLineConnector[] hintLineRenderer;
 
     private string lastMapID = "";
+
+    private void Awake()
+    {
+        InitializeHintCounts();
+    }
     private void Start()
     {
         if (hintVolume == null)
@@ -62,14 +63,14 @@ public class HintMode : MonoBehaviour
     }
     private void Update()
     {
-        string currentID = MapManager.Instance.currentMapID;
+        string currentMapID = MapManager.Instance.currentMapID;
         // 맵 ID 변경 감지
-        if (currentID != lastMapID)
+        if (currentMapID != lastMapID)
         {
-            lastMapID = currentID;
+            lastMapID = currentMapID;
 
             // 힌트 사용 가능한 맵일 경우 UI 강제 갱신
-            if (currentID == "002" || currentID == "008")
+            if (PuzzleManager.Instance.IsPuzzleMap(currentMapID))
             {
                 UpdateHintIcon();
                 UpdateHintUI();
@@ -77,7 +78,7 @@ public class HintMode : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && (currentID == "002" || currentID == "008"))
+        if (Input.GetKeyDown(KeyCode.E) && (PuzzleManager.Instance.IsPuzzleMap(currentMapID)))
         {
             TryUseHint();
         }
@@ -87,7 +88,7 @@ public class HintMode : MonoBehaviour
         UpdateHintUI();
         UpdateHintTimeBar();
 
-        if (!(currentID == "002" || currentID == "008"))
+        if (!PuzzleManager.Instance.IsPuzzleMap(currentMapID))
         {
             ForceResetHintState();
         }
@@ -99,6 +100,18 @@ public class HintMode : MonoBehaviour
             }
         }
     }
+
+    private void InitializeHintCounts()
+    {
+        hintCountsByMap.Clear();
+
+        var puzzleIDs = PuzzleManager.Instance.GetAllPuzzleMapIDs();
+        foreach (string id in puzzleIDs)
+        {
+            hintCountsByMap[id] = maxHintCount;
+        }
+    }
+
     void TryUseHintButton()
     {
         TryUseHint();
@@ -106,15 +119,15 @@ public class HintMode : MonoBehaviour
 
     void TryUseHint()
     {
-        string currentID = MapManager.Instance.currentMapID;
+        string currentMapID = MapManager.Instance.currentMapID;
 
         if (!isGrayscale)
         {
             //if (hintCount > 0 && !isInCooldown)
-            if (hintCountsByMap.ContainsKey(currentID) && hintCountsByMap[currentID] > 0 && !isInCooldown)
+            if (hintCountsByMap.ContainsKey(currentMapID) && hintCountsByMap[currentMapID] > 0 && !isInCooldown)
             {
                 //ActivateHint();
-                ActivateHint(currentID); //  currentID 전달
+                ActivateHint(currentMapID); //  currentMapID 전달
             }
             else if (isInCooldown)
             {
@@ -131,10 +144,6 @@ public class HintMode : MonoBehaviour
 
         }
     }
-
-
-
-
     void UpdateHintTimeBar()
     {
         //힌트 지속 시간 바 업데이트
@@ -254,8 +263,8 @@ public class HintMode : MonoBehaviour
 
     void UpdateHintIcon()
     {
-        string currentID = MapManager.Instance.currentMapID;
-        int currentCount = hintCountsByMap.ContainsKey(currentID) ? hintCountsByMap[currentID] : 0;
+        string currentMapID = MapManager.Instance.currentMapID;
+        int currentCount = hintCountsByMap.ContainsKey(currentMapID) ? hintCountsByMap[currentMapID] : 0;
         for (int i = 0; i < hintIcons.Length; i++)
         {
             if (hintIcons[i] != null)
@@ -265,39 +274,14 @@ public class HintMode : MonoBehaviour
         }
     }
 
-    //void ResetHintCount()
-    //{
-    //    hintCount = maxHintCount; // 힌트 카운트 초기화
-    //}
-
     void ResetAllHintCounts() //  맵별 힌트 전부 초기화
     {
-        hintCountsByMap["002"] = maxHintCount;
-        hintCountsByMap["008"] = maxHintCount;
+       foreach(string mapID in PuzzleManager.Instance.GetAllPuzzleMapIDs())
+        {
+            hintCountsByMap[mapID] = maxHintCount; // 각 맵의 힌트 카운트를 초기화
+        }
     }
 
-    //public void ForceResetHintState()
-    //{
-    //    // 힌트 상태 초기화 (이펙트, 선, 타이머, UI 등)
-    //    isGrayscale = false;
-    //    isInCooldown = false;
-    //    hintDurationTimer = 0f;
-    //    hintCooldownTimer = 0f;
-
-    //    if (colorAdjustments != null)
-    //        colorAdjustments.saturation.value = 0f;
-
-    //    foreach (var connector in hintLineRenderer)
-    //        connector.SetActive(false);
-
-    //    // 카운트 초기화
-    //    ResetHintCount();
-
-    //    // UI 초기화
-    //    UpdateHintIcon();
-    //    UpdateHintUI();
-    //    UpdateHintTimeBar();
-    //}
     public void ForceResetHintState()
     {
         isGrayscale = false;
