@@ -24,7 +24,10 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] private float fadeOutDuration = 2f;
 
     public bool IsVideoPlaying => videoPlayer.isPlaying;
+    public bool IsWaitingForInput => waitingForInput;
     private bool waitingForInput = false;
+    public bool IsPreparing => isVideoPreparing;
+    private bool isVideoPreparing = false;
 
     private void Awake()
     {
@@ -50,22 +53,17 @@ public class CutsceneController : MonoBehaviour
         fadeCanvas.alpha = 1f;
     }
 
-    private void Update()
-    {
-        if (waitingForInput)
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && !IsVideoPlaying)
-            {
-                StartCoroutine(EndAfterFadeInOut());
-            }
-        }
-    }
-
     public void PlayVideo(string path, Action onEnd)
     {
+        waitingForInput = false;
+        isVideoPreparing = true;
+
+        Debug.Log($"[CutsceneController] 영상 재생 시도: {path}");
+
         VideoClip clip = Resources.Load<VideoClip>(path);
         if (clip == null)
         {
+            Debug.LogWarning($"[CutsceneController] 영상 로드 실패: {path}");
             onEnd?.Invoke();
             return;
         }
@@ -102,14 +100,15 @@ public class CutsceneController : MonoBehaviour
 
     private void OnVideoEnd(VideoPlayer vp)
     {
+        Debug.Log("영상 종료됨. Space 입력 대기 시작.");
         videoPlayer.loopPointReached -= OnVideoEnd;
         videoPlayer.Pause();
+
         waitingForInput = true;
     }
 
     private IEnumerator PlayAfterFadeInOut()
-    {
-
+    { 
         if (fadeCanvas.alpha == 1f)
         {
             cutsceneVideo.SetActive(true);
@@ -124,18 +123,27 @@ public class CutsceneController : MonoBehaviour
             yield return StartCoroutine(FadeOut(fadeOutDuration));
         }
 
+        isVideoPreparing = false;
+
         videoPlayer.Play();
     }
 
-    private IEnumerator EndAfterFadeInOut()
+    public IEnumerator EndAfterFadeInOut(bool isBlackPanelDialogue)
     {
-        waitingForInput = false;
-        yield return StartCoroutine(FadeIn(fadeInDuration));
         videoPlayer.Stop();
-        cutsceneVideo.SetActive(false);
-        yield return StartCoroutine(FadeOut(fadeOutDuration));
 
-        onEndCallback?.Invoke();
+        if (isBlackPanelDialogue)
+        {
+            onEndCallback?.Invoke();
+        }
+        else
+        {
+            yield return StartCoroutine(FadeIn(fadeInDuration));
+            cutsceneVideo.SetActive(false);
+            yield return StartCoroutine(FadeOut(fadeOutDuration));
+
+            onEndCallback?.Invoke();
+        }
     }
 
     private IEnumerator FadeIn(float duration)
