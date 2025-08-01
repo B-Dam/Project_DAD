@@ -919,8 +919,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BoundingShape2D: {fileID: 0}
-  Damping: 0.5
-  SlowingDistance: 5
+  Damping: 0
+  SlowingDistance: 0
   OversizeWindow:
     Enabled: 0
     MaxWindowSize: 0
@@ -936,6 +936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8583124963422105500}
   - component: {fileID: 9100031954152938228}
+  - component: {fileID: 1251488475190538415}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -973,3 +974,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   confiner: {fileID: 2537693785485874198}
+--- !u!114 &1251488475190538415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7362844976638234526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5438af776d44fe04aba5240302b1af8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  virtualCam: {fileID: 5835387105049515304}
+  defaultFollowTarget: {fileID: 0}

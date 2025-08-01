@@ -19,6 +19,8 @@ public class HintMode : MonoBehaviour
     private Dictionary<string, int> hintCountsByMap = new Dictionary<string, int>()
     {
         { "002", maxHintCount },
+        { "004", maxHintCount },
+        { "006", maxHintCount },
         { "008", maxHintCount }
     };
 
@@ -69,7 +71,7 @@ public class HintMode : MonoBehaviour
             lastMapID = currentID;
 
             // 힌트 사용 가능한 맵일 경우 UI 강제 갱신
-            if (currentID == "002" || currentID == "008")
+            if (currentID == "002" || currentID == "004" || currentID == "006" || currentID == "008")
             {
                 UpdateHintIcon();
                 UpdateHintUI();
@@ -77,7 +79,7 @@ public class HintMode : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && (currentID == "002" || currentID == "008"))
+        if (Input.GetKeyDown(KeyCode.E) && (currentID == "002" || currentID == "004" || currentID == "006" || currentID == "008"))
         {
             TryUseHint();
         }
@@ -87,7 +89,7 @@ public class HintMode : MonoBehaviour
         UpdateHintUI();
         UpdateHintTimeBar();
 
-        if (!(currentID == "002" || currentID == "008"))
+        if (!(currentID == "002" || currentID == "004" || currentID == "006" || currentID == "008"))
         {
             ForceResetHintState();
         }
@@ -273,6 +275,8 @@ public class HintMode : MonoBehaviour
     void ResetAllHintCounts() //  맵별 힌트 전부 초기화
     {
         hintCountsByMap["002"] = maxHintCount;
+        hintCountsByMap["004"] = maxHintCount;
+        hintCountsByMap["006"] = maxHintCount;
         hintCountsByMap["008"] = maxHintCount;
     }
 
