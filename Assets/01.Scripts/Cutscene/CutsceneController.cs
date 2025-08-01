@@ -58,12 +58,12 @@ public class CutsceneController : MonoBehaviour
         waitingForInput = false;
         isVideoPreparing = true;
 
-        Debug.Log($"[CutsceneController] ¿µ»ó Àç»ı ½Ãµµ: {path}");
+        Debug.Log($"ğŸ¥ ì»·ì‹  ì¬ìƒ ìš”ì²­: path = {path}");
 
         VideoClip clip = Resources.Load<VideoClip>(path);
         if (clip == null)
         {
-            Debug.LogWarning($"[CutsceneController] ¿µ»ó ·Îµå ½ÇÆĞ: {path}");
+            Debug.LogWarning($"[CutsceneController] ì˜ìƒ ë¡œë“œ ì‹¤íŒ¨: {path}");
             onEnd?.Invoke();
             return;
         }
@@ -100,7 +100,7 @@ public class CutsceneController : MonoBehaviour
 
     private void OnVideoEnd(VideoPlayer vp)
     {
-        Debug.Log("¿µ»ó Á¾·áµÊ. Space ÀÔ·Â ´ë±â ½ÃÀÛ.");
+        Debug.Log("ğŸï¸ ì˜ìƒ ì¢…ë£Œ. Space ì…ë ¥ ëŒ€ê¸° ì¤‘...");
         videoPlayer.loopPointReached -= OnVideoEnd;
         videoPlayer.Pause();
 
@@ -141,8 +141,8 @@ public class CutsceneController : MonoBehaviour
             yield return StartCoroutine(FadeIn(fadeInDuration));
             cutsceneVideo.SetActive(false);
             yield return StartCoroutine(FadeOut(fadeOutDuration));
-
             onEndCallback?.Invoke();
+
         }
     }
 

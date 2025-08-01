@@ -84,7 +84,7 @@ public UnityEngine.UI.Image rightCharacterImage;
 
         if (isWaitingForCutscene && CutsceneController.Instance.IsWaitingForInput)
         {
-            Debug.Log("Space 누를 수 있는 상태1");
+            //Debug.Log("Space 누를 수 있는 상태1");
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 isWaitingForCutscene = false;
@@ -278,12 +278,12 @@ public UnityEngine.UI.Image rightCharacterImage;
         isWaitingForCutscene = false;
         isDisplayingBlackPanelDialogue = true;
 
-        bool shown = ShowBlackPanelDialogue();
+        //bool shown = ShowBlackPanelDialogue();
 
-        if (!shown)
-        {
-            StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false));
-        }
+        //if (!shown)
+        //{
+        //    StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false));
+        //}
     }
 
 
