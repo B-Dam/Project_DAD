@@ -55,7 +55,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     [Header("컷씬 이미지")]
     public UnityEngine.UI.Image cutsceneImage;
 
-
+    private bool isWaitingForCutscene = false;
 
     public string CurrentDialogueID { get; private set; }
     private void Awake()
@@ -77,6 +77,10 @@ public UnityEngine.UI.Image rightCharacterImage;
     private void Update()
     {
         if (!isDialogueActive) return;
+
+        if (isWaitingForCutscene) return;
+
+        if (CutsceneController.Instance.IsVideoPlaying) return;
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time - dialogueStartTime > dialogueInputDelay)
         {
@@ -216,10 +220,15 @@ public UnityEngine.UI.Image rightCharacterImage;
     dialogueStartTime = Time.time;
 }
 
+    private void EndVideo()
+    {
+        dialoguePanel.SetActive(true);
+        ShowNextLine();
+        isWaitingForCutscene = false;
+    }
 
 
-
-  private void DisplayCurrentLine()
+    private void DisplayCurrentLine()
 {
     DialogueEntry entry = currentDialogueEntries != null
         ? currentDialogueEntries[dialogueIndex]
@@ -258,6 +267,20 @@ public UnityEngine.UI.Image rightCharacterImage;
             leftSprite = triggerEntries[dialogueIndex].leftSprite;
             rightSprite = triggerEntries[dialogueIndex].rightSprite;
         }
+    }
+
+    if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
+    {
+        cutsceneBackgroundImage.gameObject.SetActive(false);
+        cutsceneImage.gameObject.SetActive(false);
+
+        isWaitingForCutscene = true;
+
+        CutsceneController.Instance.PlayVideo(line.spritePath, EndVideo);
+
+        dialoguePanel.SetActive(false);
+        StopBlinkUX();
+        return;
     }
 
    // === 좌측 캐릭터 스프라이트 처리 ===

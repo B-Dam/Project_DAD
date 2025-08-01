@@ -1652,6 +1652,19 @@ MonoBehaviour:
         m_Calls: []
     onEndEvents:
       m_PersistentCalls:
+        m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 0}
+    rightSprite: {fileID: 0}
+  - id: 5016
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    onEndEvents:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: CombatTriggerEvent, Assembly-CSharp
@@ -1665,19 +1678,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    shakeCutscene: 0
-    leftSprite: {fileID: 0}
-    rightSprite: {fileID: 0}
-  - id: 5016
-    speaker: 
-    text: 
-    focusTarget: {fileID: 0}
-    onStartEvents:
-      m_PersistentCalls:
-        m_Calls: []
-    onEndEvents:
-      m_PersistentCalls:
-        m_Calls: []
     shakeCutscene: 0
     leftSprite: {fileID: 0}
     rightSprite: {fileID: 1029054297226339867, guid: 3ee873c02e3d8b6428134a7e7512bac9, type: 3}
