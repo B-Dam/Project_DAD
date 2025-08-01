@@ -20,7 +20,8 @@ public class PuzzleResetManager : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        string currentMapID = MapManager.Instance.currentMapID;
+        if (Input.GetKeyDown(KeyCode.R) && PuzzleManager.Instance.IsPuzzleMap(currentMapID))
         {
             //박스들의 이동을 강제 중지
             BoxPush[] allBoxes = Object.FindObjectsByType<BoxPush>(FindObjectsSortMode.None);

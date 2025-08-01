@@ -14,7 +14,7 @@ public class PuzzleUIController : MonoBehaviour
     public void HandleFadeComplete()
     {
         string currentMapID = MapManager.Instance.currentMapID;
-        bool shouldShow = currentMapID == "002" || currentMapID == "004" || currentMapID == "006" || currentMapID == "008";
+        bool shouldShow = (PuzzleManager.Instance.IsPuzzleMap(currentMapID));
 
         Debug.Log(" 퍼즐 UI 표시 여부: " + shouldShow);
         puzzleUICanvas.SetActive(shouldShow);
