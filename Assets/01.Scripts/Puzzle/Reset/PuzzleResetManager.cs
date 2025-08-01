@@ -34,6 +34,7 @@ public class PuzzleResetManager : MonoBehaviour
     }
     public void ResetPuzzle()
     {
+        Time.timeScale = 1f; // 시간 스케일을 원래대로 복원 
         var resettableObjects = Object.FindObjectsByType<PuzzleResettable>(FindObjectsSortMode.None);
         foreach (var obj in resettableObjects)
         {
