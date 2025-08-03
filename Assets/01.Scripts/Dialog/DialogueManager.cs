@@ -10,7 +10,7 @@ public class DialogueManager : MonoBehaviour
 
     private DialogueDatabase.DialogueLine[] currentDialogueLines;
     private string[] currentDialogueIDs;
-    private int dialogueIndex = 0;
+    private int dialogueIndex = 1;
     private bool isDialogueActive = false;
     
     // 대화 ID별로 본 여부만 저장
@@ -28,9 +28,6 @@ public class DialogueManager : MonoBehaviour
     [Header("👥 좌우 캐릭터 이미지")]
 public UnityEngine.UI.Image leftCharacterImage;
 public UnityEngine.UI.Image rightCharacterImage;
-
-
-  
 
     [Header("깜빡이는 이미지")]
     public UnityEngine.UI.Image uxBlinkImage;
@@ -55,9 +52,8 @@ public UnityEngine.UI.Image rightCharacterImage;
     [Header("컷씬 이미지")]
     public UnityEngine.UI.Image cutsceneImage;
 
+    [Header("컷신 대사")]
     public CutsceneDialogue cutsceneDialogue;
-    private bool isWaitingForCutscene = false;
-    private bool hasJustPlayedCutscene = false;
     private bool isDisplayingBlackPanelDialogue = false;
 
     public string CurrentDialogueID { get; private set; }
@@ -82,35 +78,24 @@ public UnityEngine.UI.Image rightCharacterImage;
         if (!isDialogueActive) return;
         if (CutsceneController.Instance != null && (CutsceneController.Instance.IsVideoPlaying || CutsceneController.Instance.IsPreparing)) return;
 
-        if (isWaitingForCutscene && CutsceneController.Instance.IsWaitingForInput)
-        {
-            //Debug.Log("Space 누를 수 있는 상태1");
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                isWaitingForCutscene = false;
-                isDisplayingBlackPanelDialogue = true;
-                ShowBlackPanelDialogue(); // 검은 패널 대사 있으면 출력
-            }
-            return;
-        }
+        Debug.Log($"[Update] 상태 체크: isDisplayingBlackPanelDialogue = {isDisplayingBlackPanelDialogue}");
 
-        // 2. 검은 패널 대사 출력 중 - 다음 줄 또는 종료 대기
         if (isDisplayingBlackPanelDialogue && Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Space 누를 수 있는 상태2");
+            Debug.Log("Space 누를 수 있는 상태1");
             bool shown = ShowBlackPanelDialogue();
             if (!shown)
             {
-                // 더 이상 출력할 검은 패널 대사 없으면 페이드
                 isDisplayingBlackPanelDialogue = false;
-                StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false));
+                cutsceneDialogue.Hide();
+                StartCoroutine(EndBlackPanelAndContinue());
             }
             return;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time - dialogueStartTime > dialogueInputDelay)
         {
-            Debug.Log("Space 누를 수 있는 상태3");
+            Debug.Log("Space 누를 수 있는 상태2");
 
             if (isTyping)
             {
@@ -178,8 +163,6 @@ public UnityEngine.UI.Image rightCharacterImage;
  private void ShowNextLine()
 {
     StopBlinkUX();
-
-    hasJustPlayedCutscene = false;
 
     DialogueEntry entry = null;
     if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
@@ -252,38 +235,62 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     private bool ShowBlackPanelDialogue()
     {
-        if (currentDialogueIDs == null || dialogueIndex + 1 >= currentDialogueIDs.Length)
+        if (currentDialogueIDs == null || dialogueIndex >= currentDialogueIDs.Length)
             return false;
 
-        int nextIndex = dialogueIndex + 1;
-        var line = currentDialogueLines[nextIndex];
-        string id = currentDialogueIDs[nextIndex];
+        var line = currentDialogueLines[dialogueIndex];
+        string id = currentDialogueIDs[dialogueIndex];
 
         bool isBlackPanel = cutsceneDialogue != null && cutsceneDialogue.blackPanelDialogueID.Contains(id);
-        Debug.Log($"[DialogueManager] 다음 대사 ID: {id}, isBlackPanel: {isBlackPanel}");
+        Debug.Log($"[ShowBlackPanelDialogue] ID: {id}, isBlackPanel: {isBlackPanel}, Index: {dialogueIndex}");
 
-        if (isBlackPanel)
+        if (!isBlackPanel)
+            return false;
+
+        cutsceneDialogue.ShowDialogue(id, line.speaker, line.text);
+        dialogueIndex++;
+        return true;
+    }
+
+    private IEnumerator EndBlackPanelAndContinue()
+    {
+        Debug.Log("[EndBlackPanelAndContinue] 호출됨");
+        bool nextIsCutscene = false;
+
+        int nextIndex = dialogueIndex;
+        if (currentDialogueLines != null && nextIndex < currentDialogueLines.Length)
         {
-            dialoguePanel.SetActive(false);
-            cutsceneDialogue.ShowDialogue(id, line.speaker, line.text);
-            dialogueIndex = nextIndex;
-            return true;
+            var nextLine = currentDialogueLines[nextIndex];
+            Debug.Log($"[EndBlackPanelAndContinue] 다음 대사 ID: {currentDialogueIDs[nextIndex]}, spritePath = {nextLine.spritePath}");
+            nextIsCutscene = !string.IsNullOrEmpty(nextLine.spritePath) && nextLine.spritePath.StartsWith("Cutscenes/Video/");
+            Debug.Log($"[EndBlackPanelAndContinue] nextIsCutscene = {nextIsCutscene}");
         }
-
-        return false;
+        yield return StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(nextIsCutscene));
+        EndVideo();
     }
 
     private void EndVideo()
     {
-        isWaitingForCutscene = false;
-        isDisplayingBlackPanelDialogue = true;
+        Debug.Log($"[EndVideo] 진입 시 dialogueIndex = {dialogueIndex}");
 
-        //bool shown = ShowBlackPanelDialogue();
+        if (currentDialogueLines == null || dialogueIndex >= currentDialogueLines.Length)
+        {
+            Debug.Log("[EndVideo] 다음 대사가 없음");
+            EndDialogue();
+            return;
+        }
 
-        //if (!shown)
-        //{
-        //    StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false));
-        //}
+        var id = currentDialogueIDs[dialogueIndex];
+
+        if (cutsceneDialogue != null && cutsceneDialogue.blackPanelDialogueID.Contains(id))
+        {
+            isDisplayingBlackPanelDialogue = true;
+            Debug.Log($"[EndVideo] 블랙 패널 진입: {id}");
+            return;
+        }
+
+        Debug.Log($"[EndVideo] DisplayCurrentLine 직접 호출: ID = {id}");
+        DisplayCurrentLine();
     }
 
 
@@ -327,27 +334,22 @@ public UnityEngine.UI.Image rightCharacterImage;
             rightSprite = triggerEntries[dialogueIndex].rightSprite;
         }
     }
-
-
+       
+        string id = currentDialogueIDs[dialogueIndex];
         if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
         {
-            if (!hasJustPlayedCutscene)
-            {
-                if (cutsceneDialogue != null)
-                    cutsceneDialogue.Hide();
+          Debug.Log($"[DisplayCurrentLine] 컷신 시작: ID = {id}, path = {line.spritePath}");
 
-                cutsceneBackgroundImage.gameObject.SetActive(false);
-                cutsceneImage.gameObject.SetActive(false);
+            dialogueIndex++;
+            cutsceneBackgroundImage.gameObject.SetActive(false);
+            cutsceneImage.gameObject.SetActive(false);
 
-                isWaitingForCutscene = true;
-                hasJustPlayedCutscene = true;
-
-                CutsceneController.Instance.PlayVideo(line.spritePath, EndVideo);
-                dialoguePanel.SetActive(false);
-                StopBlinkUX();
-                return;
-            }
+            CutsceneController.Instance.PlayVideo(line.spritePath, EndVideo);
+            dialoguePanel.SetActive(false);
+            StopBlinkUX();
+            return;
         }
+        else dialoguePanel.SetActive(true);
 
 
 

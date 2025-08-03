@@ -15,12 +15,6 @@ public class CutsceneDialogue : MonoBehaviour
 
     public void ShowDialogue(string dialogueID, string speaker, string text)
     {
-        foreach (string id in blackPanelDialogueID)
-        {
-            Debug.Log($"[blackPanelDialogueID] 리스트 항목: '{id}'");
-        }
-
-        Debug.Log($"ShowDialogue 호출됨 - 전달 ID: {dialogueID}, isInList: {blackPanelDialogueID.Contains(dialogueID)}");
         if (blackPanelDialogueID.Contains(dialogueID))
         {
             blackPanel.SetActive(true);
