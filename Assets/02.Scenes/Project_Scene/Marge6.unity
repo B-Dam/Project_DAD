@@ -876,10 +876,12 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -41
       objectReference: {fileID: 0}
-    - target: {fileID: 2537693785485874198, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
-      propertyPath: BoundingShape2D
-      value: 
-      objectReference: {fileID: 653787514}
+
+    - target: {fileID: 2119602943650801819, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5999985
+      objectReference: {fileID: 0}
+
     - target: {fileID: 5835387105049515304, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -1210,6 +1212,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 365659795303165084, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 441
+      objectReference: {fileID: 0}
     - target: {fileID: 6149661096035739126, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_Name
       value: DialogueManager
@@ -1253,6 +1259,10 @@ PrefabInstance:
     - target: {fileID: 8287438169582842342, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8693283979752949538, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 441
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1578,6 +1588,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Events
       objectReference: {fileID: 0}
+    - target: {fileID: 2977269707519327008, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 39.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 2977269707519327008, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -100.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295613192102326485, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.373618
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295613192102326485, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10.6371155
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295613192102326485, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 47.4797
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295613192102326485, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -104.3757
+      objectReference: {fileID: 0}
     - target: {fileID: 3394546136383376052, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1598,6 +1632,20 @@ PrefabInstance:
       propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 35579876}
+
+    - target: {fileID: 4799275672357321557, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: deactivateDialogueID
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817901044391487429, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 95.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817901044391487429, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -145.6
+      objectReference: {fileID: 0}
+
     - target: {fileID: 6313564203316309660, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[4].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

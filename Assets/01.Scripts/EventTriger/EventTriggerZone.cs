@@ -103,27 +103,20 @@ private DialogueEntry[] ConvertTriggerEntriesToDialogueEntries(TriggerDialogueEn
     return entries;
 }
 /// <summary>
-/// 플레이어를 트리거 기준으로 뒤로 이동시키는 코루틴
+/// 플레이어를 트리거의 가장 가까운 면 방향으로 뒤로 이동
 /// </summary>
 private IEnumerator MovePlayerBackward(float distance, float duration)
 {
     if (PlayerController.Instance == null) yield break;
 
+    // 이동 시작 시 플레이어 제어 비활성화
     PlayerController.Instance.enabled = false;
 
-    Vector3 triggerPos = transform.position;
+    Animator anim = PlayerController.Instance.GetComponent<Animator>();
+    if (anim != null) anim.SetFloat("Run", 1f); // 강제 이동 애니메이션
+
     Vector3 playerPos = PlayerController.Instance.transform.position;
-
-    // 플레이어와 트리거 위치 차이
-    Vector3 diff = playerPos - triggerPos;
-
-    // X축과 Y축 중 절대값이 더 큰 축만 사용 (사선 방지)
-    if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
-        diff = new Vector3(Mathf.Sign(diff.x), 0f, 0f); // 좌우 방향
-    else
-        diff = new Vector3(0f, Mathf.Sign(diff.y), 0f); // 상하 방향
-
-    Vector3 backwardDir = diff.normalized;
+    Vector3 backwardDir = GetPushDirection(playerPos); // 면 기준 방향 계산
 
     Vector3 startPos = playerPos;
     Vector3 targetPos = startPos + backwardDir * distance;
@@ -138,8 +131,42 @@ private IEnumerator MovePlayerBackward(float distance, float duration)
     }
 
     PlayerController.Instance.transform.position = targetPos;
+
+    if (anim != null) anim.SetFloat("Run", 0f);
+
     PlayerController.Instance.enabled = true;
 }
+
+/// <summary>
+/// 트리거 Collider의 가장 가까운 면 방향으로 밀림 방향 계산
+/// </summary>
+private Vector3 GetPushDirection(Vector3 playerPos)
+{
+    // 트리거 Collider2D의 Bounds 가져오기
+    Collider2D col = GetComponent<Collider2D>();
+    if (col == null) return Vector3.zero;
+
+    Bounds bounds = col.bounds;
+
+    // 각 면과의 거리 계산
+    float leftDist = Mathf.Abs(playerPos.x - bounds.min.x);
+    float rightDist = Mathf.Abs(playerPos.x - bounds.max.x);
+    float bottomDist = Mathf.Abs(playerPos.y - bounds.min.y);
+    float topDist = Mathf.Abs(playerPos.y - bounds.max.y);
+
+    // 가장 가까운 면 찾기
+    float minDist = Mathf.Min(leftDist, rightDist, bottomDist, topDist);
+
+    if (minDist == leftDist)
+        return Vector3.left;
+    else if (minDist == rightDist)
+        return Vector3.right;
+    else if (minDist == bottomDist)
+        return Vector3.down;
+    else
+        return Vector3.up;
+}
+
 
 
 
@@ -171,7 +198,7 @@ private void HandleDialogueEntryEnd()
         // triggerOnce 체크된 경우 뒤로 이동 스킵
         if (!(triggerOnce && _triggeredList.Contains(triggerId)))
         {
-            StartCoroutine(MovePlayerBackward(1.6f, 1f));
+            StartCoroutine(MovePlayerBackward(1.3f, 2f));
         }
 
         DialogueManager.Instance.ClearOnDialogueEndCallback(HandleDialogueEntryEnd);
