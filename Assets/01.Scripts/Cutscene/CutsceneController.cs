@@ -23,11 +23,9 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] private float fadeInDuration = 1f;
     [SerializeField] private float fadeOutDuration = 2f;
 
-    public bool IsVideoPlaying => videoPlayer.isPlaying;
-    public bool IsWaitingForInput => waitingForInput;
-    private bool waitingForInput = false;
-    public bool IsPreparing => isVideoPreparing;
     private bool isVideoPreparing = false;
+    public bool IsVideoPlaying => videoPlayer.isPlaying;
+    public bool IsPreparing => isVideoPreparing;
 
     private void Awake()
     {
@@ -55,10 +53,9 @@ public class CutsceneController : MonoBehaviour
 
     public void PlayVideo(string path, Action onEnd)
     {
-        waitingForInput = false;
         isVideoPreparing = true;
 
-        Debug.Log($"🎥 컷신 재생 요청: path = {path}");
+        Debug.Log($"컷신 재생 요청: path = {path}");
 
         VideoClip clip = Resources.Load<VideoClip>(path);
         if (clip == null)
@@ -100,15 +97,14 @@ public class CutsceneController : MonoBehaviour
 
     private void OnVideoEnd(VideoPlayer vp)
     {
-        Debug.Log("🎞️ 영상 종료. Space 입력 대기 중...");
         videoPlayer.loopPointReached -= OnVideoEnd;
-        videoPlayer.Pause();
 
-        waitingForInput = true;
+        onEndCallback?.Invoke();
     }
 
     private IEnumerator PlayAfterFadeInOut()
-    { 
+    {
+
         if (fadeCanvas.alpha == 1f)
         {
             cutsceneVideo.SetActive(true);
@@ -128,22 +124,23 @@ public class CutsceneController : MonoBehaviour
         videoPlayer.Play();
     }
 
-    public IEnumerator EndAfterFadeInOut(bool isBlackPanelDialogue)
+    public IEnumerator EndAfterFadeInOut(bool nextIsCutscene)
     {
         videoPlayer.Stop();
 
-        if (isBlackPanelDialogue)
+        yield return StartCoroutine(FadeIn(fadeInDuration));
+        mainCamera.cullingMask = 0;
+        questUI.SetActive(false);
+
+
+        if (!nextIsCutscene)
         {
-            onEndCallback?.Invoke();
-        }
-        else
-        {
-            yield return StartCoroutine(FadeIn(fadeInDuration));
+            mainCamera.cullingMask = originalCullingMask;
             cutsceneVideo.SetActive(false);
             yield return StartCoroutine(FadeOut(fadeOutDuration));
-            onEndCallback?.Invoke();
-
         }
+
+        onEndCallback?.Invoke();
     }
 
     private IEnumerator FadeIn(float duration)
@@ -157,6 +154,7 @@ public class CutsceneController : MonoBehaviour
             fadeCanvas.alpha = Mathf.Lerp(0f, 1f, t / duration);
             yield return null;
         }
+        fadeCanvas.alpha = 1f;
     }
 
     private IEnumerator FadeOut(float duration)
@@ -168,6 +166,7 @@ public class CutsceneController : MonoBehaviour
             fadeCanvas.alpha = Mathf.Lerp(1f, 0f, t / duration);
             yield return null;
         }
+        fadeCanvas.alpha = 0f;
         fadeCanvas.gameObject.SetActive(false);
     }
 }
