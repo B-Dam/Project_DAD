@@ -419,6 +419,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!60 &760012876 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2018809866922119518, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
+  m_PrefabInstance: {fileID: 1584738043}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &787284461 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8601999820313936072, guid: afd0b594079bca945b0dc20c52fc33f5, type: 3}
@@ -702,7 +707,7 @@ Transform:
   m_GameObject: {fileID: 1322600199}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12, y: -100, z: -10}
+  m_LocalPosition: {x: 100.68016, y: -99.89468, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -871,6 +876,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -41
       objectReference: {fileID: 0}
+    - target: {fileID: 2537693785485874198, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
+      propertyPath: BoundingShape2D
+      value: 
+      objectReference: {fileID: 760012876}
     - target: {fileID: 5835387105049515304, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -1557,14 +1566,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 259919423729260861, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 586465082158899651, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1687405134267660782, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1585,22 +1586,18 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
-    - target: {fileID: 3934097532458169155, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 3815515843519923663, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: hintController
+      value: 
+      objectReference: {fileID: 1785497267512329401}
+    - target: {fileID: 3815515843519923663, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: offscreenWatcher
+      value: 
+      objectReference: {fileID: 1322600205}
     - target: {fileID: 4069335929700932538, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 35579876}
-    - target: {fileID: 5817901044391487429, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 95.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5817901044391487429, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -145.6
-      objectReference: {fileID: 0}
     - target: {fileID: 6313564203316309660, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[4].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1677,10 +1674,6 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
-    - target: {fileID: 8233485953441644270, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8536342348315174179, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
