@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class EventTriggerZone : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class EventTriggerZone : MonoBehaviour
     public TriggerDialogueEntry[] triggerDialogueEntries;
 
     private bool hasTriggered = false;
+     public string deactivateDialogueID;
     
     public static EventTriggerZone Instance { get; private set; }
 
@@ -29,26 +31,38 @@ private void Awake()
 }
 public static bool InstanceExists => Instance != null;
 
+private void Update()
+{
+    if (!string.IsNullOrEmpty(deactivateDialogueID) &&
+        DialogueManager.Instance != null &&
+        DialogueManager.Instance.HasSeen(deactivateDialogueID))
+    {
+        gameObject.SetActive(false);
+    }
+}
+
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 이미 재생했던 트리거 리스트에 triggerId가 포함되어있다면,
-        // 함수를 바로 종료
-        if (_triggeredList.Contains(triggerId))
-            return;
-
-        // 재생한 트리거 리스트에 triggerId Add
-        _triggeredList.Add(triggerId);
-
-        if (hasTriggered && triggerOnce) return;
+        // 플레이어만 감지
         if (!other.CompareTag("Player")) return;
 
+        // 조건 체크 (예: 퀘스트 조건 등)
         if (requireCondition && !CheckCondition()) return;
 
-        hasTriggered = true;
+        // triggerOnce 옵션이 true일 때만 _triggeredList 사용
+        if (triggerOnce)
+        {
+            if (_triggeredList.Contains(triggerId))
+                return;
+
+            _triggeredList.Add(triggerId);
+        }
 
         TriggerEvent();
     }
+
 
   private void TriggerEvent()
 {
@@ -88,6 +102,46 @@ private DialogueEntry[] ConvertTriggerEntriesToDialogueEntries(TriggerDialogueEn
     }
     return entries;
 }
+/// <summary>
+/// 플레이어를 트리거 기준으로 뒤로 이동시키는 코루틴
+/// </summary>
+private IEnumerator MovePlayerBackward(float distance, float duration)
+{
+    if (PlayerController.Instance == null) yield break;
+
+    PlayerController.Instance.enabled = false;
+
+    Vector3 triggerPos = transform.position;
+    Vector3 playerPos = PlayerController.Instance.transform.position;
+
+    // 플레이어와 트리거 위치 차이
+    Vector3 diff = playerPos - triggerPos;
+
+    // X축과 Y축 중 절대값이 더 큰 축만 사용 (사선 방지)
+    if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
+        diff = new Vector3(Mathf.Sign(diff.x), 0f, 0f); // 좌우 방향
+    else
+        diff = new Vector3(0f, Mathf.Sign(diff.y), 0f); // 상하 방향
+
+    Vector3 backwardDir = diff.normalized;
+
+    Vector3 startPos = playerPos;
+    Vector3 targetPos = startPos + backwardDir * distance;
+
+    float elapsed = 0f;
+    while (elapsed < duration)
+    {
+        elapsed += Time.deltaTime;
+        float t = elapsed / duration;
+        PlayerController.Instance.transform.position = Vector3.Lerp(startPos, targetPos, t);
+        yield return null;
+    }
+
+    PlayerController.Instance.transform.position = targetPos;
+    PlayerController.Instance.enabled = true;
+}
+
+
 
 private void HandleDialogueEntryStart()
 {
@@ -100,16 +154,58 @@ private void HandleDialogueEntryStart()
 
 private void HandleDialogueEntryEnd()
 {
-    if (dialogueIndex >= triggerDialogueEntries.Length)
+    // 현재 대사 종료 이벤트 실행
+    if (dialogueIndex < triggerDialogueEntries.Length)
     {
-        DialogueManager.Instance.ClearOnDialogueEndCallback(HandleDialogueEntryEnd);
-        return;
+        var entry = triggerDialogueEntries[dialogueIndex];
+        entry.OnDialogueEnd();
     }
 
-    var entry = triggerDialogueEntries[dialogueIndex];
-    entry.OnDialogueEnd(); // ✅ UnityEvent 실행
+    // 인덱스 증가
     dialogueIndex++;
+
+    
+    // 마지막 대사 종료 시 → 뒤로 이동
+    if (dialogueIndex >= triggerDialogueEntries.Length)
+    {
+        // triggerOnce 체크된 경우 뒤로 이동 스킵
+        if (!(triggerOnce && _triggeredList.Contains(triggerId)))
+        {
+            StartCoroutine(MovePlayerBackward(1.6f, 1f));
+        }
+
+        DialogueManager.Instance.ClearOnDialogueEndCallback(HandleDialogueEntryEnd);
+    }
 }
+
+
+private void OnEnable()
+{
+    CheckDeactivateCondition();
+
+    // 대화 종료될 때마다 다시 체크
+    if (DialogueManager.Instance != null)
+        DialogueManager.Instance.RegisterOnDialogueEndCallback(CheckDeactivateCondition);
+}
+
+private void OnDisable()
+{
+    if (DialogueManager.Instance != null)
+        DialogueManager.Instance.ClearOnDialogueEndCallback(CheckDeactivateCondition);
+}
+
+private void CheckDeactivateCondition()
+{
+    if (!string.IsNullOrEmpty(deactivateDialogueID) &&
+        DialogueManager.Instance != null &&
+        DialogueManager.Instance.HasSeen(deactivateDialogueID))
+    {
+        gameObject.SetActive(false);
+    }
+}
+
+
+
     private bool CheckCondition()
     {
         return true;
