@@ -57,6 +57,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     public CutsceneDialogue cutsceneDialogue;
     private bool isDisplayingBlackPanelDialogue = false;
     private bool isFading = false;
+    private bool isBattle = false;
 
     public string CurrentDialogueID { get; private set; }
     private void Awake()
@@ -266,6 +267,7 @@ public UnityEngine.UI.Image rightCharacterImage;
 
         if (currentEntry != null && currentEntry.onEndEvents.GetPersistentEventCount() > 0)
         {
+            isBattle = true;
             Debug.Log($"[EndBlackPanelAndContinue] 종료 이벤트 실행: {currentDialogueIDs[dialogueIndex]}");
             currentEntry.OnDialogueEnd();
         }
@@ -320,17 +322,10 @@ public UnityEngine.UI.Image rightCharacterImage;
 
             return;
         }
-
-        DialogueEntry entry = null;
-        if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
-            entry = currentDialogueEntries[dialogueIndex];
-
-        if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
+        if (!isBattle)
         {
-            entry.OnDialogueEnd();
+            DisplayCurrentLine();
         }
-
-        DisplayCurrentLine();
     }
 
 
@@ -732,6 +727,7 @@ public void HideDialogueSprites()
     {
         rightCharacterImage.sprite = null;
         rightCharacterImage.gameObject.SetActive(false);
+
     }
 }
 
