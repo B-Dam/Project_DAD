@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class EventTriggerZone : MonoBehaviour
 {
@@ -88,6 +89,37 @@ private DialogueEntry[] ConvertTriggerEntriesToDialogueEntries(TriggerDialogueEn
     }
     return entries;
 }
+/// <summary>
+/// 플레이어를 트리거 기준으로 뒤로 이동시키는 코루틴
+/// </summary>
+private IEnumerator MovePlayerBackward(float distance, float duration)
+{
+    if (PlayerController.Instance == null) yield break;
+
+    // 조작 비활성화
+    PlayerController.Instance.enabled = false;
+
+    // 방향 계산 (플레이어 위치 - 트리거 위치 → 트리거에서 멀어지는 방향)
+    Vector3 triggerPos = transform.position;
+    Vector3 playerPos = PlayerController.Instance.transform.position;
+    Vector3 backwardDir = (playerPos - triggerPos).normalized;
+
+    Vector3 startPos = playerPos;
+    Vector3 targetPos = startPos + backwardDir * distance;
+
+    float elapsed = 0f;
+    while (elapsed < duration)
+    {
+        elapsed += Time.deltaTime;
+        float t = elapsed / duration;
+        PlayerController.Instance.transform.position = Vector3.Lerp(startPos, targetPos, t);
+        yield return null;
+    }
+
+    // 위치 보정 후 조작 복원
+    PlayerController.Instance.transform.position = targetPos;
+    PlayerController.Instance.enabled = true;
+}
 
 private void HandleDialogueEntryStart()
 {
@@ -100,16 +132,24 @@ private void HandleDialogueEntryStart()
 
 private void HandleDialogueEntryEnd()
 {
+    // 현재 대사 종료 이벤트 실행
+    if (dialogueIndex < triggerDialogueEntries.Length)
+    {
+        var entry = triggerDialogueEntries[dialogueIndex];
+        entry.OnDialogueEnd();
+    }
+
+    // 인덱스 증가
+    dialogueIndex++;
+
+    // 마지막 대사 종료 시 → 뒤로 이동
     if (dialogueIndex >= triggerDialogueEntries.Length)
     {
         DialogueManager.Instance.ClearOnDialogueEndCallback(HandleDialogueEntryEnd);
-        return;
+        StartCoroutine(MovePlayerBackward(1.5f, 0.5f));
     }
-
-    var entry = triggerDialogueEntries[dialogueIndex];
-    entry.OnDialogueEnd(); // ✅ UnityEvent 실행
-    dialogueIndex++;
 }
+
     private bool CheckCondition()
     {
         return true;
