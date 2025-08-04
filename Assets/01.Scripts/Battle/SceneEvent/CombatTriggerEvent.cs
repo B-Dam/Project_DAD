@@ -29,6 +29,7 @@ public class CombatTriggerEvent : MonoBehaviour
     {
         DialogueManager.Instance.HideDialogueSprites(); // 새 메서드 추가
         DialogueManager.Instance.EndDialogue(clearState: false);
+        DialogueManager.Instance.dialoguePanel.SetActive(false);
     }
 
 
