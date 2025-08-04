@@ -133,12 +133,10 @@ public class CutsceneController : MonoBehaviour
         if (!nextIsCutscene)
         {
             mainCamera.cullingMask = originalCullingMask;
+            questUI.SetActive(true);
             cutsceneVideo.SetActive(false);
             yield return StartCoroutine(FadeOut(fadeOutDuration));
         }
-
-        mainCamera.cullingMask = originalCullingMask;
-        questUI.SetActive(true);
 
         onEndCallback?.Invoke();
     }

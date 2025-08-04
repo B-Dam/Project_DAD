@@ -100,7 +100,7 @@ public class BoxPush : MonoBehaviour
             {
                 if(hit.gameObject.layer == LayerMask.NameToLayer("Obstacle") ||hit.CompareTag("Box"))
                 {
-                    AudioManager.Instance.PlaySFX("Puzzle_Beep sound effect");
+                    AudioManager.Instance.PlaySFX("Puzzle/Puzzle_Beep sound effect");
                     //Debug.Log($"충돌 감지: {hit.gameObject.name}");
                     return true; // 충돌이 있으면 막힘
                 }

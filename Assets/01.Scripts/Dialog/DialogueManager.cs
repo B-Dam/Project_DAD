@@ -234,7 +234,8 @@ public UnityEngine.UI.Image rightCharacterImage;
         rightCharacterImage.gameObject.SetActive(rightCharacterImage.sprite != null);
     }
 
-    DisplayCurrentLine();
+        isBattle = false;
+        DisplayCurrentLine();
     dialogueStartTime = Time.time;
 }
 
@@ -325,10 +326,8 @@ public UnityEngine.UI.Image rightCharacterImage;
 
         if (!isBattle)
         {
-            if (dialogueIndex < currentDialogueLines.Length)
-            {
-                DisplayCurrentLine();
-            }
+            dialoguePanel.SetActive(true);
+            DisplayCurrentLine();
         }
     }
 
