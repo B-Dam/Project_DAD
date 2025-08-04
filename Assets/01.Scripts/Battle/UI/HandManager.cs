@@ -65,6 +65,11 @@ public class HandManager : MonoBehaviour
     List<CardView> handViews = new List<CardView>();
 
     CardView currentlyDiscarding;
+    
+    // 튜토리얼 모드 플래그
+    public bool IsTutorialMode { get; set; } = false;
+    // 튜토리얼용 덱 순서 큐
+    private Queue<CardData> tutorialDeckQueue;
 
     public static HandManager Instance { get; private set; }
 
@@ -98,8 +103,20 @@ public class HandManager : MonoBehaviour
             TurnManager.Instance.OnPlayerTurnStart -= StartPlayerTurn;
     }
     
+    /// <summary>
+    /// 튜토리얼 모드로 덱을 지정된 순서로 세팅
+    /// </summary>
+    public void SetupTutorialDeck(IEnumerable<CardData> orderedCards)
+    {
+        IsTutorialMode = true;
+        tutorialDeckQueue = new Queue<CardData>(orderedCards);
+    }
+    
     void InitializeDeck()
     {
+        if (IsTutorialMode)
+            return; // 이미 tutorialDeckQueue가 세팅되어 있으므로, deck 사용 안 함
+        
         // DataManager에서 플레이어 기본 카드 3종을 가져와서 5장씩 복제
         var baseCards = DataManager.Instance.GetPlayerCards();
         deck = baseCards
@@ -150,15 +167,27 @@ public class HandManager : MonoBehaviour
 
     public void DrawCard()
     {
-        // 덱이 비어 있으면 재셔플
-        if (deck.Count == 0)
-            RefillAndShuffleDeck();
+        CardData data;
 
-        if (deck.Count == 0 || handViews.Count >= maxHandSize)
-            return;
+        // 카드 데이터 분기
+        if (IsTutorialMode && tutorialDeckQueue != null && tutorialDeckQueue.Count > 0)
+        {
+            // 튜토리얼 모드: 지정한 순서대로 큐에서 꺼내 쓰기
+            data = tutorialDeckQueue.Dequeue();
+        }
+        else
+        {
+            // 일반 모드: 덱 비었으면 리필·셔플
+            if (deck.Count == 0)
+                RefillAndShuffleDeck();
 
-        var data = deck[0];
-        deck.RemoveAt(0);
+            // 손패 꽉 찼거나 덱 비었으면 리턴
+            if (deck.Count == 0 || handViews.Count >= maxHandSize)
+                return;
+
+            data = deck[0];
+            deck.RemoveAt(0);
+        }
 
         // CardView 생성 및 초기화
         var go = Instantiate(cardPrefab, handContainer);
@@ -224,6 +253,14 @@ public class HandManager : MonoBehaviour
         discard.Clear();
         Shuffle(deck);
     }
+    
+    // 손에 있는 카드를 전부 없에기 : 튜토리얼용
+    public void DiscardHandInstant()
+    {
+        foreach (var cv in handViews)
+            Destroy(cv.gameObject);
+        handViews.Clear();
+    }
 
     // 카드 사용 시 호출
     public bool UseCard(CardView cv)
@@ -267,6 +304,11 @@ public class HandManager : MonoBehaviour
           {
               // Hand에서 제거
               handViews.Remove(cv);
+              
+              // 인덱스 재설정
+              for (int i = 0; i < handViews.Count; i++)
+                  handViews[i].index = i;
+              
               Destroy(cv.gameObject);
               LayoutHand();
           });

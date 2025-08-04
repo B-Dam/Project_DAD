@@ -28,6 +28,14 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     Canvas canvas;
     CanvasGroup canvasGroup;
     
+    // 튜토리얼 구독용 드래그 이벤트
+    public static System.Action<CardView> OnCardBeginDrag;
+    
+    /// <summary>
+    /// 튜토리얼 중 드래그만 막고 싶을 때 토글하는 플래그
+    /// </summary>
+    public static bool DisableCardDragging { get; set; } = false;
+    
     void Awake()
     {
         // 컴포넌트 캐시
@@ -111,6 +119,9 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // 드래그 막기 용 플래그 (튜토리얼용)
+        if (DisableCardDragging) return;
+        
         canvasGroup.blocksRaycasts = false;  
         
         // Tween 취소
@@ -134,10 +145,16 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         Rect.SetAsLastSibling();
         canvasGroup.alpha          = 0.6f;
         canvasGroup.blocksRaycasts = false;
+        
+        // 튜토리얼에 드래그 시작 알림
+        OnCardBeginDrag?.Invoke(this);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        // 드래그 막기 용 플래그 (튜토리얼용)
+        if (DisableCardDragging) return;
+        
         // 포인터 로컬 좌표 계산
         Vector2 localMouse;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -149,6 +166,9 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        // 드래그 막기 용 플래그 (튜토리얼용)
+        if (DisableCardDragging) return;
+        
         // 투명도 복구 & Raycast 복원
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;

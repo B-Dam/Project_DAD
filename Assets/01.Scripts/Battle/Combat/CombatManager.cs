@@ -55,6 +55,7 @@ public class CombatManager : MonoBehaviour
     // 전투 중인지 확인용
     public bool IsInCombat { get; set; }
     
+    
     List<TimedModifier> playerAttackMods = new List<TimedModifier>();
     List<TimedModifier> enemyAttackMods  = new List<TimedModifier>();
     
@@ -64,10 +65,8 @@ public class CombatManager : MonoBehaviour
     public event Action OnEnemyHit;
     public event Action OnPlayerDeath;
     public event Action OnEnemyDeath;
-    // 버프/디버프 발생 이벤트
-    public event Action<bool /*isPlayer*/, bool /*isBuff*/> OnStatusEffectApplied;
-    // 필살기 발생 이벤트 (0:Attack,1:Shield,2:Stun)
-    public event Action<int /*specialIdx*/> OnSpecialUsed;
+    public event Action<bool /*isPlayer*/, bool /*isBuff*/> OnStatusEffectApplied; // 버프/디버프 발생 이벤트
+    public event Action<int /*specialIdx*/> OnSpecialUsed; // 필살기 발생 이벤트 (0:Attack,1:Shield,2:Stun)
     
     // 필살기 게이지 변화 이벤트
     public event Action<int, int> OnSpecialGaugeChanged;
@@ -123,7 +122,6 @@ public class CombatManager : MonoBehaviour
     public void SetEnvironmentEffect(EnvironmentEffect env)
     {
         currentEnvironment = env;
-        Debug.Log($"현재 환경: {env.title} (AP+{env.apBonus}, ATK*{env.attackMultiplier}, Shield*{env.shieldMultiplier})");
     }
     
     /// <summary>

@@ -6,7 +6,7 @@ using DG.Tweening;
 public class SpecialGaugeUI : MonoBehaviour
 {
     [SerializeField] private Image gaugeFillImage;
-    [SerializeField] private Button specialButton;
+    [SerializeField] public Button specialButton;
     [SerializeField] private TextMeshProUGUI gaugeText;
     [SerializeField] private float fillTweenDuration = 0.3f;
     [SerializeField] private float buttonPopScale = 1.2f;
