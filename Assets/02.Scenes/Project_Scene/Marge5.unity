@@ -1573,18 +1573,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2227633606592103046, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1930
-      objectReference: {fileID: 0}
-    - target: {fileID: 2227633606592103046, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1090
-      objectReference: {fileID: 0}
-    - target: {fileID: 2493238000353284611, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6291527040032426921, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_Name
       value: DialogueManager
