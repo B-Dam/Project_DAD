@@ -36,7 +36,7 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     [Header("쿨타임 관련")]
     private float lastDialogueEndTime = -999f;
-    public float dialogueCooldown = 0.15f;
+    public float dialogueCooldown = 0.2f;
     private float dialogueInputDelay = 0.1f;
     private float dialogueStartTime;
 
