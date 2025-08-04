@@ -23,9 +23,9 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] private float fadeInDuration = 1f;
     [SerializeField] private float fadeOutDuration = 2f;
 
+    private bool isVideoPreparing = false;
     public bool IsVideoPlaying => videoPlayer.isPlaying;
     public bool IsPreparing => isVideoPreparing;
-    private bool isVideoPreparing = false;
 
     private void Awake()
     {

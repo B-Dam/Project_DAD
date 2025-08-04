@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     [Header("컷신 대사")]
     public CutsceneDialogue cutsceneDialogue;
     private bool isDisplayingBlackPanelDialogue = false;
+    private bool isFading = false;
 
     public string CurrentDialogueID { get; private set; }
     private void Awake()
@@ -77,6 +79,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     {
         if (!isDialogueActive) return;
         if (CutsceneController.Instance != null && (CutsceneController.Instance.IsVideoPlaying || CutsceneController.Instance.IsPreparing)) return;
+        if (isFading) return;
 
         Debug.Log($"[Update] 상태 체크: isDisplayingBlackPanelDialogue = {isDisplayingBlackPanelDialogue}");
 
@@ -255,20 +258,28 @@ public UnityEngine.UI.Image rightCharacterImage;
 
     private IEnumerator EndBlackPanelAndContinue()
     {
-        Debug.Log("[EndBlackPanelAndContinue] 호출됨");
-        bool nextIsCutscene = false;
+        isFading = true;
         StopBlinkUX();
 
-        int nextIndex = dialogueIndex;
-        if (currentDialogueLines != null && nextIndex < currentDialogueLines.Length)
+        int prevIndex = dialogueIndex - 1;
+        DialogueEntry currentEntry = (currentDialogueEntries != null && prevIndex >= 0 && prevIndex < currentDialogueEntries.Length) ? currentDialogueEntries[prevIndex] : null;
+
+        if (currentEntry != null && currentEntry.onEndEvents.GetPersistentEventCount() > 0)
         {
-            var nextLine = currentDialogueLines[nextIndex];
-            Debug.Log($"[EndBlackPanelAndContinue] 다음 대사 ID: {currentDialogueIDs[nextIndex]}, spritePath = {nextLine.spritePath}");
+            Debug.Log($"[EndBlackPanelAndContinue] 종료 이벤트 실행: {currentDialogueIDs[dialogueIndex]}");
+            currentEntry.OnDialogueEnd();
+        }
+
+        bool nextIsCutscene = false;
+        if (currentDialogueLines != null && dialogueIndex < currentDialogueLines.Length)
+        {
+            var nextLine = currentDialogueLines[dialogueIndex];
             nextIsCutscene = !string.IsNullOrEmpty(nextLine.spritePath) && nextLine.spritePath.StartsWith("Cutscenes/Video/");
-            Debug.Log($"[EndBlackPanelAndContinue] nextIsCutscene = {nextIsCutscene}");
         }
         yield return StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(nextIsCutscene));
         EndVideo();
+
+        isFading = false;
     }
 
     private void EndVideo()
@@ -292,6 +303,7 @@ public UnityEngine.UI.Image rightCharacterImage;
 
         if (cutsceneDialogue != null && cutsceneDialogue.blackPanelDialogueID.Contains(id))
         {
+            Debug.Log($"[EndVideo] 다음 대사 ID = {id}, isBlackPanel = {cutsceneDialogue.blackPanelDialogueID.Contains(id)}");
             isDisplayingBlackPanelDialogue = true;
             bool shown = ShowBlackPanelDialogue();
             if (!shown)
@@ -308,13 +320,25 @@ public UnityEngine.UI.Image rightCharacterImage;
 
             return;
         }
+
+        DialogueEntry entry = null;
+        if (currentDialogueEntries != null && dialogueIndex < currentDialogueEntries.Length)
+            entry = currentDialogueEntries[dialogueIndex];
+
+        if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
+        {
+            entry.OnDialogueEnd();
+        }
+
         DisplayCurrentLine();
     }
 
 
     private void DisplayCurrentLine()
 {
-    DialogueEntry entry = currentDialogueEntries != null
+        Debug.Log($"[DisplayCurrentLine] 호출됨, dialogueIndex = {dialogueIndex}");
+
+        DialogueEntry entry = currentDialogueEntries != null
         ? currentDialogueEntries[dialogueIndex]
         : null;
 
@@ -391,11 +415,14 @@ public UnityEngine.UI.Image rightCharacterImage;
 // === 우측 캐릭터 스프라이트 처리 ===
 if (rightSprite != null)
 {
-    rightCharacterImage.sprite = rightSprite;
-    rightCharacterImage.gameObject.SetActive(true);
-    PlayDropInEffect(rightCharacterImage.rectTransform);
-}
-else
+            if (leftCharacterImage.sprite != rightSprite)
+            {
+                rightCharacterImage.sprite = rightSprite;
+                rightCharacterImage.gameObject.SetActive(true);
+                PlayDropInEffect(rightCharacterImage.rectTransform);
+            }
+            }
+            else
 {
     rightCharacterImage.sprite = null;
     rightCharacterImage.gameObject.SetActive(false);
