@@ -322,9 +322,13 @@ public UnityEngine.UI.Image rightCharacterImage;
 
             return;
         }
+
         if (!isBattle)
         {
-            DisplayCurrentLine();
+            if (dialogueIndex < currentDialogueLines.Length)
+            {
+                DisplayCurrentLine();
+            }
         }
     }
 

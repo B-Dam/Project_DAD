@@ -408,6 +408,11 @@ CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 7208446742692453691, guid: e7c07c0f210fdad4fae45a19c3d01628, type: 3}
   m_PrefabInstance: {fileID: 320469742}
   m_PrefabAsset: {fileID: 0}
+--- !u!60 &653787514 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9060196871191364200, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
+  m_PrefabInstance: {fileID: 1584738043}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &654881452 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8225915670913283560, guid: afd0b594079bca945b0dc20c52fc33f5, type: 3}
@@ -419,11 +424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!60 &760012876 stripped
-PolygonCollider2D:
-  m_CorrespondingSourceObject: {fileID: 2018809866922119518, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
-  m_PrefabInstance: {fileID: 1584738043}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &787284461 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8601999820313936072, guid: afd0b594079bca945b0dc20c52fc33f5, type: 3}
@@ -707,7 +707,7 @@ Transform:
   m_GameObject: {fileID: 1322600199}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 100.68016, y: -99.89468, z: -10}
+  m_LocalPosition: {x: -1.3964453, y: -100.00341, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -879,7 +879,7 @@ PrefabInstance:
     - target: {fileID: 2537693785485874198, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
       propertyPath: BoundingShape2D
       value: 
-      objectReference: {fileID: 760012876}
+      objectReference: {fileID: 653787514}
     - target: {fileID: 5835387105049515304, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
