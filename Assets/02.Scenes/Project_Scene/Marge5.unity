@@ -1573,50 +1573,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2493238000353284611, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: blackPanelDialogueID.Array.size
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[2]'
-      value: 5004
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[3]'
-      value: 5005
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[4]'
-      value: 5016
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[5]'
-      value: 5027
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[6]'
-      value: 5061
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[7]'
-      value: 5061
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[8]'
-      value: 5071
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[9]'
-      value: 5080
-      objectReference: {fileID: 0}
-    - target: {fileID: 4942270123194760346, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
-      propertyPath: 'blackPanelDialogueID.Array.data[10]'
-      value: 5108
-      objectReference: {fileID: 0}
     - target: {fileID: 6291527040032426921, guid: 26553a10042138646aa8ebcd0c588d59, type: 3}
       propertyPath: m_Name
       value: DialogueManager

@@ -103,7 +103,8 @@ public class CutsceneController : MonoBehaviour
     }
 
     private IEnumerator PlayAfterFadeInOut()
-    { 
+    {
+
         if (fadeCanvas.alpha == 1f)
         {
             cutsceneVideo.SetActive(true);
@@ -129,6 +130,7 @@ public class CutsceneController : MonoBehaviour
 
         yield return StartCoroutine(FadeIn(fadeInDuration));
         mainCamera.cullingMask = 0;
+        questUI.SetActive(false);
 
 
         if (!nextIsCutscene)

@@ -87,6 +87,7 @@ public UnityEngine.UI.Image rightCharacterImage;
             if (!shown)
             {
                 isDisplayingBlackPanelDialogue = false;
+                StopBlinkUX();
                 cutsceneDialogue.Hide();
                 StartCoroutine(EndBlackPanelAndContinue());
             }
@@ -256,6 +257,7 @@ public UnityEngine.UI.Image rightCharacterImage;
     {
         Debug.Log("[EndBlackPanelAndContinue] 호출됨");
         bool nextIsCutscene = false;
+        StopBlinkUX();
 
         int nextIndex = dialogueIndex;
         if (currentDialogueLines != null && nextIndex < currentDialogueLines.Length)
@@ -273,6 +275,12 @@ public UnityEngine.UI.Image rightCharacterImage;
     {
         Debug.Log($"[EndVideo] 진입 시 dialogueIndex = {dialogueIndex}");
 
+        if (CutsceneController.Instance != null && (CutsceneController.Instance.IsVideoPlaying || CutsceneController.Instance.IsPreparing))
+        {
+            Debug.Log("[EndVideo] 영상이 아직 재생 중이므로 종료 처리 중단");
+            return;
+        }
+
         if (currentDialogueLines == null || dialogueIndex >= currentDialogueLines.Length)
         {
             Debug.Log("[EndVideo] 다음 대사가 없음");
@@ -285,11 +293,21 @@ public UnityEngine.UI.Image rightCharacterImage;
         if (cutsceneDialogue != null && cutsceneDialogue.blackPanelDialogueID.Contains(id))
         {
             isDisplayingBlackPanelDialogue = true;
-            Debug.Log($"[EndVideo] 블랙 패널 진입: {id}");
+            bool shown = ShowBlackPanelDialogue();
+            if (!shown)
+            {
+                isDisplayingBlackPanelDialogue = false;
+                cutsceneDialogue.Hide();
+                StartCoroutine(EndBlackPanelAndContinue());
+            }
+
+            if (!CutsceneController.Instance.IsPreparing)
+            {
+                StartBlinkUX();
+            }
+
             return;
         }
-
-        Debug.Log($"[EndVideo] DisplayCurrentLine 직접 호출: ID = {id}");
         DisplayCurrentLine();
     }
 
@@ -340,13 +358,13 @@ public UnityEngine.UI.Image rightCharacterImage;
         {
           Debug.Log($"[DisplayCurrentLine] 컷신 시작: ID = {id}, path = {line.spritePath}");
 
+            StopBlinkUX();
             dialogueIndex++;
             cutsceneBackgroundImage.gameObject.SetActive(false);
             cutsceneImage.gameObject.SetActive(false);
 
             CutsceneController.Instance.PlayVideo(line.spritePath, EndVideo);
             dialoguePanel.SetActive(false);
-            StopBlinkUX();
             return;
         }
         else dialoguePanel.SetActive(true);
@@ -483,6 +501,7 @@ else
 
     private void StartBlinkUX()
     {
+        Debug.Log("[StartBlinkUX] 호출됨");
         if (uxBlinkImage == null) return;
 
         uxBlinkImage.gameObject.SetActive(true);
@@ -493,8 +512,9 @@ else
         blinkCoroutine = StartCoroutine(BlinkUX());
     }
 
-    private void StopBlinkUX()
+    public void StopBlinkUX()
     {
+        Debug.Log("[StopBlinkUX] 호출됨");
         if (uxBlinkImage == null) return;
 
         if (blinkCoroutine != null)
