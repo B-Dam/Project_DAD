@@ -209,25 +209,33 @@ public class MapTransition : MonoBehaviour
         virtualCam.Lens.OrthographicSize = toSize;
     }
 
-    private IEnumerator Fade(float duration, bool fadeIn)
+  private IEnumerator Fade(float duration, bool fadeIn)
+{
+    if (fadeCanvas == null) yield break;
+
+    // 페이드 시작 시 무조건 활성화
+    fadeCanvas.gameObject.SetActive(true);
+
+    float startAlpha = fadeCanvas.alpha;
+    float targetAlpha = fadeIn ? 1f : 0f;
+    float elapsed = 0f;
+
+    while (elapsed < duration)
     {
-        fadeCanvas.gameObject.SetActive(true);
-        fadeCanvas.alpha = 1f;
-        if (fadeCanvas == null) yield break;
-
-        float startAlpha = fadeCanvas.alpha;
-        float targetAlpha = fadeIn ? 1f : 0f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            fadeCanvas.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
-            yield return null;
-        }
-
-        fadeCanvas.alpha = targetAlpha;
+        elapsed += Time.deltaTime;
+        fadeCanvas.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
+        yield return null;
     }
+
+    fadeCanvas.alpha = targetAlpha;
+
+    // 알파가 0이 되었으면 완전히 비활성화
+    if (targetAlpha == 0f)
+    {
+        fadeCanvas.gameObject.SetActive(false);
+    }
+}
+
 
     // ✅ 외부 제어용 메서드는 유지
     public void BlockInteractionExternally(bool value)
