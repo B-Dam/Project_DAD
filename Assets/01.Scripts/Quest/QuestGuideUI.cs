@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using UnityEngine.UI;
 
 /// <summary>
 /// DialogueManager의 진행 상태를 바탕으로
@@ -9,6 +10,8 @@ using System.Linq;
 /// </summary>
 public class QuestGuideUI : MonoBehaviour
 {
+    public GameObject questUI;
+
     [Header("출력할 텍스트")]
     public TextMeshProUGUI guideText;
 
