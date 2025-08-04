@@ -374,9 +374,12 @@ public UnityEngine.UI.Image rightCharacterImage;
         // === 좌측 캐릭터 스프라이트 처리 ===
         if (leftSprite != null)
         {
-            leftCharacterImage.sprite = leftSprite;
-            leftCharacterImage.gameObject.SetActive(true);
-            PlayDropInEffect(leftCharacterImage.rectTransform);
+            if (leftCharacterImage.sprite != leftSprite)
+            {
+                leftCharacterImage.sprite = leftSprite;
+                leftCharacterImage.gameObject.SetActive(true);
+                PlayDropInEffect(leftCharacterImage.rectTransform);
+            }
         }
         else
         {
