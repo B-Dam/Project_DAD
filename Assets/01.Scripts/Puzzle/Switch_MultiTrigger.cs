@@ -66,7 +66,7 @@ public class Switch_MultiTrigger : MonoBehaviour
             {
                 if (AudioManager.Instance != null)
                 {
-                    AudioManager.Instance.PlaySFX("Puzzle_Switch_button");
+                    AudioManager.Instance.PlaySFX("Puzzle/Puzzle_Switch_button");
                     Debug.Log($"스위치 '{switchCol.name}' 활성화 효과음 재생! (상태 변경 감지)");
                 }
                 else
@@ -106,7 +106,7 @@ public class Switch_MultiTrigger : MonoBehaviour
                     if (targetB != null)
                         targetB.SetActive(true);
 
-                    AudioManager.Instance.PlaySFX("Door-metal");
+                    AudioManager.Instance.PlaySFX("Puzzle/Door-metal");
                 }   // 특별한 콜백 작업 필요 없으면 생략 가능
             );
         }
