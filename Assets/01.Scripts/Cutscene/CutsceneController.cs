@@ -104,13 +104,10 @@ public class CutsceneController : MonoBehaviour
 
     private IEnumerator PlayAfterFadeInOut()
     {
-
         if (fadeCanvas.alpha == 1f)
         {
             cutsceneVideo.SetActive(true);
             yield return StartCoroutine(FadeOut(fadeOutDuration));
-            mainCamera.cullingMask = originalCullingMask;
-            questUI.SetActive(true);
         }
         else
         {
@@ -139,6 +136,9 @@ public class CutsceneController : MonoBehaviour
             cutsceneVideo.SetActive(false);
             yield return StartCoroutine(FadeOut(fadeOutDuration));
         }
+
+        mainCamera.cullingMask = originalCullingMask;
+        questUI.SetActive(true);
 
         onEndCallback?.Invoke();
     }
