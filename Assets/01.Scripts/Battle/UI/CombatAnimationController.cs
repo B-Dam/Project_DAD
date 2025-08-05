@@ -88,19 +88,19 @@ public class CombatAnimationController : MonoBehaviour
                 playerAnimator.SetTrigger("Attack");
                 StartCoroutine(HandlePlayerAttack());
                 SpawnEffect(biteEffect, enemyCharacter.transform.position + Vector3.left * 1.4f);;
-                AudioManager.Instance.PlaySFX("Cat_Scratch");
+                AudioManager.Instance.PlaySFX("Battle/Cat_Scratch");
                 break;
             
             case "으르렁거리기":
                 playerAnimator.SetTrigger("Bark");
                 SpawnEffect(barkEffect, playerCharacter.transform.position + Vector3.right * 0.275f + Vector3.up * 1.3f );
-                AudioManager.Instance.PlaySFX("Dog_Growl");
+                AudioManager.Instance.PlaySFX("Battle/Dog_Growl");
 
                 break;
             case "웅크리기":
                 playerAnimator.SetTrigger("Def");
                 SpawnEffect(defEffect, playerCharacter.transform.position + Vector3.right * 0.1f + Vector3.up * 0.25f);;
-                AudioManager.Instance.PlaySFX("Dog_barrier");
+                AudioManager.Instance.PlaySFX("Battle/Dog_barrier");
                 break;
             default:
                 playerAnimator.SetTrigger("Attack");
@@ -155,7 +155,7 @@ public class CombatAnimationController : MonoBehaviour
                     case "할퀴기":
                         enemyAnimator.SetTrigger("Attack");
                         SpawnEffect(scratchEffect, playerCharacter.transform.position);
-                        AudioManager.Instance.PlaySFX("Cat_Scratch");
+                        AudioManager.Instance.PlaySFX("Battle/Cat_Scratch");
                         if (!isEnemyMoving)
                             enemyMoveCoroutine = StartCoroutine(EnemyDoAttackStep(enemyCharacter.transform));
                         break;
@@ -295,19 +295,19 @@ public class CombatAnimationController : MonoBehaviour
     {
         playerAnimator.SetTrigger("Attack");
         StartCoroutine(HandlePlayerAttack());
-        AudioManager.Instance.PlaySFX("Cat_Scratch");
+        AudioManager.Instance.PlaySFX("Battle/Cat_Scratch");
     }
 
     public void TriggerSpecialShield()
     {
         playerAnimator.SetTrigger("Def");
-        AudioManager.Instance.PlaySFX("Dog_barrier");
+        AudioManager.Instance.PlaySFX("Battle/Dog_barrier");
     }
 
     public void TriggerSpecialStun()
     {
         playerAnimator.SetTrigger("Bark");
-        AudioManager.Instance.PlaySFX("Dog_Growl");
+        AudioManager.Instance.PlaySFX("Battle/Dog_Growl");
     }
     
     // 상태이펙트(버프/디버프) 발생 시
