@@ -8333,7 +8333,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 72, y: 294}
+    messageBoxAnchoredPos: {x: 110, y: 340}
   - instruction: "\uC774\uBC88\uC5D4 \uCE74\uB4DC \uD569\uC131\uC5D0 \uB300\uD574\uC11C
       \uC54C\uC544\uBCF4\uC790."
     highlightTarget: {fileID: 0}
@@ -17612,7 +17612,7 @@ PrefabInstance:
       objectReference: {fileID: 2054641540}
     - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
       propertyPath: forceTutorialMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
       propertyPath: allEnvironments.Array.size
