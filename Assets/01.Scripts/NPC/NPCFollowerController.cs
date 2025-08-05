@@ -46,18 +46,24 @@ public class NPCMovementController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void UpdateAnimation(Vector2 velocity)
-    {
-        float speed = velocity.magnitude;
-        animator.SetFloat("Run", speed);
+   private void UpdateAnimation(Vector2 velocity)
+{
+    float speed = velocity.magnitude;
+    animator.SetFloat("Run", speed);
 
-        if (speed > 0.01f)
-            lastMoveDirection = velocity.normalized;
+    if (speed > 0.01f)
+        lastMoveDirection = velocity.normalized;
 
-        // 기본 방향이 왼쪽인 경우: 오른쪽 갈 때 1, 왼쪽 갈 때 -1
-        if (lastMoveDirection.x < 0)
-            transform.localScale = new Vector3(1, 1, 1); // 왼쪽
-        else if (lastMoveDirection.x > 0)
-            transform.localScale = new Vector3(-1, 1, 1);  // 오른쪽
-    }
+    // 현재 스케일 가져오기
+    Vector3 scale = transform.localScale;
+
+    // 왼쪽(기본) / 오른쪽 방향 판정
+    if (lastMoveDirection.x < 0)
+        scale.x = Mathf.Abs(scale.x);  // 왼쪽이면 양수
+    else if (lastMoveDirection.x > 0)
+        scale.x = -Mathf.Abs(scale.x); // 오른쪽이면 음수
+
+    transform.localScale = scale; // Y/Z 값은 그대로 유지
+}
+
 }
