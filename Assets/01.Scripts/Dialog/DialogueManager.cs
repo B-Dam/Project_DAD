@@ -323,10 +323,10 @@ public UnityEngine.UI.Image rightCharacterImage;
 
             return;
         }
-
         if (!isBattle)
         {
-            dialoguePanel.SetActive(true);
+
+
             DisplayCurrentLine();
         }
     }

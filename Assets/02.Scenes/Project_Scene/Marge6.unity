@@ -702,7 +702,9 @@ Transform:
   m_GameObject: {fileID: 1322600199}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+
   m_LocalPosition: {x: 25.669067, y: -170.12863, z: -10}
+
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -867,10 +869,12 @@ PrefabInstance:
       propertyPath: defaultFollowTarget
       value: 
       objectReference: {fileID: 4711778356559522835}
+
     - target: {fileID: 2537693785485874198, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
       propertyPath: BoundingShape2D
       value: 
       objectReference: {fileID: 2062374837}
+
     - target: {fileID: 5835387105049515304, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -1542,6 +1546,7 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+
     - target: {fileID: 1403941496903152155, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[0].leftSprite
       value: 
@@ -1553,6 +1558,7 @@ PrefabInstance:
     - target: {fileID: 1403941496903152155, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[2].leftSprite
       value: 
+
       objectReference: {fileID: 0}
     - target: {fileID: 1687405134267660782, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
@@ -1562,10 +1568,44 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
+    - target: {fileID: 1890766120091061731, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerOnce
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2016174743123720566, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: m_Name
       value: Events
       objectReference: {fileID: 0}
+
+    - target: {fileID: 2224835088350021298, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerOnce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2977269707519327008, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 39.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 2977269707519327008, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -100.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295613192102326485, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.373618
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295613192102326485, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10.6371155
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295613192102326485, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 47.4797
+      objectReference: {fileID: 0}
+    - target: {fileID: 3295613192102326485, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -104.3757
+      objectReference: {fileID: 0}
+
     - target: {fileID: 3394546136383376052, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1574,6 +1614,7 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
+
     - target: {fileID: 3815515843519923663, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1602,10 +1643,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+
     - target: {fileID: 4069335929700932538, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 35579876}
+
+    - target: {fileID: 4799275672357321557, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: deactivateDialogueID
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5676090283596293969, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerOnce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817901044391487429, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 95.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5817901044391487429, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -145.6
+      objectReference: {fileID: 0}
+
     - target: {fileID: 6313564203316309660, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[4].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1618,6 +1678,7 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
+
     - target: {fileID: 6793907299818140924, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1626,6 +1687,7 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
+
     - target: {fileID: 6989244209104651391, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1690,6 +1752,7 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
+
     - target: {fileID: 8471255376374859326, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1698,6 +1761,7 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
+
     - target: {fileID: 8536342348315174179, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
