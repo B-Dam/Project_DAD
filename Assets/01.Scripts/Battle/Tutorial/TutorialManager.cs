@@ -13,6 +13,14 @@ public class TutorialManager : MonoBehaviour
     [Header("턴 종료 버튼")]
     public Button endTurnButton;
     
+    [Header("필살기 버튼")]
+    public Button specialButton;
+
+    [Header("필살기 스킬 버튼")] 
+    public Button specialAttackButton;
+    public Button specialDefenseButton;
+    public Button specialDebuffButton;
+    
     [Header("튜토리얼 스텝 설정")]
     public TutorialStep[] steps;
     
@@ -272,7 +280,7 @@ public class TutorialManager : MonoBehaviour
     }
     
     // 카드 드래그를 막음
-    public void DisableCardDrag() 
+    public void DisableCardDrag()
     {
         CardView.DisableCardDragging = true;
     }
@@ -395,5 +403,171 @@ public class TutorialManager : MonoBehaviour
     void ResetPanelColor(Image img, Color orig)
     {
         img.color = orig;
+    }
+    
+    /// <summary>
+    /// 턴 종료 버튼을 누르는 튜토리얼 스텝
+    /// </summary>
+    public void StepEndTurn()
+    {
+        // 버튼 활성화
+        endTurnButton.interactable = true;
+        AttachClickOverlay(endTurnButton.GetComponent<RectTransform>());
+
+        // 실제 버튼 클릭 감지
+        endTurnButton.onClick.AddListener(OnTutorialEndTurnPressed);
+    }
+    
+    // End Turn 클릭 시 실행
+    private void OnTutorialEndTurnPressed()
+    {
+        // 중복 방지
+        endTurnButton.onClick.RemoveListener(OnTutorialEndTurnPressed);
+
+        // 하이라이트 페이드 아웃
+        FadeOutHighlight();
+        if (currentOverlay != null)
+            Destroy(currentOverlay);
+
+        // 적 턴이 끝나고 내 턴이 돌아올 때까지 대기
+        TurnManager.Instance.OnPlayerTurnStart += OnTutorialAfterEnemyTurn;
+    }
+    
+    // 내 턴 시작 신호 받으면 스텝 완료
+    private void OnTutorialAfterEnemyTurn()
+    {
+        TurnManager.Instance.OnPlayerTurnStart -= OnTutorialAfterEnemyTurn;
+
+        // 기존 Overlay나 Highlight 없애기
+        if (currentOverlay != null)
+            Destroy(currentOverlay);
+
+        // 스텝 완료 이벤트
+        steps[currentStep].onStepComplete.Invoke();
+    }
+
+    // 카드 합성 튜토리얼용
+    public void StepCombineUse()
+    {
+        // 카드 드래그 활성화
+        EnableCardDrag();
+        
+        // 턴 종료 버튼 비활성화
+        endTurnButton.interactable = false;
+
+        // 카드 합성 활성화
+        EnableCardCombine();
+        
+        // 카드 합성 확인 후 콜백 호출
+        HandManager.OnCardCombinedNew += OnTutorialCardCombined;
+    }
+    
+    // 합성 직후 호출되는 콜백
+    private void OnTutorialCardCombined(CardView combined)
+    {
+        // 구독 해제
+        HandManager.OnCardCombinedNew -= OnTutorialCardCombined;
+
+        // 이전 하이라이트 페이드 아웃
+        FadeOutHighlight();
+        
+        // 이제 카드 사용 단계로 넘어가기
+        CombatManager.Instance.OnPlayerSkillUsed += OnTutorialCombinedCardUsed;
+    }
+
+    // 합성된 카드를 실제로 사용했을 때
+    private void OnTutorialCombinedCardUsed(CardData data)
+    {
+        CombatManager.Instance.OnPlayerSkillUsed -= OnTutorialCombinedCardUsed;
+        if (currentOverlay != null) Destroy(currentOverlay);
+
+        // 스텝 완료 이후 다음 스텝으로
+        steps[currentStep].onStepComplete.Invoke();
+    }
+    
+    // 카드 합성 차단
+    public void DisableCardCombine()
+    {
+        HandManager.Instance.AllowCombine = false;
+    }
+    
+    // 카드 합성 허용
+    public void EnableCardCombine()
+    {
+        HandManager.Instance.AllowCombine = true;
+    }
+    
+    // 필살기 게이지 전체 회복
+    public void GainFullSpecialGauge()
+    {
+        CombatManager.Instance.GainSpecialGauge(10);
+    }
+    
+    // 필살기 버튼 체크
+    public void StepCheckSpecialButtonOnClick()
+    {
+        // 클릭 리스너 등록
+        specialButton.onClick.AddListener(OnTutorialSpecialPressed);
+    }
+    
+    private void OnTutorialSpecialPressed()
+    {
+        // 중복 리스너 해제
+        specialButton.onClick.RemoveListener(OnTutorialSpecialPressed);
+    
+        // 하이라이트 페이드 아웃
+        FadeOutHighlight();
+        if (currentOverlay != null)
+            Destroy(currentOverlay);
+
+        // 다음 스텝으로
+        steps[currentStep].onStepComplete.Invoke();
+    }
+    
+    // 필살기 사용 버튼 일시 비활성화
+    public void DisableSpecialAbilityButton()
+    {
+        specialAttackButton.interactable = false;
+        specialDefenseButton.interactable = false;
+        specialDebuffButton.interactable = false;
+    }
+    
+    // 필살기 버튼 체크
+    public void StepCheckSpecialAbilityButtonOnClick()
+    {
+        // 필살기 사용 버튼 활성화
+        specialAttackButton.interactable = true;
+        specialDefenseButton.interactable = true;
+        specialDebuffButton.interactable = true;
+        
+        // 클릭 리스너 등록
+        specialAttackButton.onClick.AddListener(OnTutorialSpecialAbilityPressed);
+    }
+    
+    private void OnTutorialSpecialAbilityPressed()
+    {
+        // 중복 리스너 해제
+        specialAttackButton.onClick.RemoveListener(OnTutorialSpecialAbilityPressed);
+    
+        // 하이라이트 페이드 아웃
+        FadeOutHighlight();
+        if (currentOverlay != null)
+            Destroy(currentOverlay);
+
+        // 적 사망 대기
+        StartCoroutine(WaitForEnemyDeathAndNextStep());
+    }
+    
+    // 적 HP가 0이 될 때까지 매 프레임 대기
+    private IEnumerator WaitForEnemyDeathAndNextStep()
+    {
+        // 적 피가 0보다 많다면 대기
+        while (CombatManager.Instance.enemyHp > 0)
+            yield return null;
+        
+        yield return new WaitForSeconds(0.8f);
+
+        // 적이 쓰러지면 다음 스텝으로
+        steps[currentStep].onStepComplete.Invoke();
     }
 }

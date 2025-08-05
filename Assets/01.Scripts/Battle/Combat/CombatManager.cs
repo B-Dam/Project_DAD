@@ -164,7 +164,6 @@ public class CombatManager : MonoBehaviour
         // 환경 행동력 보너스 확률 적용
         int bonusAP = (ShouldApplyEnvEffect() ? currentEnvironment.apBonus : 0);
         actionPoints = baseActionPoints + bonusAP;
-        /*UIManager.Instance.UpdateActionPoints(actionPoints);*/
         
         OnCombatStart?.Invoke();
         

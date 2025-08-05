@@ -45,6 +45,7 @@ public class HandManager : MonoBehaviour
     [SerializeField] private float refillStaggerDelay  = 0.05f;// 카드 간 지연
 
     [HideInInspector] public bool isDraggingCard;
+    [HideInInspector] public bool AllowCombine;
 
     // 현재 AP
     private int _currentAP;
@@ -70,6 +71,8 @@ public class HandManager : MonoBehaviour
     public bool IsTutorialMode { get; set; } = false;
     // 튜토리얼용 덱 순서 큐
     private Queue<CardData> tutorialDeckQueue;
+    // 카드 합성 확인용 이벤트
+    public static event System.Action<CardView> OnCardCombinedNew;
 
     public static HandManager Instance { get; private set; }
 
@@ -322,6 +325,9 @@ public class HandManager : MonoBehaviour
     /// </summary>
     public bool TryCombine(CardData baseCardData)
     {
+        // 카드 합성이 막힌 경우 바로 반환
+        if (!AllowCombine) return false;
+        
         // AP 체크
         if (currentAP < combineAPCost) return false;
 
@@ -365,6 +371,9 @@ public class HandManager : MonoBehaviour
         var go   = Instantiate(cardPrefab, handContainer);
         var cvNew = go.GetComponent<CardView>();
         cvNew.Initialize(newData, this, enemyDropZone);
+        
+        // 카드 합성 성공해서 생성됐는지 확인 이벤트 호출
+        OnCardCombinedNew?.Invoke(cvNew);
         
         // 인덱스 재설정
         for (int i = 0; i < handViews.Count; i++)
