@@ -1577,6 +1577,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 817462854300639789, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerOnce
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1687405134267660782, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1585,9 +1589,17 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
+    - target: {fileID: 1890766120091061731, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerOnce
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2016174743123720566, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: m_Name
       value: Events
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224835088350021298, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerOnce
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2977269707519327008, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1633,6 +1645,10 @@ PrefabInstance:
       propertyPath: deactivateDialogueID
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5676090283596293969, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerOnce
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5817901044391487429, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 95.8
@@ -1653,6 +1669,10 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
+    - target: {fileID: 6514450036065490434, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerOnce
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6989244209104651391, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 

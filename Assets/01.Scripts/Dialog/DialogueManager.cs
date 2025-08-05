@@ -390,38 +390,48 @@ public UnityEngine.UI.Image rightCharacterImage;
 
 
 
-        // === 좌측 캐릭터 스프라이트 처리 ===
-        if (leftSprite != null)
-        {
-            if (leftCharacterImage.sprite != leftSprite)
-            {
-                leftCharacterImage.sprite = leftSprite;
-                leftCharacterImage.gameObject.SetActive(true);
-                PlayDropInEffect(leftCharacterImage.rectTransform);
-            }
-        }
-        else
-        {
-            // null일 땐 무조건 초기화 후 비활성화
-            leftCharacterImage.sprite = null;
-            leftCharacterImage.gameObject.SetActive(false);
-        }
+      // === 좌측 캐릭터 스프라이트 처리 ===
+if (leftSprite != null)
+{
+    if (leftCharacterImage.sprite != leftSprite)
+    {
+        leftCharacterImage.sprite = leftSprite;
+        leftCharacterImage.gameObject.SetActive(true);
+
+        // 레이아웃 강제 갱신 후 DropInEffect 실행
+        Canvas.ForceUpdateCanvases();
+        UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(leftCharacterImage.rectTransform);
+
+        PlayDropInEffect(leftCharacterImage.rectTransform);
+    }
+}
+else
+{
+    leftCharacterImage.sprite = null;
+    leftCharacterImage.gameObject.SetActive(false);
+}
 
 // === 우측 캐릭터 스프라이트 처리 ===
 if (rightSprite != null)
 {
-            if (leftCharacterImage.sprite != rightSprite)
-            {
-                rightCharacterImage.sprite = rightSprite;
-                rightCharacterImage.gameObject.SetActive(true);
-                PlayDropInEffect(rightCharacterImage.rectTransform);
-            }
-            }
-            else
+    if (rightCharacterImage.sprite != rightSprite)
+    {
+        rightCharacterImage.sprite = rightSprite;
+        rightCharacterImage.gameObject.SetActive(true);
+
+        // 레이아웃 강제 갱신 후 DropInEffect 실행
+        Canvas.ForceUpdateCanvases();
+        UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rightCharacterImage.rectTransform);
+
+        PlayDropInEffect(rightCharacterImage.rectTransform);
+    }
+}
+else
 {
     rightCharacterImage.sprite = null;
     rightCharacterImage.gameObject.SetActive(false);
 }
+
 
 
     // 대화 ID 기록
@@ -682,9 +692,13 @@ private void PlayDropInEffect(RectTransform target)
 
 private IEnumerator DropInAnimation(RectTransform target)
 {
+    // 위치 갱신 강제
+    Canvas.ForceUpdateCanvases();
+    UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(target);
+
     Vector2 originalPos = target.anchoredPosition;
-    Vector2 startPos = originalPos + new Vector2(0f, -120f); // 시작점 (위쪽)
-    Vector2 overshootPos = originalPos + new Vector2(0f, 25f); // 튕김 지점
+    Vector2 startPos = originalPos + new Vector2(0f, -120f); 
+    Vector2 overshootPos = originalPos + new Vector2(0f, 25f);
 
     float duration1 = 0.08f;
     float duration2 = 0.05f;
