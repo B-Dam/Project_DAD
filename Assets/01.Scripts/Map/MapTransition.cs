@@ -113,11 +113,17 @@ public class MapTransition : MonoBehaviour
             }
 
         }
+      
+
+      
+        // ✅ 1. 페이드 아웃
+        yield return Fade(1f, true);
+
+        //맵 변경
         if (!string.IsNullOrEmpty(destinationMapID))
         {
             MapManager.Instance.UpdateMapData(destinationMapID);
         }
-
         //  퍼즐 UI 직접 호출
         PuzzleUIController puzzleUI = FindAnyObjectByType<PuzzleUIController>();
 
@@ -129,9 +135,6 @@ public class MapTransition : MonoBehaviour
         {
             Debug.LogWarning(" PuzzleUIController를 찾지 못했습니다.");
         }
-        // ✅ 1. 페이드 아웃
-        yield return Fade(1f, true);
-
         // ✅ 2. 카메라 줌 연출
         Camera cam = Camera.main;
         float originalSize = cam.orthographicSize;
