@@ -8002,7 +8002,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: -589, y: -33}
   - instruction: "\uCE74\uB4DC\uB97C \uD558\uB098 \uC0AC\uC6A9\uD558\uAC70\uB098,
       \uCE74\uB4DC\uB97C \uD569\uC131 \uD560 \uB54C \uD589\uB3D9\uB825\uC740 1\uC529
       \uC18C\uBAA8\uB3FC."
@@ -8026,7 +8026,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: -589, y: -33}
   - instruction: "\uC804\uD22C\uAC00 \uC2DC\uC791\uB418\uBA74 \uBB34\uC791\uC704
       5\uC7A5\uC758 \uCE74\uB4DC\uB97C \uBC1B\uC744 \uC218 \uC788\uC5B4."
     highlightTarget: {fileID: 1696841221}
@@ -8121,7 +8121,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 0
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 0, y: 396}
   - instruction: "\uC73C\uB974\uB801\uAC70\uB9AC\uAE30\uB97C \uC0AC\uC6A9\uD574\uC11C
       \uC1A1\uACF3\uB2C8\uC758 \uACF5\uACA9\uB825\uC744 \uB0AE\uCDB0\uBCF4\uC790.
       (\uCE74\uB4DC\uB97C \uB04C\uC5B4\uC11C \uC801\uC5D0\uAC8C \uC0AC\uC6A9)"
@@ -8157,7 +8157,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 0
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 0, y: 396}
   - instruction: "\uC6C5\uD06C\uB9AC\uAE30\uB97C \uC0AC\uC6A9\uD574\uC11C \uBC29\uC5B4\uB3C4\uB97C
       \uD68D\uB4DD\uD558\uC790. (\uCE74\uB4DC\uB97C \uB04C\uC5B4\uC11C \uC0AC\uC6A9)"
     highlightTarget: {fileID: 1649309876}
@@ -8192,7 +8192,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 0
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 0, y: 396}
   - instruction: "\uD589\uB3D9\uB825\uC744 \uBAA8\uB450 \uC18C\uBAA8\uD588\uC5B4!
       \uC774\uC81C \uD134 \uC885\uB8CC\uB97C \uB204\uB974\uBA74 \uB3FC."
     highlightTarget: {fileID: 1298273554}
@@ -8227,7 +8227,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 0
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 608, y: -33}
   - instruction: "\uC544\uC57C! \uC1A1\uACF3\uB2C8\uAC00 \uB098\uB97C \uACF5\uACA9\uD588\uC5B4.."
     highlightTarget: {fileID: 0}
     onStepStart:
@@ -8297,7 +8297,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 72, y: 404}
   - instruction: "\uC880 \uB354 \uC790\uC138\uD55C \uC124\uBA85\uC744 \uBCF4\uACE0
       \uC2F6\uB2E4\uBA74 \uC801 \uCE90\uB9AD\uD130 \uC704\uC5D0 \uB9C8\uC6B0\uC2A4\uB97C
       \uC62C\uB9AC\uBA74 \uC54C \uC218 \uC788\uC5B4."
@@ -8333,7 +8333,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 72, y: 294}
   - instruction: "\uC774\uBC88\uC5D4 \uCE74\uB4DC \uD569\uC131\uC5D0 \uB300\uD574\uC11C
       \uC54C\uC544\uBCF4\uC790."
     highlightTarget: {fileID: 0}
@@ -8439,7 +8439,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 0
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 0, y: 396}
   - instruction: "\uC774\uC81C \uD544\uC0B4\uAE30\uC5D0 \uB300\uD574 \uC54C\uC544\uBCFC\uAC8C."
     highlightTarget: {fileID: 0}
     onStepStart:
@@ -8496,7 +8496,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: -96, y: -24}
   - instruction: "\uCE74\uB4DC\uB97C \uC0AC\uC6A9\uD560 \uB54C 1, \uD569\uC131\uD560
       \uB54C 2\uAC00 \uCC28\uC624\uB974\uAC8C \uB3FC. "
     highlightTarget: {fileID: 854401926}
@@ -8531,7 +8531,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: -96, y: -24}
   - instruction: "\uC774\uBC88\uC5D4 \uD544\uC0B4 \uAC8C\uC774\uC9C0\uB97C \uBAA8\uB450
       \uCC44\uC6CC\uC904\uAC8C."
     highlightTarget: {fileID: 854401926}
@@ -8566,7 +8566,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: -96, y: -24}
   - instruction: "\uD65C\uC131\uD654 \uB41C \uD544\uC0B4\uAE30 \uBC84\uD2BC\uC744
       \uB20C\uB7EC\uBD10!"
     highlightTarget: {fileID: 1092494539}
@@ -8601,7 +8601,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 0
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 484, y: -33}
   - instruction: "\uAC15\uB825\uD55C \uD544\uC0B4 \uCE74\uB4DC\uAC00 \uB098\uC654\uC5B4."
     highlightTarget: {fileID: 930626395}
     onStepStart:
@@ -8635,7 +8635,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 1
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: 0, y: 396}
   - instruction: "\uD544\uC0B4! \uBB3C\uAE30\uB97C \uC0AC\uC6A9\uD574\uC11C \uC1A1\uACF3\uB2C8\uB97C
       \uBB3C\uB9AC\uCE58\uC790!"
     highlightTarget: {fileID: 1723986174}
@@ -8670,7 +8670,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     allowSkipWithInput: 0
-    messageBoxAnchoredPos: {x: 0, y: 0}
+    messageBoxAnchoredPos: {x: -450, y: 396}
   - instruction: "\uC1A1\uACF3\uB2C8\uB97C \uBB3C\uB9AC\uCCE4\uC5B4! \uC55E\uC73C\uB85C
       \uB108\uC758 \uC804\uD22C \uC2E4\uB825\uC744 \uB9C8\uC74C\uAECF \uD3BC\uCCD0\uBD10!"
     highlightTarget: {fileID: 0}
