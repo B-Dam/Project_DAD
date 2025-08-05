@@ -537,8 +537,6 @@ public class TutorialManager : MonoBehaviour
     {
         // 필살기 사용 버튼 활성화
         specialAttackButton.interactable = true;
-        specialDefenseButton.interactable = true;
-        specialDebuffButton.interactable = true;
         
         // 클릭 리스너 등록
         specialAttackButton.onClick.AddListener(OnTutorialSpecialAbilityPressed);
