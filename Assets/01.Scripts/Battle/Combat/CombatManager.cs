@@ -67,6 +67,8 @@ public class CombatManager : MonoBehaviour
     public event Action OnEnemyDeath;
     public event Action<bool /*isPlayer*/, bool /*isBuff*/> OnStatusEffectApplied; // 버프/디버프 발생 이벤트
     public event Action<int /*specialIdx*/> OnSpecialUsed; // 필살기 발생 이벤트 (0:Attack,1:Shield,2:Stun)
+    public event Action OnEnemyStuned;
+    public event Action OnEnemyStunClean;
     
     // 필살기 게이지 변화 이벤트
     public event Action<int, int> OnSpecialGaugeChanged;
@@ -229,11 +231,15 @@ public class CombatManager : MonoBehaviour
             if (--reflectTurnsRemaining == 0)
                 playerReflectPercent = 0f;
         }
-        
+
         // 기절 턴 감소 (적 턴 넘어가기 전에)
         if (enemyStunTurns > 0)
+        {
             enemyStunTurns--;
-        
+        if (enemyStunTurns == 0)
+            OnEnemyStunClean?.Invoke();
+        }
+
         UpdateModifiers(enemyAttackMods);
         RecalculateModifiers();
         OnStatsChanged?.Invoke();
@@ -470,6 +476,7 @@ public class CombatManager : MonoBehaviour
     public void SpecialStun(int turns)
     {
         enemyStunTurns = turns;
+        OnEnemyStuned?.Invoke();
         OnStatsChanged?.Invoke();
         OnSpecialUsed?.Invoke(2);
     }

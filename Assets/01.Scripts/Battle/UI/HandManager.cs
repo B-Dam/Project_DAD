@@ -45,7 +45,7 @@ public class HandManager : MonoBehaviour
     [SerializeField] private float refillStaggerDelay  = 0.05f;// 카드 간 지연
 
     [HideInInspector] public bool isDraggingCard;
-    [HideInInspector] public bool AllowCombine;
+    public bool AllowCombine = true;
 
     // 현재 AP
     private int _currentAP;
