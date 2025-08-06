@@ -53,6 +53,7 @@ public class CutsceneController : MonoBehaviour
 
     public void PlayVideo(string path, Action onEnd)
     {
+        DialogueUIDisplayer.Instance.SetPreventBlink(true);
         isVideoPreparing = true;
 
         Debug.Log($"컷신 재생 요청: path = {path}");
@@ -101,6 +102,7 @@ public class CutsceneController : MonoBehaviour
 
         videoPlayer.loopPointReached -= OnVideoEnd;
         onEndCallback = null;
+        DialogueUIDisplayer.Instance.SetPreventBlink(false);
 
         if (DialogueManager.Instance != null)
         {

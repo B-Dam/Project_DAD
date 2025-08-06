@@ -23,7 +23,12 @@ public class DialogueSession
     public string CurrentID => ids != null && CurrentIndex < ids.Length ? ids[CurrentIndex] : null;
 
     // 다음 라인 이동
-    public void MoveNext() => CurrentIndex++;
+    public void MoveNext()
+    {
+        Debug.Log($"[MoveNext] 이전 Index = {CurrentIndex}");
+        CurrentIndex++;
+        Debug.Log($"[MoveNext] 다음 Index = {CurrentIndex}");
+    }
 
     public DialogueDatabase.DialogueLine GetLine(int index)
     {
@@ -45,8 +50,12 @@ public class DialogueSession
     // 본 대사 기록
     public void MarkSeen()
     {
-        if (!string.IsNullOrEmpty(CurrentID))
+        Debug.Log($"[MarkSeen] CurrentIndex = {CurrentIndex}, CurrentID = {CurrentID}");
+        if (CurrentID != null)
+        {
             seenIDs.Add(CurrentID);
+            Debug.Log($"[MarkSeen] 저장됨: {CurrentID}");
+        }
     }
 
     // 특정 ID가 이미 본 대사인지 확인
@@ -58,7 +67,9 @@ public class DialogueSession
     // 지금까지 본 모든 ID 목록 조회 + 저장/로드 지원
     public string[] GetSeenIDs()
     {
-        return seenIDs.ToArray();
+        var list = seenIDs.ToArray();
+        Debug.Log($"GetSeenIDs(): {string.Join(", ", list)}");
+        return list;
     }
     //저장/로드 지원
     public void LoadSeenIDs(string[] ids)

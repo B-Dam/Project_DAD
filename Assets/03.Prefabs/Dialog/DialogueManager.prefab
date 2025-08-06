@@ -153,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8678319398147106673
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1159,7 +1159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e853b8fbb792b64f8db4647e2017f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questUI: {fileID: 0}
+  questUI: {fileID: 5203208272833070710}
   guideText: {fileID: 9179114729370064027}
 --- !u!1 &5361281224784644096
 GameObject:

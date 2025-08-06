@@ -1,4 +1,4 @@
-quest_id	,name,condition_start,condition_complete,chapter_name
+quest_id,name,condition_start,condition_complete,chapter_name
 4000,이동 해보자,5010,5011,1장. 시골 개와 도시 개
 4001,고양이들한테 말 걸어보자,5011,5021,1장. 시골 개와 도시 개
 4002,마을로 들어가보자,5021,5025,1장. 시골 개와 도시 개

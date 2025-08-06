@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     [Header("쿨타임 관련")]
     private float lastDialogueEndTime = -999f;
     public float dialogueCooldown = 0.2f;
-    private float dialogueInputDelay = 2f;
+    private float dialogueInputDelay = 0.2f;
     private float dialogueStartTime;
 
     private bool isInputLocked = false;
@@ -95,6 +95,7 @@ public class DialogueManager : MonoBehaviour
         if (CutsceneDialogueUI.Instance.TryDisplayBlackPanelDialogue(id))
         {
             Debug.Log($"[DialogueManager] 블랙 패널 대사 출력됨: {id}");
+            session.MarkSeen();
             return;
         }
 
@@ -121,7 +122,7 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
         {
             Debug.Log($"[DialogueManager] 컷신 영상 재생: {line.spritePath}");
-            DialogueUIDisplayer.Instance.ClearUI();
+            DialogueUIDisplayer.Instance.StopBlinkUX();
             DialogueUIDisplayer.Instance.HidePanel();
             CutsceneController.Instance.PlayVideo(line.spritePath, OnCutsceneEnded);
             return;
@@ -134,6 +135,8 @@ public class DialogueManager : MonoBehaviour
 
 
         DialogueUIDisplayer.Instance.DisplayLine(line, left, right, shouldShake);
+        session.MarkSeen();
+        QuestGuideUI.Instance.RefreshQuest();
         UnlockInput();
     }
 
@@ -145,9 +148,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        currentEntries?.ElementAtOrDefault(session.CurrentIndex)?.OnDialogueEnd();
-
-        session.MarkSeen();
         session.MoveNext();
 
         if (session.IsComplete)
@@ -173,6 +173,7 @@ public class DialogueManager : MonoBehaviour
         dialogueStartTime = Time.time;
 
         DialogueUIDisplayer.Instance.ShowPanel();
+        QuestGuideUI.Instance.questUI.SetActive(true);
 
         Sprite left = null, right = null;
         if (currentEntries != null && session.CurrentIndex < currentEntries.Length)
@@ -182,7 +183,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         DialogueUIDisplayer.Instance.RestoreCharacterSprites(left, right);
-        DisplayCurrentLine();
+        ShowNextLine();
     }
 
     public void EndDialogue(bool clearState = true)
@@ -191,7 +192,6 @@ public class DialogueManager : MonoBehaviour
         lastDialogueEndTime = Time.time;
 
         DialogueUIDisplayer.Instance.ClearUI();
-        DialogueUIDisplayer.Instance.StopBlinkUX();
 
         onDialogueEndCallback?.Invoke();
         onDialogueEndCallback = null;
@@ -219,7 +219,7 @@ public class DialogueManager : MonoBehaviour
 
         if (CutsceneDialogueUI.Instance.TryDisplayBlackPanelDialogue(nextID))
         {
-            Debug.Log($"[DialogueManager] OnCutsceneFullyEnded - 블랙 패널 대사: {nextID}");
+            Debug.Log($"[DialogueManager] OnCutsceneEnded - 블랙 패널 대사: {nextID}");
             return;
         }
 
@@ -232,6 +232,13 @@ public class DialogueManager : MonoBehaviour
 
         Debug.Log($"[DialogueManager] OnCutsceneEnded - 일반 대사: {nextID}");
         StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => {DialogueUIDisplayer.Instance.ShowPanel(); DisplayCurrentLine();}));
+    }
+
+    public DialogueEntry GetCurrentEntry()
+    {
+        return (currentEntries != null && session != null && session.CurrentIndex < currentEntries.Length)
+            ? currentEntries[session.CurrentIndex]
+            : null;
     }
 
     public void RegisterOnDialogueEndCallback(Action callback)

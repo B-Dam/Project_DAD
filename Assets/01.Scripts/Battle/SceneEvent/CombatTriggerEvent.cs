@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Multiplayer.Center.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,9 +30,10 @@ public class CombatTriggerEvent : MonoBehaviour
     {
         DialogueUIDisplayer.Instance.HideDialogueSprites(); // 새 메서드 추가
         DialogueManager.Instance.EndDialogue(clearState: false);
-        DialogueUIDisplayer.Instance.dialoguePanel.SetActive(false);
-    }
+        DialogueUIDisplayer.Instance.ClearUI();
+        QuestGuideUI.Instance.questUI.SetActive(false);
 
+        }
 
         // UI 숨기기
         if (mainUI != null) mainUI.SetActive(false);

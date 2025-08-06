@@ -32,6 +32,19 @@ public class DialogueFlowController : MonoBehaviour
 
             var session = DialogueManager.Instance.Session;
             var currentIndex = session.CurrentIndex + 1;
+
+            DialogueEntry entry = DialogueManager.Instance.GetCurrentEntry();
+            if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
+            {
+                Debug.Log($"[FlowController] 블랙 패널 대사 → OnDialogueEnd() 실행: {session.CurrentID}");
+                entry.OnDialogueEnd();
+                DialogueUIDisplayer.Instance.ClearUI();
+                QuestGuideUI.Instance.questUI.SetActive(false);
+                Debug.Log($"[FlowController] QuestGuideUI 비활성화 시도됨, 상태: {QuestGuideUI.Instance.questUI.activeSelf}");
+                CutsceneController.Instance.cutsceneVideo.SetActive(false);
+                return;
+            }
+
             var nextLine = session.HasIndex(currentIndex) ? session.GetLine(currentIndex) : null;
             var nextID = session.HasIndex(currentIndex) ? session.GetID(currentIndex) : null;
 
@@ -39,7 +52,7 @@ public class DialogueFlowController : MonoBehaviour
             {
                 Debug.Log("[FlowController] 블랙 패널 이후 → 다음은 컷신 → 페이드인/아웃 후 컷신 진입");
 
-                DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(true, () => {DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput();}));
+                DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(true, () => { DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput(); }));
             }
             else if (CutsceneDialogueUI.Instance.blackPanelDialogueID.Contains(nextID))
             {
@@ -50,7 +63,7 @@ public class DialogueFlowController : MonoBehaviour
             else
             {
                 Debug.Log("[FlowController] 블랙 패널 이후 → 일반 대사 → 그대로 진행");
-                DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput();}));
+                DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput(); }));
             }
 
             return;
