@@ -19,18 +19,6 @@ public class DataManager : MonoBehaviour
         public string chapterName; // 저장용 챕터 이름
         public string questName;   // 저장용 퀘스트 이름
     }
-
-    [Serializable]
-    public class GameState
-    {
-        public string sceneName;
-        public Vector3 playerPosition;
-        public Quaternion playerRotation;
-        public string currentChapter;
-        public string currentQuest;
-        public string[] seenDialogueIDs;
-    }
-
     public CharacterDataSO playerData { get; private set; }
     public CharacterDataSO enemyData { get; private set; }
     public CardData[] allCards { get; private set; }   // 모든 카드 SO
@@ -138,31 +126,26 @@ public class DataManager : MonoBehaviour
     // 실제 저장
     public static void SaveGame(int slot)
     {
-        // DataManager.SaveGame(0) 호출로 자동 저장
         string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
 
-        // 메타 정보
+        // 메타 정보 저장
         PlayerPrefs.SetString(key + "_Timestamp", DateTime.Now.Ticks.ToString());
         PlayerPrefs.SetString(key + "_Chapter", CurrentChapterName());
-        PlayerPrefs.SetString(key + "_Quest", CurrentQuestName());
+        PlayerPrefs.SetString(key + "_Quest",   CurrentQuestName());
+        
+        // 씬 이름 저장
+        PlayerPrefs.SetString(key + "_Scene", SceneManager.GetActiveScene().name);
 
-        // GameState 생성
-        GameState state = new GameState
-        {
-            sceneName = SceneManager.GetActiveScene().name,
-            playerPosition = Player.Instance.transform.position,
-            playerRotation = Player.Instance.transform.rotation,
-            currentChapter = CurrentChapterName(),
-            currentQuest = CurrentQuestName(),
-            seenDialogueIDs = DialogueManager.Instance
-                                               .GetAllSeenIDs()  // HashSet<string> → string[]
-                                               .ToArray()
-        };
-        string json = JsonUtility.ToJson(state);
-        PlayerPrefs.SetString(key + "_Data", json);
+        // ISaveable 수집
+        var dict = new Dictionary<string, string>();
+        var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
+        foreach (var s in saveables)
+            dict[s.UniqueID] = JsonUtility.ToJson(s.CaptureState());
 
+        // 래퍼로 직렬화
+        var wrapper = new JsonDictWrapper(dict);
+        PlayerPrefs.SetString(key + "_Data", JsonUtility.ToJson(wrapper));
         PlayerPrefs.Save();
-        Debug.Log($"SaveGame: 슬롯{slot} 저장 완료 → {json}");
     }
 
 
@@ -170,46 +153,57 @@ public class DataManager : MonoBehaviour
     public static void LoadGame(int slot)
     {
         string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
-        var meta = GetSaveMetadata(slot);
-        if (meta == null)
-        {
-            Debug.LogWarning($"슬롯{slot}에 데이터 없음");
-            return;
-        }
-        if (!PlayerPrefs.HasKey(key + "_Data"))
-        {
-            Debug.LogWarning($"슬롯{slot}의 GameState 데이터 없음");
-            return;
-        }
+        
+        //  메타, 딕셔너리 불러오기
+        string json = PlayerPrefs.GetString(key + "_Data", "{}");
+        var wrapper = JsonUtility.FromJson<JsonDictWrapper>(json);
+        var dict = wrapper.ToDictionary();
+        
+        // 저장된 씬 이름 불러오기
+        string sceneName = PlayerPrefs.GetString(key + "_Scene", SceneManager.GetActiveScene().name);
 
-        string json = PlayerPrefs.GetString(key + "_Data");
-        GameState state = JsonUtility.FromJson<GameState>(json);
-
-        // ApplyGameState 호출을 제거하고, 코루틴만 실행
-        Instance.StartCoroutine(Instance.RestoreCoroutine(state));
-        Debug.Log($"LoadGame: 슬롯{slot} 불러옴 → 씬:{state.sceneName}");
+        // 씬 전환 후에 복원 실행
+          if (Instance != null)
+              Instance.StartCoroutine(Instance.LoadSceneAndRestore(sceneName, dict));
     }
     
-    private IEnumerator RestoreCoroutine(GameState state)
+    private IEnumerator LoadSceneAndRestore(string sceneName, Dictionary<string,string> dict)
     {
-        // 씬 비동기 로드
-        var op = SceneManager.LoadSceneAsync(state.sceneName);
-        yield return op;       // 씬 로드 완료 대기
-        yield return null;     // 한 프레임 더 대기
+        // 비동기 씬 로드
+        var op = SceneManager.LoadSceneAsync(sceneName);
+        yield return op;
+        
+        yield return null; // 씬 로드 이후 한 프레임 대기
 
-        // 플레이어 위치·회전 복원
-        if (Player.Instance != null)
+        // 모든 ISaveable에게 RestoreState 호출
+        foreach (var s in FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>())
+            if (dict.TryGetValue(s.UniqueID, out var stateJson))
+                s.RestoreState(stateJson);
+    }
+    
+    // JSON 직렬화를 위해 Dictionary<string,string>을 List 로 래핑
+    [Serializable]
+    private class JsonDictWrapper
+    {
+        public List<string> keys   = new List<string>();
+        public List<string> values = new List<string>();
+
+        public JsonDictWrapper(Dictionary<string, string> dict)
         {
-            Player.Instance.transform.position = state.playerPosition;
-            Player.Instance.transform.rotation = state.playerRotation;
+            foreach (var kv in dict)
+            {
+                keys.Add(kv.Key);
+                values.Add(kv.Value);
+            }
         }
-        else Debug.LogWarning("Restore: Player.Instance is null");
 
-        // 대화 진행 상태 복원
-        if (DialogueManager.Instance != null)
-            DialogueManager.Instance.LoadSeenIDs(state.seenDialogueIDs);
-        else
-            Debug.LogWarning("Restore: DialogueManager.Instance is null");
+        public Dictionary<string, string> ToDictionary()
+        {
+            var result = new Dictionary<string, string>();
+            for (int i = 0; i < Math.Min(keys.Count, values.Count); i++)
+                result[keys[i]] = values[i];
+            return result;
+        }
     }
     
     static string CurrentChapterName()

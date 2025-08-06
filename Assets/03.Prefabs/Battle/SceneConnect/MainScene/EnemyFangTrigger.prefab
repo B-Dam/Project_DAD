@@ -44,9 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a420f0c24201284b9993f58f43d14c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTutorialTrigger: 1
   setupData:
     enemyName: "\uC1A1\uACF3\uB2C8"
     backgroundSprite: {fileID: -2595588882249502448, guid: e79426bc88010e74e8b79e0f416077ff, type: 3}
     enemyCharacterSO: {fileID: 11400000, guid: 491f9653788088e4a812bf1f6fa72bfb, type: 2}
     animatorController: {fileID: 9100000, guid: ff58fdcb44bb9844599cfbf6fd0c74c1, type: 2}
+    tutorialDeckOrder:
+    - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
+    - {fileID: 11400000, guid: a520727a7c2c1dc4f946830e49b6e2a5, type: 2}
+    - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
+    - {fileID: 11400000, guid: a520727a7c2c1dc4f946830e49b6e2a5, type: 2}
+    - {fileID: 11400000, guid: 3109a7bebd8b0094985968b261f5d9c3, type: 2}
+    - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
+    - {fileID: 11400000, guid: a520727a7c2c1dc4f946830e49b6e2a5, type: 2}
+    - {fileID: 11400000, guid: 3109a7bebd8b0094985968b261f5d9c3, type: 2}
+    - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
+    - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
+    - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
+    - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
+    - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
   mainUI: {fileID: 0}

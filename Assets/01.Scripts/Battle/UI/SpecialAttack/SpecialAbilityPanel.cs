@@ -153,7 +153,6 @@ public class SpecialAbilityPanel : MonoBehaviour
         // 중간(스케일X==0)에 스프라이트 교체 & 크기 리셋
         seq.AppendCallback(() =>
         {
-            frontImg.sprite = backImg.sprite;
             // 원래 front 크기로 복구
             frontImg.rectTransform.sizeDelta = frontOriginalSizes[idx];
             backCG.alpha  = 0f;

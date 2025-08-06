@@ -7,23 +7,14 @@
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/DataManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatUI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoadManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoadManager.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill1_0.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill1_0.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill1_11.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill1_11.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill2_0.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill2_0.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill2_6.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill2_6.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill3_0.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill3_0.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill3_1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/battleeffect_skill3_1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef1.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef1_Awake.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef1_Awake.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef2_Awake.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef2_Awake.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef3.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef3.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef3_Awake.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/Mono_battle_ef3_Awake.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Player/mono_battle_ef2.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Player/mono_battle_ef2.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/Card Back.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/Card Back.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang2_Animator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang2_Animator.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/mono_battle_defeat.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/mono_battle_defeat.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,13 +28,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2c271b216ff84328b73d1d7f2333e7ab1eac00/08/c0acfc8b/LoadSceneMode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2c271b216ff84328b73d1d7f2333e7ab1eac00/a0/d2ff6ef1/PlayerPrefs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/bf/056add9c/Action.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/EnvironmentManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/TurnManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/EnvironmentEffect.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatDataHolder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSceneController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatSetupData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatTriggerEvent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/Tutorial/TutorialManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/DeckUIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/RetryButton.cs" root0="FORCE_HIGHLIGHTING" />
@@ -52,10 +44,13 @@
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/DeckIconHover.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/EndTurnHover.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/EnemyPanelHover.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/Tooltip/EnvironmentTooltip.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueTriggerCondition.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Player/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Quest/QuestGuideUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@57cef44123c7/Editor/TMP/TMP_BaseEditorPanel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@57cef44123c7/Runtime/UGUI/EventSystem/EventInterfaces.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -170,6 +165,12 @@
       <workItem from="1753677878830" duration="20204000" />
       <workItem from="1753770058254" duration="10902000" />
       <workItem from="1753853377220" duration="5311000" />
+      <workItem from="1753924124697" duration="7984000" />
+      <workItem from="1754007854005" duration="8715000" />
+      <workItem from="1754270911619" duration="25907000" />
+      <workItem from="1754353288642" duration="13619000" />
+      <workItem from="1754395682223" duration="1476000" />
+      <workItem from="1754440026677" duration="8859000" />
     </task>
     <servers />
   </component>
@@ -184,6 +185,17 @@
     <option name="unityProjectFolder" value="true" />
   </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

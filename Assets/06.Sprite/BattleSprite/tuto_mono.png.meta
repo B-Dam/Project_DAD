@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: a53e8b70f4258db49bcfa091709a9312
+guid: 1b5820f97f7ddbd4db54c868efbc38fc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3187465861678627967
-    second: mono_battle_defeat_0
+      213: 4245073921206252461
+    second: tuto_mono_0
+  - first:
+      213: -3462068600253987039
+    second: tuto_mono_1
+  - first:
+      213: 3593980400738441546
+    second: tuto_mono_2
+  - first:
+      213: 5142228727567876627
+    second: tuto_mono_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mono_battle_defeat_0
+      name: tuto_mono_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 320
-        height: 180
+        x: 36
+        y: 76
+        width: 85
+        height: 76
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +137,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f7cf90330572c3c20800000000000000
-      internalID: 3187465861678627967
+      spriteID: da3f5ce6d3889ea30800000000000000
+      internalID: 4245073921206252461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tuto_mono_1
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 77
+        width: 85
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 127c3dd63f244ffc0800000000000000
+      internalID: -3462068600253987039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tuto_mono_2
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 78
+        width: 85
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a491bbbf12260e130800000000000000
+      internalID: 3593980400738441546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tuto_mono_3
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 82
+        width: 85
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3120e7478cddc5740800000000000000
+      internalID: 5142228727567876627
       vertices: []
       indices: 
       edges: []
@@ -148,7 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mono_battle_defeat_0: 3187465861678627967
+      tuto_mono_0: 4245073921206252461
+      tuto_mono_1: -3462068600253987039
+      tuto_mono_2: 3593980400738441546
+      tuto_mono_3: 5142228727567876627
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

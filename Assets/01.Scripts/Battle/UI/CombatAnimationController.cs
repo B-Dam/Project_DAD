@@ -43,6 +43,8 @@ public class CombatAnimationController : MonoBehaviour
     
     private Coroutine playerMoveCoroutine;
     private Coroutine enemyMoveCoroutine;
+    
+    const string ENRAGE_FLAG = "rampageUsed";
 
     private void Start()
     {
@@ -59,6 +61,8 @@ public class CombatAnimationController : MonoBehaviour
             cm.OnCombatStart         += HandleCombatStart;
             cm.OnStatusEffectApplied += HandleStatusEffect;
             cm.OnSpecialUsed         += HandleSpecialEffect;
+            cm.OnEnemyStuned         += HandleEnemyStun;
+            cm.OnEnemyStunClean      += HandleStunClean;
         }
     }
 
@@ -76,6 +80,8 @@ public class CombatAnimationController : MonoBehaviour
             cm.OnCombatStart         -= HandleCombatStart;
             cm.OnStatusEffectApplied -= HandleStatusEffect;
             cm.OnSpecialUsed         -= HandleSpecialEffect;
+            cm.OnEnemyStuned         -= HandleEnemyStun;
+            cm.OnEnemyStunClean      -= HandleStunClean;
         }
     }
 
@@ -162,7 +168,9 @@ public class CombatAnimationController : MonoBehaviour
                     case "움찔움찔":
                         enemyAnimator.SetTrigger("Twitch"); break;
                     case "마지막 발악":
-                        enemyAnimator.SetTrigger("Enrage"); break;
+                        enemyAnimator.SetTrigger("Enrage");
+                        enemyAnimator.SetBool(ENRAGE_FLAG, true);
+                        break;
                     default:
                         break;
                 }
@@ -217,6 +225,20 @@ public class CombatAnimationController : MonoBehaviour
         enemyAnimator.SetTrigger("Hit");
     }
     
+    // 적 기절 트리거
+    public void HandleEnemyStun()
+    {
+        enemyAnimator.SetBool("isStunned", true);
+        enemyAnimator.SetTrigger("Stun");
+    }
+
+    // 기절 해제
+    public void HandleStunClean()
+    {
+        enemyAnimator.SetBool("isStunned", false);
+        enemyAnimator.SetTrigger("StunClean");
+    }
+    
     // 플레이어 사망 로직
     private void HandlePlayerDeath()
     {
@@ -240,6 +262,8 @@ public class CombatAnimationController : MonoBehaviour
     // 재시작시 애니메이션 트리거
     private void HandleCombatStart()
     {
+        enemyAnimator.SetBool(ENRAGE_FLAG, false);
+        
         if (CombatDataHolder.IsRetry)
         {
             playerAnimator.SetTrigger("Retry");

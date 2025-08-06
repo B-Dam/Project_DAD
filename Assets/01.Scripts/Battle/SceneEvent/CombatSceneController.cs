@@ -36,15 +36,43 @@ public class CombatSceneController : MonoBehaviour
     [SerializeField] private float envShowDuration = 1.0f;
     [SerializeField] private float envExitDuration = 0.2f;
     
+    [Header("화면 왼쪽 환경 아이콘")]
+    [SerializeField] private Image envIconTopLeft;
+    [SerializeField] private EnvironmentTooltip envTooltip;
+    
+    [Header("디버그: 튜토리얼 강제 활성화")]
+    [SerializeField] private bool forceTutorialMode = false;
+    [SerializeField] private CardData[] forceTutorialDeckOrder;
+    
     private EnvironmentEffect currentEnvironment;
+    
+    private CombatSetupData _setupData;
     
     private void Start()
     {
+        // 튜토리얼 강제 모드일 때
+        if (forceTutorialMode && forceTutorialDeckOrder != null && forceTutorialDeckOrder.Length > 0)
+        {
+            HandManager.Instance.SetupTutorialDeck(forceTutorialDeckOrder);
+            HandManager.Instance.IsTutorialMode = true;
+        }
+        
         // 세팅 데이터 가져오기
         CombatSetupData data = CombatDataHolder.GetData();
-        
+
         if (data != null)
+        {
+            _setupData = data;
             SetupCombat(data);
+
+            // 튜토리얼 모드면 여기서도 한 번 보강 주입
+            if (CombatDataHolder.LastTrigger != null 
+                && CombatDataHolder.LastTrigger.isTutorialTrigger 
+                && data.tutorialDeckOrder != null)
+            {
+                HandManager.Instance.SetupTutorialDeck(data.tutorialDeckOrder);
+            }
+        }
         else
         {
             // 전투 세팅 데이터가 없으면 : 배틀 씬에서 테스트 하거나 etc
@@ -53,6 +81,9 @@ public class CombatSceneController : MonoBehaviour
                 currentEnvironment = allEnvironments[Random.Range(0, allEnvironments.Count)];
             else
                 Debug.LogError("allEnvironments에 할당된 SO가 없습니다!");
+            
+            // 환경 아이콘 및 툴팁 텍스트 설정
+            RefreshEnvironmentUI();
         }
 
         // 애니메이터 연결
@@ -91,6 +122,18 @@ public class CombatSceneController : MonoBehaviour
         }
 
         currentEnvironment = candidates[Random.Range(0, candidates.Count)];
+        
+        // 화면 왼쪽 아이콘 & 툴팁 세팅
+        RefreshEnvironmentUI();
+    }
+    
+    private void RefreshEnvironmentUI()
+    {
+        if (currentEnvironment == null) return;
+        // 왼쪽 위 아이콘
+        envIconTopLeft.sprite = currentEnvironment.icon;
+        // 툴팁 설명
+        envTooltip.SetDescription(currentEnvironment.description);
     }
     
     // 전투 시작시 자연스러운 UI 세팅
@@ -168,6 +211,11 @@ public class CombatSceneController : MonoBehaviour
         seq.AppendCallback(() =>
         {
             gameUIGroup.interactable = gameUIGroup.blocksRaycasts = true;
+        });
+        
+        seq.AppendCallback(() => {
+            if (HandManager.Instance.IsTutorialMode)
+                TutorialManager.Instance.ShowStep(0);
         });
         
         seq.Play();
