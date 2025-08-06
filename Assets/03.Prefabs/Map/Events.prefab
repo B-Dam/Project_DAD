@@ -1195,7 +1195,7 @@ Transform:
   m_GameObject: {fileID: 1139898459493928257}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 75.5, y: -101, z: 0}
+  m_LocalPosition: {x: 80.65, y: -101, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1550,6 +1550,7 @@ MonoBehaviour:
     shakeCutscene: 0
     leftSprite: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     rightSprite: {fileID: 0}
+
   deactivateDialogueID: 
 --- !u!1 &1356589361388417662
 GameObject:
@@ -1638,6 +1639,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+
 --- !u!1 &1386416639236175594
 GameObject:
   m_ObjectHideFlags: 0
@@ -3379,7 +3381,9 @@ Transform:
   m_GameObject: {fileID: 2560214286046969748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+
   m_LocalPosition: {x: 86, y: -137, z: 0}
+
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5227,6 +5231,7 @@ MonoBehaviour:
   - 5083
   targetObjects:
   - {fileID: 5444134797153639578}
+  - {fileID: 6455132639044259431}
   - {fileID: 6997331821175351067}
   - {fileID: 8506971644380540557}
   - {fileID: 3124469021265709625}
@@ -6023,7 +6028,7 @@ Transform:
   m_GameObject: {fileID: 4184625644551724347}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.5, y: -104.67, z: 0}
+  m_LocalPosition: {x: 43.5, y: -107, z: 0}
   m_LocalScale: {x: 10, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6485,7 +6490,7 @@ Transform:
   m_GameObject: {fileID: 4372002916376758718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 59.5, y: -101, z: 0}
+  m_LocalPosition: {x: 59, y: -101, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9800,7 +9805,7 @@ Transform:
   m_GameObject: {fileID: 6133204879426315689}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.660511, y: -1.3218079, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10714,48 +10719,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     shakeCutscene: 0
-    leftSprite: {fileID: 0}
-    rightSprite: {fileID: 6970758700920361785, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
+    leftSprite: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
+    rightSprite: {fileID: 0}
   - id: 5029
-    speaker: 
-    text: 
-    focusTarget: {fileID: 0}
-    onStartEvents:
-      m_PersistentCalls:
-        m_Calls: []
-    onEndEvents:
-      m_PersistentCalls:
-        m_Calls: []
-    shakeCutscene: 0
-    leftSprite: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
-    rightSprite: {fileID: 0}
-  - id: 5030
-    speaker: 
-    text: 
-    focusTarget: {fileID: 0}
-    onStartEvents:
-      m_PersistentCalls:
-        m_Calls: []
-    onEndEvents:
-      m_PersistentCalls:
-        m_Calls: []
-    shakeCutscene: 0
-    leftSprite: {fileID: 0}
-    rightSprite: {fileID: -5908108522567052277, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
-  - id: 5031
-    speaker: 
-    text: 
-    focusTarget: {fileID: 0}
-    onStartEvents:
-      m_PersistentCalls:
-        m_Calls: []
-    onEndEvents:
-      m_PersistentCalls:
-        m_Calls: []
-    shakeCutscene: 0
-    leftSprite: {fileID: 4051051484111560148, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
-    rightSprite: {fileID: 0}
-  - id: 5032
     speaker: 
     text: 
     focusTarget: {fileID: 0}
@@ -10768,7 +10734,7 @@ MonoBehaviour:
     shakeCutscene: 0
     leftSprite: {fileID: 0}
     rightSprite: {fileID: 6688118466754180597, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
-  - id: 5033
+  - id: 5030
     speaker: 
     text: 
     focusTarget: {fileID: 0}
@@ -10781,7 +10747,33 @@ MonoBehaviour:
     shakeCutscene: 0
     leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     rightSprite: {fileID: 0}
-  - id: 5034
+  - id: 5031
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 0}
+    rightSprite: {fileID: 6688118466754180597, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
+  - id: 5032
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
+    rightSprite: {fileID: 0}
+  - id: 5033
     speaker: 
     text: 
     focusTarget: {fileID: 0}
@@ -10794,7 +10786,7 @@ MonoBehaviour:
     shakeCutscene: 0
     leftSprite: {fileID: 0}
     rightSprite: {fileID: 6970758700920361785, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
-  - id: 5035
+  - id: 5034
     speaker: 
     text: 
     focusTarget: {fileID: 0}
@@ -10807,7 +10799,7 @@ MonoBehaviour:
     shakeCutscene: 0
     leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     rightSprite: {fileID: 0}
-  - id: 5036
+  - id: 5035
     speaker: 
     text: 
     focusTarget: {fileID: 0}
@@ -10820,6 +10812,19 @@ MonoBehaviour:
     shakeCutscene: 0
     leftSprite: {fileID: 0}
     rightSprite: {fileID: -5908108522567052277, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
+  - id: 5036
+    speaker: 
+    text: 
+    focusTarget: {fileID: 0}
+    onStartEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    onEndEvents:
+      m_PersistentCalls:
+        m_Calls: []
+    shakeCutscene: 0
+    leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
+    rightSprite: {fileID: 0}
   - id: 5037
     speaker: 
     text: 
@@ -10844,8 +10849,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     shakeCutscene: 0
-    leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
-    rightSprite: {fileID: 0}
+    leftSprite: {fileID: 0}
+    rightSprite: {fileID: 6970758700920361785, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
   - id: 5039
     speaker: 
     text: 
@@ -12136,8 +12141,6 @@ Transform:
   - {fileID: 9171555549179815795}
   - {fileID: 3473560033423554964}
   - {fileID: 5412850696182673358}
-  - {fileID: 8881408235667269596}
-  - {fileID: 1925654333827872457}
   m_Father: {fileID: 6785457341285239764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8162735810453095204
@@ -13085,6 +13088,7 @@ MonoBehaviour:
     shakeCutscene: 0
     leftSprite: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
     rightSprite: {fileID: 0}
+
   deactivateDialogueID: 5050
 --- !u!1 &8609316887819277725
 GameObject:
@@ -13194,6 +13198,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+
 --- !u!1 &8644653382049892759
 GameObject:
   m_ObjectHideFlags: 0
