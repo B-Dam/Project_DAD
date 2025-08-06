@@ -6,15 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Combat/CombatManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/DataManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/CombatAnimationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/UI/HandManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoadManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoadManager.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang2_Animator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang2_Animator.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/mono_battle_defeat.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/06.Sprite/BattleSprite/mono_battle_defeat.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/99.Externals/Fonts/DNFBitBitv2 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/99.Externals/Fonts/DNFBitBitv2 SDF.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
