@@ -15,7 +15,10 @@ public class DialogueFlowController : MonoBehaviour
     public void HandleSpaceInput()
     {
         if (!DialogueManager.Instance.IsDialogueActive)
+        {
+            DialogueUIDisplayer.Instance.StopBlinkUX();
             return;
+        }
 
         if (DialogueUIDisplayer.Instance.IsTyping)
         {

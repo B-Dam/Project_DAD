@@ -157,7 +157,11 @@ public class DialogueUIDisplayer : MonoBehaviour
             yield return new WaitForSeconds(typingSpeed);
         }
 
-        StartBlinkUX();
+        var session = DialogueManager.Instance?.Session;
+        if (session != null && session.HasIndex(session.CurrentIndex))
+        {
+            StartBlinkUX();
+        }
     }
 
     private void HandleCutsceneImage(string path, bool shake)

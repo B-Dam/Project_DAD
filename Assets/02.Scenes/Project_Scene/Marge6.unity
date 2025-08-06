@@ -1596,18 +1596,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1403941496903152155, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: dialogueEntries.Array.data[0].leftSprite
-      value: 
-      objectReference: {fileID: 4302164030236062966, guid: 082ce4d1e8dbb5e4f889a25b37f98747, type: 3}
-    - target: {fileID: 1403941496903152155, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: dialogueEntries.Array.data[1].leftSprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1403941496903152155, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: dialogueEntries.Array.data[2].leftSprite
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1687405134267660782, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: hintController
       value: 
@@ -1636,26 +1624,6 @@ PrefabInstance:
       propertyPath: offscreenWatcher
       value: 
       objectReference: {fileID: 1322600205}
-    - target: {fileID: 3894557324719379100, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3894557324719379100, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3894557324719379100, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3894557324719379100, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3894557324719379100, guid: 94838649432a50d438b208246d624ec7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
-      objectReference: {fileID: 0}
     - target: {fileID: 4069335929700932538, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: dialogueEntries.Array.data[2].onEndEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     [Header("쿨타임 관련")]
     private float lastDialogueEndTime = -999f;
     public float dialogueCooldown = 0.2f;
-    private float dialogueInputDelay = 0.1f;
+    private float dialogueInputDelay = 2f;
     private float dialogueStartTime;
 
     private bool isInputLocked = false;
@@ -191,6 +191,7 @@ public class DialogueManager : MonoBehaviour
         lastDialogueEndTime = Time.time;
 
         DialogueUIDisplayer.Instance.ClearUI();
+        DialogueUIDisplayer.Instance.StopBlinkUX();
 
         onDialogueEndCallback?.Invoke();
         onDialogueEndCallback = null;
