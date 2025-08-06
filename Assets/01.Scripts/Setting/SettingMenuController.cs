@@ -26,6 +26,9 @@ public class SettingMenuController : MonoBehaviour
     [Header("설정창 전체 Panel")]
     [SerializeField] private GameObject settingsPanel;
     
+    [Header("퀘스트 UI")] 
+    public GameObject questUI;
+    
     private void Start()
     {
         settingsPanel.SetActive(false);
@@ -51,6 +54,11 @@ public class SettingMenuController : MonoBehaviour
                 Time.timeScale = 1f;
             }
         }
+        
+        if (CombatManager.Instance.IsInCombat)
+            questUI.SetActive(false);        
+        else
+            questUI.SetActive(true);
     }
 
     // 버튼 OnClick 으로 연결

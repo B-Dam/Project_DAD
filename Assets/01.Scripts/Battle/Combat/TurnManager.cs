@@ -48,6 +48,10 @@ public class TurnManager : MonoBehaviour
         
         // 턴 종료 버튼 활성화
         endTurnButton.enabled = true;
+        
+        // 필살기 버튼 활성화
+        if(CombatManager.Instance.IsSpecialReady)
+            SpecialGaugeUI.Instance.specialButton.interactable = true;
     }
     
     /// <summary>
@@ -65,6 +69,9 @@ public class TurnManager : MonoBehaviour
 
         // 턴 종료 버튼 비활성화
         endTurnButton.enabled = false;
+        
+        // 필살기 버튼 비활성화
+        SpecialGaugeUI.Instance.specialButton.interactable = false;
         
         // 턴 종료 버튼 텍스트 변경
         ChangeTurnEndButtonText();

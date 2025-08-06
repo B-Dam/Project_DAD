@@ -15,7 +15,7 @@ MonoBehaviour:
   effectId: rain
   title: "\uC138\uCC2C \uBE44"
   description: "\uBAA8\uB4E0 \uC57D\uD654 \uACC4\uC5F4 \uCE74\uB4DC\uC758 \uD6A8\uACFC\uAC00
-    \uC808\uBC18\uC774 \uB429\uB2C8\uB2E4. (\uC18C\uC218\uC810 \uC544\uB798 \uBC84\uB9BC)"
+    \uC808\uBC18\uC774 \uB429\uB2C8\uB2E4.\n(\uC18C\uC218\uC810 \uC544\uB798 \uBC84\uB9BC)"
   apBonus: 0
   attackMultiplier: 1
   shieldMultiplier: 1

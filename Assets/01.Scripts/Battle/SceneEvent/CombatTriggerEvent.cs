@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class CombatTriggerEvent : MonoBehaviour
 {
+    [Tooltip("이 전투가 튜토리얼인지")]
+    public bool isTutorialTrigger;
+    
     [Header("전투 정보")]
     public CombatSetupData setupData;
 
@@ -12,8 +15,8 @@ public class CombatTriggerEvent : MonoBehaviour
     public GameObject mainUI;
 
     private Scene _previousScene;
-    
-    bool hasTriggered = false;
+
+    bool hasTriggered;
 
     private void Awake()
     {
@@ -23,7 +26,7 @@ public class CombatTriggerEvent : MonoBehaviour
 
     public void TriggerCombat()
     {
-        if (hasTriggered) return;  // 이미 실행됐으면 무시
+        if (hasTriggered) return; // 이미 실행됐으면 무시
         hasTriggered = true;
     // 대화 UI 숨기되 데이터는 유지하되 스프라이트는 꺼버림
     if (DialogueManager.Instance != null)
