@@ -36,12 +36,9 @@ public class DialogueFlowController : MonoBehaviour
             DialogueEntry entry = DialogueManager.Instance.GetCurrentEntry();
             if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
             {
-                Debug.Log($"[FlowController] 블랙 패널 대사 → OnDialogueEnd() 실행: {session.CurrentID}");
                 entry.OnDialogueEnd();
                 DialogueUIDisplayer.Instance.ClearUI();
-                QuestGuideUI.Instance.questUI.SetActive(false);
-                Debug.Log($"[FlowController] QuestGuideUI 비활성화 시도됨, 상태: {QuestGuideUI.Instance.questUI.activeSelf}");
-                CutsceneController.Instance.cutsceneVideo.SetActive(false);
+                StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { CombatTriggerEvent.Instance.TriggerCombat(); }, false));
                 return;
             }
 
@@ -50,20 +47,16 @@ public class DialogueFlowController : MonoBehaviour
 
             if (!string.IsNullOrEmpty(nextLine?.spritePath) && nextLine.spritePath.StartsWith("Cutscenes/Video/"))
             {
-                Debug.Log("[FlowController] 블랙 패널 이후 → 다음은 컷신 → 페이드인/아웃 후 컷신 진입");
-
-                DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(true, () => { DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput(); }));
+                DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(true, () => { DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput(); }, true));
             }
             else if (CutsceneDialogueUI.Instance.blackPanelDialogueID.Contains(nextID))
             {
-                Debug.Log("[FlowController] 블랙 패널 이후 → 다음도 블랙 패널 대사 → 즉시 진행");
                 DialogueManager.Instance.ShowNextLine();
                 DialogueManager.Instance.UnlockInput();
             }
             else
             {
-                Debug.Log("[FlowController] 블랙 패널 이후 → 일반 대사 → 그대로 진행");
-                DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput(); }));
+                DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput(); }, true));
             }
 
             return;
@@ -72,6 +65,15 @@ public class DialogueFlowController : MonoBehaviour
         var line = DialogueManager.Instance.GetCurrentLine();
         if (!string.IsNullOrEmpty(line?.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
             return;
+        var normalEntry = DialogueManager.Instance.GetCurrentEntry();
+        if (normalEntry != null && normalEntry.onEndEvents.GetPersistentEventCount() > 0)
+        {
+            normalEntry.OnDialogueEnd();
+            DialogueUIDisplayer.Instance.HidePanel();
+            DialogueUIDisplayer.Instance.StopBlinkUX();
+            QuestGuideUI.Instance.questUI.SetActive(false);
+            CutsceneController.Instance.cutsceneVideo.SetActive(false);
+        }
 
         DialogueManager.Instance.ShowNextLine();
         DialogueManager.Instance.UnlockInput();

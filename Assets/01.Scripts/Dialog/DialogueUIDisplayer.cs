@@ -164,7 +164,7 @@ public class DialogueUIDisplayer : MonoBehaviour
         }
 
         var session = DialogueManager.Instance?.Session;
-        if (session != null && session.HasIndex(session.CurrentIndex))
+        if (session != null && session.HasIndex(session.CurrentIndex) && !preventBlinkUX)
         {
             StartBlinkUX();
         }

@@ -38,14 +38,12 @@ public class CutsceneDialogueUI : MonoBehaviour
 
     public void Hide()
     {
-        Debug.Log("[CutsceneDialogueUI] °ËÀº ÆÐ³Î ¼û±è ½ÇÇàµÊ");
         blackPanel.SetActive(false);
     }
 
     public bool TryDisplayBlackPanelDialogue(string id)
     {
         if (!blackPanelDialogueID.Contains(id)) return false;
-        Debug.Log($"[CutsceneDialogueUI] °ËÀº ÆÐ³Î ´ë»ç Ç¥½ÃµÊ: {id}");
 
         var line = DialogueManager.Instance?.GetCurrentLine();
         if (line == null) return false;

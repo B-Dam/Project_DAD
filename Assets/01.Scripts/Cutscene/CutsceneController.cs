@@ -98,15 +98,12 @@ public class CutsceneController : MonoBehaviour
 
     private void OnVideoEnd(VideoPlayer vp)
     {
-        Debug.Log("[Cutscene] OnVideoEnd 호출됨");
-
         videoPlayer.loopPointReached -= OnVideoEnd;
         onEndCallback = null;
         DialogueUIDisplayer.Instance.SetPreventBlink(false);
 
         if (DialogueManager.Instance != null)
         {
-            Debug.Log("[Cutscene] DialogueManager.Instance 확인됨 → OnCutsceneEnded() 호출");
             DialogueManager.Instance.OnCutsceneEnded();
         }
         else
@@ -117,16 +114,13 @@ public class CutsceneController : MonoBehaviour
 
     private IEnumerator PlayAfterFadeInOut()
     {
-        Debug.Log("[Cutscene] PlayAfterFadeInOut 시작");
         if (fadeCanvas.alpha == 1f)
         {
-            Debug.Log("[Cutscene] 화면이 이미 어두움 → 바로 컷신 활성화 후 FadeOut");
             cutsceneVideo.SetActive(true);
             yield return StartCoroutine(FadeOut(fadeOutDuration));
         }
         else
         {
-            Debug.Log("[Cutscene] 화면이 밝음 → FadeIn 후 컷신 활성화");
             yield return StartCoroutine(FadeIn(fadeInDuration));
             cutsceneVideo.SetActive(true);
             yield return StartCoroutine(FadeOut(fadeOutDuration));
@@ -134,39 +128,25 @@ public class CutsceneController : MonoBehaviour
 
         isVideoPreparing = false;
 
-        Debug.Log("[Cutscene] videoPlayer.Play() 실행");
         videoPlayer.Play();
     }
 
-    public IEnumerator EndAfterFadeInOut(bool nextIsCutscene, Action onEnd)
+    public IEnumerator EndAfterFadeInOut(bool nextIsCutscene, Action onEnd, bool restoreUI = true)
     {
-        Debug.Log("[Cutscene] EndAfterFadeInOut 시작");
         videoPlayer.Stop();
-        Debug.Log("[Cutscene] videoPlayer.Stop() 실행됨");
         yield return StartCoroutine(FadeIn(fadeInDuration));
-        Debug.Log("[Cutscene] 화면 FadeIn 완료");
 
         mainCamera.cullingMask = 0;
         questUI.SetActive(false);
-        //DialogueUIDisplayer.Instance.StopBlinkUX();
-        Debug.Log("[Cutscene] 카메라와 UI 초기화 완료");
-
 
         if (!nextIsCutscene)
         {
-            Debug.Log("[Cutscene] 다음은 일반 대사 → 화면 복구 후 FadeOut");
             mainCamera.cullingMask = originalCullingMask;
-            questUI.SetActive(true);
+            if (restoreUI) questUI.SetActive(true);
             cutsceneVideo.SetActive(false);
             yield return StartCoroutine(FadeOut(fadeOutDuration));
-            Debug.Log("[Cutscene] FadeOut 완료");
-        }
-        else
-        {
-            Debug.Log("[Cutscene] 다음은 컷신 → FadeOut 생략, 바로 이어짐");
         }
 
-        Debug.Log("[Cutscene] onEnd 콜백 호출");
         onEnd?.Invoke();
     }
 
