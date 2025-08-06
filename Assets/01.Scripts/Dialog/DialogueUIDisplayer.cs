@@ -32,6 +32,8 @@ public class DialogueUIDisplayer : MonoBehaviour
     private bool isTyping = false;
     private string fullText = "";
     public bool IsTyping => isTyping;
+    private bool preventBlinkUX = false;
+    public void SetPreventBlink(bool value) => preventBlinkUX = value;
 
     private void Awake()
     {
@@ -73,7 +75,11 @@ public class DialogueUIDisplayer : MonoBehaviour
             StopCoroutine(typingCoroutine);
             dialogueText.text = fullText;
             isTyping = false;
-            StartBlinkUX();
+            var session = DialogueManager.Instance?.Session;
+            if (session != null && session.HasIndex(session.CurrentIndex) && !preventBlinkUX)
+            {
+                StartBlinkUX();
+            }
         }
     }
 
@@ -158,7 +164,7 @@ public class DialogueUIDisplayer : MonoBehaviour
         }
 
         var session = DialogueManager.Instance?.Session;
-        if (session != null && session.HasIndex(session.CurrentIndex))
+        if (session != null && session.HasIndex(session.CurrentIndex) && !preventBlinkUX)
         {
             StartBlinkUX();
         }
@@ -224,6 +230,8 @@ public class DialogueUIDisplayer : MonoBehaviour
 
     private void SetCharacterImage(Image image, Sprite sprite)
     {
+        if (image.sprite == sprite) return;
+
         if (sprite != null)
         {
             image.sprite = sprite;

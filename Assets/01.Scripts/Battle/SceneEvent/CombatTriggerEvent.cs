@@ -1,9 +1,12 @@
 using System.Collections;
+using Unity.Multiplayer.Center.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CombatTriggerEvent : MonoBehaviour
 {
+    public static CombatTriggerEvent Instance;
+
     [Tooltip("이 전투가 튜토리얼인지")]
     public bool isTutorialTrigger;
     
@@ -20,6 +23,7 @@ public class CombatTriggerEvent : MonoBehaviour
     private void Awake()
     {
         // 트리거 오브젝트가 Battle 씬 로딩/언로드 때 파괴되지 않도록
+        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -32,9 +36,10 @@ public class CombatTriggerEvent : MonoBehaviour
     {
         DialogueUIDisplayer.Instance.HideDialogueSprites(); // 새 메서드 추가
         DialogueManager.Instance.EndDialogue(clearState: false);
-        DialogueUIDisplayer.Instance.dialoguePanel.SetActive(false);
-    }
+        DialogueUIDisplayer.Instance.ClearUI();
+        QuestGuideUI.Instance.questUI.SetActive(false);
 
+        }
 
         // UI 숨기기
         if (mainUI != null) mainUI.SetActive(false);
@@ -59,6 +64,8 @@ public class CombatTriggerEvent : MonoBehaviour
             CombatManager.Instance.IsInCombat = true;
             AudioManager.Instance.PlayBGM("Battle_Sound");
         };
+
+        return;
     }
 
     // 전투가 끝났을 때 호출

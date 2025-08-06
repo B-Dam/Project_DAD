@@ -9,12 +9,13 @@ public class DialogueManager : MonoBehaviour
 
     private DialogueSession session;
     private DialogueEntry[] currentEntries;
-    private Action onDialogueEndCallback;
+    public Action onDialogueEndCallback;
+    public static event Action OnDialogueEnded;
 
     [Header("쿨타임 관련")]
     private float lastDialogueEndTime = -999f;
     public float dialogueCooldown = 0.2f;
-    private float dialogueInputDelay = 2f;
+    private float dialogueInputDelay = 0.2f;
     private float dialogueStartTime;
 
     private bool isInputLocked = false;
@@ -83,26 +84,18 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayCurrentLine()
     {
-        if (session == null || session.IsComplete)
-        {
-            Debug.LogWarning("[DialogueManager] DisplayCurrentLine 호출 - session이 null이거나 완료됨");
-            return;
-        }
+        if (session == null || session.IsComplete) return;
 
         string id = session.CurrentID;
         DialogueLine line = session.GetLine(session.CurrentIndex);
 
         if (CutsceneDialogueUI.Instance.TryDisplayBlackPanelDialogue(id))
         {
-            Debug.Log($"[DialogueManager] 블랙 패널 대사 출력됨: {id}");
+            session.MarkSeen();
             return;
         }
 
-        Debug.Log($"[DialogueManager] DisplayCurrentLine 호출됨: ID = {id}, speaker = {line.speaker}");
-
         DialogueEntry entry = (currentEntries != null && session.CurrentIndex < currentEntries.Length) ? currentEntries[session.CurrentIndex] : null;
-
-        if (entry != null) Debug.Log($"[DialogueManager] DialogueEntry 존재: shake = {entry.shakeCutscene}");
 
         entry?.OnDialogueStart();
 
@@ -113,15 +106,13 @@ public class DialogueManager : MonoBehaviour
 
             if (triggerEntry != null)
             {
-                Debug.Log("[DialogueManager] TriggerEntry onStartEvents 실행");
                 triggerEntry.OnDialogueStart();
             }
         }
 
         if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
         {
-            Debug.Log($"[DialogueManager] 컷신 영상 재생: {line.spritePath}");
-            DialogueUIDisplayer.Instance.ClearUI();
+            DialogueUIDisplayer.Instance.StopBlinkUX();
             DialogueUIDisplayer.Instance.HidePanel();
             CutsceneController.Instance.PlayVideo(line.spritePath, OnCutsceneEnded);
             return;
@@ -130,10 +121,11 @@ public class DialogueManager : MonoBehaviour
         bool shouldShake = entry?.shakeCutscene ?? false;
         Sprite left = entry?.leftSprite;
         Sprite right = entry?.rightSprite;
-        Debug.Log($"[DialogueManager] 일반 대사 출력: speaker = {line.speaker}, shake = {shouldShake}, text = {line.text}");
 
 
         DialogueUIDisplayer.Instance.DisplayLine(line, left, right, shouldShake);
+        session.MarkSeen();
+        QuestGuideUI.Instance.RefreshQuest();
         UnlockInput();
     }
 
@@ -145,9 +137,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        currentEntries?.ElementAtOrDefault(session.CurrentIndex)?.OnDialogueEnd();
-
-        session.MarkSeen();
         session.MoveNext();
 
         if (session.IsComplete)
@@ -173,6 +162,7 @@ public class DialogueManager : MonoBehaviour
         dialogueStartTime = Time.time;
 
         DialogueUIDisplayer.Instance.ShowPanel();
+        QuestGuideUI.Instance.questUI.SetActive(true);
 
         Sprite left = null, right = null;
         if (currentEntries != null && session.CurrentIndex < currentEntries.Length)
@@ -182,7 +172,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         DialogueUIDisplayer.Instance.RestoreCharacterSprites(left, right);
-        DisplayCurrentLine();
+        ShowNextLine();
     }
 
     public void EndDialogue(bool clearState = true)
@@ -191,9 +181,10 @@ public class DialogueManager : MonoBehaviour
         lastDialogueEndTime = Time.time;
 
         DialogueUIDisplayer.Instance.ClearUI();
-        DialogueUIDisplayer.Instance.StopBlinkUX();
 
         onDialogueEndCallback?.Invoke();
+        OnDialogueEnded?.Invoke();
+
         onDialogueEndCallback = null;
 
         if (clearState)
@@ -210,28 +201,29 @@ public class DialogueManager : MonoBehaviour
 
         if (session.IsComplete)
         {
-            EndDialogue();
+            StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { EndDialogue(); }, true));
             return;
         }
 
         string nextID = session.CurrentID;
         var nextLine = session.GetLine(session.CurrentIndex);
 
-        if (CutsceneDialogueUI.Instance.TryDisplayBlackPanelDialogue(nextID))
-        {
-            Debug.Log($"[DialogueManager] OnCutsceneFullyEnded - 블랙 패널 대사: {nextID}");
-            return;
-        }
+        if (CutsceneDialogueUI.Instance.TryDisplayBlackPanelDialogue(nextID)) return;
 
         if (!string.IsNullOrEmpty(nextLine?.spritePath) && nextLine.spritePath.StartsWith("Cutscenes/Video/"))
         {
-            Debug.Log($"[DialogueManager] OnCutsceneFullyEnded - 다음 컷신 대기: {nextID}");
-            StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(true, () => {DisplayCurrentLine();}));
+            StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(true, () => { DisplayCurrentLine(); }, true));
             return;
         }
 
-        Debug.Log($"[DialogueManager] OnCutsceneEnded - 일반 대사: {nextID}");
-        StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => {DialogueUIDisplayer.Instance.ShowPanel(); DisplayCurrentLine();}));
+        StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { DialogueUIDisplayer.Instance.ShowPanel(); DisplayCurrentLine(); }, true));
+    }
+
+    public DialogueEntry GetCurrentEntry()
+    {
+        return (currentEntries != null && session != null && session.CurrentIndex < currentEntries.Length)
+            ? currentEntries[session.CurrentIndex]
+            : null;
     }
 
     public void RegisterOnDialogueEndCallback(Action callback)

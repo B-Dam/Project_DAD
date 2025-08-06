@@ -1,10 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
-/// <summary>
-/// DialogueManager.HasSeen 과 IsDialogueActive를 이용해서
-/// “대화가 끝난 시점”에 조건을 평가하고 이벤트를 실행
-/// </summary>
 public class DialogueTriggerCondition : MonoBehaviour
 {
     [Header("감지할 대화 ID")]
@@ -15,29 +12,32 @@ public class DialogueTriggerCondition : MonoBehaviour
     public UnityEvent onConditionMet;
 
     private bool hasTriggered = false;
-    private bool prevDialogueActive = false;
 
-    private void Update()
+    private void OnEnable()
     {
-        var dm = DialogueManager.Instance;
-        if (dm == null || hasTriggered) return;
-
-        // 매 프레임 대화 활성 상태 변화를 체크
-        bool nowActive = dm.IsDialogueActive;
-        // “대화 중” → “대화 아님” 으로 변할 때(=대화 종료 시점)
-        if (prevDialogueActive && !nowActive)
-        {
-            EvaluateCondition(dm);
-        }
-        prevDialogueActive = nowActive;
+        DialogueManager.OnDialogueEnded += EvaluateCondition;
     }
 
-    private void EvaluateCondition(DialogueManager dm)
+    private void OnDisable()
     {
+        DialogueManager.OnDialogueEnded -= EvaluateCondition;
+    }
+
+    private void EvaluateCondition()
+    {
+        if (hasTriggered) return;
+
+        var dm = DialogueManager.Instance;
+        if (dm == null) return;
+
         bool sawStart = !string.IsNullOrEmpty(startId) && dm.HasSeen(startId);
-        bool sawEnd   = !string.IsNullOrEmpty(endId)   && dm.HasSeen(endId);
+        bool sawEnd = !string.IsNullOrEmpty(endId) && dm.HasSeen(endId);
+
+        Debug.Log($"[DialogueTriggerCondition] EvaluateCondition 호출됨 - startId: {startId}={sawStart}, endId: {endId}={sawEnd}");
+
         if (sawStart && !sawEnd)
         {
+            Debug.Log("[DialogueTriggerCondition] 조건 만족 → 이벤트 실행");
             onConditionMet?.Invoke();
             hasTriggered = true;
         }
