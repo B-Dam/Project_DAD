@@ -22,13 +22,6 @@ public class DialogueEntry
     public Sprite leftSprite;
     public Sprite rightSprite;
 
-    
-public void OnDialogueStart()
-    {
-        onStartEvents?.Invoke();
-    }
-    public void OnDialogueEnd()
-    {
-        onEndEvents?.Invoke();
-    }
+    public void OnDialogueStart() => onStartEvents?.Invoke();
+    public void OnDialogueEnd() => onEndEvents?.Invoke();
 }

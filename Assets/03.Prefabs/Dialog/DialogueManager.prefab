@@ -1519,8 +1519,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8287438169582842342}
-  - component: {fileID: 3000394825375865765}
   - component: {fileID: 881792441394540909}
+  - component: {fileID: 8643396771789834153}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -1544,29 +1544,6 @@ Transform:
   - {fileID: 1384325418385686256}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3000394825375865765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6149661096035739126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56fd6df13cc53a447bc1eae9d98647bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialoguePanel: {fileID: 1359079147115420780}
-  dialogBoxBackgroundImage: {fileID: 5256915042434179580}
-  speakerText: {fileID: 294455232816792661}
-  dialogueText: {fileID: 6891352988716044084}
-  leftCharacterImage: {fileID: 7374368154276650905}
-  rightCharacterImage: {fileID: 3383360686877258677}
-  uxBlinkImage: {fileID: 4052139789816685810}
-  dialogueCooldown: 1
-  cutsceneBackgroundImage: {fileID: 4774030648181741638}
-  cutsceneImage: {fileID: 2895008898736641246}
-  cutsceneDialogue: {fileID: 881792441394540909}
 --- !u!114 &881792441394540909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1591,9 +1568,30 @@ MonoBehaviour:
   - 5071
   - 5080
   - 5108
+  - 5120
   blackPanel: {fileID: 6131915194668185421}
   speakerText: {fileID: 6955486357831510990}
   dialogueText: {fileID: 6310170790554883944}
+--- !u!114 &8643396771789834153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6149661096035739126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f734bd3a9eb4647b8f84eb9a515b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialoguePanel: {fileID: 1359079147115420780}
+  dialogBoxBackgroundImage: {fileID: 5256915042434179580}
+  speakerText: {fileID: 294455232816792661}
+  dialogueText: {fileID: 6891352988716044084}
+  leftCharacterImage: {fileID: 7374368154276650905}
+  rightCharacterImage: {fileID: 3383360686877258677}
+  uxBlinkImage: {fileID: 4052139789816685810}
+  cutsceneImage: {fileID: 4774030648181741638}
 --- !u!1 &8218630342481171196
 GameObject:
   m_ObjectHideFlags: 0

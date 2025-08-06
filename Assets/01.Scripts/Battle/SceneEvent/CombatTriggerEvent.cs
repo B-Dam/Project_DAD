@@ -27,9 +27,9 @@ public class CombatTriggerEvent : MonoBehaviour
     // 대화 UI 숨기되 데이터는 유지하되 스프라이트는 꺼버림
     if (DialogueManager.Instance != null)
     {
-        DialogueManager.Instance.HideDialogueSprites(); // 새 메서드 추가
+        DialogueUIDisplayer.Instance.HideDialogueSprites(); // 새 메서드 추가
         DialogueManager.Instance.EndDialogue(clearState: false);
-        DialogueManager.Instance.dialoguePanel.SetActive(false);
+        DialogueUIDisplayer.Instance.dialoguePanel.SetActive(false);
     }
 
 
