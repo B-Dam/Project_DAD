@@ -76,8 +76,6 @@ public class PuzzleHintManager : MonoBehaviour
     private float timer = 0f;
     private void Update()
     {
-       
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             TryActivateHint();
@@ -128,7 +126,7 @@ public class PuzzleHintManager : MonoBehaviour
     {
         if (!CanUseHint())
         {
-            AudioManager.Instance.PlaySFX("CannotMoveBox");
+            AudioManager.Instance.PlaySFX("Puzzle/ImpossibleFeedback");
             return;
         }
 

@@ -36,16 +36,16 @@ public class DialogueFlowController : MonoBehaviour
             DialogueEntry entry = DialogueManager.Instance.GetCurrentEntry();
             if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
             {
+                StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { CombatTriggerEvent.Instance.TriggerCombat(); }, false));
                 entry.OnDialogueEnd();
                 DialogueUIDisplayer.Instance.uIDisplayer.SetActive(false);
-                StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { CombatTriggerEvent.Instance.TriggerCombat(); }, false));
                 return;
             }
 
             var nextLine = session.HasIndex(currentIndex) ? session.GetLine(currentIndex) : null;
             var nextID = session.HasIndex(currentIndex) ? session.GetID(currentIndex) : null;
 
-            if (!string.IsNullOrEmpty(nextLine?.spritePath) && nextLine.spritePath.StartsWith("Cutscenes/Video/"))
+            if (!string.IsNullOrEmpty(nextLine?.spritePath) && nextLine.spritePath.StartsWith("Cutscenes/"))
             {
                 DialogueManager.Instance.StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(true, () => { DialogueManager.Instance.ShowNextLine(); DialogueManager.Instance.UnlockInput(); }, true));
             }
@@ -63,7 +63,7 @@ public class DialogueFlowController : MonoBehaviour
         }
 
         var line = DialogueManager.Instance.GetCurrentLine();
-        if (!string.IsNullOrEmpty(line?.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
+        if (!string.IsNullOrEmpty(line?.spritePath) && line.spritePath.StartsWith("Cutscenes/"))
             return;
         var normalEntry = DialogueManager.Instance.GetCurrentEntry();
         if (normalEntry != null && normalEntry.onEndEvents.GetPersistentEventCount() > 0)

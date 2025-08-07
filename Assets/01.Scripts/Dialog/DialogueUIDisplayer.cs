@@ -173,7 +173,7 @@ public class DialogueUIDisplayer : MonoBehaviour
 
     private void HandleCutsceneImage(string path, bool shake)
     {
-        bool isSpriteCutscene = !string.IsNullOrEmpty(path) && !path.StartsWith("Cutscenes/Video/");
+        bool isSpriteCutscene = !string.IsNullOrEmpty(path) && !path.StartsWith("Cutscenes/");
         if (!isSpriteCutscene)
         {
             Sprite sprite = Resources.Load<Sprite>(path);

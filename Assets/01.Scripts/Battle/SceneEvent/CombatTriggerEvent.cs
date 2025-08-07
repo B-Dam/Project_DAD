@@ -63,7 +63,6 @@ public class CombatTriggerEvent : MonoBehaviour
                 SceneManager.SetActiveScene(battle);
             CombatManager.Instance.IsInCombat = true;
         };
-
         return;
     }
 
