@@ -109,9 +109,9 @@ public class PuzzleHintManager : MonoBehaviour
                 activeAnswertToTarge?.SetTargets(target, answer, dist2);
             }
 
-            //// 지속 시간이 다 되면 자동 종료
-            //if (durationTimer >= hintDuration)
-            //    DeactivateHint();
+            // 지속 시간이 다 되면 자동 종료
+            if (durationTimer >= hintDuration)
+                DeactivateHint();
         }
         // 쿨다운 처리
         if (isCooldown)
