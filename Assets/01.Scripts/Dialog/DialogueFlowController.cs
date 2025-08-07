@@ -37,7 +37,7 @@ public class DialogueFlowController : MonoBehaviour
             if (entry != null && entry.onEndEvents.GetPersistentEventCount() > 0)
             {
                 entry.OnDialogueEnd();
-                DialogueUIDisplayer.Instance.ClearUI();
+                DialogueUIDisplayer.Instance.uIDisplayer.SetActive(false);
                 StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(false, () => { CombatTriggerEvent.Instance.TriggerCombat(); }, false));
                 return;
             }
@@ -69,10 +69,8 @@ public class DialogueFlowController : MonoBehaviour
         if (normalEntry != null && normalEntry.onEndEvents.GetPersistentEventCount() > 0)
         {
             normalEntry.OnDialogueEnd();
-            DialogueUIDisplayer.Instance.HidePanel();
-            DialogueUIDisplayer.Instance.StopBlinkUX();
-            QuestGuideUI.Instance.questUI.SetActive(false);
-            CutsceneController.Instance.cutsceneVideo.SetActive(false);
+            DialogueUIDisplayer.Instance.uIDisplayer.SetActive(false);
+            return;
         }
 
         DialogueManager.Instance.ShowNextLine();

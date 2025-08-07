@@ -161,6 +161,7 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = true;
         dialogueStartTime = Time.time;
 
+        DialogueUIDisplayer.Instance.uIDisplayer.SetActive(true);
         DialogueUIDisplayer.Instance.ShowPanel();
         QuestGuideUI.Instance.questUI.SetActive(true);
 

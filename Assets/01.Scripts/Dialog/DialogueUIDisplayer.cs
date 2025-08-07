@@ -9,6 +9,7 @@ public class DialogueUIDisplayer : MonoBehaviour
     public static DialogueUIDisplayer Instance;
 
     [Header("UI 컴포넌트")]
+    public GameObject uIDisplayer;
     public GameObject dialoguePanel;
     public Image dialogBoxBackgroundImage;
     public TextMeshProUGUI speakerText;
