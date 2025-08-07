@@ -145,10 +145,11 @@ public class MapTransition : MonoBehaviour
             // 체크된 경우에만 위치 저장
             if (shouldSavePosition)
             {
+                string currentMapID = MapManager.Instance.currentMapID;
                 PuzzlePlayerResettable resettable = player.GetComponent<PuzzlePlayerResettable>();
                 if (resettable != null)
                 {
-                    resettable.SaveResetPoint();
+                    resettable.SaveResetPlayerPoint(currentMapID);
                     Debug.Log(" 플레이어 위치 저장됨");
                 }
             }
