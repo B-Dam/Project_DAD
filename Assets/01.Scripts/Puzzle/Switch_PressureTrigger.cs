@@ -47,18 +47,37 @@ public class Switch_PressureTrigger : MonoBehaviour
             isActivated = false;
         }
     }
+    //private void OpenDoor()
+    //{
+    //    if (targetA != null)
+    //        targetA.SetActive(false);
+
+    //    AudioManager.Instance.PlaySFX("DoorOpen");
+
+    //    if (targetB != null && instantiatedOpenDoor == null)
+    //    {
+    //        instantiatedOpenDoor = Instantiate(targetB, targetA.transform.position, targetB.transform.rotation);//Quaternion.identity회전없는상태
+    //    }
+    //}
     private void OpenDoor()
     {
         if (targetA != null)
             targetA.SetActive(false);
 
-        AudioManager.Instance.PlaySFX("DoorOpen");
-
         if (targetB != null && instantiatedOpenDoor == null)
         {
-            instantiatedOpenDoor = Instantiate(targetB, targetA.transform.position, targetB.transform.rotation);//Quaternion.identity회전없는상태
+            // 카메라 연출과 함께 프리팹 생성
+            CameraEventPlayer.Instance.PlayCameraSequence(
+                targetA.transform,
+                1f,
+                1f,
+                () =>
+                {
+                    instantiatedOpenDoor = Instantiate(targetB, targetA.transform.position, targetB.transform.rotation);
+                    AudioManager.Instance.PlaySFX("Puzzle/Door-metal");
+                }
+            );
         }
-    }
     private void CloseDoor()
     {
         if (targetA != null)

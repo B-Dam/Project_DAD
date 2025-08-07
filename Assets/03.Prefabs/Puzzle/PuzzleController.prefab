@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1335537810642621432}
   - component: {fileID: 4539512483265520461}
-  - component: {fileID: 7575569492832515779}
   - component: {fileID: 5470591259541828104}
   - component: {fileID: 6106127557259550285}
   - component: {fileID: 6553411676452258898}
@@ -49,30 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapDatabaseTextAsset: {fileID: 4900000, guid: 070cdc8e341e4a84fab623731f8bdd24, type: 3}
---- !u!114 &7575569492832515779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960364117206209066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b98744c211450384780bafcbfa51a9c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hintVolume: {fileID: 0}
-  hintDurationTxt: {fileID: 0}
-  hintCooldownTxt: {fileID: 0}
-  hintIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  hintDurationTimeBar: {fileID: 0}
-  hintCooldownTimeBar: {fileID: 0}
-  HintBtn: {fileID: 0}
-  hintLineRenderer:
-  - {fileID: 0}
 --- !u!114 &5470591259541828104
 MonoBehaviour:
   m_ObjectHideFlags: 0
