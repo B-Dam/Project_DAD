@@ -43,16 +43,16 @@ public class CutsceneController : MonoBehaviour
     private void Start()
     {
         originalCullingMask = mainCamera.cullingMask;
+    }
+
+    public void PlayVideo(string path, Action onEnd)
+    {
         mainCamera.cullingMask = 0;
 
         questUI.SetActive(false);
 
         fadeCanvas.gameObject.SetActive(true);
         fadeCanvas.alpha = 1f;
-    }
-
-    public void PlayVideo(string path, Action onEnd)
-    {
         isVideoPreparing = true;
 
         Debug.Log($"컷신 재생 요청: path = {path}");

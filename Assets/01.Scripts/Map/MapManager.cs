@@ -26,7 +26,7 @@ public class MapManager : MonoBehaviour
         currentMapTransform = mapTransform;
     }
     public string prevMapID;
-    public string currentMapID = "001";  // 첫 시작 시 001로 설정
+    public string currentMapID = "002";  //d 첫 시작 시 001로 설정
 
 
     private void Awake()
