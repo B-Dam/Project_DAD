@@ -156,7 +156,7 @@ public class PuzzleHintManager : MonoBehaviour
         }
         if (!CanUseHint())
         {
-            AudioManager.Instance.PlaySFX("CannotMoveBox");
+            AudioManager.Instance.PlaySFX("ImpossibleFeedback");
             return;
         }
        
