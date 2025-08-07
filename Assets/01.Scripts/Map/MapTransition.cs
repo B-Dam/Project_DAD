@@ -128,8 +128,8 @@ public class MapTransition : MonoBehaviour
         {
             MapManager.Instance.UpdateMapData(destinationMapID);
         }
-       
-       
+        OnMapTransitionComplete?.Invoke();
+
         // ✅ 2. 카메라 줌 연출
         Camera cam = Camera.main;
         float originalSize = cam.orthographicSize;
@@ -162,7 +162,7 @@ public class MapTransition : MonoBehaviour
         // ✅ 5. 페이드 인
         yield return Fade(1f, false);
 
-        OnMapTransitionComplete?.Invoke();
+        
 
         if (playerController != null)
         {

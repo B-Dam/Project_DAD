@@ -60,19 +60,19 @@ public class PuzzleHintConnector : MonoBehaviour
         UpdateParticlePositionAndRotation();
 
         // 거리 변화 감지 (0.1 이상 차이날 때만 재시뮬레이션)
-        if (Mathf.Abs(distance - lastDistance) > 0.1f)
-        {
-            lastDistance = distance;
+        //if (Mathf.Abs(distance - lastDistance) > 0.1f)
+        //{
+        //    lastDistance = distance;
 
-            float normalized = Mathf.Clamp01(distance / 1f);
-            float lifetime = Mathf.Max(1f, particleInstance.main.startLifetime.constant);
+        //    float normalized = Mathf.Clamp01(distance / 1f);
+        //    float lifetime = Mathf.Max(1f, particleInstance.main.startLifetime.constant);
 
-            particleInstance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            particleInstance.Simulate(normalized * lifetime, true, true);
-            particleInstance.Play();
+        //    particleInstance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        //    particleInstance.Simulate(normalized * lifetime, true, true);
+        //    particleInstance.Play();
 
-            Debug.Log($"[HintConnector] 파티클 갱신됨 - 거리: {distance:F2}");
-        }
+        //    Debug.Log($"[HintConnector] 파티클 갱신됨 - 거리: {distance:F2}");
+        //}
     }
 
     // 힌트를 켜고 끄는 함수 (선 + 파티클)

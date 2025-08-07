@@ -7,7 +7,7 @@ public class PuzzleUIController : MonoBehaviour
     private void Awake()
     {
         if (puzzleUICanvas != null)
-            puzzleUICanvas.SetActive(true);//s
+            puzzleUICanvas.SetActive(false);
     }
 
 

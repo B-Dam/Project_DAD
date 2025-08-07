@@ -46,21 +46,37 @@ public class PuzzleHintManager : MonoBehaviour
     private void Start()
     {
         // 퍼즐 맵 ID별로 힌트 횟수 초기화
-        foreach (string mapID in PuzzleManager.Instance.GetAllPuzzleMapIDs())
-            hintCounts[mapID] = maxHintCount;
+        foreach (string mapID in PuzzleManager.Instance.GetAllPuzzleMapIDs()) { 
+        hintCounts[mapID] = maxHintCount;
+        Debug.Log($"{mapID}[HintManager] 초기 힌트 횟수 설정됨: {maxHintCount}회"); }
 
-        ui?.UpdateHintIcons(GetCurrentHintCount());// UI 힌트 아이콘 갱신
     }
-    private float updateInterval = 0.2f;
-    private float timer = 0f;
-    private void Update()
+    private void OnEnable()
     {
+        MapTransition.OnMapTransitionComplete += UpdateUIHintIcons;
+    }
+
+    private void OnDisable()
+    {
+        MapTransition.OnMapTransitionComplete -= UpdateUIHintIcons;
+    }
+    private void UpdateUIHintIcons()
+    {
+        int currentHintCount = GetCurrentHintCount();
+        ui?.UpdateHintIcons(currentHintCount);
+
         // 퍼즐 맵이 아니면 힌트 비활성화
         if (!PuzzleManager.Instance.IsPuzzleMap(CurrentMapID()))
         {
             DeactivateHint();
             return;
         }
+    }
+    private float updateInterval = 1f;
+    private float timer = 0f;
+    private void Update()
+    {
+       
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -108,7 +124,7 @@ public class PuzzleHintManager : MonoBehaviour
         ui?.UpdateBars(isActive, durationTimer, hintDuration, isCooldown, cooldownTimer, hintCooldown);
     }
     // 힌트를 시도하려고 할 때 호출
-    private void TryActivateHint()
+    public void TryActivateHint()
     {
         if (!CanUseHint()) return;
 
@@ -126,7 +142,7 @@ public class PuzzleHintManager : MonoBehaviour
         float dist2 = Vector2.Distance(target.position, answer.position);
 
         // 너무 가까우면 힌트 생략
-        float touchingThreshold = 5f;
+        float touchingThreshold = 0.2f;
         if (dist1 < touchingThreshold)
         {
             Debug.Log($"[HintManager] 박스와 너무 가까움. 힌트 생략됨. 거리: {dist1:F2}");

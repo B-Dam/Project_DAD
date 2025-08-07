@@ -1138,7 +1138,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 11534839
+    m_Bits: 28312055
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2455,6 +2455,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4008039832703752696, guid: ced9115417a92f946a7e8d8b9759a54a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6578831205685009998, guid: ced9115417a92f946a7e8d8b9759a54a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2757,6 +2761,10 @@ PrefabInstance:
       propertyPath: fadeCanvas
       value: 
       objectReference: {fileID: 320469743}
+    - target: {fileID: 1840064733495539065, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2141645326577698202, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 
@@ -2833,6 +2841,10 @@ PrefabInstance:
       propertyPath: fadeCanvas
       value: 
       objectReference: {fileID: 320469743}
+    - target: {fileID: 7892910157058947858, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Layer
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 8044757984384480708, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 
