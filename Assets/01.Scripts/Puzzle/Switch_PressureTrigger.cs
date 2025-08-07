@@ -78,6 +78,7 @@ public class Switch_PressureTrigger : MonoBehaviour
                 }
             );
         }
+    }
     private void CloseDoor()
     {
         if (targetA != null)
