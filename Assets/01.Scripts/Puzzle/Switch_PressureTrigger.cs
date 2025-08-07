@@ -61,8 +61,7 @@ public class Switch_PressureTrigger : MonoBehaviour
     //}
     private void OpenDoor()
     {
-        if (targetA != null)
-            targetA.SetActive(false);
+       
 
         if (targetB != null && instantiatedOpenDoor == null)
         {
@@ -73,6 +72,8 @@ public class Switch_PressureTrigger : MonoBehaviour
                 1f,
                 () =>
                 {
+                    if (targetA != null)
+                        targetA.SetActive(false);
                     instantiatedOpenDoor = Instantiate(targetB, targetA.transform.position, targetB.transform.rotation);
                     AudioManager.Instance.PlaySFX("Puzzle/Door-metal");
                 }

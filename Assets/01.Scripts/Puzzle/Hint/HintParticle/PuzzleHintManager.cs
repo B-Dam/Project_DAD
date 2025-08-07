@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PuzzleHintManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PuzzleHintManager : MonoBehaviour
     public PuzzleHintUIController ui;
 
     [Header("힌트 설정")]
-    public float hintDuration = 10f;
+    public float hintDuration = 15f;
     public float hintCooldown = 30f;
     public int maxHintCount = 3;
 
@@ -26,6 +27,9 @@ public class PuzzleHintManager : MonoBehaviour
 
     private bool isActive;// 현재 힌트가 활성 상태인지
     private bool isCooldown;// 쿨다운 중인지
+
+    [Header("Puzzle Hint 버튼")]
+    public Button puzzleHintButton;
 
     // 각 맵 ID별로 남은 힌트 횟수를 저장
     private Dictionary<string, int> hintCounts = new();
@@ -46,10 +50,21 @@ public class PuzzleHintManager : MonoBehaviour
     private void Start()
     {
         // 퍼즐 맵 ID별로 힌트 횟수 초기화
-        foreach (string mapID in PuzzleManager.Instance.GetAllPuzzleMapIDs()) { 
-        hintCounts[mapID] = maxHintCount;
-        Debug.Log($"{mapID}[HintManager] 초기 힌트 횟수 설정됨: {maxHintCount}회"); }
+        foreach (string mapID in PuzzleManager.Instance.GetAllPuzzleMapIDs())
+        {
+            hintCounts[mapID] = maxHintCount;
+            Debug.Log($"{mapID}[HintManager] 초기 힌트 횟수 설정됨: {maxHintCount}회");
+        }
 
+        if (puzzleHintButton != null)
+        {
+            puzzleHintButton.onClick.AddListener(TryActivateHint);
+        }
+        else
+        {
+            Debug.LogWarning("[HintManager] puzzleHintButton이 할당되지 않았습니다.");
+
+        }
     }
     private void OnEnable()
     {
@@ -76,7 +91,7 @@ public class PuzzleHintManager : MonoBehaviour
     private float timer = 0f;
     private void Update()
     {
-       
+
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -93,8 +108,8 @@ public class PuzzleHintManager : MonoBehaviour
             {
                 timer = 0f;
                 // 0.1초 마다 가장 가까운 대상과 정답 갱신
-                 target = finder.FindClosestTarget();
-                 answer = finder.FindAnswerForTarget(target);
+                target = finder.FindClosestTarget();
+                answer = finder.FindAnswerForTarget(target);
             }
             //// 매 프레임마다 가장 가까운 대상과 정답 갱신
             //var target = finder.FindClosestTarget();
@@ -126,12 +141,25 @@ public class PuzzleHintManager : MonoBehaviour
     // 힌트를 시도하려고 할 때 호출
     public void TryActivateHint()
     {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null || Time.timeScale == 0f || !PlayerController.Instance.CanMove())
+        {
+            Debug.LogWarning("플레이어 이동 불가 상태 혹은 게임 멈춘상태");
+            return;
+        }
+        // 힌트가 이미 활성화되어 있으면 → 종료
+        if (isActive)
+        {
+            Debug.Log("[HintManager] 힌트 중 E키 or 버튼 눌림 → 힌트 종료");
+            DeactivateHint();
+            return;
+        }
         if (!CanUseHint())
         {
             AudioManager.Instance.PlaySFX("CannotMoveBox");
             return;
         }
-
+       
         var target = finder.FindClosestTarget(); // 플레이어 기준 가장 가까운 오브젝트
         var answer = finder.FindAnswerForTarget(target); // 해당 오브젝트의 정답 위치
 

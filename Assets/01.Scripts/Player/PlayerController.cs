@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         // 앞에 장애물 감지 + UI 표시
         TryShowObstacleIndicator();
     }
-    private bool CanMove()
+    public bool CanMove()
     {
         // 대화 중이면 이동/상호작용 입력 차단
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive)
