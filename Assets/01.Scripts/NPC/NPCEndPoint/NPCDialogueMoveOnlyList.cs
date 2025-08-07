@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCDialogueMoveOnly : MonoBehaviour
+public class NPCDialogueMoveOnlyList : MonoBehaviour
 {
     public OffscreenWatcher offscreenWatcher;
     public InteractHintController hintController;
@@ -12,8 +12,8 @@ public class NPCDialogueMoveOnly : MonoBehaviour
     [Header("이동 대상 오브젝트들")]
     public List<Transform> targetObjects;
 
-    [Header("도착지 오브젝트")]
-    public Transform destinationTarget;
+    [Header("이동 경로 (순차적)")]
+    public List<Transform> waypoints;
 
     [Header("이동 거리")]
     public float moveDuration = 10f;
@@ -45,7 +45,7 @@ public class NPCDialogueMoveOnly : MonoBehaviour
 
         hintController?.DisableHint();// 대사걸기 말풍선 비활성화
 
-        if (destinationTarget == null)
+        if (waypoints == null)
         {
             Debug.LogWarning(" 도착지가 설정되지 않았습니다!");
             return;
@@ -66,12 +66,12 @@ public class NPCDialogueMoveOnly : MonoBehaviour
             {
                 col.enabled = false; // 충돌 비활성화
             }
-            Debug.Log($"대상 '{obj.name}' → {destinationTarget.position} 으로 이동 시작");
-            StartCoroutine(MoveToPosition(obj, destinationTarget.position, moveDuration));
+            Debug.Log($"대상 '{obj.name}' → {waypoints} 으로 이동 시작");
+            StartCoroutine(MoveAlongPath(obj, waypoints, moveDuration));
         }
     }
 
-    IEnumerator MoveToPosition(Transform obj, Vector3 targetPos, float duration)
+    IEnumerator MoveAlongPath(Transform obj, List<Transform> path, float duration)
     {
         NPCMovementController npc = obj.GetComponent<NPCMovementController>();
         if (npc == null)
@@ -80,24 +80,35 @@ public class NPCDialogueMoveOnly : MonoBehaviour
             yield break;
         }
 
-        Vector2 direction = (targetPos - obj.position).normalized;
-        npc.SetMoveDirection(direction);
+        //Vector2 direction = (targetPos - obj.position).normalized;
+        //npc.SetMoveDirection(direction);
 
-        float elapsed = 0f;
         float threshold = 0.05f; // 도착 허용 오차
 
-        while (elapsed < duration)
+        foreach(var waypoint in path)
         {
-            if (obj == null) yield break; // 오브젝트가 파괴되면 중지
-            float distance = Vector2.Distance(obj.position, targetPos);
-            if (distance <= threshold) // 도착 허용 오차 이내면 종료
-                break;
-            elapsed += Time.deltaTime;
-            yield return null; // 다음 프레임까지 대기
+            if (waypoint == null) continue;
+            Vector3 targetPos = waypoint.position;
+            Vector2 direction = (targetPos - obj.position).normalized;
+            npc.SetMoveDirection(direction);
+
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                if (obj == null) yield break; // 오브젝트가 파괴되면 중지
+                float distance = Vector2.Distance(obj.position, targetPos);
+                if (distance <= threshold) // 도착 허용 오차 이내면 다음 웨이포인트로 이동
+                    break;
+                elapsed += Time.deltaTime;
+                yield return null; // 다음 프레임까지 대기
+            }
+            
         }
+       
 
         npc.Stop(); // NPC 멈춤 처리
-        Debug.Log($"{obj.name} 이동 완료: {targetPos}");
+        Debug.Log($"{obj.name} 이동 완료: {path}");
 
         PlayerController.Instance.enabled = true; // 플레이어 이동 활성화
         hintController?.EnableHint(); // 대사걸기 말풍선 활성화

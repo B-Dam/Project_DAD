@@ -3,12 +3,11 @@ using UnityEngine.UI;
 
 public class PuzzleResetManager : MonoBehaviour
 {
-    private HintMode hintMode;
     public Button resetButton;
 
     void Start()
     {
-        hintMode = Object.FindFirstObjectByType<HintMode>();
+        //hintMode = Object.FindFirstObjectByType<HintMode>();
         if (resetButton != null)
         {
             resetButton.onClick.AddListener(ResetPuzzle);
@@ -44,7 +43,7 @@ public class PuzzleResetManager : MonoBehaviour
 
         var playerResettable = Object.FindFirstObjectByType<PuzzlePlayerResettable>();
         playerResettable.ResetState();
-        hintMode.ForceResetHintState();
+        PuzzleHintManager.Instance?.DeactivateHint(); // 힌트 비활성화
         Debug.Log("퍼즐 상태 리셋 완료");
     }
 

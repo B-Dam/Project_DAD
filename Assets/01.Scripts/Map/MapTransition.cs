@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using Unity.Cinemachine;
+using System;
 
 public class MapTransition : MonoBehaviour
 {
@@ -32,6 +33,9 @@ public class MapTransition : MonoBehaviour
 
     [Header("플레이어 위치 저장 여부")]
     public bool shouldSavePosition = false;
+
+    // 맵 전환 완료 이벤트
+    public static event Action OnMapTransitionComplete;
     private void Awake()
     {
         // 퀘스트 조건이 모두 비어 있다면 이동 허용
@@ -113,24 +117,18 @@ public class MapTransition : MonoBehaviour
             }
 
         }
+      
+
+      
+        // ✅ 1. 페이드 아웃
+        yield return Fade(1f, true);
+
+        //맵 변경
         if (!string.IsNullOrEmpty(destinationMapID))
         {
             MapManager.Instance.UpdateMapData(destinationMapID);
         }
-
-        //  퍼즐 UI 직접 호출
-        PuzzleUIController puzzleUI = FindAnyObjectByType<PuzzleUIController>();
-
-        if (puzzleUI != null)
-        {
-            puzzleUI.HandleFadeComplete();
-        }
-        else
-        {
-            Debug.LogWarning(" PuzzleUIController를 찾지 못했습니다.");
-        }
-        // ✅ 1. 페이드 아웃
-        yield return Fade(1f, true);
+        OnMapTransitionComplete?.Invoke();
 
         // ✅ 2. 카메라 줌 연출
         Camera cam = Camera.main;
@@ -164,7 +162,7 @@ public class MapTransition : MonoBehaviour
         // ✅ 5. 페이드 인
         yield return Fade(1f, false);
 
-       
+        
 
         if (playerController != null)
         {
