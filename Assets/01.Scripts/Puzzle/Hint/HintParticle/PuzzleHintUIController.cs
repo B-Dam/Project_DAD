@@ -37,7 +37,7 @@ public class PuzzleHintUIController : MonoBehaviour
             durationBar.fillAmount = isHintActive ? Mathf.Clamp01((hintDuration - durationTimer) / hintDuration) : 0f;
 
         if (cooldownBar != null)
-            cooldownBar.fillAmount = isCooldown ? Mathf.Clamp01(cooldownTimer / hintCooldown) : 1f;
+            cooldownBar.fillAmount = isCooldown ? Mathf.Clamp01(cooldownTimer / hintCooldown) : 0f;
 
         if (durationText != null)
             durationText.text = isHintActive ? $"Dur: {hintDuration - durationTimer:F1}" : "--";
