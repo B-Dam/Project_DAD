@@ -126,7 +126,11 @@ public class PuzzleHintManager : MonoBehaviour
     // 힌트를 시도하려고 할 때 호출
     public void TryActivateHint()
     {
-        if (!CanUseHint()) return;
+        if (!CanUseHint())
+        {
+            AudioManager.Instance.PlaySFX("CannotMoveBox");
+            return;
+        }
 
         var target = finder.FindClosestTarget(); // 플레이어 기준 가장 가까운 오브젝트
         var answer = finder.FindAnswerForTarget(target); // 해당 오브젝트의 정답 위치
