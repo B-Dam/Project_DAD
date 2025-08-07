@@ -130,11 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a420f0c24201284b9993f58f43d14c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &174923074 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 557819748028291771, guid: efe7468904ca672438b84b94522293ec, type: 3}
-  m_PrefabInstance: {fileID: 1840458622181951242}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &320469742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -686,7 +681,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 11534839
+    m_Bits: 28312055
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -872,6 +867,14 @@ PrefabInstance:
       propertyPath: defaultFollowTarget
       value: 
       objectReference: {fileID: 4711778356559522835}
+    - target: {fileID: 2119602943650801819, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -39
+      objectReference: {fileID: 0}
+    - target: {fileID: 2119602943650801819, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5999985
+      objectReference: {fileID: 0}
     - target: {fileID: 2537693785485874198, guid: 76c87fc5103e90245b8f92c5e5abb0f8, type: 3}
       propertyPath: BoundingShape2D
       value: 
@@ -1255,10 +1258,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8643396771789834153, guid: efe7468904ca672438b84b94522293ec, type: 3}
-      propertyPath: uIDisplayer
-      value: 
-      objectReference: {fileID: 174923074}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1289,7 +1288,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1256572786534334348, guid: 2fab71ae4ca0a4643bcd200c3daa2437, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 1256572786534334348, guid: 2fab71ae4ca0a4643bcd200c3daa2437, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1353,6 +1352,10 @@ PrefabInstance:
       propertyPath: mainUI
       value: 
       objectReference: {fileID: 5072203958340343698}
+    - target: {fileID: 1873849472112745617, guid: e9bd355df5ca06c4aadd97a816ebc4fb, type: 3}
+      propertyPath: isTutorialTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4551098616148276178, guid: e9bd355df5ca06c4aadd97a816ebc4fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2133,18 +2136,10 @@ PrefabInstance:
       propertyPath: fadeCanvas
       value: 
       objectReference: {fileID: 320469743}
-    - target: {fileID: 1549521151179197803, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
-      propertyPath: m_SortingOrder
-      value: 500
-      objectReference: {fileID: 0}
     - target: {fileID: 1552472758416143729, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 
       objectReference: {fileID: 320469743}
-    - target: {fileID: 2044952789024499616, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2141645326577698202, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 

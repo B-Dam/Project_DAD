@@ -53,6 +53,7 @@ public class CutsceneController : MonoBehaviour
 
     public void PlayVideo(string path, Action onEnd)
     {
+
         DialogueUIDisplayer.Instance.SetPreventBlink(true);
         isVideoPreparing = true;
 

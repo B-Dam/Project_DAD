@@ -170,6 +170,7 @@ public class CombatAnimationController : MonoBehaviour
                     case "마지막 발악":
                         enemyAnimator.SetTrigger("Enrage");
                         enemyAnimator.SetBool(ENRAGE_FLAG, true);
+                        AudioManager.Instance.PlaySFX("Battle/Awaken");
                         break;
                     default:
                         break;
@@ -360,7 +361,7 @@ public class CombatAnimationController : MonoBehaviour
     {
         if (prefab == null) return;
         var go = Instantiate(prefab, worldPos, Quaternion.identity);
-        
+
         // Animator 에서 재생 시간 가져오기
         float lifeTime = 0.5f; // 기본값
         var animator = go.GetComponent<Animator>();
