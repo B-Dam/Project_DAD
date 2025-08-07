@@ -1584,6 +1584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f734bd3a9eb4647b8f84eb9a515b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uIDisplayer: {fileID: 557819748028291771}
   dialoguePanel: {fileID: 1359079147115420780}
   dialogBoxBackgroundImage: {fileID: 5256915042434179580}
   speakerText: {fileID: 294455232816792661}

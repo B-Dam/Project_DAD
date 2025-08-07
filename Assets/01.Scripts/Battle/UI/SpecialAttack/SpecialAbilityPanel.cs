@@ -187,6 +187,8 @@ public class SpecialAbilityPanel : MonoBehaviour
         float screenW = Screen.width;
         float panelW  = cutscenePanel.rect.width;
 
+        AudioManager.Instance.PlaySFX("Battle/UseSpecialSkill");
+
         // 화면 왼쪽 바깥으로 위치
         cutscenePanel.anchoredPosition = new Vector2(-screenW - panelW, 0);
 
