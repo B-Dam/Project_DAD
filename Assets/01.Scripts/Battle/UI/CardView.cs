@@ -136,6 +136,7 @@ public class CardView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         handManager.isDraggingCard = true;
 
         // 클릭 시 카드와 포인터 간 오프셋 계산
+        AudioManager.Instance.PlaySFX("Battle/SelectCard");
         Vector2 localMouse;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             handManager.handContainer, eventData.position, canvas.worldCamera, out localMouse);

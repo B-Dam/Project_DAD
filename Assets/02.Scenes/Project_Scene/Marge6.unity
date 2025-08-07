@@ -1981,6 +1981,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingCanvas2
       objectReference: {fileID: 0}
+    - target: {fileID: 1712602560877550405, guid: afd0b594079bca945b0dc20c52fc33f5, type: 3}
+      propertyPath: questUI
+      value: 
+      objectReference: {fileID: 582621222291374331}
     - target: {fileID: 3723392298652144238, guid: afd0b594079bca945b0dc20c52fc33f5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2129,10 +2133,18 @@ PrefabInstance:
       propertyPath: fadeCanvas
       value: 
       objectReference: {fileID: 320469743}
+    - target: {fileID: 1549521151179197803, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_SortingOrder
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 1552472758416143729, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 
       objectReference: {fileID: 320469743}
+    - target: {fileID: 2044952789024499616, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2141645326577698202, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 

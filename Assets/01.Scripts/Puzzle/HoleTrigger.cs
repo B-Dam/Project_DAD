@@ -22,7 +22,7 @@ public class HoleTrigger : MonoBehaviour
             if (box != null)
             {
                 StartCoroutine(FillHoleDelayed(box)); // 박스가 구멍에 들어오면 구멍을 채움
-                AudioManager.Instance.PlaySFX("Puzzle/Puzzle_Box_drop");
+                AudioManager.Instance.PlaySFX("Puzzle/BoxDrop");
             }
         }
     }

@@ -12,6 +12,7 @@ public class BoomTrigger : MonoBehaviour
         {
             Time.timeScale = 0f;
             Debug.Log("Boom!");
+            AudioManager.Instance.PlaySFX("TouchTrap");
 
             if (canvas == null)
             {

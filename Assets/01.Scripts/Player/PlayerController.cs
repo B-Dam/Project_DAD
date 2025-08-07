@@ -295,7 +295,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            AudioManager.Instance.PlaySFX("Walk");
+            AudioManager.Instance.PlaySFX("PlayerWalk");
             yield return new WaitForSeconds(1f);
         }
     }

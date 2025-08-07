@@ -138,10 +138,12 @@ public class HintMode : MonoBehaviour
             else if (isInCooldown)
             {
                 Debug.Log(" 힌트는 아직 쿨타임 중입니다!");
+                AudioManager.Instance.PlaySFX("ImpossibleFeedback");
             }
             else
             {
                 Debug.Log(" 힌트는 더 이상 사용할 수 없습니다!");
+                AudioManager.Instance.PlaySFX("ImpossibleFeedback");
             }
         }
         else
