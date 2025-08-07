@@ -58,7 +58,7 @@ public class MapManager : MonoBehaviour
         }
 
         // ✅ 기본 BGM 설정 (처음 시작 시 필수)
-        AudioManager.Instance.PlayBGM("LostSouls");
+        AudioManager.Instance.PlayBGM("MapBGM");
 
     }
 
@@ -92,8 +92,8 @@ public class MapManager : MonoBehaviour
         {
             Debug.LogWarning("❗ CameraConfinerUpdater를 찾을 수 없습니다.");
         }
-        // 🎵 BGM 설정
-        string targetBGM = PuzzleManager.Instance.IsPuzzleMap(currentMapID) ? "Puzzle_Sound" : "LostSouls";
+        // BGM 설정
+        string targetBGM = PuzzleManager.Instance.IsPuzzleMap(currentMapID) ? "PuzzleMapBGM" : "MapBGM";
         if (AudioManager.Instance != null && AudioManager.Instance.currentBGMName != targetBGM)
         {
             AudioManager.Instance.PlayBGM(targetBGM);
