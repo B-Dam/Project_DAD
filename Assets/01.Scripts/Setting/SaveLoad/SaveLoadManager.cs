@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using System.Collections; 
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -69,20 +70,41 @@ public class SaveLoadManager : MonoBehaviour
 
     void RefreshAllSlots()
     {
-        // 슬롯 레이블 업데이트
-        for (int i = 0; i < saveSlots.Length; i++)
+        RefreshSaveSlots();
+        RefreshLoadSlots();
+    }
+    
+    void RefreshSaveSlots()
+    {
+        if (saveSlotLabels == null) return;
+
+        for (int i = 0; i < saveSlotLabels.Length; i++)
         {
-            var data = DataManager.GetSaveMetadata(i);
-            bool hasData = data != null;
-            saveSlotLabels[i].text = hasData
-                ? $"{data.timestamp:yyyy.MM.dd HH:mm}\n{data.chapterName} - {data.questName}"
-                : "No Data";
-            // 자동저장 슬롯(0번)은 Save 모드에서 비활성화
-            saveSlots[i].interactable = !(i == 0 && currentMode == Mode.Save);
-            
-            // Load 모드에선 데이터 없는 슬롯 비활성화
-            loadSlots[i].interactable = (currentMode == Mode.Load) ? hasData : false;
-            loadSlotLabels[i].text = saveSlotLabels[i].text;
+            bool hasData = SaveLoadManagerCore.Instance.HasSaveFile(i);
+            if (!hasData)
+            {
+                saveSlotLabels[i].text = "빈 슬롯";
+                continue;
+            }
+            var meta = DataManager.GetSaveMetadata(i);
+            saveSlotLabels[i].text = BuildSlotLabelText(meta);
+        }
+    }
+
+    void RefreshLoadSlots()
+    {
+        if (loadSlotLabels == null) return;
+
+        for (int i = 0; i < loadSlotLabels.Length; i++)
+        {
+            bool hasData = SaveLoadManagerCore.Instance.HasSaveFile(i);
+            if (!hasData)
+            {
+                loadSlotLabels[i].text = "빈 슬롯";
+                continue;
+            }
+            var meta = DataManager.GetSaveMetadata(i);   // ← 저장된 메타 그대로
+            loadSlotLabels[i].text = BuildSlotLabelText(meta);
         }
     }
 
@@ -100,11 +122,18 @@ public class SaveLoadManager : MonoBehaviour
     {
         // 다시 한 번 저장 대상( ISaveable )을 최신화
         SaveLoadManagerCore.Instance.RegisterSaveables();
+        
         // 실제 Save
         SaveLoadManagerCore.Instance.SaveGame(selectedSlotIndex);
         
-        saveConfirmPanel.SetActive(false);
+        // 메타 기록
+        DataManager.UpdateSaveMetadata(selectedSlotIndex);
+        
+        // 슬롯 라벨 즉시 갱신
         RefreshAllSlots();
+        
+        // 패널 닫기
+        saveConfirmPanel.SetActive(false);
     }
 
     void OnClickLoadSlot(int slotIndex)
@@ -122,5 +151,23 @@ public class SaveLoadManager : MonoBehaviour
         SaveLoadManagerCore.Instance.LoadGame(selectedSlotIndex);
         
         loadConfirmPanel.SetActive(false);
+        
+        StartCoroutine(RefreshAfterLoad());
+    }
+    
+    IEnumerator RefreshAfterLoad()
+    {
+        yield return null; // 1프레임
+        yield return null; // 2프레임 (안정성)
+        RefreshAllSlots();
+    }
+    
+    string BuildSlotLabelText(DataManager.SaveMetadata meta)
+    {
+        if (meta == null) return "No Data";
+        string time    = (meta.timestamp == DateTime.MinValue) ? "-" : meta.timestamp.ToString("yyyy.MM.dd HH:mm");
+        string chapter = string.IsNullOrEmpty(meta.chapterName) ? "-" : meta.chapterName;
+        string quest   = string.IsNullOrEmpty(meta.questName)   ? "-" : meta.questName;
+        return $"{time}\n{chapter} - {quest}";
     }
 }

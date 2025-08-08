@@ -132,14 +132,15 @@ public class MapTransition : MonoBehaviour
 
         // ✅ 2. 카메라 줌 연출
         Camera cam = Camera.main;
-        float originalSize = cam.orthographicSize;
+        //float originalSize = cam.orthographicSize;
+        float originalSize = (virtualCam != null) ? virtualCam.Lens.OrthographicSize : (cam != null ? cam.orthographicSize : 5f);
         yield return StartCoroutine(ZoomCamera(originalSize, originalSize * 0.5f, 0.5f)); // 줌 인
 
         // ✅ 3. 플레이어 위치 이동 + 카메라도 바로 이동
         if (destinationPoint != null && player != null)
         {
             player.transform.position = destinationPoint.position;
-            cam.transform.position = new Vector3(destinationPoint.position.x, destinationPoint.position.y, cam.transform.position.z);
+            //cam.transform.position = new Vector3(destinationPoint.position.x, destinationPoint.position.y, cam.transform.position.z);
             Debug.Log($"➡ {player.name} 이동 완료: {destinationPoint.position}");
 
             // 체크된 경우에만 위치 저장

@@ -1,79 +1,108 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class HoleTrigger : MonoBehaviour
 {
-    private bool isFalled = false;
-    [SerializeField] private GameObject holeCoverPrefab; // 구멍이 채워졌을 때 표시할 커버
+    [Header("플레이어 차단 오브젝트(선택)")]
     [SerializeField] private GameObject playerBlock;
-    private Collider2D holeCollider;
-    private static readonly HashSet<int> ClaimedBoxes = new(); // 박스 선점 테이블
-    private void Start()
+
+    [Header("트리거 콜라이더 (비워두면 자동탐색)")]
+    [SerializeField] private Collider2D holeCollider;
+
+    // 런타임 상태
+    private bool isFalled;
+    private int? lastConsumedBoxId;
+
+    // 부모 HoleSave (상태 갱신용)
+    private HoleSave holeSave;
+
+    private void Awake()
     {
-        holeCollider = GetComponent<Collider2D>();
-        holeCollider.isTrigger = true; // 구멍은 트리거로 설정
+        if (!holeCollider)
+            holeCollider = GetComponent<Collider2D>() ?? GetComponentInChildren<Collider2D>(true);
 
+        holeSave = GetComponentInParent<HoleSave>();
     }
-    private void OnTriggerStay2D(Collider2D other)
+
+#if UNITY_EDITOR
+    private void OnValidate()
     {
-        if (isFalled) return; // 이미 구멍에 빠졌다면 무시
-        if (!other.CompareTag("Box")) return;
-
-        BoxPush box = other.GetComponent<BoxPush>();
-        if (box == null) return;
-        int boxId = other.GetInstanceID();
-
-        //박스 선점: 이미 다른 구멍이 처리 중이면 무시
-        if (!ClaimedBoxes.Add(boxId)) return;
-
-
-        StartCoroutine(FillHoleDelayed(box)); // 박스가 구멍에 들어오면 구멍을 채움
-        AudioManager.Instance.PlaySFX("Puzzle/BoxDrop");
-
-
+        if (!holeCollider)
+            holeCollider = GetComponent<Collider2D>() ?? GetComponentInChildren<Collider2D>(true);
     }
-    //bool IsFullyInside(Collider2D outer, Collider2D inner)
-    //{
-    //    //지정된 좌표가 outer 콜라이더의 경계 안에 포함되어 있는지 확인
-    //    return outer.bounds.Contains(inner.bounds.min) &&//inner 콜라이더의 좌하단 꼭짓점 좌표
-    //           outer.bounds.Contains(inner.bounds.max);//inner 콜라이더의 우상단 꼭짓점 좌표
-    //}
+#endif
+
+    private void OnEnable()  => EnsureTriggerEnabled();
+    private void Start()     => EnsureTriggerEnabled();
+
+    private void EnsureTriggerEnabled()
+    {
+        if (!holeCollider) return;
+        holeCollider.isTrigger = true;
+        if (!isFalled) holeCollider.enabled = true; // 빈 상태면 켬
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) => TryHandle(other);
+    private void OnTriggerStay2D(Collider2D other)  => TryHandle(other);
+
+    public void TryHandleExternal(Collider2D other) => TryHandle(other); // 필요 시 자식 리레이용
+
+    private void TryHandle(Collider2D other)
+    {
+        if (isFalled) return;
+
+        var boxPush = other.GetComponentInParent<BoxPush>();
+        if (!boxPush) return;
+
+        var rb = other.attachedRigidbody;
+        if (!rb) return;
+
+        // 같은 박스가 여러 콜라이더로 들어와도 1회만 처리
+        int boxId = rb.GetInstanceID();
+        if (lastConsumedBoxId.HasValue && lastConsumedBoxId.Value == boxId) return;
+        lastConsumedBoxId = boxId;
+
+        StartCoroutine(FillHoleDelayed(boxPush));
+        AudioManager.Instance?.PlaySFX("Puzzle/BoxDrop");
+    }
+
+    /// <summary>세이브 로드 직후, HoleSave에서 호출</summary>
+    public void ResetRuntime(bool hasCover)
+    {
+        isFalled = hasCover;
+
+        if (!holeCollider)
+            holeCollider = GetComponent<Collider2D>() ?? GetComponentInChildren<Collider2D>(true);
+
+        if (holeCollider)
+        {
+            holeCollider.isTrigger = true;
+            holeCollider.enabled   = !hasCover;
+        }
+
+        if (playerBlock) playerBlock.SetActive(!hasCover);
+
+        lastConsumedBoxId = null;
+    }
+
     private IEnumerator FillHoleDelayed(BoxPush box)
     {
-        yield return null; // 한 프레임 대기
+        yield return null;
         FillHole(box);
     }
 
     private void FillHole(BoxPush box)
     {
-        isFalled = true; // 구멍에 빠졌음을 표시
-        //holeCollider.isTrigger = false; // 구멍의 트리거를 비활성화
-        holeCollider.enabled = false; // 구멍의 충돌을 비활성화
+        isFalled = true;
 
+        if (holeCollider) holeCollider.enabled = false;
+        if (playerBlock)  playerBlock.SetActive(false);
 
+        // 커버 생성/삭제 책임은 HoleSave가 담당
+        holeSave?.SetHasCover(true);
 
-        Transform parent = transform.parent;
-
-
-        if (holeCoverPrefab != null)
-            Instantiate(holeCoverPrefab, transform.position, Quaternion.identity, parent ? parent : null);
-
-        if (playerBlock != null)
-            playerBlock.SetActive(false);
-
-        if (box != null)
-            box.gameObject.SetActive(false);
-        //if (holeCoverPrefab != null && parent != null)
-        //{
-        //    Instantiate(holeCoverPrefab, transform.position, Quaternion.identity, parent);
-        //}
-        //else
-        //{
-        //    // 예외 처리: 부모 없으면 그냥 생성
-        //    Instantiate(holeCoverPrefab, transform.position, Quaternion.identity);
-        //}
-        //playerBlock.SetActive(false); // 플레이어 블록 활성화
-        //box.gameObject.SetActive(false); // 박스를 비활성화
+        // 박스 비활성
+        if (box) box.gameObject.SetActive(false);
     }
 }

@@ -1,44 +1,37 @@
-using System;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+using System.Linq;
+#endif
 
-[ExecuteAlways]
+[DisallowMultipleComponent]
 public class UniqueID : MonoBehaviour
 {
-    [SerializeField, HideInInspector]
-    private string uniqueId;
-
-    public string ID
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(uniqueId))
-                Generate();
-            return uniqueId;
-        }
-    }
-
-    private void Awake()
-    {
-        // 런타임에도 ID가 없으면 생성
-        if (string.IsNullOrEmpty(uniqueId))
-            Generate();
-    }
+    [SerializeField, HideInInspector] private string id;
+    public string ID => id;
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        // 에디터에서 붙이거나 복제할 때 ID가 비어 있으면 생성
-        if (string.IsNullOrEmpty(uniqueId))
-            Generate();
+        if (Application.isPlaying) return;
+
+        if (string.IsNullOrEmpty(id) || IsDuplicate(id))
+        {
+            id = System.Guid.NewGuid().ToString("N");
+            EditorUtility.SetDirty(this);
+        }
+    }
+
+    private bool IsDuplicate(string value)
+    {
+        var all = Object.FindObjectsOfType<UniqueID>(true);
+        return all.Any(u => u != this && u.id == value);
     }
 #endif
 
-    private void Generate()
+    private void Awake()
     {
-        uniqueId = Guid.NewGuid().ToString();
-#if UNITY_EDITOR
-        // 에디터 변경 저장
-        UnityEditor.EditorUtility.SetDirty(this);
-#endif
+        if (string.IsNullOrEmpty(id))
+            id = System.Guid.NewGuid().ToString("N");
     }
 }

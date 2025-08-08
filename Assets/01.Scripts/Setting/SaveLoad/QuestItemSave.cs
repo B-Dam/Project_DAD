@@ -1,42 +1,44 @@
 using System;
 using UnityEngine;
 
-// 저장할 데이터
 [Serializable]
 public struct QuestItemData
 {
     public bool isActive;
+    public Vector3 position;
 }
 
+[RequireComponent(typeof(UniqueID))]
 public class QuestItemSave : MonoBehaviour, ISaveable
 {
-    UniqueID idComp;
-
-    private void Awake()
+    private UniqueID idComp;
+    public string UniqueID
     {
-        idComp = GetComponent<UniqueID>();
-    }
-
-    // ISaveable.UniqueID 구현
-    public string UniqueID => idComp.ID;
-
-
-    // 저장할 때 호출: 활성화 상태만 담아서 반환
-    public object CaptureState()
-    {
-        return new QuestItemData
+        get
         {
-            isActive = gameObject.activeSelf
-        };
+            if (idComp == null)
+            {
+                idComp = GetComponent<UniqueID>();
+                if (idComp == null) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
+            }
+            return idComp.ID;
+        }
     }
 
-    // 로드할 때 호출: JSON 문자열을 구조체로 파싱 후 복원
+    public object CaptureState() => new QuestItemData
+    {
+        isActive = gameObject.activeSelf,
+        position = transform.position
+    };
+
     public void RestoreState(object state)
     {
-        var json = state as string;
-        if (string.IsNullOrEmpty(json)) return;
-
+        var json = state as string; if (string.IsNullOrEmpty(json)) return;
         var data = JsonUtility.FromJson<QuestItemData>(json);
-        gameObject.SetActive(data.isActive);
+
+        if (gameObject.activeSelf != data.isActive)
+            gameObject.SetActive(data.isActive);
+
+        transform.position = data.position;
     }
 }

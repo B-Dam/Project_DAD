@@ -1,74 +1,156 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public struct HoleData
+[DisallowMultipleComponent]
+[RequireComponent(typeof(UniqueID))]
+public class HoleSave : MonoBehaviour, ISaveable, IPostLoad
 {
-    public bool hasCover;       // 커버(분다)가 있는지
-    public bool blockerActive;  // PlayerBlocker의 활성화 여부
-}
+    [Serializable]
+    private struct HoleData { public bool hasCover; }
 
-public class HoleSave : MonoBehaviour, ISaveable
-{
-    UniqueID idComp;
+    [Header("자식 트리거(비워두면 자동탐색)")]
+    [SerializeField] private HoleTrigger targetTrigger;
+
+    [Header("커버 프리팹 (필수)")]
+    [SerializeField] private GameObject holeCoverPrefab;
+
+    [Header("세이브 상태")]
+    [SerializeField] private bool hasCover;   // 채워진 상태로 저장되었는지
+    public bool HasCover => hasCover;
+
+    // ISaveable 고유 ID
+    private UniqueID idComp;
+    public string UniqueID
+    {
+        get
+        {
+            if (!idComp && !TryGetComponent(out idComp))
+            {
+                Debug.LogError($"[HoleSave] UniqueID 누락: {name}", this);
+                return null;
+            }
+            return idComp.ID;
+        }
+    }
 
     private void Awake()
     {
-        idComp = GetComponent<UniqueID>();
+        if (!idComp) TryGetComponent(out idComp);
+        if (!targetTrigger)
+            targetTrigger = GetComponentInChildren<HoleTrigger>(true);
     }
 
-    // ISaveable.UniqueID 구현
-    public string UniqueID => idComp.ID;
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (!idComp && !TryGetComponent(out idComp))
+            idComp = gameObject.AddComponent<UniqueID>();
 
-    [Header("프리팹 & 자식 이름 설정")]
-    [Tooltip("Instantiate할 HoleCover 프리팹")]
-    [SerializeField] private GameObject holeCoverPrefab;
-    [Tooltip("Hierarchy 상 복사된 HoleCover 오브젝트 이름")]
-    [SerializeField] private string holeCoverName = "HoleCover";
-    [Tooltip("PlayerBlocker 오브젝트 (자식)를 드래그해서 할당")]
-    [SerializeField] private GameObject playerBlocker;
+        if (!targetTrigger)
+            targetTrigger = GetComponentInChildren<HoleTrigger>(true);
 
-    // 저장할 데이터를 구조체로 반환
+        if (!holeCoverPrefab)
+            Debug.LogWarning($"[HoleSave] holeCoverPrefab 미할당: {name}", this);
+    }
+#endif
+
+    // ---------- Save / Load ----------
+
     public object CaptureState()
     {
-        bool hasCover = transform.Find(holeCoverName) != null;
-        bool blockerActive = playerBlocker != null && playerBlocker.activeSelf;
-
-        return new HoleData
-        {
-            hasCover      = hasCover,
-            blockerActive = blockerActive
-        };
+        return JsonUtility.ToJson(new HoleData { hasCover = hasCover });
     }
 
-    // 로드시 JSON 문자열을 파싱해 상태 복원
     public void RestoreState(object state)
     {
         var json = state as string;
-        if (string.IsNullOrEmpty(json)) return;
-
-        var data = JsonUtility.FromJson<HoleData>(json);
-
-        // 1) HoleCover 처리
-        var existingCover = transform.Find(holeCoverName);
-        if (data.hasCover)
+        if (!string.IsNullOrEmpty(json))
         {
-            // 커버가 있어야 하는데 없으면 Instantiate
-            if (existingCover == null && holeCoverPrefab != null)
-            {
-                var cover = Instantiate(holeCoverPrefab, transform);
-                cover.name = holeCoverName;
-            }
+            var data = JsonUtility.FromJson<HoleData>(json);
+            hasCover = data.hasCover;
+        }
+        // 실제 적용은 OnPostLoad에서
+    }
+
+    public void OnPostLoad()
+    {
+        if (!targetTrigger)
+            targetTrigger = GetComponentInChildren<HoleTrigger>(true);
+
+        if (targetTrigger)
+        {
+            // 트리거/블로커 상태 동기화
+            targetTrigger.ResetRuntime(hasCover);
+            // 커버 생성/삭제 보정
+            EnsureCover(hasCover);
         }
         else
         {
-            // 커버가 없어야 하는데 있으면 파괴
-            if (existingCover != null)
-                Destroy(existingCover.gameObject);
+            Debug.LogError($"[HoleSave] 자식에서 HoleTrigger를 찾지 못했습니다: {name}", this);
+        }
+    }
+
+    // 런타임에서 상태 변경 시 호출(트리거에서 호출)
+    public void SetHasCover(bool value)
+    {
+        hasCover = value;
+        EnsureCover(hasCover);
+    }
+
+    // ---------- 커버 관리 ----------
+
+    // 커버는 항상 이 부모(Hole)의 직속 자식으로 관리
+    private Vector3 ResolveCoverPosition()
+    {
+        return targetTrigger ? targetTrigger.transform.position : transform.position;
+    }
+
+    private List<GameObject> FindExistingCovers()
+    {
+        var list = new List<GameObject>();
+        string key = holeCoverPrefab ? holeCoverPrefab.name : "HoleCover";
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+            var n = child.name;
+            if (n.StartsWith(key, StringComparison.OrdinalIgnoreCase) ||
+                n.IndexOf("HoleCover", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                list.Add(child.gameObject);
+            }
+        }
+        return list;
+    }
+
+    private void EnsureCover(bool needCover)
+    {
+        var covers = FindExistingCovers();
+
+        if (!needCover)
+        {
+            // 없어야 하면 전부 제거
+            for (int i = 0; i < covers.Count; i++)
+                if (covers[i]) Destroy(covers[i]);
+            return;
         }
 
-        // 2) PlayerBlocker 처리
-        if (playerBlocker != null)
-            playerBlocker.SetActive(data.blockerActive);
+        // 있어야 하면 1개 보장
+        if (covers.Count == 0)
+        {
+            if (!holeCoverPrefab)
+            {
+                Debug.LogWarning($"[HoleSave] holeCoverPrefab이 비어 있어 커버를 생성할 수 없습니다: {name}", this);
+                return;
+            }
+            var go = Instantiate(holeCoverPrefab, ResolveCoverPosition(), Quaternion.identity, transform);
+            // go.name = holeCoverPrefab.name; // 원하면 이름 고정
+        }
+        else if (covers.Count > 1)
+        {
+            for (int i = 1; i < covers.Count; i++)
+                if (covers[i]) Destroy(covers[i]);
+        }
     }
 }
