@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HoleTrigger : MonoBehaviour
@@ -7,6 +8,7 @@ public class HoleTrigger : MonoBehaviour
     [SerializeField] private GameObject holeCoverPrefab; // 구멍이 채워졌을 때 표시할 커버
     [SerializeField] private GameObject playerBlock;
     private Collider2D holeCollider;
+    private static readonly HashSet<int> ClaimedBoxes = new(); // 박스 선점 테이블
     private void Start()
     {
         holeCollider = GetComponent<Collider2D>();
@@ -16,15 +18,20 @@ public class HoleTrigger : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         if (isFalled) return; // 이미 구멍에 빠졌다면 무시
-        if (other.CompareTag("Box"))//&& IsFullyInside(other, holeCollider)
-        {
-            BoxPush box = other.GetComponent<BoxPush>();
-            if (box != null)
-            {
-                StartCoroutine(FillHoleDelayed(box)); // 박스가 구멍에 들어오면 구멍을 채움
-                AudioManager.Instance.PlaySFX("Puzzle/BoxDrop");
-            }
-        }
+        if (!other.CompareTag("Box")) return;
+
+        BoxPush box = other.GetComponent<BoxPush>();
+        if (box == null) return;
+        int boxId = other.GetInstanceID();
+
+        //박스 선점: 이미 다른 구멍이 처리 중이면 무시
+        if (!ClaimedBoxes.Add(boxId)) return;
+
+
+        StartCoroutine(FillHoleDelayed(box)); // 박스가 구멍에 들어오면 구멍을 채움
+        AudioManager.Instance.PlaySFX("Puzzle/BoxDrop");
+
+
     }
     //bool IsFullyInside(Collider2D outer, Collider2D inner)
     //{
@@ -48,22 +55,25 @@ public class HoleTrigger : MonoBehaviour
 
         Transform parent = transform.parent;
 
-        //  Destroy된 오브젝트 보호
-        if (parent != null && parent.gameObject == null)
-        {
-            parent = null;
-        }
 
-        if (holeCoverPrefab != null && parent != null)
-        {
-            Instantiate(holeCoverPrefab, transform.position, Quaternion.identity, parent);
-        }
-        else
-        {
-            // 예외 처리: 부모 없으면 그냥 생성
-            Instantiate(holeCoverPrefab, transform.position, Quaternion.identity);
-        }
-        playerBlock.SetActive(false); // 플레이어 블록 활성화
-        box.gameObject.SetActive(false); // 박스를 비활성화
+        if (holeCoverPrefab != null)
+            Instantiate(holeCoverPrefab, transform.position, Quaternion.identity, parent ? parent : null);
+
+        if (playerBlock != null)
+            playerBlock.SetActive(false);
+
+        if (box != null)
+            box.gameObject.SetActive(false);
+        //if (holeCoverPrefab != null && parent != null)
+        //{
+        //    Instantiate(holeCoverPrefab, transform.position, Quaternion.identity, parent);
+        //}
+        //else
+        //{
+        //    // 예외 처리: 부모 없으면 그냥 생성
+        //    Instantiate(holeCoverPrefab, transform.position, Quaternion.identity);
+        //}
+        //playerBlock.SetActive(false); // 플레이어 블록 활성화
+        //box.gameObject.SetActive(false); // 박스를 비활성화
     }
 }
