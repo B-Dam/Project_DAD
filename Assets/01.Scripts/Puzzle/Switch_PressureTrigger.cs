@@ -22,6 +22,7 @@ public class Switch_PressureTrigger : MonoBehaviour
             IsFullyInside(switchCollider, other)) // 순서: 스위치가 대상 안에 있는가?
         {
             Debug.Log(" 스위치가 대상 안에 완전히 들어옴 → 문 열기");
+            AudioManager.Instance.PlaySFX("PushSwitch");
 
             OpenDoor();
 
@@ -46,14 +47,37 @@ public class Switch_PressureTrigger : MonoBehaviour
             isActivated = false;
         }
     }
+    //private void OpenDoor()
+    //{
+    //    if (targetA != null)
+    //        targetA.SetActive(false);
+
+    //    AudioManager.Instance.PlaySFX("DoorOpen");
+
+    //    if (targetB != null && instantiatedOpenDoor == null)
+    //    {
+    //        instantiatedOpenDoor = Instantiate(targetB, targetA.transform.position, targetB.transform.rotation);//Quaternion.identity회전없는상태
+    //    }
+    //}
     private void OpenDoor()
     {
-        if (targetA != null)
-            targetA.SetActive(false);
+       
 
         if (targetB != null && instantiatedOpenDoor == null)
         {
-            instantiatedOpenDoor = Instantiate(targetB, targetA.transform.position, targetB.transform.rotation);//Quaternion.identity회전없는상태
+            // 카메라 연출과 함께 프리팹 생성
+            CameraEventPlayer.Instance.PlayCameraSequence(
+                targetA.transform,
+                1f,
+                1f,
+                () =>
+                {
+                    if (targetA != null)
+                        targetA.SetActive(false);
+                    instantiatedOpenDoor = Instantiate(targetB, targetA.transform.position, targetB.transform.rotation);
+                    AudioManager.Instance.PlaySFX("Puzzle/Door-metal");
+                }
+            );
         }
     }
     private void CloseDoor()

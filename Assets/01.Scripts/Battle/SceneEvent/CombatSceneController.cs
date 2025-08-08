@@ -122,7 +122,7 @@ public class CombatSceneController : MonoBehaviour
         }
 
         currentEnvironment = candidates[Random.Range(0, candidates.Count)];
-        
+
         // 화면 왼쪽 아이콘 & 툴팁 세팅
         RefreshEnvironmentUI();
     }
@@ -161,6 +161,19 @@ public class CombatSceneController : MonoBehaviour
         seq.AppendCallback(() =>
         {
             CombatManager.Instance.SetEnvironmentEffect(currentEnvironment);
+
+            if (currentEnvironment.effectId == "wind")
+            {
+                AudioManager.Instance.PlayBGM("WindyBattleBGM");
+            }
+            else if (currentEnvironment.effectId == "rain")
+            {
+                AudioManager.Instance.PlayBGM("RainningBattleBGM");
+            }
+            else if (currentEnvironment.effectId == "fog")
+            {
+                AudioManager.Instance.PlayBGM("BattleMapBGM");
+            }
         });
         seq.AppendCallback(() =>
         {

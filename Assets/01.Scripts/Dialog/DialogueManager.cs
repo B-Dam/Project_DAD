@@ -121,7 +121,7 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/Video/"))
+        if (!string.IsNullOrEmpty(line.spritePath) && line.spritePath.StartsWith("Cutscenes/"))
         {
             DialogueUIDisplayer.Instance.StopBlinkUX();
             DialogueUIDisplayer.Instance.HidePanel();
@@ -172,6 +172,7 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = true;
         dialogueStartTime = Time.time;
 
+        DialogueUIDisplayer.Instance.uIDisplayer.SetActive(true);
         DialogueUIDisplayer.Instance.ShowPanel();
         QuestGuideUI.Instance.questUI.SetActive(true);
 
@@ -221,7 +222,7 @@ public class DialogueManager : MonoBehaviour
 
         if (CutsceneDialogueUI.Instance.TryDisplayBlackPanelDialogue(nextID)) return;
 
-        if (!string.IsNullOrEmpty(nextLine?.spritePath) && nextLine.spritePath.StartsWith("Cutscenes/Video/"))
+        if (!string.IsNullOrEmpty(nextLine?.spritePath) && nextLine.spritePath.StartsWith("Cutscenes/"))
         {
             StartCoroutine(CutsceneController.Instance.EndAfterFadeInOut(true, () => { DisplayCurrentLine(); }, true));
             return;

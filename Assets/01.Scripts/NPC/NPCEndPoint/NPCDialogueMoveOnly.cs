@@ -60,7 +60,8 @@ public class NPCDialogueMoveOnly : MonoBehaviour
         {
             if (obj == null) continue;
 
-            Collider col = obj.GetComponent<Collider>();
+            Collider2D col = obj.GetComponent<Collider2D>();
+
             if (col != null)
             {
                 col.enabled = false; // 충돌 비활성화

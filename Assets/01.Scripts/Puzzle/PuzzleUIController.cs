@@ -10,13 +10,22 @@ public class PuzzleUIController : MonoBehaviour
             puzzleUICanvas.SetActive(false);
     }
 
-    // ⬇ 외부에서 직접 호출되는 메서드
-    public void HandleFadeComplete()
+
+    private void OnEnable()
+    {
+        MapTransition.OnMapTransitionComplete += OnMapTransitionComplete;
+    }
+
+    private void OnDisable()
+    {
+        MapTransition.OnMapTransitionComplete -= OnMapTransitionComplete;
+    }
+    private void OnMapTransitionComplete()
     {
         string currentMapID = MapManager.Instance.currentMapID;
-        bool shouldShow = (PuzzleManager.Instance.IsPuzzleMap(currentMapID));
+        bool isPuzzle = PuzzleManager.Instance.IsPuzzleMap(currentMapID);
 
-        Debug.Log(" 퍼즐 UI 표시 여부: " + shouldShow);
-        puzzleUICanvas.SetActive(shouldShow);
+        // UI On/Off는 자동 처리하고 싶으면 여기서 SetActive도 가능
+        puzzleUICanvas.SetActive(isPuzzle);
     }
 }

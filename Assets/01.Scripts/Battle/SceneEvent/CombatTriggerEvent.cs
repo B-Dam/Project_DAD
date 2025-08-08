@@ -62,9 +62,7 @@ public class CombatTriggerEvent : MonoBehaviour
             if (battle.IsValid())
                 SceneManager.SetActiveScene(battle);
             CombatManager.Instance.IsInCombat = true;
-            AudioManager.Instance.PlayBGM("Battle_Sound");
         };
-
         return;
     }
 
@@ -72,7 +70,7 @@ public class CombatTriggerEvent : MonoBehaviour
     public void OnBattleEnd()
     {
         StartCoroutine(UnloadBattleSceneRoutine());
-        AudioManager.Instance.PlayBGM("LostSouls");
+        AudioManager.Instance.PlayBGM("MapBGM");
     }
 
     private IEnumerator UnloadBattleSceneRoutine()

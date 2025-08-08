@@ -12,11 +12,12 @@ public class BoomTrigger : MonoBehaviour
         {
             Time.timeScale = 0f;
             Debug.Log("Boom!");
+            AudioManager.Instance.PlaySFX("TouchTrap");
 
             if (canvas == null)
             {
                 //canvas = FindFirstObjectByType<Canvas>();
-                canvas = GameObject.Find("UICanvas")?.GetComponent<Canvas>();
+                canvas = GameObject.Find("PuzzleUICanvas")?.GetComponent<Canvas>();
                 if (canvas == null)
                 {
                     Debug.LogError(" Canvas를 찾을 수 없습니다!");

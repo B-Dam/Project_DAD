@@ -9,6 +9,7 @@ public class DialogueUIDisplayer : MonoBehaviour
     public static DialogueUIDisplayer Instance;
 
     [Header("UI 컴포넌트")]
+    public GameObject uIDisplayer;
     public GameObject dialoguePanel;
     public Image dialogBoxBackgroundImage;
     public TextMeshProUGUI speakerText;
@@ -172,7 +173,7 @@ public class DialogueUIDisplayer : MonoBehaviour
 
     private void HandleCutsceneImage(string path, bool shake)
     {
-        bool isSpriteCutscene = !string.IsNullOrEmpty(path) && !path.StartsWith("Cutscenes/Video/");
+        bool isSpriteCutscene = !string.IsNullOrEmpty(path) && !path.StartsWith("Cutscenes/");
         if (!isSpriteCutscene)
         {
             Sprite sprite = Resources.Load<Sprite>(path);

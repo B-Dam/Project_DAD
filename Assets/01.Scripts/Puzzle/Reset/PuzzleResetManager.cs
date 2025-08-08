@@ -3,12 +3,11 @@ using UnityEngine.UI;
 
 public class PuzzleResetManager : MonoBehaviour
 {
-    private HintMode hintMode;
     public Button resetButton;
 
     void Start()
     {
-        hintMode = Object.FindFirstObjectByType<HintMode>();
+        //hintMode = Object.FindFirstObjectByType<HintMode>();
         if (resetButton != null)
         {
             resetButton.onClick.AddListener(ResetPuzzle);
@@ -27,7 +26,7 @@ public class PuzzleResetManager : MonoBehaviour
             BoxPush[] allBoxes = Object.FindObjectsByType<BoxPush>(FindObjectsSortMode.None);
             foreach (var box in allBoxes)
             {
-                box.ForceStop(); 
+                box.ForceStop();
             }
 
             ResetPuzzle();
@@ -35,16 +34,28 @@ public class PuzzleResetManager : MonoBehaviour
     }
     public void ResetPuzzle()
     {
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) return;
+        var controller = player.GetComponent<PlayerController>();
+        if (controller == null || Time.timeScale == 0f || !PlayerController.Instance.CanMove())
+        {
+            return; // 플레이어가 비활성화 상태면 리셋 취소
+        }
+        string currentMapID = MapManager.Instance.currentMapID;
         Time.timeScale = 1f; // 시간 스케일을 원래대로 복원 
-        var resettableObjects = Object.FindObjectsByType<PuzzleResettable>(FindObjectsSortMode.None);
+        var resettableObjects = FindObjectsByType<PuzzleResettable>(FindObjectsSortMode.None);
         foreach (var obj in resettableObjects)
         {
-            obj.ResetState();
+            //obj.ResetPuzzleState(currentMapID);
+            if (obj.mapID == "Map" + currentMapID) // 현재 맵에 속한 오브젝트만
+            {
+                obj.ResetPuzzleState(currentMapID);
+            }
         }
 
         var playerResettable = Object.FindFirstObjectByType<PuzzlePlayerResettable>();
-        playerResettable.ResetState();
-        hintMode.ForceResetHintState();
+        playerResettable.ResetPlayerState(currentMapID);
+        PuzzleHintManager.Instance?.DeactivateHint(); // 힌트 비활성화
         Debug.Log("퍼즐 상태 리셋 완료");
     }
 

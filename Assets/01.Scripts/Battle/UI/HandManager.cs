@@ -195,9 +195,9 @@ public class HandManager : MonoBehaviour
         // CardView 생성 및 초기화
         var go = Instantiate(cardPrefab, handContainer);
         var cv = go.GetComponent<CardView>();
-
         cv.Initialize(data, this, enemyDropZone);
-        
+        AudioManager.Instance.PlaySFX("Battle/DrawCard");
+
         // RectTransform 가져오기
         var rt = cv.Rect;
         
@@ -412,7 +412,7 @@ public class HandManager : MonoBehaviour
         if (count == 0) return;
 
         DOTween.Kill("Layout");
-        
+
         float totalW = count * cardWidth + (count - 1) * spacing;
         float startX = -totalW / 2f + cardWidth / 2f;
 

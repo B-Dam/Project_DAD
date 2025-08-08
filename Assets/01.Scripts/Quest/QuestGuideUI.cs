@@ -49,7 +49,7 @@ public class QuestGuideUI : MonoBehaviour
 
             if (newText != currentDisplayedQuestName)
             {
-                AudioManager.Instance.PlaySFX("Quest_signal");
+                AudioManager.Instance.PlaySFX("QuestSignal");
             }
 
             guideText.text = newText;

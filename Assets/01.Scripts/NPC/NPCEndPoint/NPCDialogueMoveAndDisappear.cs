@@ -136,7 +136,8 @@ public class NPCDialogueMoveAndDisappear : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        npc.Destroy(); // 멈춤 처리
+        //npc.Destroy(); // 멈춤 처리
+        //npc.gameObject.SetActive(false);
         Debug.Log($" {obj.name} 이동 완료: {targetPos}");
 
     }
