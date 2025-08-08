@@ -106,80 +106,6 @@ public class DataManager : MonoBehaviour
             Debug.LogError($"GetCard 실패: '{displayName}' rank={rank} 카드가 없습니다.");
         return card;
     }
-
-    // 메타 정보만 불러오기
-    public static SaveMetadata GetSaveMetadata(int slot)
-    {
-        string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
-        if (!PlayerPrefs.HasKey(key + "_Timestamp")) return null;
-
-        long ticks = Convert.ToInt64(PlayerPrefs.GetString(key + "_Timestamp"));
-        var meta = new SaveMetadata
-        {
-            timestamp = new DateTime(ticks),
-            chapterName = PlayerPrefs.GetString(key + "_Chapter"),
-            questName = PlayerPrefs.GetString(key + "_Quest")
-        };
-        return meta;
-    }
-
-    // 실제 저장
-    public static void SaveGame(int slot)
-    {
-        string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
-
-        // 메타 정보 저장
-        PlayerPrefs.SetString(key + "_Timestamp", DateTime.Now.Ticks.ToString());
-        PlayerPrefs.SetString(key + "_Chapter", CurrentChapterName());
-        PlayerPrefs.SetString(key + "_Quest",   CurrentQuestName());
-        
-        // 씬 이름 저장
-        PlayerPrefs.SetString(key + "_Scene", SceneManager.GetActiveScene().name);
-
-        // ISaveable 수집
-        var dict = new Dictionary<string, string>();
-        var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
-        foreach (var s in saveables)
-            dict[s.UniqueID] = JsonUtility.ToJson(s.CaptureState());
-
-        // 래퍼로 직렬화
-        var wrapper = new JsonDictWrapper(dict);
-        PlayerPrefs.SetString(key + "_Data", JsonUtility.ToJson(wrapper));
-        PlayerPrefs.Save();
-    }
-
-
-    // 불러오기
-    public static void LoadGame(int slot)
-    {
-        string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
-        
-        //  메타, 딕셔너리 불러오기
-        string json = PlayerPrefs.GetString(key + "_Data", "{}");
-        var wrapper = JsonUtility.FromJson<JsonDictWrapper>(json);
-        var dict = wrapper.ToDictionary();
-        
-        // 저장된 씬 이름 불러오기
-        string sceneName = PlayerPrefs.GetString(key + "_Scene", SceneManager.GetActiveScene().name);
-
-        // 씬 전환 후에 복원 실행
-          if (Instance != null)
-              Instance.StartCoroutine(Instance.LoadSceneAndRestore(sceneName, dict));
-    }
-    
-    private IEnumerator LoadSceneAndRestore(string sceneName, Dictionary<string,string> dict)
-    {
-        // 비동기 씬 로드
-        var op = SceneManager.LoadSceneAsync(sceneName);
-        yield return op;
-        
-        yield return null; // 씬 로드 이후 한 프레임 대기
-
-        // 모든 ISaveable에게 RestoreState 호출
-        foreach (var s in FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>())
-            if (dict.TryGetValue(s.UniqueID, out var stateJson))
-                s.RestoreState(stateJson);
-    }
     
     // JSON 직렬화를 위해 Dictionary<string,string>을 List 로 래핑
     [Serializable]
@@ -246,5 +172,64 @@ public class DataManager : MonoBehaviour
 
         // 있으면 퀘스트 이름 반환, 없으면 빈 문자열
         return active != null ? active.questName : string.Empty;
+    }
+    
+    public static void UpdateSaveMetadata(int slot)
+    {
+        string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
+        PlayerPrefs.SetString(key + "_Timestamp", DateTime.Now.Ticks.ToString());
+
+        // 1) QuestGuideUI에 보이는 텍스트 우선 사용
+        string uiQuest = null;
+        if (QuestGuideUI.Instance != null && QuestGuideUI.Instance.guideText != null)
+        {
+            // 최신 상태 보장
+            QuestGuideUI.Instance.RefreshQuest();
+
+            uiQuest = QuestGuideUI.Instance.guideText.text;
+        }
+
+        string chapter = string.Empty;
+        string quest   = string.Empty;
+
+        if (!string.IsNullOrEmpty(uiQuest))
+        {
+            // 동일한 퀘스트명을 questTable에서 찾아 챕터까지 매핑
+            var row = Instance?.questTable?.Values?
+                .FirstOrDefault(q => q.questName == uiQuest);
+
+            if (row != null)
+            {
+                chapter = row.chapterName;
+                quest   = row.questName;   // UI와 동일
+            }
+            else
+            {
+                // 테이블 매칭이 안되면 최소한 UI 텍스트만 저장
+                quest = uiQuest;
+            }
+        }
+        else
+        {
+            // 2) UI가 없거나 비어 있으면 기존 계산으로 폴백
+            chapter = CurrentChapterName() ?? string.Empty;
+            quest   = CurrentQuestName()   ?? string.Empty;
+        }
+
+        PlayerPrefs.SetString(key + "_Chapter", chapter);
+        PlayerPrefs.SetString(key + "_Quest",   quest);
+        PlayerPrefs.Save();
+    }
+    
+    public static SaveMetadata GetSaveMetadata(int slot)
+    {
+        string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
+        var ticksStr = PlayerPrefs.GetString(key + "_Timestamp", string.Empty);
+        DateTime ts = string.IsNullOrEmpty(ticksStr) ? DateTime.MinValue : new DateTime(long.Parse(ticksStr));
+        return new SaveMetadata {
+            timestamp  = ts,
+            chapterName = PlayerPrefs.GetString(key + "_Chapter"),
+            questName   = PlayerPrefs.GetString(key + "_Quest")
+        };
     }
 }

@@ -64,9 +64,20 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogueByIDs(string[] dialogueIDs)
     {
         if (dialogueIDs == null || dialogueIDs.Length == 0) return;
-
+        
+        // 이미 본 대화 ID는 필터링
+        var toPlayIds = dialogueIDs
+                        .Where(id => !HasSeen(id))   // 또는 DialogueManager.Instance.HasSeen(id)
+                        .ToArray();
+        
+        // 필터 후 남은 게 없으면 아무것도 하지 않음
+        if (toPlayIds.Length == 0) return;
+        
+        // 실제 라인으로 변환해 세션 생성
         var lines = dialogueIDs.Select(id => DialogueDatabase.Instance.GetLineById(id)).ToArray();
         var newSession = new DialogueSession(lines, dialogueIDs);
+        
+        // 대화 시작
         StartDialogue(newSession);
     }
 

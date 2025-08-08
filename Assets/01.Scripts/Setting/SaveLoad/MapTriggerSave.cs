@@ -1,35 +1,40 @@
 using System;
 using UnityEngine;
 
-// 저장할 MapTrigger 상태를 담는 데이터 구조체
 [Serializable]
-struct MapTriggerData
+public struct TriggerData
 {
     public bool isActive;
 }
 
-// 맵 트리거 세이브
+[RequireComponent(typeof(UniqueID))]
 public class MapTriggerSave : MonoBehaviour, ISaveable
 {
-    [SerializeField] private string uniqueID;
-    public string UniqueID => uniqueID;
-
-    public object CaptureState()
+    private UniqueID idComp;
+    public string UniqueID
     {
-        // isActvie에 GameObject의 활성화 상태를 저장
-        return new MapTriggerData
+        get
         {
-            isActive = gameObject.activeSelf
-        };
+            if (idComp == null)
+            {
+                idComp = GetComponent<UniqueID>();
+                if (idComp == null) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
+            }
+            return idComp.ID;
+        }
     }
+
+    public object CaptureState() => new TriggerData
+    {
+        isActive = gameObject.activeSelf,
+    };
 
     public void RestoreState(object state)
     {
-        // state는 JSON 문자열이므로 string으로 캐스팅
-        var json = state as string;
+        var json = state as string; if (string.IsNullOrEmpty(json)) return;
+        var data = JsonUtility.FromJson<TriggerData>(json);
 
-        // 다시 MapTriggerData로 파싱
-        var data = JsonUtility.FromJson<MapTriggerData>(json);
-        gameObject.SetActive(data.isActive);
+        if (gameObject.activeSelf != data.isActive)
+            gameObject.SetActive(data.isActive);
     }
 }

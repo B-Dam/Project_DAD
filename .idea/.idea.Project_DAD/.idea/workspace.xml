@@ -6,8 +6,27 @@
   <component name="ChangeListManager">
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Creator_Scene/Battle.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang2_Animator.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/04.Animations/Battle/Fang/Fang2_Animator.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/DataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/Data/DataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Map/MapTransition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Map/MapTransition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/NPCDialogueMoveAndDisappear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/NPCDialogueMoveAndDisappear.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Puzzle/HoleTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Puzzle/HoleTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/BoxSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/BoxSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/CameraSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/CameraSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/DialogueSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/DialogueSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/HoleSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/HoleSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/ISaveable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/ISaveable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/MapTriggerSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/MapTriggerSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/PlayerSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/PlayerSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/QuestItemSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/QuestItemSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManagerCore.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManagerCore.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/UniqueID.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/UniqueID.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Project_Scene/Marge6_SaveTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Project_Scene/Marge6_SaveTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Map/Events.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Map/Events.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Map/Maps.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Map/Maps.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/05.UI/CutsceneRenderTexture.renderTexture" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/05.UI/CutsceneRenderTexture.renderTexture" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/99.Externals/Fonts/DNFBitBitv2 SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/99.Externals/Fonts/DNFBitBitv2 SDF.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +61,12 @@
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueTriggerCondition.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Player/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Quest/QuestGuideUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/BoxSave.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/CameraSave.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/HoleSave.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/IPostLoad.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/QuestItemSave.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@57cef44123c7/Editor/TMP/TMP_BaseEditorPanel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@57cef44123c7/Runtime/UGUI/EventSystem/EventInterfaces.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -165,6 +189,8 @@
       <workItem from="1754353288642" duration="13619000" />
       <workItem from="1754395682223" duration="1476000" />
       <workItem from="1754440026677" duration="8859000" />
+      <workItem from="1754533994700" duration="15681000" />
+      <workItem from="1754612914910" duration="3863000" />
     </task>
     <servers />
   </component>
