@@ -11,8 +11,19 @@ struct MapTriggerData
 // 맵 트리거 세이브
 public class MapTriggerSave : MonoBehaviour, ISaveable
 {
-    [SerializeField] private string uniqueID;
-    public string UniqueID => uniqueID;
+    private UniqueID idComp;
+
+    public string UniqueID
+    {
+        get
+        {
+            if (idComp == null)
+            {
+                idComp = GetComponent<UniqueID>() ?? gameObject.AddComponent<UniqueID>();
+            }
+            return idComp.ID;
+        }
+    }
 
     public object CaptureState()
     {

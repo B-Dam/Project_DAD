@@ -22,7 +22,7 @@ public class DialogueSession
 
     public string CurrentID => ids != null && CurrentIndex < ids.Length ? ids[CurrentIndex] : null;
 
-    // ´ÙÀ½ ¶óÀÎ ÀÌµ¿
+    // ë‹¤ìŒ ë¼ì¸ ì´ë™
     public void MoveNext()
     {
         CurrentIndex++;
@@ -33,19 +33,19 @@ public class DialogueSession
         return HasIndex(index) ? lines[index] : null;
     }
 
-    // ¾ÈÀüÇÑ ÀÎµ¦½º Á¢±Ù
+    // ì•ˆì „í•œ ì¸ë±ìŠ¤ ì ‘ê·¼
     public bool HasIndex(int index)
     {
         return lines != null && index >= 0 && index < lines.Length;
     }
 
-    // ´ÙÀ½ ID °¡Á®¿À±â
+    // ë‹¤ìŒ ID ê°€ì ¸ì˜¤ê¸°
     public string GetID(int index)
     {
         return ids != null && index >= 0 && index < ids.Length ? ids[index] : null;
     }
 
-    // º» ´ë»ç ±â·Ï
+    // ë³¸ ëŒ€ì‚¬ ê¸°ë¡
     public void MarkSeen()
     {
         if (CurrentID != null)
@@ -54,19 +54,19 @@ public class DialogueSession
         }
     }
 
-    // Æ¯Á¤ ID°¡ ÀÌ¹Ì º» ´ë»çÀÎÁö È®ÀÎ
+    // íŠ¹ì • IDê°€ ì´ë¯¸ ë³¸ ëŒ€ì‚¬ì¸ì§€ í™•ì¸
     public bool HasSeen(string id)
     {
         return seenIDs.Contains(id);
     }
 
-    // Áö±Ý±îÁö º» ¸ðµç ID ¸ñ·Ï Á¶È¸ + ÀúÀå/·Îµå Áö¿ø
+    // ì§€ê¸ˆê¹Œì§€ ë³¸ ëª¨ë“  ID ëª©ë¡ ì¡°íšŒ + ì €ìž¥/ë¡œë“œ ì§€ì›
     public string[] GetSeenIDs()
     {
         var list = seenIDs.ToArray();
         return list;
     }
-    //ÀúÀå/·Îµå Áö¿ø
+    //ì €ìž¥/ë¡œë“œ ì§€ì›
     public void LoadSeenIDs(string[] ids)
     {
         seenIDs.Clear();

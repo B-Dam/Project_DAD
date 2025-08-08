@@ -55,8 +55,8 @@ public class SettingMenuController : MonoBehaviour
             }
         }
         
-        if (CombatManager.Instance.IsInCombat)
-            questUI.SetActive(false);        
+        if (CombatManager.Instance != null && CombatManager.Instance.IsInCombat)
+            questUI.SetActive(false);
         else
             questUI.SetActive(true);
     }

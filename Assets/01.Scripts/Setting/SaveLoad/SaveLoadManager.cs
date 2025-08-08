@@ -34,6 +34,9 @@ public class SaveLoadManager : MonoBehaviour
 
     void Start()
     {
+        // 씬 전환 직후, 혹은 Start 시점에 현재 씬의 모든 ISaveable을 등록
+        SaveLoadManagerCore.Instance.RegisterSaveables();
+        
         for (int i = 0; i < saveSlots.Length; i++)
         {
             int idx = i;
@@ -95,7 +98,11 @@ public class SaveLoadManager : MonoBehaviour
 
     void OnConfirmSave()
     {
-        DataManager.SaveGame(selectedSlotIndex);
+        // 다시 한 번 저장 대상( ISaveable )을 최신화
+        SaveLoadManagerCore.Instance.RegisterSaveables();
+        // 실제 Save
+        SaveLoadManagerCore.Instance.SaveGame(selectedSlotIndex);
+        
         saveConfirmPanel.SetActive(false);
         RefreshAllSlots();
     }
@@ -109,7 +116,11 @@ public class SaveLoadManager : MonoBehaviour
 
     void OnConfirmLoad()
     {
-        DataManager.LoadGame(selectedSlotIndex);
+        // 로드 전에도 저장 대상 레지스트리 갱신
+        SaveLoadManagerCore.Instance.RegisterSaveables();
+        // 실제 Load
+        SaveLoadManagerCore.Instance.LoadGame(selectedSlotIndex);
+        
         loadConfirmPanel.SetActive(false);
     }
 }

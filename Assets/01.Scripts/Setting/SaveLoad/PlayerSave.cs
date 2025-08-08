@@ -11,9 +11,16 @@ public struct PlayerData
 
 public class PlayerSave : MonoBehaviour, ISaveable
 {
-    [SerializeField]
-    private string uniqueID;
-    public string UniqueID => uniqueID;
+    UniqueID idComp;
+
+    private void Awake()
+    {
+        idComp = GetComponent<UniqueID>();
+    }
+
+    // ISaveable.UniqueID 구현
+    public string UniqueID => idComp.ID;
+
 
     // 저장 시 호출: 위치·회전 정보를 담아 반환
     public object CaptureState()
@@ -29,6 +36,7 @@ public class PlayerSave : MonoBehaviour, ISaveable
     public void RestoreState(object state)
     {
         var json = state as string;
+        Debug.Log($"[RestoreState] {UniqueID} → json={json}");
         if (string.IsNullOrEmpty(json)) return;
 
         var data = JsonUtility.FromJson<PlayerData>(json);

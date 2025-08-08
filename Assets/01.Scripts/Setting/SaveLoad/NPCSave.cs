@@ -10,10 +10,22 @@ struct NPCData
 }
 
 // NPC 세이브
+[RequireComponent(typeof(UniqueID))]
 public class NPCSave : MonoBehaviour, ISaveable
 {
-    [SerializeField] private string uniqueID;
-    public string UniqueID => uniqueID;
+    private UniqueID idComp;
+
+    public string UniqueID
+    {
+        get
+        {
+            if (idComp == null)
+            {
+                idComp = GetComponent<UniqueID>() ?? gameObject.AddComponent<UniqueID>();
+            }
+            return idComp.ID;
+        }
+    }
 
     // NPC 상태 저장
     public object CaptureState()

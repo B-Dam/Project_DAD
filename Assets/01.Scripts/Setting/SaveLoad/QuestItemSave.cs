@@ -10,9 +10,16 @@ public struct QuestItemData
 
 public class QuestItemSave : MonoBehaviour, ISaveable
 {
-    [SerializeField]
-    private string uniqueID;
-    public string UniqueID => uniqueID;
+    UniqueID idComp;
+
+    private void Awake()
+    {
+        idComp = GetComponent<UniqueID>();
+    }
+
+    // ISaveable.UniqueID 구현
+    public string UniqueID => idComp.ID;
+
 
     // 저장할 때 호출: 활성화 상태만 담아서 반환
     public object CaptureState()

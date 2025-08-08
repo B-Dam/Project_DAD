@@ -10,9 +10,15 @@ public struct HoleData
 
 public class HoleSave : MonoBehaviour, ISaveable
 {
-    [SerializeField]
-    private string uniqueID;
-    public string UniqueID => uniqueID;
+    UniqueID idComp;
+
+    private void Awake()
+    {
+        idComp = GetComponent<UniqueID>();
+    }
+
+    // ISaveable.UniqueID 구현
+    public string UniqueID => idComp.ID;
 
     [Header("프리팹 & 자식 이름 설정")]
     [Tooltip("Instantiate할 HoleCover 프리팹")]

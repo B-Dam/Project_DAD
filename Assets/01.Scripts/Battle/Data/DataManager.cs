@@ -126,45 +126,13 @@ public class DataManager : MonoBehaviour
     // 실제 저장
     public static void SaveGame(int slot)
     {
-        string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
-
-        // 메타 정보 저장
-        PlayerPrefs.SetString(key + "_Timestamp", DateTime.Now.Ticks.ToString());
-        PlayerPrefs.SetString(key + "_Chapter", CurrentChapterName());
-        PlayerPrefs.SetString(key + "_Quest",   CurrentQuestName());
-        
-        // 씬 이름 저장
-        PlayerPrefs.SetString(key + "_Scene", SceneManager.GetActiveScene().name);
-
-        // ISaveable 수집
-        var dict = new Dictionary<string, string>();
-        var saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
-        foreach (var s in saveables)
-            dict[s.UniqueID] = JsonUtility.ToJson(s.CaptureState());
-
-        // 래퍼로 직렬화
-        var wrapper = new JsonDictWrapper(dict);
-        PlayerPrefs.SetString(key + "_Data", JsonUtility.ToJson(wrapper));
-        PlayerPrefs.Save();
+        SaveLoadManagerCore.Instance.SaveGame(slot);
     }
-
 
     // 불러오기
     public static void LoadGame(int slot)
     {
-        string key = (slot == 0) ? "AutoSlot" : $"ManualSlot{slot}";
-        
-        //  메타, 딕셔너리 불러오기
-        string json = PlayerPrefs.GetString(key + "_Data", "{}");
-        var wrapper = JsonUtility.FromJson<JsonDictWrapper>(json);
-        var dict = wrapper.ToDictionary();
-        
-        // 저장된 씬 이름 불러오기
-        string sceneName = PlayerPrefs.GetString(key + "_Scene", SceneManager.GetActiveScene().name);
-
-        // 씬 전환 후에 복원 실행
-          if (Instance != null)
-              Instance.StartCoroutine(Instance.LoadSceneAndRestore(sceneName, dict));
+        SaveLoadManagerCore.Instance.LoadGame(slot);
     }
     
     private IEnumerator LoadSceneAndRestore(string sceneName, Dictionary<string,string> dict)

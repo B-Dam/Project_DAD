@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class OffscreenWatcher : MonoBehaviour
@@ -59,5 +60,20 @@ public class OffscreenWatcher : MonoBehaviour
         }
 
         onAllRemovedCallback = callback;//  아직 감시할 대상이 남아있으면 저장해둠
+    }
+    
+    // 저장용: 현재 보고 있는 targets의 UniqueID 배열로 반환
+    public string[] GetWatchedIDs()
+    {
+        return targets
+               .Select(t => t.GetComponent<ISaveable>()?.UniqueID)
+               .Where(id => !string.IsNullOrEmpty(id))
+               .ToArray();
+    }
+
+    // 복원용: 리스트 초기화
+    public void ClearAllTargets()
+    {
+        targets.Clear();
     }
 }
