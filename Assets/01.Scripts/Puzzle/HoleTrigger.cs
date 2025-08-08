@@ -11,12 +11,12 @@ public class HoleTrigger : MonoBehaviour
     {
         holeCollider = GetComponent<Collider2D>();
         holeCollider.isTrigger = true; // 구멍은 트리거로 설정
-        
+
     }
     private void OnTriggerStay2D(Collider2D other)
     {
         if (isFalled) return; // 이미 구멍에 빠졌다면 무시
-        if (other.CompareTag("Box") )//&& IsFullyInside(other, holeCollider)
+        if (other.CompareTag("Box"))//&& IsFullyInside(other, holeCollider)
         {
             BoxPush box = other.GetComponent<BoxPush>();
             if (box != null)
@@ -44,18 +44,16 @@ public class HoleTrigger : MonoBehaviour
         //holeCollider.isTrigger = false; // 구멍의 트리거를 비활성화
         holeCollider.enabled = false; // 구멍의 충돌을 비활성화
 
-        //  안전하게 MapManager에서 현재 맵 Transform 가져오기
-        Transform parent = null;
-        if (MapManager.Instance != null)
-        {
-            parent = MapManager.Instance.currentMapTransform;
 
-            //  Destroy된 오브젝트 보호
-            if (parent != null && parent.gameObject == null)
-            {
-                parent = null;
-            }
+
+        Transform parent = transform.parent;
+
+        //  Destroy된 오브젝트 보호
+        if (parent != null && parent.gameObject == null)
+        {
+            parent = null;
         }
+
         if (holeCoverPrefab != null && parent != null)
         {
             Instantiate(holeCoverPrefab, transform.position, Quaternion.identity, parent);

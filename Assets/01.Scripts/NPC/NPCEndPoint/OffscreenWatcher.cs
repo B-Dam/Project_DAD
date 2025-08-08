@@ -30,7 +30,8 @@ public class OffscreenWatcher : MonoBehaviour
             if (isOutOfView)
             {
                 Debug.Log($"❌ {obj.name} 카메라 밖 → 제거");
-                Destroy(obj.gameObject);
+                //Destroy(obj.gameObject);
+                obj.gameObject.SetActive(false); // 오브젝트 비활성화
                 targets.RemoveAt(i);
             }
         }
