@@ -5,12 +5,16 @@ using UnityEngine;
 public struct TriggerData
 {
     public bool isActive;
+    public bool triggered;
 }
 
 [RequireComponent(typeof(UniqueID))]
 public class MapTriggerSave : MonoBehaviour, ISaveable
 {
     private UniqueID idComp;
+    
+    [SerializeField] EventTriggerZone zone;     // 같은 오브젝트에 붙은 존 참조
+    
     public string UniqueID
     {
         get
@@ -27,6 +31,7 @@ public class MapTriggerSave : MonoBehaviour, ISaveable
     public object CaptureState() => new TriggerData
     {
         isActive = gameObject.activeSelf,
+        triggered = zone != null && zone.HasTriggered(), // 추가 저장
     };
 
     public void RestoreState(object state)
@@ -36,5 +41,9 @@ public class MapTriggerSave : MonoBehaviour, ISaveable
 
         if (gameObject.activeSelf != data.isActive)
             gameObject.SetActive(data.isActive);
+        
+        // 저장 당시의 '이미 발동됨' 상태 복원
+        if (zone != null)
+            zone.SetTriggered(data.triggered);
     }
 }

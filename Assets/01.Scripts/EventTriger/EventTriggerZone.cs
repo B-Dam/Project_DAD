@@ -24,6 +24,30 @@ public class EventTriggerZone : MonoBehaviour
      public string deactivateDialogueID;
     
     public static EventTriggerZone Instance { get; private set; }
+    
+    public bool HasTriggered()
+    {
+        // 인스턴스 플래그 또는 triggerOnce일 때 전역 리스트에 해당 id가 있으면 true
+        return hasTriggered || (triggerOnce && _triggeredList.Contains(triggerId));
+    }
+    
+    public void SetTriggered(bool value)
+    {
+        hasTriggered = value;
+
+        if (triggerOnce)
+        {
+            if (value)
+            {
+                if (!_triggeredList.Contains(triggerId))
+                    _triggeredList.Add(triggerId);
+            }
+            else
+            {
+                _triggeredList.Remove(triggerId);
+            }
+        }
+    }
 
 private void Awake()
 {
