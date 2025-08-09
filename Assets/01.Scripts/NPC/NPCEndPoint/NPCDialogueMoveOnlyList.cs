@@ -19,7 +19,10 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
     public float moveDuration = 10f;
 
     private bool hasTriggered = false;
-   
+
+    [Header("이동 완료 시 오브젝트 비활성화여부")]
+    public bool moveFinishSetActive = false; // Inspector에서 On/Off 가능
+    
     private void Update()
     {
         if (hasTriggered || DialogueManager.Instance == null)
@@ -108,6 +111,14 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
        
 
         npc.Stop(); // NPC 멈춤 처리
+
+        //  이동 완료 후 비활성화 옵션 적용
+        if (moveFinishSetActive && obj != null)
+        {
+            obj.gameObject.SetActive(false);
+            Debug.Log($"{obj.name} → 이동 완료 후 비활성화됨");
+        }
+
         Debug.Log($"{obj.name} 이동 완료: {path}");
 
         PlayerController.Instance.enabled = true; // 플레이어 이동 활성화
