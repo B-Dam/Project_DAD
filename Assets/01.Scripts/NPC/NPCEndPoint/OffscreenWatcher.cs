@@ -7,6 +7,8 @@ public class OffscreenWatcher : MonoBehaviour
 {
     private List<Transform> targets = new List<Transform>();
     private Action onAllRemovedCallback;
+    
+    public static bool PauseOnLoad = false;
 
     void Update()
     {

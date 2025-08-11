@@ -32,12 +32,13 @@ public class NPCSave : MonoBehaviour, ISaveable
     public object CaptureState()
     {
         var cols = GetComponentsInChildren<Collider2D>(true);
+        Debug.Log($"[NPCSave/Capture] id={GetComponent<UniqueID>()?.ID} active={gameObject.activeSelf} cols={cols.Length}");
         var states = new bool[cols.Length];
         for (int i = 0; i < cols.Length; i++) states[i] = cols[i].enabled;
 
-        return new
+        return new NPCData
         {
-            isActive = gameObject.activeSelf,
+            isActive = gameObject.activeInHierarchy,
             position = transform.position,
             rotation = transform.rotation,
             scale = transform.localScale,
@@ -49,6 +50,7 @@ public class NPCSave : MonoBehaviour, ISaveable
     {
         var json = state as string; if (string.IsNullOrEmpty(json)) return;
         var data = JsonUtility.FromJson<NPCData>(json);
+        Debug.Log($"[NPCSave/Restore] id={GetComponent<UniqueID>()?.ID} -> isActive={data.isActive}");
 
         if (gameObject.activeSelf != data.isActive)
             gameObject.SetActive(data.isActive);

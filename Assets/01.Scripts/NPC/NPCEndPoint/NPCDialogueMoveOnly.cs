@@ -19,6 +19,9 @@ public class NPCDialogueMoveOnly : MonoBehaviour
     public float moveDuration = 10f;
 
     private bool hasTriggered = false;
+    
+    public bool IsTriggered => hasTriggered;
+    public void SetTriggered(bool v) => hasTriggered = v;
    
     private void Update()
     {

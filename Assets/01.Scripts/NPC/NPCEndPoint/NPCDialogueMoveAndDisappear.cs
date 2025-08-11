@@ -24,6 +24,9 @@ public class NPCDialogueMoveAndDisappear : MonoBehaviour
     public float moveDuration = 10f;
 
     private bool hasTriggered = false;
+    
+    public bool IsTriggered => hasTriggered;
+    public void SetTriggered(bool v) => hasTriggered = v;
 
 
     /*
@@ -34,6 +37,7 @@ public class NPCDialogueMoveAndDisappear : MonoBehaviour
     */
     void Update()
     {
+        if (SaveLoadManagerCore.IsRestoring) return;
         if (hasTriggered || DialogueManager.Instance == null) return;
 
         if (DialogueManager.Instance.IsDialogueActive)

@@ -6,12 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/DialogueSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/DialogueSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatTriggerEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Battle/SceneEvent/CombatTriggerEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/NPCDialogueMoveAndDisappear.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/NPCDialogueMoveAndDisappear.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/NPCDialogueMoveOnly.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/NPCDialogueMoveOnly.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/NPCDialogueMoveOnlyList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/NPCDialogueMoveOnlyList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/OffscreenWatcher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/NPC/NPCEndPoint/OffscreenWatcher.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SettingMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SettingMenuController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManagerCore.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManagerCore.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Project_Scene/Marge6_SaveTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Project_Scene/Marge6_SaveTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/SceneConnect/MainScene/EnemyFangTrigger.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/SceneConnect/MainScene/EnemyFangTrigger.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/SceneConnect/MainScene/EnemyFangTrigger2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/03.Prefabs/Battle/SceneConnect/MainScene/EnemyFangTrigger2.prefab" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +52,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/BoxSave.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/CameraSave.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/HoleSave.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/IPostLoad.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCMoveTriggerSave.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/QuestItemSave.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@57cef44123c7/Editor/TMP/TMP_BaseEditorPanel.cs" root0="SKIP_HIGHLIGHTING" />

@@ -19,6 +19,8 @@ public class CombatTriggerEvent : MonoBehaviour
     private Scene _previousScene;
 
     bool hasTriggered;
+    public bool IsTriggered => hasTriggered;
+    public void SetTriggered(bool v) => hasTriggered = v;
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class CombatTriggerEvent : MonoBehaviour
 
     public void TriggerCombat()
     {
+        if (SaveLoadManagerCore.IsRestoring) return;
         if (hasTriggered) return; // 이미 실행됐으면 무시
         hasTriggered = true;
     // 대화 UI 숨기되 데이터는 유지하되 스프라이트는 꺼버림

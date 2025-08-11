@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4551098616148276178}
   - component: {fileID: 1873849472112745617}
+  - component: {fileID: 2512883307228431798}
+  - component: {fileID: 1217698229933329854}
   m_Layer: 0
   m_Name: EnemyFangTrigger
   m_TagString: Untagged
@@ -65,3 +67,28 @@ MonoBehaviour:
     - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
     - {fileID: 11400000, guid: ec17edfce2bae8a4799c71165a34c152, type: 2}
   mainUI: {fileID: 0}
+--- !u!114 &2512883307228431798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678678313739594393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66405f0176faace4da96e56d4234931d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 6a9f5674e057494ca446739f47be81af
+--- !u!114 &1217698229933329854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678678313739594393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f200e143e7480404d99b64175e70ecbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

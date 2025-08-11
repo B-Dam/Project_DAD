@@ -19,6 +19,9 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
     public float moveDuration = 10f;
 
     private bool hasTriggered = false;
+    
+    public bool IsTriggered => hasTriggered;
+    public void SetTriggered(bool v) => hasTriggered = v;
 
     [Header("이동 완료 시 오브젝트 비활성화여부")]
     public bool moveFinishSetActive = false; // Inspector에서 On/Off 가능
