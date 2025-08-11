@@ -974,6 +974,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   confiner: {fileID: 2537693785485874198}
+  warpDistance: 20
+  enableDistance: 4
+  maxWaitFrames: 5
 --- !u!114 &1251488475190538415
 MonoBehaviour:
   m_ObjectHideFlags: 0
