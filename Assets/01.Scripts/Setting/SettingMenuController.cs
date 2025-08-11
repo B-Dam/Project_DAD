@@ -36,8 +36,29 @@ public class SettingMenuController : MonoBehaviour
         ShowMenu(MenuType.Sound);
     }
     
+    // 설정창 진입 방지용 bool 헬퍼
+    bool IsSettingsBlocked()
+    {
+        // 대화 진행 중
+        var dm = DialogueManager.Instance;
+        if (dm != null && dm.IsDialogueActive) return true;
+
+        // 컷씬 재생/준비 중
+        var cc = CutsceneController.Instance;
+        if (cc != null && (cc.IsVideoPlaying || cc.IsPreparing)) return true;
+
+        // NPC 이동 중(플레이어 조작 막힘)
+        var pc = PlayerController.Instance;
+        if (pc != null && !pc.enabled) return true;
+
+        return false;
+    }
+    
     private void Update()
     {
+        // 해당 상태면 Esc 무시
+        if (IsSettingsBlocked()) return;
+        
         // Esc 키를 누르면 토글
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -54,7 +75,8 @@ public class SettingMenuController : MonoBehaviour
                 Time.timeScale = 1f;
             }
         }
-        
+
+        // 전투 중에 QuestUI 비활성화
         if (CombatManager.Instance != null && CombatManager.Instance.IsInCombat)
             questUI.SetActive(false);
         else

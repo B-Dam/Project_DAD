@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 using static DialogueDatabase;
 
 public class DialogueManager : MonoBehaviour
@@ -28,6 +29,7 @@ public class DialogueManager : MonoBehaviour
     public DialogueSession Session => session;
     public DialogueDatabase.DialogueLine GetCurrentLine() => session.GetLine(session.CurrentIndex);
     public void UnlockInput() => isInputLocked = false;
+    private readonly HashSet<string> _seenCache = new HashSet<string>();
 
     private void Awake()
     {
@@ -196,6 +198,14 @@ public class DialogueManager : MonoBehaviour
 
         onDialogueEndCallback?.Invoke();
         OnDialogueEnded?.Invoke();
+        
+        // 세션 날리기 전에 seen 누적
+        if (session != null)
+        {
+            var ids = session.GetSeenIDs();
+            if (ids != null)
+                foreach (var s in ids) _seenCache.Add(s);
+        }
 
         onDialogueEndCallback = null;
 
@@ -248,7 +258,29 @@ public class DialogueManager : MonoBehaviour
         onDialogueEndCallback -= callback;
     }
 
-    public bool HasSeen(string id) => session?.HasSeen(id) ?? false;
-    public string[] GetAllSeenIDs() => session?.GetSeenIDs() ?? Array.Empty<string>();
-    public void LoadSeenIDs(string[] ids) => session?.LoadSeenIDs(ids);
+    public bool HasSeen(string id) => (session?.HasSeen(id) ?? false) || _seenCache.Contains(id);
+    public string[] GetAllSeenIDs()
+    {
+        var cur = session?.GetSeenIDs() ?? Array.Empty<string>();
+        return cur.Concat(_seenCache).Distinct().ToArray();
+    }
+    public void LoadSeenIDs(string[] ids)
+    {
+        if (ids == null) return;
+        foreach (var s in ids) _seenCache.Add(s);
+        session?.LoadSeenIDs(ids);
+    }
+    
+    // 저장/불러오기용 덮어쓰기 오버로드
+    public void LoadSeenIDs(string[] ids, bool replace)
+    {
+        if (!replace) { LoadSeenIDs(ids); return; }
+
+        _seenCache.Clear();
+        // 세션이 살아있다면 세션 쪽도 비운 뒤 로드(메서드 있으면 사용)
+        session?.LoadSeenIDs(ids);
+
+        if (ids != null)
+            foreach (var s in ids) _seenCache.Add(s);
+    }
 }

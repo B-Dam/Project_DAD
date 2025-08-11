@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 [Serializable]
@@ -8,6 +9,7 @@ public struct NPCData
     public Vector3 position;
     public Quaternion rotation;
     public Vector3 scale;
+    public bool[] colliderEnabledStates; // 콜라이더 활성화 상태
 }
 
 [RequireComponent(typeof(UniqueID))]
@@ -27,13 +29,21 @@ public class NPCSave : MonoBehaviour, ISaveable
         }
     }
 
-    public object CaptureState() => new NPCData
+    public object CaptureState()
     {
-        isActive = gameObject.activeSelf,
-        position = transform.position,
-        rotation = transform.rotation,
-        scale    = transform.localScale
-    };
+        var cols = GetComponentsInChildren<Collider2D>(true);
+        var states = new bool[cols.Length];
+        for (int i = 0; i < cols.Length; i++) states[i] = cols[i].enabled;
+
+        return new
+        {
+            isActive = gameObject.activeSelf,
+            position = transform.position,
+            rotation = transform.rotation,
+            scale = transform.localScale,
+            colliderEnabledStates = states
+        };
+    }
 
     public void RestoreState(object state)
     {
@@ -46,5 +56,16 @@ public class NPCSave : MonoBehaviour, ISaveable
         transform.position   = data.position;
         transform.rotation   = data.rotation;
         transform.localScale = data.scale;
+        
+        var cols = GetComponentsInChildren<Collider2D>(true);
+        if (data.colliderEnabledStates != null && data.colliderEnabledStates.Length == cols.Length)
+        {
+            for (int i = 0; i < cols.Length; i++) cols[i].enabled = data.colliderEnabledStates[i];
+        }
+        else
+        {
+            // 기본적으로 콜라이더 활성화 (상호작용 가능 보장)
+            foreach (var c in cols) c.enabled = true;
+        }
     }
 }

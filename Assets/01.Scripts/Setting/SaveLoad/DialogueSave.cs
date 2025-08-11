@@ -47,6 +47,10 @@ public class DialogueSave : MonoBehaviour, ISaveable
             ids          = Array.Empty<string>(),
             seenIds      = Array.Empty<string>()
         };
+        
+        // 세션 없어도 누적 seen(캐시 포함) 저장
+        if (dm != null)
+            data.seenIds = dm.GetAllSeenIDs();
 
         if (dm != null && dm.Session != null)
         {
@@ -61,7 +65,6 @@ public class DialogueSave : MonoBehaviour, ISaveable
 
             data.ids          = ids.ToArray();
             data.currentIndex = dm.Session.CurrentIndex;
-            data.seenIds      = dm.GetAllSeenIDs(); // 세션 내 '본' 목록
         }
         return data;
     }
@@ -73,6 +76,7 @@ public class DialogueSave : MonoBehaviour, ISaveable
         if (string.IsNullOrEmpty(json)) return;
 
         var data = JsonUtility.FromJson<DialogueSaveData>(json);
+        
         StartCoroutine(ApplyNextFrame(data)); // UI/싱글톤 준비 이후에 적용
     }
 
@@ -90,37 +94,99 @@ public class DialogueSave : MonoBehaviour, ISaveable
             yield break;
         }
 
-        // 저장 당시 대화가 '꺼짐' 상태였다면, 지금 실행 중이면 꺼주고 끝
+        // 대화창 꺼진 상태 저장본이면 seen만 복원하고 UI 갱신 후 종료
         if (!data.isActive || data.ids == null || data.ids.Length == 0)
         {
-            if (dm.IsDialogueActive) dm.EndDialogue(true);
+            dm.LoadSeenIDs(data.seenIds, true); // 덮어쓰기
+            if (QuestGuideUI.Instance != null) //  로드시 퀘스트 텍스트 갱신
+                QuestGuideUI.Instance.RefreshQuest();
             yield break;
         }
 
-        // 1) 저장해둔 ID 시퀀스로 라인 재구성
+        // 저장해둔 ID 시퀀스로 라인 재구성
         var lines = new DialogueDatabase.DialogueLine[data.ids.Length];
         for (int i = 0; i < data.ids.Length; i++)
             lines[i] = db.GetLineById(data.ids[i]);
 
-        // 2) 새로운 세션 생성 후 시작 (index=0에서 표시는 되지만, 곧 점프함)
+        // 새로운 세션 생성 후 시작 (index=0에서 표시는 되지만, 곧 점프함)
         var newSession = new DialogueSession(lines, data.ids);
-        dm.StartDialogue(newSession);                                                       // 세션 시작/패널 표시/현재 라인 표시 :contentReference[oaicite:0]{index=0}
+        dm.StartDialogue(newSession);
+        
+        // 세션이 생긴 상태에서 한 번만 덮어쓰기 로드
+        dm.LoadSeenIDs(data.seenIds, true);
 
-        // 3) '이미 본' 목록 복원(선택)
-        if (data.seenIds != null && data.seenIds.Length > 0)
-            dm.LoadSeenIDs(data.seenIds);                                                  // 세션에 seenIDs 주입 :contentReference[oaicite:1]{index=1}
-
-        // 4) 저장해 둔 인덱스로 점프 (이벤트/컷신 발동 없이 세션 인덱스만 이동)
+        // 저장해 둔 인덱스로 점프 (이벤트/컷신 발동 없이 세션 인덱스만 이동)
         int cur = dm.Session.CurrentIndex;
         while (cur < data.currentIndex && dm.Session.HasIndex(cur + 1))
         {
-            // Display/ShowNextLine을 호출하지 않고, 세션 인덱스만 올린다
-            dm.Session.MoveNext();                                                         // 인덱스 증가 :contentReference[oaicite:2]{index=2}
+            // Display/ShowNextLine을 호출하지 않고, 세션 인덱스만 올림
+            dm.Session.MoveNext();
             cur++;
         }
 
-        // 5) 점프한 위치의 라인을 다시 그리기
-        dm.DisplayCurrentLine();                                                           // 해당 인덱스 라인 표시 :contentReference[oaicite:3]{index=3}
+        // 점프한 위치의 라인을 다시 그리기, DisplayCurrentLine에서 QuestUI도 갱신
+        dm.DisplayCurrentLine();
         dm.UnlockInput();
+    }
+    
+    // ▼ 디버그 전용 필드
+    [Header("DEBUG · Dialogue SeenIDs (runtime)")]
+    [SerializeField] bool debugAutoRefresh = true;   // 실시간 갱신 on/off
+    [SerializeField] float debugRefreshInterval = 0.5f;
+
+    [SerializeField] int debugSeenCount;             // 본 ID 개수
+    [SerializeField] string[] debugSeenIDs;          // 본 ID 리스트
+    [TextArea(2, 6)] [SerializeField] string debugSeenPreview; // 미리보기(콤마로 합침)
+
+    [SerializeField] string debugCurrentID;          // 현재 라인 ID
+    [SerializeField] int debugCurrentIndex = -1;     // 현재 인덱스
+
+    float _debugNextAt; // 내부 타이머
+    
+    // ▼ 인스펙터 갱신용: 수동 갱신 버튼
+    [ContextMenu("DEBUG · Refresh SeenIDs Now")]
+    void DebugRefreshNow()
+    {
+        var dm = DialogueManager.Instance;
+        if (dm == null)
+        {
+            debugSeenIDs = System.Array.Empty<string>();
+            debugSeenCount = 0;
+            debugSeenPreview = "(DialogueManager 없음)";
+            debugCurrentIndex = -1;
+            debugCurrentID = string.Empty;
+            return;
+        }
+
+        // 세션의 '이미 본' ID 전부 가져오기
+        var arr = dm.GetAllSeenIDs();     // ← 실제로 존재 (DialogueManager.cs)
+        debugSeenIDs = arr;
+        debugSeenCount = arr?.Length ?? 0;
+        debugSeenPreview = (arr == null || arr.Length == 0) ? "(none)" : string.Join(", ", arr);
+
+        // 현재 라인/인덱스도 확인
+        if (dm.Session != null && dm.Session.HasIndex(dm.Session.CurrentIndex))
+        {
+            debugCurrentIndex = dm.Session.CurrentIndex;
+            debugCurrentID = dm.Session.GetID(debugCurrentIndex);
+        }
+        else
+        {
+            debugCurrentIndex = -1;
+            debugCurrentID = string.Empty;
+        }
+    }
+    
+    // ▼ 런타임 자동 갱신 (OnEnable/OnDisable 또는 Update)
+    void Update()
+    {
+        if (!Application.isPlaying) return;
+        if (!debugAutoRefresh) return;
+
+        if (Time.unscaledTime >= _debugNextAt)
+        {
+            DebugRefreshNow();
+            _debugNextAt = Time.unscaledTime + Mathf.Max(0.1f, debugRefreshInterval);
+        }
     }
 }

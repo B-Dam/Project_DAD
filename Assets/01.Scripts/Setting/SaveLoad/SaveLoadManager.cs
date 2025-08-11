@@ -159,6 +159,12 @@ public class SaveLoadManager : MonoBehaviour
     {
         yield return null; // 1프레임
         yield return null; // 2프레임 (안정성)
+        
+        // 로드 시 퀘스트 텍스트 갱신
+        if (QuestGuideUI.Instance != null)
+            QuestGuideUI.Instance.RefreshQuest();
+        
+        // 슬롯 라벨 동기화
         RefreshAllSlots();
     }
     

@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="422f3aa0-eb23-4f71-99eb-d383fadc2753" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_DAD/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/EventTriger/EventTriggerZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/EventTriger/EventTriggerZone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/MapTriggerSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/MapTriggerSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Dialog/DialogueManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/DialogueSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/DialogueSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/NPCSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SaveLoad/SaveLoadManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SettingMenuController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/01.Scripts/Setting/SettingMenuController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/02.Scenes/Project_Scene/Marge6_SaveTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/02.Scenes/Project_Scene/Marge6_SaveTest.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -173,6 +176,7 @@
       <workItem from="1754533994700" duration="15681000" />
       <workItem from="1754612914910" duration="3863000" />
       <workItem from="1754714189655" duration="3146000" />
+      <workItem from="1754872340415" duration="5341000" />
     </task>
     <servers />
   </component>
