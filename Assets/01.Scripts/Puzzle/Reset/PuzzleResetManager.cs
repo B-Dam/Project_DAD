@@ -37,12 +37,15 @@ public class PuzzleResetManager : MonoBehaviour
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null) return;
         var controller = player.GetComponent<PlayerController>();
-        if (controller == null || Time.timeScale == 0f || !PlayerController.Instance.CanMove())
+        if (controller == null || !PlayerController.Instance.CanMove())
         {
             return; // 플레이어가 비활성화 상태면 리셋 취소
         }
         string currentMapID = MapManager.Instance.currentMapID;
+        if(Time.timeScale == 0f)
+        {
         Time.timeScale = 1f; // 시간 스케일을 원래대로 복원 
+        }
         var resettableObjects = FindObjectsByType<PuzzleResettable>(FindObjectsSortMode.None);
         foreach (var obj in resettableObjects)
         {
