@@ -49,7 +49,7 @@ MonoBehaviour:
   isTutorialTrigger: 1
   setupData:
     enemyName: "\uC1A1\uACF3\uB2C8"
-    backgroundSprite: {fileID: -2595588882249502448, guid: e79426bc88010e74e8b79e0f416077ff, type: 3}
+    backgroundSprite: {fileID: 7866148467997648545, guid: e4e212795ef854ca8ab0dbd00b35902b, type: 3}
     enemyCharacterSO: {fileID: 11400000, guid: 491f9653788088e4a812bf1f6fa72bfb, type: 2}
     animatorController: {fileID: 9100000, guid: ff58fdcb44bb9844599cfbf6fd0c74c1, type: 2}
     tutorialDeckOrder:
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66405f0176faace4da96e56d4234931d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 6a9f5674e057494ca446739f47be81af
+  id: e3fef73e6562486aa6990f872b8913d1
 --- !u!114 &1217698229933329854
 MonoBehaviour:
   m_ObjectHideFlags: 0

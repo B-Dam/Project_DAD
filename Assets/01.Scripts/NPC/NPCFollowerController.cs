@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class NPCMovementController : MonoBehaviour
@@ -7,7 +7,7 @@ public class NPCMovementController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Vector2 moveDirection = Vector2.zero;
-    private Vector2 lastMoveDirection = Vector2.left; // ✅ 기본 왼쪽으로 설정
+    private Vector2 lastMoveDirection = Vector2.zero; // ✅ 기본 왼쪽으로 설정
 
     private void Awake()
     {

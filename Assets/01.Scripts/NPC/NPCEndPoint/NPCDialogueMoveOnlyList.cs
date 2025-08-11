@@ -114,7 +114,12 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
        
 
         npc.Stop(); // NPC 멈춤 처리
+        Collider2D col = obj.GetComponent<Collider2D>();
 
+        if (col != null)
+        {
+            col.enabled = true; // 충돌 활성화
+        }
         //  이동 완료 후 비활성화 옵션 적용
         if (moveFinishSetActive && obj != null)
         {
