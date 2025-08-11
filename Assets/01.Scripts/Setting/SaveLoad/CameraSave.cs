@@ -1,281 +1,193 @@
+// Assets/01.Scripts/Setting/SaveLoad/CameraSave.cs
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
-using Unity.Cinemachine;
 
-/// 저장 포맷
-[Serializable]
-public struct CameraData
-{
-    public Vector3    position;
-    public Quaternion rotation;
-    public float      size;               // ortho면 orthographicSize, 아니면 fieldOfView
-    public string[]   watchedTargetIDs;   // OffscreenWatcher 대상 UniqueID들
-    public string     confineMapId;       // 저장 당시 카메라가 묶여 있던 맵 이름(예: "Map001")
-}
-
-/// Maps 루트에서 플레이어가 어느 맵 안에 있는지 판별하거나,
-/// 맵 ID로 PolygonCollider2D(없으면 자동 생성)를 찾아주는 헬퍼
-static class MapLookup
-{
-    public static bool TryFindMapByPosition(Transform mapsRoot, Vector2 pos,
-                                            out string mapId, out PolygonCollider2D poly)
-    {
-        mapId = null; poly = null;
-        if (!mapsRoot) return false;
-
-        foreach (Transform child in mapsRoot)
-        {
-            var p = child.GetComponentInChildren<PolygonCollider2D>(true);
-            if (!p) p = GetOrBuildBoundsCollider(child); // 폴리곤 없으면 자동 생성
-            if (!p) continue;
-
-            if (p.OverlapPoint(pos))
-            {
-                mapId = child.name;  // "Map001" 가정
-                poly  = p;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static PolygonCollider2D FindMapPolygonById(Transform mapsRoot, string mapId)
-    {
-        if (!mapsRoot || string.IsNullOrEmpty(mapId)) return null;
-        var t = mapsRoot.Find(mapId);
-        if (!t) return null;
-
-        var p = t.GetComponentInChildren<PolygonCollider2D>(true);
-        if (!p) p = GetOrBuildBoundsCollider(t); // 없으면 자동 생성
-        return p;
-    }
-
-    /// 맵 하위에 렌더러 바운드로 사각형 폴리곤을 자동 생성/캐시
-    public static PolygonCollider2D GetOrBuildBoundsCollider(Transform map, string childName="__AutoBounds")
-    {
-        if (!map) return null;
-
-        var child = map.Find(childName);
-        if (!child)
-        {
-            var go = new GameObject(childName);
-            go.hideFlags = HideFlags.DontSave;
-            go.layer = LayerMask.NameToLayer("Ignore Raycast"); // 충돌 방지용 권장
-            go.transform.SetParent(map, false);
-            child = go.transform;
-        }
-
-        var poly = child.GetComponent<PolygonCollider2D>();
-        if (!poly) poly = child.gameObject.AddComponent<PolygonCollider2D>();
-        poly.isTrigger = true;
-
-        // 렌더러 바운드 합산 → 로컬 좌표 네 모서리
-        var b = ComputeRenderersBoundsWorld(map);
-        var min = map.InverseTransformPoint(b.min);
-        var max = map.InverseTransformPoint(b.max);
-
-        var pts = new Vector2[4]
-        {
-            new Vector2(min.x, min.y),
-            new Vector2(min.x, max.y),
-            new Vector2(max.x, max.y),
-            new Vector2(max.x, min.y)
-        };
-        poly.pathCount = 1;
-        poly.SetPath(0, pts);
-        return poly;
-    }
-
-    static Bounds ComputeRenderersBoundsWorld(Transform root)
-    {
-        var renderers = root.GetComponentsInChildren<Renderer>(true);
-        Bounds b = new Bounds(root.position, Vector3.zero);
-        bool has = false;
-        foreach (var r in renderers)
-        {
-            if (!has) { b = r.bounds; has = true; }
-            else b.Encapsulate(r.bounds);
-        }
-        if (!has) b = new Bounds(root.position, Vector3.one);
-        return b;
-    }
-}
-
-[RequireComponent(typeof(OffscreenWatcher))]
 [RequireComponent(typeof(UniqueID))]
-[DefaultExecutionOrder(1100)] // 대부분 초기화가 끝난 뒤 적용되도록 약간 늦게
 public class CameraSave : MonoBehaviour, ISaveable
 {
-    [Header("Maps 루트(미지정 시 'Maps'로 찾음)")]
-    [SerializeField] private Transform mapsRoot;
-
-    [Header("플레이어(미지정 시 Tag=Player 탐색)")]
-    [SerializeField] private Transform player;
-
-    private UniqueID                 idComp;
-    private OffscreenWatcher         watcher;
-    private Camera                   cam;
-    private CinemachineConfiner2D    confiner;
-    private bool                     isOrtho;
-
-    private CameraData pending;
-    private bool       hasPending;
-
-    public string UniqueID
+    [Serializable]
+    private struct Data
     {
-        get
-        {
-            if (!idComp)
-            {
-                idComp = GetComponent<UniqueID>();
-                if (!idComp) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
-            }
-            return idComp.ID;
-        }
+        public string mapId;           // 저장 당시 맵ID (컨파이너 이름: "Confine_{mapId}")
+        public float  orthoSize;       // 메인 카메라 직교 사이즈(옵션)
+        public Vector3 camPosition;    // 메인 카메라 위치(옵션)
     }
 
-    void Awake()
-    {
-        idComp  = GetComponent<UniqueID>();
-        watcher = GetComponent<OffscreenWatcher>();
-        cam     = GetComponent<Camera>();
-        isOrtho = cam && cam.orthographic;
+    private UniqueID _uid;
+    public string UniqueID => (_uid ??= GetComponent<UniqueID>()).ID;
 
-        // Confiner는 보통 VCam에 붙어 있으니 현재 오브젝트/자식에서 모두 시도
-        confiner = GetComponent<CinemachineConfiner2D>();
-        if (!confiner) confiner = GetComponentInChildren<CinemachineConfiner2D>(true);
+    [Header("옵션")]
+    [SerializeField] bool snapFollowInsideOnLoad = true;  // 로드 직후 Follow가 바깥이면 안으로 한 번 스냅
+    [SerializeField] float snapLerp = 0.02f;              // 바깥→안쪽으로 들어갈 보정 비율(0.0~0.1 권장)
+    [SerializeField] string confinePrefix = "Confine_";   // 컨파이너 오브젝트 접두사
 
-        if (!mapsRoot)
-        {
-            var go = GameObject.Find("Maps");
-            if (go) mapsRoot = go.transform;
-        }
-        if (!player)
-        {
-            var p = GameObject.FindGameObjectWithTag("Player");
-            if (p) player = p.transform;
-        }
-    }
-
-    void OnEnable()  => MapsReadyBroadcaster.OnMapsReady += TryApplyPending;
-    void OnDisable() => MapsReadyBroadcaster.OnMapsReady -= TryApplyPending;
-
+    // ===== 저장 =====
     public object CaptureState()
     {
-        // 플레이어 위치로 현재 맵 판별 → confineMapId 저장
-        string mapId = null;
-        if (player && mapsRoot)
-            MapLookup.TryFindMapByPosition(mapsRoot, (Vector2)player.position, out mapId, out _);
-
-        // 보강: 현재 confiner가 물고 있는 폴리곤 루트 이름
-        if (string.IsNullOrEmpty(mapId) && confiner && confiner.BoundingShape2D)
-            mapId = confiner.BoundingShape2D.transform.root.name;
-
-        float sizeVal = 0f;
-        if (cam) sizeVal = isOrtho ? cam.orthographicSize : cam.fieldOfView;
-
-        return new CameraData
+        var data = new Data
         {
-            position         = transform.position,
-            rotation         = transform.rotation,
-            size             = sizeVal,
-            watchedTargetIDs = watcher ? watcher.GetWatchedIDs() : null,
-            confineMapId     = mapId
+            mapId       = MapManager.Instance ? MapManager.Instance.currentMapID : null,
+            orthoSize   = Camera.main ? Camera.main.orthographicSize : 0f,
+            camPosition = Camera.main ? Camera.main.transform.position : Vector3.zero
         };
+
+        Debug.Log($"[CameraSave/Capture] id={UniqueID} mapId={data.mapId} size={data.orthoSize}");
+        return data; // JsonUtility 직렬화용 POCO
     }
 
+    // ===== 불러오기 =====
     public void RestoreState(object state)
     {
         var json = state as string;
         if (string.IsNullOrEmpty(json)) return;
 
-        pending    = JsonUtility.FromJson<CameraData>(json);
-        hasPending = true;
+        var data = JsonUtility.FromJson<Data>(json);
 
-        // 맵이 이미 준비됐을 수도 있으니 즉시 시도
-        TryApplyPending();
-    }
-
-    private void TryApplyPending()
-    {
-        if (!hasPending) return;
-        // 경계/다른 컴포넌트 Start/Confiner invalidate 이후에 적용되도록 한 프레임 미룸
-        StartCoroutine(ApplyNextFrame());
-    }
-
-    private IEnumerator ApplyNextFrame()
-    {
-        yield return null; // 필요하면 2~3프레임로 늘려도 OK
-        ApplyNow();
-    }
-
-    private void ApplyNow()
-    {
-        // 1) 경계(클램프) 먼저 세팅
-        if (confiner && !string.IsNullOrEmpty(pending.confineMapId))
+        // 1) 카메라 기초 복원(원치 않으면 주석 처리)
+        if (Camera.main)
         {
-            var poly = MapLookup.FindMapPolygonById(mapsRoot, pending.confineMapId);
-            if (poly)
-            {
-                confiner.BoundingShape2D = poly;
-                confiner.InvalidateBoundingShapeCache();
-            }
+            if (data.orthoSize > 0f) Camera.main.orthographicSize = data.orthoSize;
+            if (data.camPosition != Vector3.zero) Camera.main.transform.position = data.camPosition;
         }
 
-        // 2) 카메라 트랜스폼/사이즈 적용
-        transform.position = pending.position;
-        transform.rotation = pending.rotation;
+        // 2) 두 프레임 대기 후(씬 콜라이더/맵 준비 보장) 컨파이너/VCam 재바인딩
+        StartCoroutine(RebindRoutine(data.mapId));
+    }
 
-        if (cam)
+    IEnumerator RebindRoutine(string savedMapId)
+    {
+        yield return null;
+        yield return null; // 콜라이더/시네머신/맵 오브젝트 준비 보장
+
+        // MapManager의 값을 우선 진실로 사용
+        string mapId = (MapManager.Instance && !string.IsNullOrEmpty(MapManager.Instance.currentMapID))
+            ? MapManager.Instance.currentMapID
+            : savedMapId;
+
+        if (string.IsNullOrEmpty(mapId))
         {
-            if (isOrtho) cam.orthographicSize = pending.size;
-            else         cam.fieldOfView      = pending.size;
+            Debug.LogWarning("[CameraSave] mapId가 비어 있어 컨파이너 바인딩을 건너뜁니다.");
+            yield break;
         }
 
-        // 3) OffscreenWatcher 대상 복원 (Core 레지스트리 우선)
-        if (watcher)
+        var poly = FindConfineCollider(mapId);
+        if (!poly)
         {
-            watcher.ClearAllTargets();
-            var ids = pending.watchedTargetIDs;
-            if (ids != null)
-            {
-                foreach (var id in ids)
-                {
-                    Transform tr = null;
-
-                    // 최적: SaveLoadManagerCore 레지스트리
-                    var core = SaveLoadManagerCore.Instance;
-                    if (core != null)
-                    {
-                        // TryGetSaveable 제공한다면 사용
-                        var tryGet = core.GetType().GetMethod("TryGet",
-                            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                        if (tryGet != null)
-                        {
-                            object[] args = new object[] { id, null };
-                            bool ok = (bool)tryGet.Invoke(core, args);
-                            if (ok && args[1] is ISaveable sv && sv is MonoBehaviour mb1)
-                                tr = mb1.transform;
-                        }
-                    }
-
-                    // Fallback: 느리지만 안전한 전역 탐색(로드 단발성이므로 OK)
-                    if (!tr)
-                    {
-                        var mb = GameObject.FindObjectsOfType<MonoBehaviour>(true)
-                                 .OfType<ISaveable>()
-                                 .FirstOrDefault(s => s.UniqueID == id) as MonoBehaviour;
-                        if (mb) tr = mb.transform;
-                    }
-
-                    if (tr) watcher.Register(tr);
-                }
-            }
+            Debug.LogWarning($"[CameraSave] {confinePrefix}{mapId} Collider2D를 찾지 못했습니다.");
+            yield break;
         }
 
-        hasPending = false;
-        Debug.Log($"[CameraSave] Restored. confineMapId={pending.confineMapId}");
+        var vcam = GetActiveVirtualCamera();
+        if (!vcam)
+        {
+            Debug.LogWarning("[CameraSave] 활성 CinemachineVirtualCamera를 찾지 못했습니다.");
+            yield break;
+        }
+
+        // 활성 VCam의 Confiner에만 바인딩(2D/구버전 대응)
+        if (!BindConfinerToVcam(vcam, poly))
+        {
+            Debug.LogWarning($"[CameraSave] {vcam.name}에 Confiner(2D/구버전)가 없습니다.");
+            yield break;
+        }
+
+        // Follow가 바깥이면 안으로 한 번 스냅(옵션)
+        if (snapFollowInsideOnLoad) SnapFollowInsideIfNeeded(vcam, poly);
+
+        // 다음 LateUpdate에서 강제 재계산
+        InvalidateVcamState(vcam);
+
+        Debug.Log($"[CameraSave] 컨파이너 바운딩 갱신 완료 (map={mapId}, vcam={vcam.name})");
+    }
+
+    // ───────────────────── Helper: Confiner/VCam 찾기/바인딩 ─────────────────────
+
+    Collider2D FindConfineCollider(string mapId)
+    {
+        var go = GameObject.Find($"Cameras/MapCollider/{mapId}_Collider");
+        if (go) return go.GetComponent<Collider2D>();
+
+        return null;
+    }
+
+    Component GetActiveVirtualCamera()
+    {
+        // CinemachineCore.Instance.GetActiveBrain(0) → brain.ActiveVirtualCamera.VirtualCameraGameObject
+        var cmAsm = AppDomain.CurrentDomain.GetAssemblies()
+            .FirstOrDefault(a => a.GetName().Name.StartsWith("Cinemachine", StringComparison.OrdinalIgnoreCase));
+        if (cmAsm == null) return null;
+
+        var tCore = cmAsm.GetType("Cinemachine.CinemachineCore");
+        var tVcam = cmAsm.GetType("Cinemachine.CinemachineVirtualCamera");
+        if (tCore == null || tVcam == null) return null;
+
+        var inst = tCore.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)?.GetValue(null);
+        if (inst == null) return null;
+
+        var brainCount = (int)(tCore.GetProperty("BrainCount")?.GetValue(inst) ?? 0);
+        if (brainCount <= 0) return null;
+
+        var brain = tCore.GetMethod("GetActiveBrain", BindingFlags.Public | BindingFlags.Instance)?.Invoke(inst, new object[] { 0 });
+        if (brain == null) return null;
+
+        var icam = brain.GetType().GetProperty("ActiveVirtualCamera", BindingFlags.Public | BindingFlags.Instance)?.GetValue(brain);
+        if (icam == null) return null;
+
+        var vcamGO = icam.GetType().GetProperty("VirtualCameraGameObject", BindingFlags.Public | BindingFlags.Instance)?.GetValue(icam) as GameObject;
+        if (!vcamGO) return null;
+
+        var vcam = vcamGO.GetComponent(tVcam) as Component;
+        return vcam;
+    }
+
+    bool BindConfinerToVcam(Component vcam, Collider2D poly)
+    {
+        var tConf2D = vcam.GetType().Assembly.GetType("Cinemachine.CinemachineConfiner2D");
+        var tConf   = vcam.GetType().Assembly.GetType("Cinemachine.CinemachineConfiner");
+
+        Component conf = null;
+        if (tConf2D != null) conf = vcam.GetComponent(tConf2D) as Component;
+        if (conf == null && tConf != null) conf = vcam.GetComponent(tConf) as Component;
+        if (conf == null) return false;
+
+        var fld = conf.GetType().GetField("m_BoundingShape2D",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        fld?.SetValue(conf, poly);
+
+        var inv = conf.GetType().GetMethod("InvalidateCache",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            ?? conf.GetType().GetMethod("InvalidatePathCache",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        inv?.Invoke(conf, null);
+
+        return true;
+    }
+
+    void InvalidateVcamState(Component vcam)
+    {
+        var prop = vcam.GetType().GetProperty("PreviousStateIsValid",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        if (prop != null && prop.CanWrite) prop.SetValue(vcam, false);
+    }
+
+    void SnapFollowInsideIfNeeded(Component vcam, Collider2D poly)
+    {
+        // vcam.Follow (Transform)
+        var pFollow = vcam.GetType().GetProperty("Follow", BindingFlags.Instance | BindingFlags.Public);
+        var follow = pFollow?.GetValue(vcam) as Transform;
+        if (!follow || !poly) return;
+
+        var p = (Vector2)follow.position;
+        if (poly.OverlapPoint(p)) return;
+
+        var edge   = poly.ClosestPoint(p);
+        var center = (Vector2)poly.bounds.center;
+        var inside = Vector2.Lerp(edge, center, Mathf.Clamp01(snapLerp));
+        follow.position = new Vector3(inside.x, inside.y, follow.position.z);
+
+        Debug.Log("[CameraSave] Follow를 컨파이너 내부로 스냅");
     }
 }

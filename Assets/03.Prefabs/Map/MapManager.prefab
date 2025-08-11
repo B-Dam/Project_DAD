@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6101065659546350933}
   - component: {fileID: 6583311525861023535}
+  - component: {fileID: 7779492580353844139}
+  - component: {fileID: 1531753103447499175}
+  - component: {fileID: 638899642174405418}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
@@ -25,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7014593307187655460}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 140, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -44,22 +47,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c0702151e937a4e8ead43614a8d6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapBase: {fileID: 0}
-  mapData:
-    map_id: 
-    name: 
-    type: 0
-    left_map: 
-    right_map: 
-    up_map: 
-    down_map: 
-    bgm: 
-    player_position_left: {x: 0, y: 0}
-    player_position_right: {x: 0, y: 0}
-    player_position_up: {x: 0, y: 0}
-    player_position_down: {x: 0, y: 0}
   prevMapID: 
-  currentMapID: 
-  lastPlayerScale: {x: 0, y: 0, z: 0}
-  isClear105: 0
-  isClear108: 0
+  currentMapID: 001
+--- !u!114 &7779492580353844139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014593307187655460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66405f0176faace4da96e56d4234931d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: f6deb23fe4384fb2991c415fc8eada93
+--- !u!114 &1531753103447499175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014593307187655460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a071059d5356bd9469f5844f7e38e17f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &638899642174405418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014593307187655460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c09018680050254b9401b09adc5aa86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapColliderRoot: Cameras/MapCollider
+  colliderSuffix: _Collider
+  rebindOnStart: 1
+  waitFrames: 2
+  snapFollowInsideOnce: 1
+  snapBias: 0.02

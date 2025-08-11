@@ -153,13 +153,43 @@ public class SaveLoadManagerCore : MonoBehaviour
         yield return null;
         foreach (var mb in FindObjectsOfType<MonoBehaviour>(true))
             if (mb is IPostLoad post) post.OnPostLoad();
-
-        // 혹시 늦게 생성된 오브젝트가 있다면 한 번 더 시도(선택)
-        if (pending.Count > 0)
+        
+        // 정착 재시도 루프: 늦게 등장한 트리거까지 적용
+        int frames = 0;
+        int stable = 0;
+        const int MAX_FRAMES = 20;     // 필요에 맞게 조절 (보통 5~10로도 충분)
+        while (pending.Count > 0 && frames++ < MAX_FRAMES && stable < 2)
         {
+            int before = pending.Count;
+
+            // 1프레임 쉬면서 생성/활성/OnEnable 완료 대기
+            yield return null;
+
+            // 씬에 새로 생긴 저장대상 다시 등록(+비활성 포함)
             RegisterSaveables();
             TryApplyPending();
+
+            // 진행 상황 로깅
+            Debug.Log($"[SaveCore] settle {frames}: pending {before} -> {pending.Count}");
+
+            // 더 이상 줄지 않으면 안정화 카운트 증가
+            stable = (pending.Count == before) ? (stable + 1) : 0;
         }
+
+        if (pending.Count > 0)
+        {
+            Debug.LogWarning($"[SaveCore] 일부 항목 미적용(pending={pending.Count}). 다음 프레임에 재시도 예정.");
+        }
+        
+        yield return null;
+        
+        var updater = FindObjectOfType<CameraConfinerUpdater>(true);
+        if (updater != null)
+        {
+            // MapManager에 현재 맵 ID가 있다면
+            updater.RefreshById(MapManager.Instance.currentMapID);
+        }
+        
         IsRestoring = false;
     }
 
@@ -191,5 +221,6 @@ public class SaveLoadManagerCore : MonoBehaviour
 
     // 타입으로 간단 분류: 먼저 복원돼야 안정적인 애들
     bool IsEnvironment(ISaveable sv) =>
-        sv is HoleSave || sv is MapTriggerSave || sv is QuestItemSave || sv is DialogueSave || sv is NPCMoveTriggerSave || sv is CombatTriggerSave;
+        sv is HoleSave || sv is MapTriggerSave || sv is QuestItemSave || sv is DialogueSave || sv is MapManagerSave ||
+        sv is CameraSave || sv is NPCMoveTriggerSave || sv is CombatTriggerSave ;
 }
