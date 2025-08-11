@@ -6,20 +6,20 @@ public class DialogueSession
 {
     private DialogueDatabase.DialogueLine[] lines;
     private string[] ids;
-    private HashSet<string> seenIDs = new HashSet<string>();
+    private readonly HashSet<string> seenIDs;
+
 
     public int CurrentIndex { get; private set; } = 0;
 
-    public DialogueSession(DialogueDatabase.DialogueLine[] lines, string[] ids)
+    public DialogueSession(DialogueDatabase.DialogueLine[] lines, string[] ids, HashSet<string> sharedSeen)
     {
         this.lines = lines;
         this.ids = ids;
+        this.seenIDs = sharedSeen ?? new HashSet<string>();
     }
 
     public bool IsEmpty => lines == null || lines.Length == 0;
-
     public bool IsComplete => CurrentIndex >= lines.Length;
-
     public string CurrentID => ids != null && CurrentIndex < ids.Length ? ids[CurrentIndex] : null;
 
     // 다음 라인 이동
@@ -57,7 +57,9 @@ public class DialogueSession
     // 특정 ID가 이미 본 대사인지 확인
     public bool HasSeen(string id)
     {
-        return seenIDs.Contains(id);
+        bool result = seenIDs.Contains(id);
+        Debug.Log($"[DialogueSession#{id}] HasSeen -> {id} = {result} / 목록:[{string.Join(", ", seenIDs)}]");
+        return result;
     }
 
     // 지금까지 본 모든 ID 목록 조회 + 저장/로드 지원

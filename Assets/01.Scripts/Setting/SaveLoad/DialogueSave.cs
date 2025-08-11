@@ -109,7 +109,7 @@ public class DialogueSave : MonoBehaviour, ISaveable
             lines[i] = db.GetLineById(data.ids[i]);
 
         // 새로운 세션 생성 후 시작 (index=0에서 표시는 되지만, 곧 점프함)
-        var newSession = new DialogueSession(lines, data.ids);
+        var newSession = new DialogueSession(lines, data.ids, dm.SharedSeen);
         dm.StartDialogue(newSession);
         
         // 세션이 생긴 상태에서 한 번만 덮어쓰기 로드

@@ -30,6 +30,7 @@ public class DialogueManager : MonoBehaviour
     public DialogueDatabase.DialogueLine GetCurrentLine() => session.GetLine(session.CurrentIndex);
     public void UnlockInput() => isInputLocked = false;
     private readonly HashSet<string> _seenCache = new HashSet<string>();
+    public HashSet<string> SharedSeen => _seenCache;
 
     private void Awake()
     {
@@ -66,11 +67,12 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogueByIDs(string[] dialogueIDs)
     {
         if (dialogueIDs == null || dialogueIDs.Length == 0) return;
-        
-        // 실제 라인으로 변환해 세션 생성
+
         var lines = dialogueIDs.Select(id => DialogueDatabase.Instance.GetLineById(id)).ToArray();
-        var newSession = new DialogueSession(lines, dialogueIDs);
-        
+        if (session != null)
+            foreach (var s in session.GetSeenIDs()) _seenCache.Add(s);
+        var newSession = new DialogueSession(lines, dialogueIDs, _seenCache);
+
         // 대화 시작
         StartDialogue(newSession);
     }
@@ -142,6 +144,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        session.MarkSeen();
         session.MoveNext();
 
         if (session.IsComplete)
@@ -250,7 +253,12 @@ public class DialogueManager : MonoBehaviour
         onDialogueEndCallback -= callback;
     }
 
-    public bool HasSeen(string id) => (session?.HasSeen(id) ?? false) || _seenCache.Contains(id);
+    public bool HasSeen(string id)
+    {
+        bool inCache = _seenCache.Contains(id);
+        Debug.Log($"[DM] HasSeen? id:{id}, cache:{inCache}");
+        return inCache;
+    }
     public string[] GetAllSeenIDs()
     {
         var cur = session?.GetSeenIDs() ?? Array.Empty<string>();
