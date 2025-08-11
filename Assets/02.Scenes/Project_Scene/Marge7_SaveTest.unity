@@ -2587,6 +2587,14 @@ PrefabInstance:
       propertyPath: id
       value: 5b8f6ce4a80a4fcdba4818802b5aa7d6
       objectReference: {fileID: 0}
+    - target: {fileID: 817462854300639789, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[0].leftSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 817462854300639789, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[0].rightSprite
+      value: 
+      objectReference: {fileID: 6970758700920361785, guid: c68f65847f1ac1c49bca2bda3453d244, type: 3}
     - target: {fileID: 1472475050246985102, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: id
       value: 09bf6a75596945b1aa4406d79ec16c7b
@@ -3145,6 +3153,14 @@ PrefabInstance:
       propertyPath: id
       value: d68b8cefbc6d49beba7e146f8d712587
       objectReference: {fileID: 0}
+    - target: {fileID: 1180613185057763027, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180613185057763027, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 1422143884584965906, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: canvas
       value: 
@@ -3225,6 +3241,14 @@ PrefabInstance:
       propertyPath: boomEffectUI
       value: 
       objectReference: {fileID: 1031358000}
+    - target: {fileID: 3933741430221610814, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933741430221610814, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 3938713611237714752, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
       value: 
@@ -3276,6 +3300,14 @@ PrefabInstance:
     - target: {fileID: 5572017012775469168, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: id
       value: fba026c75fbd47739e99541c92f34bda
+      objectReference: {fileID: 0}
+    - target: {fileID: 5748134121736623914, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5748134121736623914, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 5802032616927356568, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: id
@@ -3337,6 +3369,14 @@ PrefabInstance:
       propertyPath: boomEffectUI
       value: 
       objectReference: {fileID: 1031358000}
+    - target: {fileID: 6500690533257143546, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6500690533257143546, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6677081444119925287, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: id
       value: 431c71f42b3c494ea62f29facec5902c
@@ -3376,6 +3416,14 @@ PrefabInstance:
     - target: {fileID: 7460073330832656746, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: id
       value: 9c649ab1bc474cde9baaa90cd4ef4535
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466077717006364820, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7466077717006364820, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 7700543047543250414, guid: 112690eb8072aef4f9f35f6f4fb3158e, type: 3}
       propertyPath: fadeCanvas
