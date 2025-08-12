@@ -18,11 +18,9 @@ public class MainMenuManager : MonoBehaviour
 
     private void StartGame()
     {
-        SceneManager.LoadScene("Marge5"); // 실제 게임 씬 이름
+        SceneManager.LoadScene("RobbyScene"); // 실제 게임 씬 이름
     }
-
-   
-
+    
     private void QuitGame()
     {
         //Debug.Log("게임 종료 시도");

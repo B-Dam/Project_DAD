@@ -6,10 +6,10 @@ public class CutsceneDialogueUI : MonoBehaviour
 {
     public static CutsceneDialogueUI Instance { get; private set; }
 
-    [Header("°ËÀº ÆĞ³Î¿ë ´ë»ç ID")]
+    [Header("ê²€ì€ íŒ¨ë„ìš© ëŒ€ì‚¬ ID")]
     public List<string> blackPanelDialogueID;
 
-    [Header("°ËÀº ÆĞ³Î UI")]
+    [Header("ê²€ì€ íŒ¨ë„ UI")]
     public GameObject blackPanel;
     public TextMeshProUGUI speakerText;
     public TextMeshProUGUI dialogueText;

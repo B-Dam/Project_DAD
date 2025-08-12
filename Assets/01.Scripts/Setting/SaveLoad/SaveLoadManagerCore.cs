@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class SaveEntry { public string id; public string json; }
@@ -19,6 +20,11 @@ public class SaveWrapper
 public class SaveLoadManagerCore : MonoBehaviour
 {
     public static SaveLoadManagerCore Instance { get; private set; }
+    public static int? PendingLoadSlot { get; private set; }
+    public static float SpawnSafetySeconds = 0.35f;
+
+    static Collider2D[] _tmpCols2D = Array.Empty<Collider2D>();
+    static Collider[]   _tmpCols3D = Array.Empty<Collider>();
     
     // 복구 중인제 확인 하는 불 값
     public static bool IsRestoring { get; private set; }
@@ -217,6 +223,71 @@ public class SaveLoadManagerCore : MonoBehaviour
             Application.persistentDataPath,
             string.Format(FILE_PATTERN, slotIndex));
         return System.IO.File.Exists(path);
+    }
+    
+    // 저장: 다음 씬에서 로드하도록 예약
+    public static void RequestLoadOnNextScene(int slot)
+    {
+        PendingLoadSlot = slot;
+        SceneManager.sceneLoaded -= OnSceneLoadedStatic; // 중복 방지
+        SceneManager.sceneLoaded += OnSceneLoadedStatic;
+    }
+    
+    static void OnSceneLoadedStatic(Scene scene, LoadSceneMode mode)
+    {
+        if (!PendingLoadSlot.HasValue || Instance == null) return;
+
+        // 가장 이른 타이밍에 플레이어 콜라이더 OFF (첫 물리 스텝 전에 막음)
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            _tmpCols2D = player.GetComponentsInChildren<Collider2D>(true);
+            _tmpCols3D = player.GetComponentsInChildren<Collider>(true);
+            foreach (var c in _tmpCols2D) c.enabled = false;
+            foreach (var c in _tmpCols3D) c.enabled = false;
+        }
+        else
+        {
+            _tmpCols2D = Array.Empty<Collider2D>();
+            _tmpCols3D = Array.Empty<Collider>();
+        }
+
+        Instance.StartCoroutine(Instance.CoDeferredLoad(PendingLoadSlot.Value));
+    }
+    
+    public IEnumerator CoDeferredLoad(int slot)
+    {
+        // 한두 프레임 대기: 메인 씬의 Awake/Start 정착
+        yield return null;
+        yield return null;
+
+        RegisterSaveables();
+
+        // 실제 저장 복원
+        LoadGame(slot);
+
+        // 복원 완료 후, 잠깐의 실시간 딜레이로 트리거 안정화
+        if (SpawnSafetySeconds > 0f)
+            yield return new WaitForSecondsRealtime(SpawnSafetySeconds);
+
+        // 콜라이더 다시 ON (플레이어가 교체/리스폰되었을 수 있으니 보정)
+        if (_tmpCols2D.Length == 0 && _tmpCols3D.Length == 0)
+        {
+            var player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                _tmpCols2D = player.GetComponentsInChildren<Collider2D>(true);
+                _tmpCols3D = player.GetComponentsInChildren<Collider>(true);
+            }
+        }
+        foreach (var c in _tmpCols2D) if (c) c.enabled = true;
+        foreach (var c in _tmpCols3D) if (c) c.enabled = true;
+
+        _tmpCols2D = Array.Empty<Collider2D>();
+        _tmpCols3D = Array.Empty<Collider>();
+
+        PendingLoadSlot = null;
+        SceneManager.sceneLoaded -= OnSceneLoadedStatic;
     }
 
     // 타입으로 간단 분류: 먼저 복원돼야 안정적인 애들
