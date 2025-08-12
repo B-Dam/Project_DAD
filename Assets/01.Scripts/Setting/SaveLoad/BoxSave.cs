@@ -34,7 +34,7 @@ public class BoxSave : MonoBehaviour, ISaveable, IPostLoad
             if (!idComp)
             {
                 idComp = GetComponent<UniqueID>();
-                if (!idComp) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
+                //if (!idComp) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
             }
             return idComp.ID;
         }

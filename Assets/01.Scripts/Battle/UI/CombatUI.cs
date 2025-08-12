@@ -150,7 +150,7 @@ public class CombatUI : MonoBehaviour
             var txt = go.GetComponentInChildren<TMP_Text>();
             if (txt == null)
             {
-                Debug.LogError("[CombatUI] Instantiate된 아이콘에 TMP_Text가 없습니다!", go);
+                //Debug.LogError("[CombatUI] Instantiate된 아이콘에 TMP_Text가 없습니다!", go);
                 continue;
             }
 

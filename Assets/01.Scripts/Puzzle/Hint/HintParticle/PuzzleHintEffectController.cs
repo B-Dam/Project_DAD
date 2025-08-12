@@ -13,13 +13,13 @@ public class PuzzleHintEffectController : MonoBehaviour
     {
         if (grayscaleVolume == null)
         {
-            Debug.LogWarning("Volume이 연결되지 않았습니다.");
+            //Debug.LogWarning("Volume이 연결되지 않았습니다.");
             return;
         }
 
         if (!grayscaleVolume.profile.TryGet(out colorAdjustments))
         {
-            Debug.LogWarning("ColorAdjustments가 Volume에 없습니다.");
+            //Debug.LogWarning("ColorAdjustments가 Volume에 없습니다.");
         }
     }
 
@@ -31,6 +31,6 @@ public class PuzzleHintEffectController : MonoBehaviour
         if (colorAdjustments == null) return;
 
         colorAdjustments.saturation.value = enable ? -100f : 0f;
-        Debug.Log($"화면 색상 변경됨: {(enable ? "흑백" : "컬러")}");
+        //Debug.Log($"화면 색상 변경됨: {(enable ? "흑백" : "컬러")}");
     }
 }

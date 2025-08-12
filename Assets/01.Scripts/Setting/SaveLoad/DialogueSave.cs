@@ -25,7 +25,7 @@ public class DialogueSave : MonoBehaviour, ISaveable
             if (!idComp)
             {
                 idComp = GetComponent<UniqueID>();
-                if (!idComp) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
+                //if (!idComp) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
             }
             return idComp.ID;
         }
@@ -90,7 +90,7 @@ public class DialogueSave : MonoBehaviour, ISaveable
 
         if (dm == null || db == null)
         {
-            Debug.LogWarning("[DialogueSave] DialogueManager/Database 준비 안 됨. 적용 보류.");
+            //Debug.LogWarning("[DialogueSave] DialogueManager/Database 준비 안 됨. 적용 보류.");
             yield break;
         }
 

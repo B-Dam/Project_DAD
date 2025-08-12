@@ -21,7 +21,7 @@ public class Switch_PressureTrigger : MonoBehaviour
         if ((other.CompareTag("Player") || other.CompareTag("Box")) &&
             IsFullyInside(switchCollider, other)) // 순서: 스위치가 대상 안에 있는가?
         {
-            Debug.Log(" 스위치가 대상 안에 완전히 들어옴 → 문 열기");
+            //Debug.Log(" 스위치가 대상 안에 완전히 들어옴 → 문 열기");
             AudioManager.Instance.PlaySFX("PushSwitch");
 
             OpenDoor();

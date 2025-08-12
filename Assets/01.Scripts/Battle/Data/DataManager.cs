@@ -61,7 +61,7 @@ public class DataManager : MonoBehaviour
         questTable = CsvDatabase.LoadCsvDict("questDB", f => new QuestData(f));
         characterTable = CsvDatabase.LoadCsvDict("characterDB", f => new CharacterData(f));
         dialogueTable = CsvDatabase.LoadCsvDict("dialogueDB", f => new DialogueData(f));
-        Debug.Log($"퀘스트 {questTable.Count}개, 캐릭터 {characterTable.Count}개, 대화 {dialogueTable.Count}개 로드 완료");
+        //Debug.Log($"퀘스트 {questTable.Count}개, 캐릭터 {characterTable.Count}개, 대화 {dialogueTable.Count}개 로드 완료");
     }
 
     /// <summary>
@@ -102,8 +102,8 @@ public class DataManager : MonoBehaviour
             .FirstOrDefault(c =>
                 c.displayName == displayName &&
                 c.rank == rank);
-        if (card == null)
-            Debug.LogError($"GetCard 실패: '{displayName}' rank={rank} 카드가 없습니다.");
+        //if (card == null)
+        //    Debug.LogError($"GetCard 실패: '{displayName}' rank={rank} 카드가 없습니다.");
         return card;
     }
     

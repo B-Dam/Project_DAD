@@ -79,13 +79,12 @@ public class InteractHintController : MonoBehaviour
     {
         if (currentHintUI == null)
         {
-            GameObject prefab = Resources.Load<GameObject>("PressSpace/PressSpaceUI");
-            if (prefab == null)
+            if (hintUIPrefab == null)
             {
-                Debug.LogError("❌ Resources/PressSpaceUI 프리팹이 없습니다.");
+                //Debug.LogError("❌ PressSpaceUI 프리팹이 없습니다.");
                 return;
             }
-            currentHintUI = Instantiate(prefab);
+            currentHintUI = Instantiate(hintUIPrefab);
         }
 
         currentHintUI.SetActive(true);

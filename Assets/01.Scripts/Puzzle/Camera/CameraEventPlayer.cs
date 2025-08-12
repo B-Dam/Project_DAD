@@ -35,7 +35,7 @@ public class CameraEventPlayer : MonoBehaviour
     {
         if (virtualCam == null || defaultFollowTarget == null)
         {
-            Debug.LogError("❌ virtualCam 또는 defaultFollowTarget이 할당되지 않았습니다!");
+            //Debug.LogError("❌ virtualCam 또는 defaultFollowTarget이 할당되지 않았습니다!");
             yield break;
         }
 

@@ -46,7 +46,7 @@ public class SaveLoadManagerCore : MonoBehaviour
             string id = sv.UniqueID;
             if (string.IsNullOrEmpty(id))
             {
-                Debug.LogWarning($"[SaveCore] 빈 ID: {((MonoBehaviour)sv).name}");
+                //Debug.LogWarning($"[SaveCore] 빈 ID: {((MonoBehaviour)sv).name}");
                 continue;
             }
             if (!byId.TryGetValue(id, out var list))
@@ -78,13 +78,13 @@ public class SaveLoadManagerCore : MonoBehaviour
                     var mb = (MonoBehaviour)sv;
                     return $"{mb.name}(activeInHierarchy={mb.gameObject.activeInHierarchy})";
                 }));
-                Debug.LogWarning($"[SaveCore] 중복 ID 해결: {kv.Key} -> {((MonoBehaviour)chosen).name} 선택 | 후보: {info}");
+                //Debug.LogWarning($"[SaveCore] 중복 ID 해결: {kv.Key} -> {((MonoBehaviour)chosen).name} 선택 | 후보: {info}");
             }
 
             saveables[kv.Key] = chosen;
         }
 
-        Debug.Log($"[SaveCore] ISaveable 등록 완료: {saveables.Count}개 (중복 해결 {dup}개)");
+        //Debug.Log($"[SaveCore] ISaveable 등록 완료: {saveables.Count}개 (중복 해결 {dup}개)");
     }
 
     public void SaveGame(int slotIndex)
@@ -101,7 +101,7 @@ public class SaveLoadManagerCore : MonoBehaviour
 
         var path = Path.Combine(Application.persistentDataPath, string.Format(FILE_PATTERN, slotIndex));
         File.WriteAllText(path, json);
-        Debug.Log($"[SaveCore] 슬롯 {slotIndex} 저장 → {path}");
+        //Debug.Log($"[SaveCore] 슬롯 {slotIndex} 저장 → {path}");
     }
 
     public void LoadGame(int slotIndex)
@@ -113,7 +113,7 @@ public class SaveLoadManagerCore : MonoBehaviour
     {
         IsRestoring = true;
         var path = Path.Combine(Application.persistentDataPath, string.Format(FILE_PATTERN, slotIndex));
-        if (!File.Exists(path)) { Debug.LogWarning($"[SaveCore] 파일 없음: {path}"); IsRestoring = false; yield break; }
+        //if (!File.Exists(path)) { Debug.LogWarning($"[SaveCore] 파일 없음: {path}"); IsRestoring = false; yield break; }
 
         var wrapper = JsonUtility.FromJson<SaveWrapper>(File.ReadAllText(path));
 
@@ -147,7 +147,7 @@ public class SaveLoadManagerCore : MonoBehaviour
                 pending[e.id] = e.json; // 나중에 등장하면 적용
             }
         }
-        Debug.Log($"[SaveCore] Restore 적용: env={applied1}, dynamic={applied2}, pending={pending.Count}");
+        //Debug.Log($"[SaveCore] Restore 적용: env={applied1}, dynamic={applied2}, pending={pending.Count}");
 
         // 다음 프레임에 PostLoad 훅 호출(겹침 정리 등)
         yield return null;
@@ -170,7 +170,7 @@ public class SaveLoadManagerCore : MonoBehaviour
             TryApplyPending();
 
             // 진행 상황 로깅
-            Debug.Log($"[SaveCore] settle {frames}: pending {before} -> {pending.Count}");
+            //Debug.Log($"[SaveCore] settle {frames}: pending {before} -> {pending.Count}");
 
             // 더 이상 줄지 않으면 안정화 카운트 증가
             stable = (pending.Count == before) ? (stable + 1) : 0;
@@ -178,7 +178,7 @@ public class SaveLoadManagerCore : MonoBehaviour
 
         if (pending.Count > 0)
         {
-            Debug.LogWarning($"[SaveCore] 일부 항목 미적용(pending={pending.Count}). 다음 프레임에 재시도 예정.");
+            //Debug.LogWarning($"[SaveCore] 일부 항목 미적용(pending={pending.Count}). 다음 프레임에 재시도 예정.");
         }
         
         yield return null;
@@ -208,7 +208,7 @@ public class SaveLoadManagerCore : MonoBehaviour
                 applied++;
             }
         }
-        if (applied > 0) Debug.Log($"[SaveCore] pending 적용: {applied}, 남음={pending.Count}");
+        //if (applied > 0) Debug.Log($"[SaveCore] pending 적용: {applied}, 남음={pending.Count}");
     }
     
     public bool HasSaveFile(int slotIndex)

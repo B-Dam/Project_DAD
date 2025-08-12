@@ -16,7 +16,7 @@ public class CsvDatabase : MonoBehaviour
         var ta = Resources.Load<TextAsset>($"CSV/{fileName}");
         if (ta == null)
         {
-            Debug.LogError($"CSV 로드 실패: Resources/CSV/{fileName}.csv 를 찾을 수 없습니다.");
+            //Debug.LogError($"CSV 로드 실패: Resources/CSV/{fileName}.csv 를 찾을 수 없습니다.");
             return dict;
         }
         

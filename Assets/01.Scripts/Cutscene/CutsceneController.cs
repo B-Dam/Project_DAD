@@ -57,12 +57,12 @@ public class CutsceneController : MonoBehaviour
         DialogueUIDisplayer.Instance.SetPreventBlink(true);
         isVideoPreparing = true;
 
-        Debug.Log($"컷신 재생 요청: path = {path}");
+        //Debug.Log($"컷신 재생 요청: path = {path}");
 
         VideoClip clip = Resources.Load<VideoClip>(path);
         if (clip == null)
         {
-            Debug.LogWarning($"[CutsceneController] 영상 로드 실패: {path}");
+            //Debug.LogWarning($"[CutsceneController] 영상 로드 실패: {path}");
             onEnd?.Invoke();
             return;
         }
@@ -109,7 +109,7 @@ public class CutsceneController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[Cutscene] DialogueManager.Instance가 null임");
+            //Debug.LogError("[Cutscene] DialogueManager.Instance가 null임");
         }
     }
 

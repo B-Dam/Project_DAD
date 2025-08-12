@@ -27,7 +27,7 @@ public class PuzzleManager : MonoBehaviour
     {
         if (mapDatabaseTextAsset == null)
         {
-            Debug.LogWarning("맵 데이터가 연결되지 않았습니다.");
+            //Debug.LogWarning("맵 데이터가 연결되지 않았습니다.");
             return;
         }
         puzzleMapIDs.Clear();

@@ -34,7 +34,7 @@ public class CameraSave : MonoBehaviour, ISaveable
             camPosition = Camera.main ? Camera.main.transform.position : Vector3.zero
         };
 
-        Debug.Log($"[CameraSave/Capture] id={UniqueID} mapId={data.mapId} size={data.orthoSize}");
+        //Debug.Log($"[CameraSave/Capture] id={UniqueID} mapId={data.mapId} size={data.orthoSize}");
         return data; // JsonUtility 직렬화용 POCO
     }
 
@@ -69,28 +69,28 @@ public class CameraSave : MonoBehaviour, ISaveable
 
         if (string.IsNullOrEmpty(mapId))
         {
-            Debug.LogWarning("[CameraSave] mapId가 비어 있어 컨파이너 바인딩을 건너뜁니다.");
+            //Debug.LogWarning("[CameraSave] mapId가 비어 있어 컨파이너 바인딩을 건너뜁니다.");
             yield break;
         }
 
         var poly = FindConfineCollider(mapId);
         if (!poly)
         {
-            Debug.LogWarning($"[CameraSave] {confinePrefix}{mapId} Collider2D를 찾지 못했습니다.");
+            //Debug.LogWarning($"[CameraSave] {confinePrefix}{mapId} Collider2D를 찾지 못했습니다.");
             yield break;
         }
 
         var vcam = GetActiveVirtualCamera();
         if (!vcam)
         {
-            Debug.LogWarning("[CameraSave] 활성 CinemachineVirtualCamera를 찾지 못했습니다.");
+            //Debug.LogWarning("[CameraSave] 활성 CinemachineVirtualCamera를 찾지 못했습니다.");
             yield break;
         }
 
         // 활성 VCam의 Confiner에만 바인딩(2D/구버전 대응)
         if (!BindConfinerToVcam(vcam, poly))
         {
-            Debug.LogWarning($"[CameraSave] {vcam.name}에 Confiner(2D/구버전)가 없습니다.");
+            //Debug.LogWarning($"[CameraSave] {vcam.name}에 Confiner(2D/구버전)가 없습니다.");
             yield break;
         }
 
@@ -100,7 +100,7 @@ public class CameraSave : MonoBehaviour, ISaveable
         // 다음 LateUpdate에서 강제 재계산
         InvalidateVcamState(vcam);
 
-        Debug.Log($"[CameraSave] 컨파이너 바운딩 갱신 완료 (map={mapId}, vcam={vcam.name})");
+        //Debug.Log($"[CameraSave] 컨파이너 바운딩 갱신 완료 (map={mapId}, vcam={vcam.name})");
     }
 
     // ───────────────────── Helper: Confiner/VCam 찾기/바인딩 ─────────────────────
@@ -188,6 +188,6 @@ public class CameraSave : MonoBehaviour, ISaveable
         var inside = Vector2.Lerp(edge, center, Mathf.Clamp01(snapLerp));
         follow.position = new Vector3(inside.x, inside.y, follow.position.z);
 
-        Debug.Log("[CameraSave] Follow를 컨파이너 내부로 스냅");
+        //Debug.Log("[CameraSave] Follow를 컨파이너 내부로 스냅");
     }
 }

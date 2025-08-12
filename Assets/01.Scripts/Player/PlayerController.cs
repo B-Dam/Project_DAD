@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
             Vector2 origin = transform.position;
             Vector2 direction = lastMoveDirection.normalized;
 
-            Debug.DrawRay(origin, direction * interactRange, Color.red, 0.5f); // 시각화
+            //Debug.DrawRay(origin, direction * interactRange, Color.red, 0.5f); // 시각화
 
             RaycastHit2D hit = Physics2D.Raycast(origin, direction, interactRange, interactLayer);
 
@@ -274,13 +274,13 @@ public class PlayerController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("⚠️ 충돌했지만 IInteractable 없음: " + target.name);
+                        //Debug.Log("⚠️ 충돌했지만 IInteractable 없음: " + target.name);
                     }
                 }
             }
             else
             {
-                Debug.Log("❌ 상호작용 대상 없음");
+                //Debug.Log("❌ 상호작용 대상 없음");
             }
         }
     }

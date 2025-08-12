@@ -53,7 +53,7 @@ public class PuzzleHintManager : MonoBehaviour
         foreach (string mapID in PuzzleManager.Instance.GetAllPuzzleMapIDs())
         {
             hintCounts[mapID] = maxHintCount;
-            Debug.Log($"{mapID}[HintManager] 초기 힌트 횟수 설정됨: {maxHintCount}회");
+            //Debug.Log($"{mapID}[HintManager] 초기 힌트 횟수 설정됨: {maxHintCount}회");
         }
 
         if (puzzleHintButton != null)
@@ -62,7 +62,7 @@ public class PuzzleHintManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[HintManager] puzzleHintButton이 할당되지 않았습니다.");
+            //Debug.LogWarning("[HintManager] puzzleHintButton이 할당되지 않았습니다.");
 
         }
     }
@@ -144,13 +144,13 @@ public class PuzzleHintManager : MonoBehaviour
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null || Time.timeScale == 0f || !PlayerController.Instance.CanMove())
         {
-            Debug.LogWarning("플레이어 이동 불가 상태 혹은 게임 멈춘상태");
+            //Debug.LogWarning("플레이어 이동 불가 상태 혹은 게임 멈춘상태");
             return;
         }
         // 힌트가 이미 활성화되어 있으면 → 종료
         if (isActive)
         {
-            Debug.Log("[HintManager] 힌트 중 E키 or 버튼 눌림 → 힌트 종료");
+            //Debug.Log("[HintManager] 힌트 중 E키 or 버튼 눌림 → 힌트 종료");
             DeactivateHint();
             return;
         }
@@ -167,7 +167,7 @@ public class PuzzleHintManager : MonoBehaviour
 
         if (target == null || answer == null)
         {
-            Debug.LogWarning("[HintManager] 타겟 또는 정답이 없습니다.");
+            //Debug.LogWarning("[HintManager] 타겟 또는 정답이 없습니다.");
             return;
         }
         float dist1 = Vector2.Distance(finder.player.position, target.position);
@@ -177,12 +177,12 @@ public class PuzzleHintManager : MonoBehaviour
         float touchingThreshold = 0.2f;
         if (dist1 < touchingThreshold)
         {
-            Debug.Log($"[HintManager] 박스와 너무 가까움. 힌트 생략됨. 거리: {dist1:F2}");
+            //Debug.Log($"[HintManager] 박스와 너무 가까움. 힌트 생략됨. 거리: {dist1:F2}");
             return;
         }
         if (dist2 < touchingThreshold)
         {
-            Debug.Log($"[HintManager] 정답과 너무 가까움. 힌트 생략됨. 거리: {dist2:F2}");
+            //Debug.Log($"[HintManager] 정답과 너무 가까움. 힌트 생략됨. 거리: {dist2:F2}");
             return;
         }
         // 힌트 활성화
@@ -211,12 +211,12 @@ public class PuzzleHintManager : MonoBehaviour
         hintCounts[CurrentMapID()]--;
         ui?.UpdateHintIcons(GetCurrentHintCount());
 
-        Debug.Log($"[HintManager] 힌트 사용됨 - 남은 횟수: {hintCounts[CurrentMapID()]}");
+        //Debug.Log($"[HintManager] 힌트 사용됨 - 남은 횟수: {hintCounts[CurrentMapID()]}");
     }
     // 힌트 비활성화 처리
     public void DeactivateHint()
     {
-        Debug.Log($"[HintManager] 힌트 비활성화 호출됨 (duration: {durationTimer:F2})");
+        //Debug.Log($"[HintManager] 힌트 비활성화 호출됨 (duration: {durationTimer:F2})");
         isActive = false;
 
         if (activePlayerTargetToPlayer != null)

@@ -108,7 +108,7 @@ public class PuzzleHintConnector : MonoBehaviour
         float lifetime = particleInstance.main.startLifetime.constant;
         float simulateTime = lifetime * normalized;// 거리 비례 시뮬레이션 시간 계산
 
-        Debug.Log("simulateTime" + simulateTime);
+        //Debug.Log("simulateTime" + simulateTime);
         // 위치, 회전, 크기 설정
         UpdateParticlePositionAndRotation();
 
@@ -118,7 +118,7 @@ public class PuzzleHintConnector : MonoBehaviour
         particleInstance.Pause();
 
         yield return null; // 렌더링 한 프레임 기다리기
-        Debug.Log("[Connector] 파티클 재생 시작 (Play 호출)");
+        //Debug.Log("[Connector] 파티클 재생 시작 (Play 호출)");
         particleInstance.Play();
     }
 

@@ -43,10 +43,10 @@ public class DialogueDatabase : MonoBehaviour
     public void LoadCSV(string fileName)
     {
         dialogueDict.Clear();
-        TextAsset csvData = Resources.Load<TextAsset>("CSV/dialog/" + fileName);
+        TextAsset csvData = Resources.Load<TextAsset>("CSV/" + fileName);
         if (csvData == null)
         {
-            Debug.LogError($"❌ CSV 파일 'CSV/dialog/{fileName}'을(를) 찾을 수 없습니다.");
+            //Debug.LogError($"❌ CSV 파일 'CSV/{fileName}'을(를) 찾을 수 없습니다.");
             return;
         }
 

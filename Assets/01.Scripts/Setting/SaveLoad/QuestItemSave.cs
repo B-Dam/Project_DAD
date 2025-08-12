@@ -19,7 +19,7 @@ public class QuestItemSave : MonoBehaviour, ISaveable
             if (idComp == null)
             {
                 idComp = GetComponent<UniqueID>();
-                if (idComp == null) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
+                //if (idComp == null) Debug.LogError($"[Save] UniqueID 누락: {name}", this);
             }
             return idComp.ID;
         }

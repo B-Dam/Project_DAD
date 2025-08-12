@@ -84,7 +84,7 @@ public class MapTransition : MonoBehaviour
                 ? requiredComplteQuestId
                 : requiredinprogressQuestId;
 
-            Debug.Log($"❌ 이동 차단됨: 퀘스트 '{failedQuestId}' 조건 불충족");
+            //Debug.Log($"❌ 이동 차단됨: 퀘스트 '{failedQuestId}' 조건 불충족");
             StartInteractionCooldown(); // 쿨타임 적용
         }
 }
@@ -141,7 +141,7 @@ public class MapTransition : MonoBehaviour
         {
             player.transform.position = destinationPoint.position;
             //cam.transform.position = new Vector3(destinationPoint.position.x, destinationPoint.position.y, cam.transform.position.z);
-            Debug.Log($"➡ {player.name} 이동 완료: {destinationPoint.position}");
+            //Debug.Log($"➡ {player.name} 이동 완료: {destinationPoint.position}");
 
             // 체크된 경우에만 위치 저장
             if (shouldSavePosition)
@@ -151,7 +151,7 @@ public class MapTransition : MonoBehaviour
                 if (resettable != null)
                 {
                     resettable.SaveResetPlayerPoint(currentMapID);
-                    Debug.Log(" 플레이어 위치 저장됨");
+                    //Debug.Log(" 플레이어 위치 저장됨");
                 }
             }
         }
@@ -254,9 +254,9 @@ public class MapTransition : MonoBehaviour
     private IEnumerator DisableInteractionForSeconds(float duration)
     {
         canInteract = false;
-        Debug.Log($"🕒 MapTransition 쿨타임 시작 ({duration}초)");
+        //Debug.Log($"🕒 MapTransition 쿨타임 시작 ({duration}초)");
         yield return new WaitForSeconds(duration);
         canInteract = true;
-        Debug.Log("✅ MapTransition 쿨타임 해제됨");
+        //Debug.Log("✅ MapTransition 쿨타임 해제됨");
     }
 }

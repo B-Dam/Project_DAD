@@ -412,12 +412,12 @@ public class CombatManager : MonoBehaviour
         
         if (enemyHp <= 0)
         {
-            Debug.Log("Victory!");
+            //Debug.Log("Victory!");
             // 승리 시 추가 로직
         }
         else if (playerHp <= 0)
         {
-            Debug.Log("Defeat...");
+            //Debug.Log("Defeat...");
         }
     }
     

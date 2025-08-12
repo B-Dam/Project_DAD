@@ -256,7 +256,7 @@ public class DialogueManager : MonoBehaviour
     public bool HasSeen(string id)
     {
         bool inCache = _seenCache.Contains(id);
-        Debug.Log($"[DM] HasSeen? id:{id}, cache:{inCache}");
+        //Debug.Log($"[DM] HasSeen? id:{id}, cache:{inCache}");
         return inCache;
     }
     public string[] GetAllSeenIDs()

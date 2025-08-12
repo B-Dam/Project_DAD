@@ -76,11 +76,11 @@ public class CombatSceneController : MonoBehaviour
         else
         {
             // 전투 세팅 데이터가 없으면 : 배틀 씬에서 테스트 하거나 etc
-            Debug.LogWarning("전투 세팅 데이터가 없습니다. 모든 환경 중 하나를 랜덤으로 지정합니다.");
+            //Debug.LogWarning("전투 세팅 데이터가 없습니다. 모든 환경 중 하나를 랜덤으로 지정합니다.");
             if (allEnvironments != null && allEnvironments.Count > 0)
                 currentEnvironment = allEnvironments[Random.Range(0, allEnvironments.Count)];
             else
-                Debug.LogError("allEnvironments에 할당된 SO가 없습니다!");
+                //Debug.LogError("allEnvironments에 할당된 SO가 없습니다!");
             
             // 환경 아이콘 및 툴팁 텍스트 설정
             RefreshEnvironmentUI();
@@ -117,7 +117,7 @@ public class CombatSceneController : MonoBehaviour
 
         if (candidates.Count == 0)
         {
-            Debug.LogWarning($"[{data.enemyName}]에 매핑된 환경 SO가 없습니다. 전체 풀에서 선택합니다.");
+            //Debug.LogWarning($"[{data.enemyName}]에 매핑된 환경 SO가 없습니다. 전체 풀에서 선택합니다.");
             candidates = allEnvironments;
         }
 

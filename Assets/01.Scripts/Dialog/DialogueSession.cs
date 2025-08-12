@@ -58,7 +58,7 @@ public class DialogueSession
     public bool HasSeen(string id)
     {
         bool result = seenIDs.Contains(id);
-        Debug.Log($"[DialogueSession#{id}] HasSeen -> {id} = {result} / 목록:[{string.Join(", ", seenIDs)}]");
+        //Debug.Log($"[DialogueSession#{id}] HasSeen -> {id} = {result} / 목록:[{string.Join(", ", seenIDs)}]");
         return result;
     }
 

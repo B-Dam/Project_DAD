@@ -27,7 +27,7 @@ public class HoleSave : MonoBehaviour, ISaveable, IPostLoad
         {
             if (!idComp && !TryGetComponent(out idComp))
             {
-                Debug.LogError($"[HoleSave] UniqueID 누락: {name}", this);
+                //Debug.LogError($"[HoleSave] UniqueID 누락: {name}", this);
                 return null;
             }
             return idComp.ID;
@@ -50,8 +50,8 @@ public class HoleSave : MonoBehaviour, ISaveable, IPostLoad
         if (!targetTrigger)
             targetTrigger = GetComponentInChildren<HoleTrigger>(true);
 
-        if (!holeCoverPrefab)
-            Debug.LogWarning($"[HoleSave] holeCoverPrefab 미할당: {name}", this);
+        //if (!holeCoverPrefab)
+        //    Debug.LogWarning($"[HoleSave] holeCoverPrefab 미할당: {name}", this);
     }
 #endif
 
@@ -141,7 +141,7 @@ public class HoleSave : MonoBehaviour, ISaveable, IPostLoad
         {
             if (!holeCoverPrefab)
             {
-                Debug.LogWarning($"[HoleSave] holeCoverPrefab이 비어 있어 커버를 생성할 수 없습니다: {name}", this);
+                //Debug.LogWarning($"[HoleSave] holeCoverPrefab이 비어 있어 커버를 생성할 수 없습니다: {name}", this);
                 return;
             }
             var go = Instantiate(holeCoverPrefab, ResolveCoverPosition(), Quaternion.identity, transform);

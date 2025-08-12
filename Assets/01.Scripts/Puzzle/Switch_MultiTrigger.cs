@@ -29,7 +29,7 @@ public class Switch_MultiTrigger : MonoBehaviour
         {
             if (!isActivated)
             {
-                Debug.Log(" 모든 스위치가 누름 상태 → 작동!");
+                //Debug.Log(" 모든 스위치가 누름 상태 → 작동!");
                 OpenTargetB();
                 isActivated = true;
             }
@@ -38,7 +38,7 @@ public class Switch_MultiTrigger : MonoBehaviour
         {
             if (isActivated)
             {
-                Debug.Log(" 하나 이상 비었음 → 꺼짐");
+                //Debug.Log(" 하나 이상 비었음 → 꺼짐");
                 CloseTargetB();
                 isActivated = false;
             }
@@ -67,11 +67,11 @@ public class Switch_MultiTrigger : MonoBehaviour
                 if (AudioManager.Instance != null)
                 {
                     AudioManager.Instance.PlaySFX("Puzzle/PushSwitch");
-                    Debug.Log($"스위치 '{switchCol.name}' 활성화 효과음 재생! (상태 변경 감지)");
+                    //Debug.Log($"스위치 '{switchCol.name}' 활성화 효과음 재생! (상태 변경 감지)");
                 }
                 else
                 {
-                    Debug.LogWarning($"스위치 '{switchCol.name}': AudioManager.Instance가 null이라 효과음 재생 실패.");
+                    //Debug.LogWarning($"스위치 '{switchCol.name}': AudioManager.Instance가 null이라 효과음 재생 실패.");
                 }
             }
             switchStates[switchCol] = occupied;

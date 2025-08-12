@@ -9,11 +9,11 @@ public class TriggerTutorial : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        Debug.Log($" Trigger 작동됨! ({gameObject.name})");
+        //Debug.Log($" Trigger 작동됨! ({gameObject.name})");
 
         if (tutorialManager == null)
         {
-            Debug.LogError(" tutorialManager가 비어 있음!");
+            //Debug.LogError(" tutorialManager가 비어 있음!");
             return;
         }
 

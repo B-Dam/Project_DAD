@@ -38,7 +38,7 @@ public class PuzzleResettable : MonoBehaviour
         {
             resetPoints[mapID] = (transform.position, transform.rotation);
             savedMapIDs.Add(mapID);
-            Debug.Log($"[{name}] {mapID} 최초 위치 저장됨: {transform.position}");
+            //Debug.Log($"[{name}] {mapID} 최초 위치 저장됨: {transform.position}");
         }
     }
 
@@ -51,7 +51,7 @@ public class PuzzleResettable : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"[{name}] {mapID} 위치가 저장되지 않았습니다.");
+            //Debug.LogWarning($"[{name}] {mapID} 위치가 저장되지 않았습니다.");
         }
     }
     //void Awake()

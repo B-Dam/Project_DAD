@@ -59,7 +59,7 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"초기 맵 Map_{currentMapID} 을 씬에서 찾을 수 없습니다!");
+            //Debug.LogError($"초기 맵 Map_{currentMapID} 을 씬에서 찾을 수 없습니다!");
         }
 
         // ✅ 기본 BGM 설정 (처음 시작 시 필수)
@@ -71,18 +71,18 @@ public class MapManager : MonoBehaviour
         prevMapID = currentMapID;
         currentMapID = newMapID;
 
-        Debug.Log($"맵 데이터가 업데이트되었습니다: {currentMapID}");
+        //Debug.Log($"맵 데이터가 업데이트되었습니다: {currentMapID}");
 
         // currentMapTransform 설정
         Transform mapTransform = GameObject.Find(newMapID)?.transform;
-        Debug.Log(mapTransform);
+        //Debug.Log(mapTransform);
         if (mapTransform != null)
         {
             SetCurrentMapTransform(mapTransform);
         }
         else
         {
-            Debug.LogError($"❌ {newMapID} 이름의 맵 Transform을 찾을 수 없습니다!");
+            //Debug.LogError($"❌ {newMapID} 이름의 맵 Transform을 찾을 수 없습니다!");
             return;
         }
 
@@ -94,7 +94,7 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("❗ CameraConfinerUpdater를 찾을 수 없습니다.");
+            //Debug.LogWarning("❗ CameraConfinerUpdater를 찾을 수 없습니다.");
         }
 
         // BGM 설정
@@ -107,14 +107,14 @@ public class MapManager : MonoBehaviour
 
     public void ReapplyForCurrentMap()
     {
-        Debug.Log($"[Map] Reapply current={currentMapID}");
+        //Debug.Log($"[Map] Reapply current={currentMapID}");
 
         // 1) Confine_{ID} 오브젝트의 Collider2D 찾기
         var area = GameObject.Find($"Confine_{currentMapID}");
         var poly = area ? area.GetComponent<Collider2D>() : null;
         if (poly == null)
         {
-            Debug.LogWarning($"[Map] Confine_{currentMapID} Collider2D 없음");
+            //Debug.LogWarning($"[Map] Confine_{currentMapID} Collider2D 없음");
             return;
         }
 
@@ -124,7 +124,7 @@ public class MapManager : MonoBehaviour
                                  a.GetName().Name.StartsWith("Cinemachine", StringComparison.OrdinalIgnoreCase));
         if (cmAsm == null)
         {
-            Debug.LogWarning("[Map] Cinemachine 어셈블리 없음");
+            //Debug.LogWarning("[Map] Cinemachine 어셈블리 없음");
             return;
         }
 
@@ -137,7 +137,7 @@ public class MapManager : MonoBehaviour
 
         if (conf == null)
         {
-            Debug.LogWarning("[Map] Confiner(2D) 컴포넌트 없음");
+            //Debug.LogWarning("[Map] Confiner(2D) 컴포넌트 없음");
             return;
         }
 

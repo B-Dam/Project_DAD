@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7014593307187655460
+--- !u!1 &4968215376933021307
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6101065659546350933}
-  - component: {fileID: 6583311525861023535}
-  - component: {fileID: 7779492580353844139}
-  - component: {fileID: 1531753103447499175}
-  - component: {fileID: 638899642174405418}
+  - component: {fileID: 4695983433962618133}
+  - component: {fileID: 6195288624758175956}
+  - component: {fileID: 426544792912903367}
+  - component: {fileID: 3103969997419312618}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
@@ -20,28 +19,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6101065659546350933
+--- !u!4 &4695983433962618133
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014593307187655460}
+  m_GameObject: {fileID: 4968215376933021307}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 140, z: 0}
+  m_LocalPosition: {x: 29.778, y: -100.78227, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6583311525861023535
+--- !u!114 &6195288624758175956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014593307187655460}
+  m_GameObject: {fileID: 4968215376933021307}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7c0702151e937a4e8ead43614a8d6c4, type: 3}
@@ -49,46 +48,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevMapID: 
   currentMapID: 001
---- !u!114 &7779492580353844139
+--- !u!114 &426544792912903367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014593307187655460}
+  m_GameObject: {fileID: 4968215376933021307}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66405f0176faace4da96e56d4234931d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: f6deb23fe4384fb2991c415fc8eada93
---- !u!114 &1531753103447499175
+  id: 5e2679af008a4f92a2b2ddaa34c1039b
+--- !u!114 &3103969997419312618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014593307187655460}
+  m_GameObject: {fileID: 4968215376933021307}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a071059d5356bd9469f5844f7e38e17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &638899642174405418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014593307187655460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c09018680050254b9401b09adc5aa86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapColliderRoot: Cameras/MapCollider
-  colliderSuffix: _Collider
-  rebindOnStart: 1
-  waitFrames: 2
-  snapFollowInsideOnce: 1
-  snapBias: 0.02

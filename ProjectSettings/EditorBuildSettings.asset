@@ -48,7 +48,7 @@ EditorBuildSettings:
     path: Assets/02.Scenes/Maps/109.unity
     guid: fe371d4fe01973d43bc1db9ed60a5869
   - enabled: 1
-    path: Assets/02.Scenes/Creator_Scene/Battle.unity
+    path: Assets/02.Scenes/Project_Scene/Battle.unity
     guid: cfa7073d737002342925beb23051b232
   - enabled: 1
     path: Assets/02.Scenes/Project_Scene/Marge5.unity

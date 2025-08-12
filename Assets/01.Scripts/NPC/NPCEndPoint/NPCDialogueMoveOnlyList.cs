@@ -40,7 +40,7 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
             {
                 hasTriggered = true;
                 DialogueManager.Instance.RegisterOnDialogueEndCallback(OnDialogueEnded);// 대화가 끝날 때 호출될 콜백 등록
-                Debug.Log($"대사 ID '{currentID}' 감지됨 → 이동 시작");
+                //Debug.Log($"대사 ID '{currentID}' 감지됨 → 이동 시작");
             }
         }
     }
@@ -53,7 +53,7 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
 
         if (waypoints == null)
         {
-            Debug.LogWarning(" 도착지가 설정되지 않았습니다!");
+            //Debug.LogWarning(" 도착지가 설정되지 않았습니다!");
             return;
         }
         // 플레이어 비활성화
@@ -72,7 +72,7 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
             {
                 col.enabled = false; // 충돌 비활성화
             }
-            Debug.Log($"대상 '{obj.name}' → {waypoints} 으로 이동 시작");
+            //Debug.Log($"대상 '{obj.name}' → {waypoints} 으로 이동 시작");
             StartCoroutine(MoveAlongPath(obj, waypoints, moveDuration));
         }
     }
@@ -82,7 +82,7 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
         NPCMovementController npc = obj.GetComponent<NPCMovementController>();
         if (npc == null)
         {
-            Debug.LogWarning($"'{obj.name}'에 NPCMovementController가 없습니다.");
+            //Debug.LogWarning($"'{obj.name}'에 NPCMovementController가 없습니다.");
             yield break;
         }
 
@@ -124,10 +124,10 @@ public class NPCDialogueMoveOnlyList : MonoBehaviour
         if (moveFinishSetActive && obj != null)
         {
             obj.gameObject.SetActive(false);
-            Debug.Log($"{obj.name} → 이동 완료 후 비활성화됨");
+            //Debug.Log($"{obj.name} → 이동 완료 후 비활성화됨");
         }
 
-        Debug.Log($"{obj.name} 이동 완료: {path}");
+        //Debug.Log($"{obj.name} 이동 완료: {path}");
 
         PlayerController.Instance.enabled = true; // 플레이어 이동 활성화
         hintController?.EnableHint(); // 대사걸기 말풍선 활성화

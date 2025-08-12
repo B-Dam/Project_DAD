@@ -15,7 +15,7 @@ public class CameraConfinerUpdater : MonoBehaviour
     {
         if (!mapTransform)
         {
-            Debug.LogWarning("mapTransform is null");
+            //Debug.LogWarning("mapTransform is null");
             return;
         }
 
@@ -27,14 +27,14 @@ public class CameraConfinerUpdater : MonoBehaviour
         var go = GameObject.Find($"Cameras/MapCollider/{mapId}_Collider");
         if (!go)
         {
-            Debug.LogWarning($"Collider 오브젝트를 찾을 수 없습니다: {mapId}");
+            //Debug.LogWarning($"Collider 오브젝트를 찾을 수 없습니다: {mapId}");
             return;
         }
 
         var col = go.GetComponent<Collider2D>();
         if (!col)
         {
-            Debug.LogWarning($"Collider2D가 없습니다: {go.name}");
+            //Debug.LogWarning($"Collider2D가 없습니다: {go.name}");
             return;
         }
 
@@ -45,7 +45,7 @@ public class CameraConfinerUpdater : MonoBehaviour
     {
         if (!col)
         {
-            Debug.LogWarning("Collider2D is null");
+            //Debug.LogWarning("Collider2D is null");
             return;
         }
 
@@ -114,7 +114,7 @@ public class CameraConfinerUpdater : MonoBehaviour
         // F) 우선순위 복원
         RestorePriorities(prios);
 
-        Debug.Log($"Confiner 스마트 리프레시 완료 (active:{GetActiveVCamName(brain)})");
+        //Debug.Log($"Confiner 스마트 리프레시 완료 (active:{GetActiveVCamName(brain)})");
     }
 
     // === 유틸(리플렉션으로 CM2/CM3 모두 커버) ===

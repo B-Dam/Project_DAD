@@ -25,7 +25,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void QuitGame()
     {
-        Debug.Log("게임 종료 시도");
+        //Debug.Log("게임 종료 시도");
         Application.Quit();
 
 #if UNITY_EDITOR

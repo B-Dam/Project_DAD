@@ -49,10 +49,10 @@ public class NPCMoveTriggerSave : MonoBehaviour, ISaveable
         };
 
         // 디버그
-        Debug.Log($"[NPCMoveTriggerSave/Capture] {name} " +
-                  $"Disappear=({data.hasMoveDisappear},{data.trigMoveDisappear}) " +
-                  $"Only=({data.hasMoveOnly},{data.trigMoveOnly}) " +
-                  $"List=({data.hasMoveList},{data.trigMoveList})");
+        ////Debug.Log($"[NPCMoveTriggerSave/Capture] {name} " +
+        //          $"Disappear=({data.hasMoveDisappear},{data.trigMoveDisappear}) " +
+        //          $"Only=({data.hasMoveOnly},{data.trigMoveOnly}) " +
+        //          $"List=({data.hasMoveList},{data.trigMoveList})");
 
         return data;
     }
@@ -78,7 +78,7 @@ public class NPCMoveTriggerSave : MonoBehaviour, ISaveable
         if (data.hasMoveList && moveList != null)
             WriteTriggered(moveList, data.trigMoveList);
 
-        Debug.Log($"[NPCMoveTriggerSave/Restore] {name} 적용 완료");
+        //Debug.Log($"[NPCMoveTriggerSave/Restore] {name} 적용 완료");
     }
 
     // ───────── 헬퍼 ─────────

@@ -33,11 +33,11 @@ public class DialogueTriggerCondition : MonoBehaviour
         bool sawStart = !string.IsNullOrEmpty(startId) && dm.HasSeen(startId);
         bool sawEnd = !string.IsNullOrEmpty(endId) && dm.HasSeen(endId);
 
-        Debug.Log($"[DialogueTriggerCondition] EvaluateCondition 호출됨 - startId: {startId}={sawStart}, endId: {endId}={sawEnd}");
+        //Debug.Log($"[DialogueTriggerCondition] EvaluateCondition 호출됨 - startId: {startId}={sawStart}, endId: {endId}={sawEnd}");
 
         if (sawStart && !sawEnd)
         {
-            Debug.Log("[DialogueTriggerCondition] 조건 만족 → 이벤트 실행");
+            //Debug.Log("[DialogueTriggerCondition] 조건 만족 → 이벤트 실행");
             onConditionMet?.Invoke();
             hasTriggered = true;
         }

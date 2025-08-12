@@ -112,7 +112,7 @@ public class MapDB
         }
         else
         {
-            Debug.Log($"좌표 값이 x|y 형태가 아닙니다 {str}");
+            //Debug.Log($"좌표 값이 x|y 형태가 아닙니다 {str}");
             return Vector2.zero;
         }
     }
@@ -122,7 +122,7 @@ public class MapDB
     {
         if (!_mapDataList.ContainsKey(mapID))
         {
-            Debug.LogError($"맵 ID '{mapID}'는 등록되어 있지 않습니다.");
+            //Debug.LogError($"맵 ID '{mapID}'는 등록되어 있지 않습니다.");
             return null;
         }
         MapData data = _mapDataList[mapID];

@@ -14,7 +14,7 @@ public class PuzzleResetManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Reset 버튼이 연결되지 않았습니다.");
+            //Debug.LogWarning("Reset 버튼이 연결되지 않았습니다.");
         }
     }
     void Update()
@@ -59,7 +59,7 @@ public class PuzzleResetManager : MonoBehaviour
         var playerResettable = Object.FindFirstObjectByType<PuzzlePlayerResettable>();
         playerResettable.ResetPlayerState(currentMapID);
         PuzzleHintManager.Instance?.DeactivateHint(); // 힌트 비활성화
-        Debug.Log("퍼즐 상태 리셋 완료");
+        //Debug.Log("퍼즐 상태 리셋 완료");
     }
 
 }

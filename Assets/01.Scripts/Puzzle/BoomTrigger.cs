@@ -19,7 +19,7 @@ public class BoomTrigger : MonoBehaviour
         if (resetButton != null)
             resetButton.onClick.AddListener(OnResetTriggered);
         else
-            Debug.LogWarning("[BoomTrigger] resetButton이 비어있습니다. 버튼으로 리셋을 못합니다.");
+            //Debug.LogWarning("[BoomTrigger] resetButton이 비어있습니다. 버튼으로 리셋을 못합니다.");
 
         if (boomEffectUI != null)
             boomEffectUI.SetActive(false);
@@ -36,18 +36,18 @@ public class BoomTrigger : MonoBehaviour
     {
         if (!other.CompareTag("Player") && !other.CompareTag("Box")) return;
 
-        Debug.Log("Boom!");
+        //Debug.Log("Boom!");
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySFX("Puzzle/TouchTrap");
 
         if (canvas == null)
         {
-            Debug.LogError("[BoomTrigger] Canvas가 인스펙터에 할당되어 있지 않습니다!");
+            //Debug.LogError("[BoomTrigger] Canvas가 인스펙터에 할당되어 있지 않습니다!");
             return;
         }
         if (boomEffectUI == null)
         {
-            Debug.LogError("[BoomTrigger] boomEffectUI가 인스펙터에 할당되어 있지 않습니다!");
+            //Debug.LogError("[BoomTrigger] boomEffectUI가 인스펙터에 할당되어 있지 않습니다!");
             return;
         }
 
@@ -68,7 +68,7 @@ public class BoomTrigger : MonoBehaviour
         if (resetManager != null)
             resetManager.ResetPuzzle();
         else
-            Debug.LogWarning("[BoomTrigger] PuzzleResetManager를 찾지 못해 ResetPuzzle을 호출하지 못했습니다.");
+            //Debug.LogWarning("[BoomTrigger] PuzzleResetManager를 찾지 못해 ResetPuzzle을 호출하지 못했습니다.");
 
         // UI 닫기
         if (boomEffectUI != null)

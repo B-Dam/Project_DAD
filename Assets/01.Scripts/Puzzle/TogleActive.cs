@@ -14,7 +14,7 @@ public class TogleActive : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[ToggleTarget] 버튼이 연결되지 않았습니다.");
+            //Debug.LogWarning("[ToggleTarget] 버튼이 연결되지 않았습니다.");
         }
     }
 

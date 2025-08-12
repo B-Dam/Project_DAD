@@ -32,7 +32,7 @@ public class OffscreenWatcher : MonoBehaviour
 
             if (isOutOfView)
             {
-                Debug.Log($"❌ {obj.name} 카메라 밖 → 제거");
+                //Debug.Log($"❌ {obj.name} 카메라 밖 → 제거");
                 //Destroy(obj.gameObject);
                 obj.gameObject.SetActive(false); // 오브젝트 비활성화
                 targets.RemoveAt(i);
@@ -41,7 +41,7 @@ public class OffscreenWatcher : MonoBehaviour
         // 조건 만족 시 콜백 실행
         if (onAllRemovedCallback != null && targets.Count == 0)
         {
-            Debug.Log("🎯 모든 오브젝트 제거됨 → 콜백 실행");
+            //Debug.Log("🎯 모든 오브젝트 제거됨 → 콜백 실행");
             onAllRemovedCallback.Invoke();
             onAllRemovedCallback = null; // 한 번만 실행
         }

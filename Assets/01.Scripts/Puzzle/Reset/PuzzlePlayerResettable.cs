@@ -13,7 +13,7 @@ public class PuzzlePlayerResettable : MonoBehaviour
     public void SaveResetPlayerPoint(string mapID)
     {
         resetPoints[mapID] = (transform.position, transform.rotation);
-        Debug.Log($"[PlayerReset] {mapID} 위치 저장됨: {transform.position}");
+        //Debug.Log($"[PlayerReset] {mapID} 위치 저장됨: {transform.position}");
     }
 
     /// <summary>
@@ -25,11 +25,11 @@ public class PuzzlePlayerResettable : MonoBehaviour
         {
             transform.position = data.pos;
             transform.rotation = data.rot;
-            Debug.Log($"[PlayerReset] {mapID} 위치로 리셋됨: {data.pos}");
+            //Debug.Log($"[PlayerReset] {mapID} 위치로 리셋됨: {data.pos}");
         }
         else
         {
-            Debug.LogWarning($"[PlayerReset] {mapID} 위치 정보 없음");
+            //Debug.LogWarning($"[PlayerReset] {mapID} 위치 정보 없음");
         }
     }
 }

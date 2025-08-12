@@ -27,21 +27,21 @@ public class BlockIndicatorManager : MonoBehaviour
             canvas = GameObject.Find("PuzzleUICanvas")?.GetComponent<Canvas>();
             if (canvas == null)
             {
-                Debug.LogWarning("Puzzle UI Canvas 찾을 수 없음 (BlockIndicatorManager-ShowIndicator 호출 시점)");
+                //Debug.LogWarning("Puzzle UI Canvas 찾을 수 없음 (BlockIndicatorManager-ShowIndicator 호출 시점)");
                 return;
             }
         }
 
         if (blockIndicatorPrefab == null)
         {
-            Debug.LogWarning(" blockIndicatorPrefab is not assigned");
+            //Debug.LogWarning(" blockIndicatorPrefab is not assigned");
             return;
         }
 
         Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPos);
 
         GameObject icon = Instantiate(blockIndicatorPrefab, canvas.transform);
-        Debug.Log($"icon instantiated at {icon.GetComponent<RectTransform>().position}");
+        //Debug.Log($"icon instantiated at {icon.GetComponent<RectTransform>().position}");
 
         icon.GetComponent<RectTransform>().position = screenPos;
         Destroy(icon, 0.2f);
