@@ -28,8 +28,17 @@ public class PlayerController : MonoBehaviour
     [Header("막힘 알림")]
     public LayerMask obstacleLayer;
     public LayerMask playerBlockerLayer;
-    private float lastIndicatorTime = -10f;
 
+    // 표시까지 눌러서 버텨야 하는 시간
+    public float indicatorHoldTime = 0.5f;
+
+    // 표시 후 다시 뜨기까지의 쿨타임(선택)
+    public float indicatorCooldown = 0.5f;
+
+    private float lastIndicatorTime = -10f;
+    private float obstacleHoldTimer = 0f;
+
+    [SerializeField] private float rayDistance = 0.7f;
     private Coroutine walkSfxCoroutine;
 
     // 박스 미리 유지 시간 관련 변수
@@ -69,7 +78,8 @@ public class PlayerController : MonoBehaviour
 
         // 이동 가능 여부 확인
         CanMove();
-
+        // 앞에 장애물 감지 + UI 표시
+        TryShowObstacleIndicator();
         CheckPushHoldAndTry();
 
         if (moveInput.magnitude > 0.01f)
@@ -103,8 +113,7 @@ public class PlayerController : MonoBehaviour
         if (CanMove())
             MovePlayer();
 
-        // 앞에 장애물 감지 + UI 표시
-        TryShowObstacleIndicator();
+       
     }
     public bool CanMove()
     {
@@ -131,33 +140,57 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         UpdateAnimation(Vector2.zero);
     }
-    private void TryShowObstacleIndicator()//P
+    private void TryShowObstacleIndicator()
     {
-        if (Time.time - lastIndicatorTime < boxPushHoldTime) return;
+        // 1. 입력이 없으면 타이머 리셋
+        if (moveInput == Vector2.zero || lastMoveInput == Vector2.zero)
+        {
+            obstacleHoldTimer = 0f;
+            return;
+        }
 
-        // 조건 1: 방향 입력 중일 때만
-        if (moveInput == Vector2.zero) return;
-
-        // 너무 짧은 입력 무시
-        if (lastMoveInput == Vector2.zero) return;
-
-        // 박스를 밀고 있다면 BoxPush에서 처리하게 둔다
         Vector2 origin = transform.position;
         Vector2 dir = lastMoveInput.normalized;
         float distance = 0.7f;
 
+        // 2. Raycast로 지정 레이어에 맞는 오브젝트 탐지
         RaycastHit2D hit = Physics2D.Raycast(origin, dir, distance, obstacleLayer | playerBlockerLayer);
+
+        bool hitNonBoxObstacle = false;
         if (hit.collider != null)
         {
-            GameObject hitObj = hit.collider.gameObject;
+            var go = hit.collider.gameObject;
+            // 박스는 제외
+            hitNonBoxObstacle = !(go.CompareTag("Box") && go.GetComponent<BoxPush>() != null);
+        }
 
-            // 박스를 만났다면 BoxPush가 판단
-            if (hitObj.CompareTag("Box") && hitObj.GetComponent<BoxPush>() != null) return;
+        // 3. "막혀 있음" 판정
+        //    - 앞에 장애물 있음
+        //    - 전진 방향 속도가 거의 0
+        float forwardSpeed = Vector2.Dot(rb.linearVelocity, dir);
+        bool blocked = hitNonBoxObstacle && forwardSpeed < 0.02f; // 0.02f는 임계값, 필요시 조정
 
-            BlockIndicatorManager.Instance?.ShowIndicator(transform.position + new Vector3(0f, 1.2f, 0f));
-            lastIndicatorTime = Time.time; // 마지막 표시 시간 갱신
+        // 4. 막혀 있으면 타이머 누적
+        if (blocked)
+        {
+            obstacleHoldTimer += Time.deltaTime;
+
+            // 5. 0.5초 이상 밀었고, 쿨타임도 지났다면 표시
+            if (obstacleHoldTimer >= indicatorHoldTime &&
+                Time.time - lastIndicatorTime >= indicatorCooldown)
+            {
+                BlockIndicatorManager.Instance?.ShowIndicator(transform.position + new Vector3(0f, 1.2f, 0f));
+                lastIndicatorTime = Time.time;
+                obstacleHoldTimer = 0f; // 표시 후 초기화 (원하면 유지 가능)
+            }
+        }
+        else
+        {
+            // 6. 막힘 해제되면 타이머 리셋
+            obstacleHoldTimer = 0f;
         }
     }
+
     private void TryAutoPushBox()
     {
         if (moveInput == Vector2.zero) return;
