@@ -67,7 +67,7 @@ public class BoomTrigger : MonoBehaviour
         // 퍼즐 리셋
         if (resetManager != null)
             resetManager.ResetPuzzle();
-        else
+        //else
             //Debug.LogWarning("[BoomTrigger] PuzzleResetManager를 찾지 못해 ResetPuzzle을 호출하지 못했습니다.");
 
         // UI 닫기
