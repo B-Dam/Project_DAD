@@ -29,26 +29,21 @@ public class MapManagerSave : MonoBehaviour, ISaveable
         if (string.IsNullOrEmpty(json)) return;
 
         var data = JsonUtility.FromJson<Data>(json);
-
-        // 즉시 필드 복원
-        if (MapManager.Instance != null)
-        {
-            MapManager.Instance.prevMapID    = data.prevID; 
-            MapManager.Instance.currentMapID = data.currentID;
-        }
-
-        // 씬 콜라이더/시네머신 준비를 한 프레임 기다렸다가 컨파이너 재적용
-        StartCoroutine(ApplyNextFrame(data.currentID));
+        if (MapManager.Instance == null) return;
+        
+        // 직접 값을 세팅하고 코루틴을 돌리는 대신, MapManager에게 모든 작업을 위임
+        // 씬이 완전히 로드되고 다른 객체들이 준비될 시간을 벌기 위해 한 프레임 뒤에 호출
+        StartCoroutine(Co_Apply(data));
     }
 
-    System.Collections.IEnumerator ApplyNextFrame(string id)
+    private System.Collections.IEnumerator Co_Apply(Data data)
     {
-        yield return null;
-        yield return null; // 씬 내 콜라이더 / 카메라 준비 대기
-        var mm = MapManager.Instance;
-        if (mm == null) yield break;
+        // 다른 ISaveable들이 모두 Restore될 때까지 한 프레임 대기
+        yield return null; 
 
-        // 현재 ID 기준으로 컨파이너/음악 등을 재적용
-        mm.ReapplyForCurrentMap();
+        if (MapManager.Instance != null && !string.IsNullOrEmpty(data.currentID))
+        {
+            MapManager.Instance.SwitchMapAndApplySettings(data.currentID);
+        }
     }
 }

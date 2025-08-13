@@ -32,7 +32,7 @@ public class MapManager : MonoBehaviour
     }
 
     public string prevMapID;
-    public string currentMapID = "001"; //d 첫 시작 시 001로 설정
+    public string currentMapID = "001"; // 첫 시작 시 001로 설정
 
 
     private void Awake()
@@ -159,6 +159,28 @@ public class MapManager : MonoBehaviour
             : "MapBGM";
         if (AudioManager.Instance != null && AudioManager.Instance.currentBGMName != targetBGM)
             AudioManager.Instance.PlayBGM(targetBGM);
+    }
+    
+    public void SwitchMapAndApplySettings(string newMapID)
+    {
+        // 맵 ID 갱신
+        prevMapID = currentMapID;
+        currentMapID = newMapID;
+    
+        // 새로운 맵 찾아서 활성화하고 Transform 갱신
+        Transform newMapObject = GameObject.Find(newMapID)?.transform;
+        if (newMapObject != null)
+        {
+            newMapObject.gameObject.SetActive(true);
+            SetCurrentMapTransform(newMapObject);
+        }
+        else
+        {
+            return; // 맵을 못찾으면 더 진행하지 않음
+        }
+    
+        // 모든 설정 재적용 (기존 ReapplyForCurrentMap 호출)
+        ReapplyForCurrentMap();
     }
 }
 

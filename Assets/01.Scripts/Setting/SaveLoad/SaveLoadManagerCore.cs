@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -194,6 +195,7 @@ public class SaveLoadManagerCore : MonoBehaviour
         {
             // MapManager에 현재 맵 ID가 있다면
             updater.RefreshById(MapManager.Instance.currentMapID);
+            StartCoroutine(CoGuaranteeConfinerEnabled(updater));
         }
         
         IsRestoring = false;
@@ -288,6 +290,40 @@ public class SaveLoadManagerCore : MonoBehaviour
 
         PendingLoadSlot = null;
         SceneManager.sceneLoaded -= OnSceneLoadedStatic;
+    }
+    
+    private IEnumerator CoGuaranteeConfinerEnabled(CameraConfinerUpdater updater)
+    {
+        // 업데이터 내부 코루틴이 끝날 시간을 조금 준다
+        yield return null;
+        yield return null;
+
+        var conf = (updater && updater.confiner)
+            ? updater.confiner
+            : FindFirstObjectByType<CinemachineConfiner2D>(UnityEngine.FindObjectsInactive.Include);
+
+        if (conf == null) yield break;
+
+        // 바운딩이 비어 있으면 현재 맵 기준으로 채워줌(콜라이더도 활성 보정)
+        if (conf.BoundingShape2D == null && MapManager.Instance != null)
+        {
+            string id = MapManager.Instance.currentMapID;
+            var go = GameObject.Find($"Cameras/MapCollider/{id}_Collider");
+            var col = go ? go.GetComponent<Collider2D>() : null;
+            if (col)
+            {
+                if (!col.gameObject.activeInHierarchy) col.gameObject.SetActive(true);
+                if (!col.enabled) col.enabled = true;
+                conf.BoundingShape2D = col;
+            }
+        }
+
+        // 최종 보장: enable = true
+        conf.enabled = true;
+
+        // 캐시 무효화(CM2/CM3 모두 커버)
+        var t = conf.GetType();
+        (t.GetMethod("InvalidatePathCache") ?? t.GetMethod("InvalidateCache"))?.Invoke(conf, null);
     }
 
     // 타입으로 간단 분류: 먼저 복원돼야 안정적인 애들

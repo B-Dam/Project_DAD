@@ -5,77 +5,56 @@ using System.Reflection;
 
 public class CameraConfinerUpdater : MonoBehaviour
 {
-    [Header("참조")] public CinemachineConfiner2D confiner; // VCam에 붙은 Confiner2D
+    [Header("참조")] 
+    public CinemachineConfiner2D confiner; // VCam에 붙은 Confiner2D
 
-    [Header("워프 판정/복구 세팅")] public float warpDistance = 5f; // 이보다 멀면 워프 취급
+    [Header("워프 판정/복구 세팅")] 
+    public float warpDistance = 5f; // 이보다 멀면 워프 취급
     public float enableDistance = 1.5f; // 카메라-타깃 거리 이하면 Confiner 재활성
     public int maxWaitFrames = 30; // 안전장치
+    
+    Coroutine _refreshRoutine;
 
     public void UpdateConfinerFor(Transform mapTransform)
     {
-        if (!mapTransform)
-        {
-            //Debug.LogWarning("mapTransform is null");
-            return;
-        }
-
+        if (!mapTransform) return;
         RefreshById(mapTransform.name);
     }
 
     public void RefreshById(string mapId)
     {
         var go = GameObject.Find($"Cameras/MapCollider/{mapId}_Collider");
-        if (!go)
-        {
-            //Debug.LogWarning($"Collider 오브젝트를 찾을 수 없습니다: {mapId}");
-            return;
-        }
+        var col = go ? go.GetComponent<Collider2D>() : null;
+        if (!col) return;
 
-        var col = go.GetComponent<Collider2D>();
-        if (!col)
-        {
-            //Debug.LogWarning($"Collider2D가 없습니다: {go.name}");
-            return;
-        }
-
-        StartCoroutine(CoRefreshSmart(col));
-    }
-
-    public void RefreshWithCollider(Collider2D col)
-    {
-        if (!col)
-        {
-            //Debug.LogWarning("Collider2D is null");
-            return;
-        }
-
-        StartCoroutine(CoRefreshSmart(col));
+        // 기존 실행 중단 후 새로 시작 (중복 방지)
+        if (_refreshRoutine != null) StopCoroutine(_refreshRoutine);
+        _refreshRoutine = StartCoroutine(CoRefreshSmart(col));
     }
 
     private IEnumerator CoRefreshSmart(Collider2D col)
     {
         if (!confiner) yield break;
 
-        // 0) 내 VCam과 현재 활성 VCam 파악
+        // 내 VCam과 현재 활성 VCam 파악
         var myVcam = GetVCamComponent(confiner.gameObject); // confiner가 붙은 그 VCam
         var brain = Camera.main ? Camera.main.GetComponent<CinemachineBrain>() : null;
-        var activeV = GetActiveVCam(brain); // 지금 화면을 잡고 있는 VCam
         var follow = GetFollowTarget(myVcam);
         var myTf = confiner.transform;
 
-        // A) 모든 VCam의 우선순위 백업 → 내 것 최상위로 올림 (브레인은 끄지 않음)
+        // 모든 VCam의 우선순위 백업 → 내 것 최상위로 올림 (브레인은 끄지 않음)
         var prios = BumpPriorityOnlyMine(myVcam, 10000);
 
-        // B) Confiner OFF + 바운딩 교체 + 캐시 무효화
-        bool prevEnabled = confiner.enabled;
+        // 내가 직접 껐는지 여부만 기억 (중첩 호출 대비)
+        bool turnedOffByMe = confiner.enabled; // 켜져 있으면 내가 끄는 것
         confiner.enabled = false;
+
         confiner.BoundingShape2D = col;
         TryInvalidate(confiner);
         TrySetPrevStateInvalid(myVcam);
-        yield return null; // 프레임 대기
-
-        // C) 내 VCam이 아직 활성 아니면(=화면을 다른 VCam이 잡고 있으면) 이번 프레임엔 무시되니까
-        //    우선순위 올려둔 상태에서 "강제 스냅"을 먼저 실행
+        yield return null;
+        
+        // 우선순위 올려둔 상태에서 "강제 스냅"을 먼저 실행
         if (myTf && follow)
         {
             var pos = myTf.position;
@@ -95,7 +74,7 @@ public class CameraConfinerUpdater : MonoBehaviour
             }
         }
 
-        // D) 타깃 근처까지 붙을 때까지 잠깐 대기(최대 프레임)
+        // 타깃 근처까지 붙을 때까지 잠깐 대기(최대 프레임)
         int frames = 0;
         while (myTf && follow &&
                Vector3.Distance(myTf.position, follow.position) > enableDistance &&
@@ -105,16 +84,17 @@ public class CameraConfinerUpdater : MonoBehaviour
             yield return null;
         }
 
-        // E) Confiner ON + 캐시 무효화 + 안정화
-        confiner.enabled = prevEnabled;
+        // 내가 껐던 경우에만 다시 킴 (다른 곳에서 원래 꺼놨다면 존중)
+        if (turnedOffByMe) confiner.enabled = true;
         TryInvalidate(confiner);
+        
         yield return null;
+        
         TrySetPrevStateInvalid(myVcam);
 
-        // F) 우선순위 복원
+        // 우선순위 복원
         RestorePriorities(prios);
-
-        //Debug.Log($"Confiner 스마트 리프레시 완료 (active:{GetActiveVCamName(brain)})");
+        _refreshRoutine = null;
     }
 
     // === 유틸(리플렉션으로 CM2/CM3 모두 커버) ===
