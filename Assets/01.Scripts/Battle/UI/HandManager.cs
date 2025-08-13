@@ -46,7 +46,17 @@ public class HandManager : MonoBehaviour
 
     [HideInInspector] public bool isDraggingCard;
     public bool AllowCombine = true;
+    
+    [HideInInspector] public bool RequireCombineBeforeUse = false; // 합성 전 사용 금지
+    private CardView _requiredCombinedCard = null;  // 그 합성 카드만 허용
 
+    // 합성 전 사용 금지용 메서드
+    public void SetCombineUseRequirement(bool active)
+    {
+        RequireCombineBeforeUse = active;
+        _requiredCombinedCard = null; // 새 스텝 시작 시 초기화
+    }
+    
     // 현재 AP
     private int _currentAP;
 
@@ -268,6 +278,13 @@ public class HandManager : MonoBehaviour
     // 카드 사용 시 호출
     public bool UseCard(CardView cv)
     {
+        // 튜토리얼: 합성 전에는 어떤 카드도 사용 불가, 합성 후에는 지정된 합성 카드만 허용
+        if (RequireCombineBeforeUse)
+        {
+            if (_requiredCombinedCard == null) return false; // 아직 합성 안 함
+            if (cv != _requiredCombinedCard) return false;   // 합성 카드 외 사용 금지
+        }
+        
         // AP 체크
         if (currentAP < cv.data.costAP)
         {
@@ -281,7 +298,15 @@ public class HandManager : MonoBehaviour
         // 필살기 게이지 증가
         CombatManager.Instance.GainSpecialGauge(1);
         
+        // 실제 스킬 적용
         CombatManager.Instance.ApplySkill(cv.data, isPlayer: true);
+        
+        // 튜토리얼 성공 시 플래그 제거
+        if (RequireCombineBeforeUse && cv == _requiredCombinedCard)
+        {
+            RequireCombineBeforeUse = false;
+            _requiredCombinedCard = null;
+        }
 
         // 기본 카드(rank==1)만 discard에 추가하고, 합성된 카드(rank>1)는 버리지 않음
         if (cv.data.rank == 1)
@@ -374,6 +399,10 @@ public class HandManager : MonoBehaviour
         
         // 카드 합성 성공해서 생성됐는지 확인 이벤트 호출
         OnCardCombinedNew?.Invoke(cvNew);
+        
+        // 튜토리얼: 합성 후 ‘바로 그 카드’만 사용 가능하게 지정
+        if (RequireCombineBeforeUse)
+            _requiredCombinedCard = cvNew;
         
         // 인덱스 재설정
         for (int i = 0; i < handViews.Count; i++)

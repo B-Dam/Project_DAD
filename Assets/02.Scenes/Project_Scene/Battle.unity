@@ -4448,6 +4448,7 @@ MonoBehaviour:
   refillStaggerDelay: 0.05
   isDraggingCard: 0
   AllowCombine: 1
+  RequireCombineBeforeUse: 0
   deck: []
   discard: []
 --- !u!1 &851132698
@@ -8799,13 +8800,13 @@ MonoBehaviour:
     onStepStart:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 0
+        - m_Target: {fileID: 1476500758}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: StepEndTutorial
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -8837,6 +8838,7 @@ MonoBehaviour:
   rightPanel: {fileID: 1573015771}
   typingSpeed: 0.05
   typingComplete: 0
+  IsTutorial: 0
 --- !u!4 &1476500759
 Transform:
   m_ObjectHideFlags: 0
@@ -17734,7 +17736,7 @@ PrefabInstance:
       objectReference: {fileID: 2054641540}
     - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
       propertyPath: forceTutorialMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
       propertyPath: allEnvironments.Array.size

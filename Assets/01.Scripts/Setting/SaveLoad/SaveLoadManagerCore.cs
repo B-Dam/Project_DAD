@@ -328,6 +328,6 @@ public class SaveLoadManagerCore : MonoBehaviour
 
     // 타입으로 간단 분류: 먼저 복원돼야 안정적인 애들
     bool IsEnvironment(ISaveable sv) =>
-        sv is HoleSave || sv is MapTriggerSave || sv is QuestItemSave || sv is DialogueSave || sv is MapManagerSave ||
+        sv is HoleSave /*|| sv is MapTriggerSave*/ || sv is QuestItemSave || sv is DialogueSave || sv is MapManagerSave ||
         sv is CameraSave || sv is NPCMoveTriggerSave || sv is CombatTriggerSave ;
 }
