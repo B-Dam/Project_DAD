@@ -43,6 +43,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] bool typingComplete = false;
     
     private Color topOrig, bottomOrig, leftOrig, rightOrig;
+
+    public bool IsTutorial;
     
     // AttachClickOverlay에서 할당할 필드
     private GameObject currentOverlay;
@@ -458,6 +460,9 @@ public class TutorialManager : MonoBehaviour
         // 카드 합성 활성화
         EnableCardCombine();
         
+        // 합성 전 사용 금지 잠금 활성화
+        HandManager.Instance.SetCombineUseRequirement(true);
+        
         // 카드 합성 확인 후 콜백 호출
         HandManager.OnCardCombinedNew += OnTutorialCardCombined;
     }
@@ -519,6 +524,9 @@ public class TutorialManager : MonoBehaviour
         FadeOutHighlight();
         if (currentOverlay != null)
             Destroy(currentOverlay);
+        
+        // 필살기 버튼 esc로 닫지 못하게 차단
+        IsTutorial = true;
 
         // 다음 스텝으로
         steps[currentStep].onStepComplete.Invoke();
@@ -544,14 +552,14 @@ public class TutorialManager : MonoBehaviour
     
     private void OnTutorialSpecialAbilityPressed()
     {
-        // 중복 리스너 해제
-        specialAttackButton.onClick.RemoveListener(OnTutorialSpecialAbilityPressed);
-    
         // 하이라이트 페이드 아웃
         FadeOutHighlight();
         if (currentOverlay != null)
             Destroy(currentOverlay);
-
+        
+        // 중복 리스너 해제
+        specialAttackButton.onClick.RemoveListener(OnTutorialSpecialAbilityPressed);
+        
         // 적 사망 대기
         StartCoroutine(WaitForEnemyDeathAndNextStep());
     }
@@ -568,4 +576,11 @@ public class TutorialManager : MonoBehaviour
         // 적이 쓰러지면 다음 스텝으로
         steps[currentStep].onStepComplete.Invoke();
     }
+
+    public void StepEndTutorial()
+    {
+        // 튜토리얼 종료
+        IsTutorial = false;
+    }
+    
 }

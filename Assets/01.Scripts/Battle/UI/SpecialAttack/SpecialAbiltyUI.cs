@@ -28,7 +28,7 @@ public class SpecialAbilityUI : MonoBehaviour
     void Update()
     {
         // ESC 키로 언제든 패널 닫기
-        if (specialPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        if (!TutorialManager.Instance.IsTutorial && specialPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
             HideSpecialPanel();
     }
 
