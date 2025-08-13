@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -197,7 +197,8 @@ public class SaveLoadManagerCore : MonoBehaviour
             updater.RefreshById(MapManager.Instance.currentMapID);
             StartCoroutine(CoGuaranteeConfinerEnabled(updater));
         }
-        
+
+        MapTransition.TriggerMapTransitionComplete(); // 맵 전환 완료 이벤트 호출을 통해 퍼즐맵 UI 켜기 등
         IsRestoring = false;
     }
 

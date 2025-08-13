@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,10 +28,13 @@ public class SettingMenuController : MonoBehaviour
     
     [Header("퀘스트 UI")] 
     public GameObject questUI;
-    
+
+    [Header("Back 버튼")]
+    public Button backButton;
     private void Start()
     {
         settingsPanel.SetActive(false);
+        backButton.onClick.AddListener(ToggleSettingsPanel);
         // 시작할 때 기본 메뉴 선택
         ShowMenu(MenuType.Sound);
     }
@@ -62,18 +65,19 @@ public class SettingMenuController : MonoBehaviour
         // Esc 키를 누르면 토글
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            bool isOn = settingsPanel.activeSelf;
-            settingsPanel.SetActive(!isOn);
-            if (!isOn)
-            {
-                settingsPanel.transform.SetAsLastSibling();
-                ShowMenu(MenuType.Sound); // 열 때 기본 탭 지정
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                Time.timeScale = 1f;
-            }
+            ToggleSettingsPanel();
+            //bool isOn = settingsPanel.activeSelf;
+            //settingsPanel.SetActive(!isOn);
+            //if (!isOn)
+            //{
+            //    settingsPanel.transform.SetAsLastSibling();
+            //    ShowMenu(MenuType.Sound); // 열 때 기본 탭 지정
+            //    Time.timeScale = 0f;
+            //}
+            //else
+            //{
+            //    Time.timeScale = 1f;
+            //}
         }
 
         // 전투 중에 QuestUI 비활성화
@@ -82,7 +86,22 @@ public class SettingMenuController : MonoBehaviour
         else
             questUI.SetActive(true);
     }
+    private void ToggleSettingsPanel()
+    {
+        bool isOn = settingsPanel.activeSelf;
+        settingsPanel.SetActive(!isOn);
 
+        if (!isOn)
+        {
+            settingsPanel.transform.SetAsLastSibling();
+            ShowMenu(MenuType.Sound); // 열 때 기본 탭 지정
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
     // 버튼 OnClick 으로 연결
     public void OnClickSound() => ShowMenu(MenuType.Sound);
     public void OnClickSave()
