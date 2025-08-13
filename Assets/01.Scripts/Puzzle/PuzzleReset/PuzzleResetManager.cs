@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class PuzzleResetManager : MonoBehaviour
 {
     public Button resetButton;
-
+    public GameObject settingUI; // 설정 UI 오브젝트
     void Start()
     {
         //hintMode = Object.FindFirstObjectByType<HintMode>();
@@ -34,6 +34,12 @@ public class PuzzleResetManager : MonoBehaviour
     }
     public void ResetPuzzle()
     {
+        if(settingUI != null && settingUI.activeSelf)
+        {
+            // 설정 UI가 열려있으면 리셋 취소
+            return;
+        }
+
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null) return;
         var controller = player.GetComponent<PlayerController>();
