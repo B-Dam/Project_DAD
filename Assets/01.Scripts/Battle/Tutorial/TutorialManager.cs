@@ -298,10 +298,14 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     public void FadeOutHighlight(float t = 0.1f)
     {
-        topPanel.DOFade(0, t).OnComplete(() => topPanel.gameObject.SetActive(false));
-        bottomPanel.DOFade(0, t).OnComplete(() => bottomPanel.gameObject.SetActive(false));
-        leftPanel.DOFade(0, t).OnComplete(() => leftPanel.gameObject.SetActive(false));
-        rightPanel.DOFade(0, t).OnComplete(() => rightPanel.gameObject.SetActive(false));
+        if (topPanel != null)
+            topPanel.DOFade(0, t).OnComplete(() => topPanel.gameObject.SetActive(false));
+        if (bottomPanel != null)
+            bottomPanel.DOFade(0, t).OnComplete(() => bottomPanel.gameObject.SetActive(false));
+        if (leftPanel != null)
+            leftPanel.DOFade(0, t).OnComplete(() => leftPanel.gameObject.SetActive(false));
+        if (rightPanel != null)
+            rightPanel.DOFade(0, t).OnComplete(() => rightPanel.gameObject.SetActive(false));
     }
     
     // 카드 사용 확인 스텝
@@ -552,13 +556,13 @@ public class TutorialManager : MonoBehaviour
     
     private void OnTutorialSpecialAbilityPressed()
     {
+        // 중복 리스너 해제
+        specialAttackButton.onClick.RemoveListener(OnTutorialSpecialAbilityPressed);
+        
         // 하이라이트 페이드 아웃
         FadeOutHighlight();
         if (currentOverlay != null)
             Destroy(currentOverlay);
-        
-        // 중복 리스너 해제
-        specialAttackButton.onClick.RemoveListener(OnTutorialSpecialAbilityPressed);
         
         // 적 사망 대기
         StartCoroutine(WaitForEnemyDeathAndNextStep());
