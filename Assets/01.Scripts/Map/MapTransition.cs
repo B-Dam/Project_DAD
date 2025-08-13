@@ -36,6 +36,10 @@ public class MapTransition : MonoBehaviour
 
     // 맵 전환 완료 이벤트
     public static event Action OnMapTransitionComplete;
+    public static void TriggerMapTransitionComplete()
+    {
+        OnMapTransitionComplete?.Invoke();
+    }
     private void Awake()
     {
         // 퀘스트 조건이 모두 비어 있다면 이동 허용

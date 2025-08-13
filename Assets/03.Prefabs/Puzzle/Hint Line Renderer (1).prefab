@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2991716781510456247}
   - component: {fileID: 5497927846942558570}
   - component: {fileID: 5837153970330038720}
-  - component: {fileID: 3219462465702866664}
   m_Layer: 22
   m_Name: Hint Line Renderer (1)
   m_TagString: Untagged
@@ -155,19 +154,3 @@ MonoBehaviour:
   targetA: {fileID: 0}
   targetB: {fileID: 0}
   lineParticlePrefab: {fileID: 6750787165831178034, guid: 3bb35280ec94fe647875c3b182de2a5e, type: 3}
---- !u!114 &3219462465702866664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3757373728026214524}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39a89bfde02695b4da2571cb32651c95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetA: {fileID: 0}
-  targetB: {fileID: 0}
-  lineParticlePrefab: {fileID: 0}
-  hintActivateDistance: 1

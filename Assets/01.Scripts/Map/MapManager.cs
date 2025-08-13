@@ -65,7 +65,6 @@ public class MapManager : MonoBehaviour
         // ✅ 기본 BGM 설정 (처음 시작 시 필수)
         AudioManager.Instance.PlayBGM("MapBGM");
     }
-
     public void UpdateMapData(string newMapID)
     {
         prevMapID = currentMapID;
@@ -153,12 +152,13 @@ public class MapManager : MonoBehaviour
                       BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         inv?.Invoke(conf, null);
 
-        // BGM 재적용
-        string targetBGM = PuzzleManager.Instance != null && PuzzleManager.Instance.IsPuzzleMap(currentMapID)
-            ? "PuzzleMapBGM"
-            : "MapBGM";
-        if (AudioManager.Instance != null && AudioManager.Instance.currentBGMName != targetBGM)
-            AudioManager.Instance.PlayBGM(targetBGM);
+
+        //// BGM 재적용
+        //string targetBGM = PuzzleManager.Instance != null && PuzzleManager.Instance.IsPuzzleMap(currentMapID)
+        //    ? "PuzzleMapBGM"
+        //    : "MapBGM";
+        //if (AudioManager.Instance != null && AudioManager.Instance.currentBGMName != targetBGM)
+        //    AudioManager.Instance.PlayBGM(targetBGM);
     }
     
     public void SwitchMapAndApplySettings(string newMapID)
@@ -178,7 +178,17 @@ public class MapManager : MonoBehaviour
         {
             return; // 맵을 못찾으면 더 진행하지 않음
         }
-    
+
+        // BGM 재적용
+        if (PuzzleManager.Instance.IsPuzzleMap(currentMapID))
+        {
+            AudioManager.Instance.PlayBGM("PuzzleMapBGM");
+        }
+        else
+        {
+            AudioManager.Instance.PlayBGM("MapBGM");
+        }
+
         // 모든 설정 재적용 (기존 ReapplyForCurrentMap 호출)
         ReapplyForCurrentMap();
     }
