@@ -43,11 +43,11 @@ public class CutsceneController : MonoBehaviour
     private void Start()
     {
         originalCullingMask = mainCamera.cullingMask;
-        mainCamera.cullingMask = 0;
+        //mainCamera.cullingMask = 0;
 
         questUI.SetActive(false);
 
-        fadeCanvas.gameObject.SetActive(true);
+        //fadeCanvas.gameObject.SetActive(true);
         fadeCanvas.alpha = 1f;
     }
 
