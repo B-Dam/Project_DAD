@@ -17760,7 +17760,7 @@ PrefabInstance:
       objectReference: {fileID: 2054641540}
     - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
       propertyPath: forceTutorialMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5161954527356046381, guid: 47fad57de092e564fbc7ab935f242337, type: 3}
       propertyPath: allEnvironments.Array.size
