@@ -2642,6 +2642,14 @@ PrefabInstance:
       propertyPath: id
       value: 5021e1fbab89454c867da8d8da983346
       objectReference: {fileID: 0}
+    - target: {fileID: 1857804100598706994, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerId
+      value: 5110
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857804100598706994, guid: 94838649432a50d438b208246d624ec7, type: 3}
+      propertyPath: triggerDialogueEntries.Array.data[0].id
+      value: 5110
+      objectReference: {fileID: 0}
     - target: {fileID: 1858455534063045594, guid: 94838649432a50d438b208246d624ec7, type: 3}
       propertyPath: id
       value: a714a40ce34244fca4430064fa476501
