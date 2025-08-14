@@ -156,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 1322600201}
     - target: {fileID: 6415557925823890217, guid: efe7468904ca672438b84b94522293ec, type: 3}
       propertyPath: m_RenderMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6955486357831510990, guid: efe7468904ca672438b84b94522293ec, type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -234,7 +234,7 @@ PrefabInstance:
       objectReference: {fileID: 1322600201}
     - target: {fileID: 4009366926655192091, guid: 0886fe467ef98ba48998da9dcf864909, type: 3}
       propertyPath: m_RenderMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8398332971723944227, guid: 0886fe467ef98ba48998da9dcf864909, type: 3}
       propertyPath: m_Pivot.x
@@ -540,7 +540,7 @@ PrefabInstance:
       objectReference: {fileID: 1322600201}
     - target: {fileID: 1422653405907520583, guid: e7c07c0f210fdad4fae45a19c3d01628, type: 3}
       propertyPath: m_RenderMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2153882251756647254, guid: e7c07c0f210fdad4fae45a19c3d01628, type: 3}
       propertyPath: m_Pivot.x
@@ -1228,7 +1228,7 @@ PrefabInstance:
       objectReference: {fileID: 1322600201}
     - target: {fileID: 2372917347404053311, guid: f069fc0fa5403b24fbc6d4fab1b7f207, type: 3}
       propertyPath: m_RenderMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2841516628360804029, guid: f069fc0fa5403b24fbc6d4fab1b7f207, type: 3}
       propertyPath: m_Name
@@ -1388,7 +1388,6 @@ GameObject:
   - component: {fileID: 1322600204}
   - component: {fileID: 1322600205}
   - component: {fileID: 1322600206}
-  - component: {fileID: 1322600207}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1560,19 +1559,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
---- !u!114 &1322600207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322600199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c49df23ded7253141944ffe7b073f00a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetAspect: 1.7777778
 --- !u!1001 &1382008582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2143,7 +2129,7 @@ PrefabInstance:
       objectReference: {fileID: 1322600201}
     - target: {fileID: 4027324706448020064, guid: 6baee7dea17ae27458a5b5a4afc7a3c9, type: 3}
       propertyPath: m_RenderMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6009477325748368046, guid: 6baee7dea17ae27458a5b5a4afc7a3c9, type: 3}
       propertyPath: questUI
